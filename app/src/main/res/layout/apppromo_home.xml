@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <RelativeLayout
+        android:id="@+id/common_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+
+        >
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:popupTheme="@style/popUpTheme">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="50dp"
+                        android:clickable="true"
+                        android:id="@+id/ic_back"
+                        android:src="@drawable/back_icon"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        />
+
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:clickable="true"
+                        android:id="@+id/image_view_title"
+                        android:src="@drawable/logo"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/ic_back"
+                        />
+
+
+
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rel_cross_app_promo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/common_header"
+        >
+
+
+        <TextView
+            android:id="@+id/tv_app_promo_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Other Galway App"
+            android:textSize="16dp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            />
+
+           <ImageView
+               android:id="@+id/iv_close"
+               android:layout_width="15dp"
+               android:layout_height="15dp"
+               android:src="@drawable/close"
+               android:layout_margin="5dp"
+               android:layout_alignParentRight="true"
+               />
+
+
+        <RelativeLayout
+            android:id="@+id/rel_galway"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/nav_item_border_background"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:elevation="5dp"
+            android:layout_below="@+id/rel_galwayfoundation"
+            >
+            <ImageView
+                android:id="@+id/imageView_app_galway"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/nav_galwayfieldofficer"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_app_galway"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imageView_app_galway"
+                android:text="Galway Field Officer"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_glazegalway"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_toRightOf="@+id/imageView_app_galway"
+                android:layout_below="@+id/tv_app_galway"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/nav_button_border_background"
+                android:text="OPEN"
+                android:layout_marginTop="10dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_galwaykart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/nav_item_border_background"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:elevation="10dp"
+
+            android:layout_below="@+id/tv_app_promo_head"
+
+            >
+
+            <ImageView
+                android:id="@+id/imageView_app_galwaykart"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/nav_glazegalway"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_app_galwaykart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imageView_app_galwaykart"
+                android:text="GlazeGalway"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_galwaykart"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_toRightOf="@+id/imageView_app_galwaykart"
+                android:layout_below="@+id/tv_app_galwaykart"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/nav_button_border_background"
+                android:text="OPEN"
+                android:layout_marginTop="10dp"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rel_galwayexam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/nav_item_border_background"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+
+            android:elevation="10dp"
+            android:layout_below="@+id/rel_galwaykart"
+            >
+            <ImageView
+                android:id="@+id/imageView_app_galwayexam"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/nav_galwayexamsystem"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_app_galwayexam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imageView_app_galwayexam"
+                android:text="Galway Exam"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_galwayexam"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_toRightOf="@+id/imageView_app_galwayexam"
+                android:layout_below="@+id/tv_app_galwayexam"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/nav_button_border_background"
+                android:text="OPEN"
+                android:layout_marginTop="10dp"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rel_galwayfoundation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/nav_item_border_background"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+
+            android:elevation="10dp"
+            android:layout_below="@+id/rel_galwayexam"
+            >
+            <ImageView
+                android:id="@+id/imageView_app_galwayfoundation"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_galwayfoundation"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_app_galwayfoundation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imageView_app_galwayfoundation"
+                android:text="Galway Foundation"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_galwayfoundation"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_toRightOf="@+id/imageView_app_galwayfoundation"
+                android:layout_below="@+id/tv_app_galwayfoundation"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/nav_button_border_background"
+                android:text="INSTALL"
+                android:layout_marginTop="10dp"
+                />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_home_page"
+        app:menu="@menu/activity_home_page_drawer" >
+
+        <ExpandableListView
+            android:id="@+id/expandableListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/nav_header_height"
+            android:background="@android:color/white"
+            android:dividerHeight="1dp"
+            android:layoutDirection="rtl"
+            android:groupIndicator="@drawable/store_info_expandabellist_indicator"
+            />
+
+    </com.google.android.material.navigation.NavigationView>
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

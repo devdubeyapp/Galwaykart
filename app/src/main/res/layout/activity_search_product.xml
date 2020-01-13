@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="productDetail"
+            type="com.galwaykart.dbfiles.ProductDataModel" />
+    </data>
+    
+
+<androidx.drawerlayout.widget.DrawerLayout 
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:fitsSystemWindows="true">
+
+
+    <LinearLayout
+        android:id="@+id/common_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        >
+
+    <include
+        layout="@layout/common_header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rel_searchview"
+            android:layout_below="@+id/common_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+
+
+
+            <androidx.appcompat.widget.SearchView
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/profile_box_style"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:hint="What is in your mind"
+                android:textColor="#000"
+
+                android:textColorHint="#7f7f7f"
+                android:id="@+id/search_view"
+                android:clickable="true"
+
+                app:theme="@style/AppSearchView"
+                app:searchIcon="@drawable/ic_search_icon"
+                app:closeIcon="@drawable/ic_delete_icon"
+                />
+
+        </RelativeLayout>
+
+
+    <TextView
+        android:layout_below="@+id/rel_searchview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_alert"
+        android:textSize="16dp"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:textColor="@color/colorPrimary"
+
+        />
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_below="@+id/tv_alert"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:layout_marginTop="10dp"
+        android:layoutAnimation="@anim/layout_animation_right_to_left"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:visibility="gone"
+        app:headerLayout="@layout/nav_header_home_page"
+        app:menu="@menu/activity_home_page_drawer"
+        >
+
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/nav_header_height"
+        android:background="@android:color/white"
+        android:dividerHeight="1dp"
+        android:layoutDirection="rtl"
+        android:groupIndicator="@drawable/store_info_expandabellist_indicator"
+        />
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
+</layout>

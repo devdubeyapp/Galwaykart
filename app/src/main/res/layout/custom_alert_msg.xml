@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_dialog"
+    android:layout_alignParentTop="true"
+    >
+
+    <Button
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/close"
+        android:layout_margin="10dp"
+        android:id="@+id/bt_cancel"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_dialog_msg"
+
+        android:text="Added to Cart"
+        android:textSize="14dp"
+        android:textColor="@color/colorwhite"
+        android:layout_margin="5dp"
+        android:padding="10dp"/>
+
+</RelativeLayout>

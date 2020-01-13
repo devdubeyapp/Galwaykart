@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rltosp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/profile_box_style"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+        <TextView
+            android:id="@+id/text_carrier_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uploadProgressBar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="ARLRDBD"
+            android:text="carrier code"
+            android:visibility="gone"
+            android:textStyle="bold"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/text_method_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_carrier_code"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:fontFamily="ARLRDBD"
+            android:text="method code"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/text_carrier_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_method_code"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="ARLRDBD"
+            android:textStyle="bold"
+            android:text="carrier title"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/text_method_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_carrier_title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="ARLRDBD"
+            android:textStyle="bold"
+            android:text="method title"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/text_base_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_method_title"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="ARLRDBD"
+            android:text="base amount"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/text_available"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_base_amount"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="ARLRDBD"
+            android:text="available"
+            android:textColor="@color/text"
+            android:textSize="16dp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/text_error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_available"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="ARLRDBD"
+            android:text="error message"
+            android:textColor="@color/text"
+            android:textSize="16dp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/text_price_excl_tax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_error_message"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="ARLRDBD"
+            android:text="price excl tax"
+
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/text_price_incl_tax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_price_excl_tax"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="ARLRDBD"
+            android:text="price incl tax"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/text_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_price_incl_tax"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="ARLRDBD"
+            android:text="amount"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <Button
+            android:id="@+id/btselect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:layout_below="@+id/text_amount"
+            android:background="@drawable/border"
+            android:layout_marginLeft="10dp"
+            android:onClick="selectItem"
+            android:text="Select" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

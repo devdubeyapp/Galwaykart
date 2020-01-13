@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rel_lay1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/profile_box_style"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:elevation="3dp"
+
+        >
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_view_date"
+            android:paddingLeft="20dp"
+            android:textColor="#fff"
+            android:textSize="25dp"
+            android:layout_marginTop="10dp"
+            android:text="25"
+            android:background="@color/colorPrimaryDark"/>
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="May 2018"
+            android:paddingLeft="5dp"
+            android:layout_below="@+id/text_view_date"
+            android:id="@+id/tv_month_year"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="#fff"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order id (Pending)"
+            android:id="@+id/return_order_id"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/text_view_date"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Increment Id"
+            android:id="@+id/increment_id"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tv_month_year"
+            android:layout_below="@+id/return_order_id"
+            />
+
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

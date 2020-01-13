@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rltosp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/profile_box_style"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+        <ProgressBar
+            android:id="@+id/uploadProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/textCustomer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/uploadProgressBar"
+            android:fontFamily="ARLRDBD"
+            android:text="Item Name"
+            android:textColor="@color/text"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <Button
+
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/bt_edit_add_icon"
+            android:background="@drawable/edit_icn"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentRight="true"
+
+
+
+            />
+
+
+        <TextView
+            android:id="@+id/textCompany_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/textCustomer_name"
+            android:fontFamily="ARLRDBD"
+            android:text="Company Name"
+            android:textColor="@color/text"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/textStreet_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/textCompany_name"
+            android:fontFamily="ARLRDBD"
+            android:text="Street Address"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/textCity_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/textStreet_name"
+            android:fontFamily="ARLRDBD"
+            android:text="City Name"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/textRegion_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/textCity_name"
+            android:fontFamily="ARLRDBD"
+            android:text="region Name"
+            android:visibility="gone"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/textPincode_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/textRegion_name"
+            android:fontFamily="ARLRDBD"
+            android:text="Pincode Name"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/textTelephone_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/textPincode_name"
+            android:fontFamily="ARLRDBD"
+            android:text="telephone"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/btEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textTelephone_name"
+            android:layout_marginTop="10dp"
+            android:padding="15dp"
+            android:visibility="gone"
+            android:background="@drawable/border"
+            android:text="Edit Address" />
+
+        <Button
+            android:id="@+id/btselect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/btEdit"
+            android:layout_marginTop="10dp"
+            android:padding="15dp"
+            android:paddingLeft="10dp"
+            android:layout_marginRight="100dp"
+            android:layout_below="@+id/textTelephone_name"
+            android:background="@drawable/border"
+            android:layout_marginLeft="20dp"
+            android:text="Select" />
+
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

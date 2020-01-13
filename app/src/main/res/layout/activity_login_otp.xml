@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/rel_layout_otp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_img_style"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:elevation="3dp"
+        android:layout_below="@+id/view">
+
+
+        <TextView
+            android:id="@+id/tverror"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="10dp"
+
+            android:text=""
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/red"
+
+
+            />
+
+        <TextView
+            android:id="@+id/tvotpno"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textSize="15dp"
+            android:text="OTP"
+            android:textColor="@color/colorPrimary"
+            android:layout_below="@+id/tverror"
+            android:layout_weight="1"
+
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            />
+        <ImageView
+            android:id="@+id/iv_info"
+            app:srcCompat="@drawable/icon_info"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tverror"
+            android:layout_toRightOf="@+id/tvotpno"
+            android:clickable="true"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:layout_below="@+id/tvotpno"
+            android:id="@+id/lay_2">
+
+            <EditText
+                android:id="@+id/edit_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="OTP"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <Button
+            android:id="@+id/button_otp_resend"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Resend OTP"
+            android:layout_below="@+id/lay_2"
+            android:background="@color/colorYellow"
+            android:textStyle="bold"
+            android:textSize="18dp" />
+
+        <Button
+            android:id="@+id/button_otp_check"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Submit"
+            android:layout_below="@+id/button_otp_resend"
+            android:background="@color/colorYellow"
+            android:textStyle="bold"
+
+            android:textSize="18dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

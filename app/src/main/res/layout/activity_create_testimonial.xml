@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".testimonial.CreateTestimonialActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/common_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+
+        >
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:popupTheme="@style/popUpTheme">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="50dp"
+                        android:clickable="true"
+                        android:id="@+id/ic_back"
+                        android:src="@drawable/back_icon"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        />
+
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:clickable="true"
+                        android:id="@+id/image_view_title"
+                        android:src="@drawable/logo"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/ic_back"
+                        />
+
+
+
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:text="Submit Testimonial"
+        android:gravity="left"
+        android:layout_margin="10dp"
+        android:textSize="16dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/common_header"
+        >
+
+    </TextView>
+
+
+    <ScrollView
+        android:layout_below="@+id/tv_head"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <RelativeLayout
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="left|top">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/user_img_view"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/customer"/>
+
+                    <ImageView
+                        android:id="@+id/capture_image_view"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="5dp"
+                        android:adjustViewBounds="true"
+                        android:padding="5dp"
+                        android:background="@drawable/circle_shape"
+                        android:src="@android:drawable/ic_menu_camera"/>
+
+                </RelativeLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <EditText
+                        android:id="@+id/title_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:hint="Title *"
+                        android:inputType="textCapSentences|textMultiLine|textAutoCorrect"
+                        android:maxLines="50"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_layout6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <EditText
+                        android:id="@+id/description_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:hint="Description"
+                        android:inputType="textCapSentences|textMultiLine|textAutoCorrect"
+                        android:maxLines="80"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_capture_image12"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="12dp"
+                        android:padding="4dp"
+                        android:hint="Capture Image"
+                        android:background="@drawable/shape_line"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="15dp"/>
+
+                    <ImageView
+                        android:id="@+id/user_img_view12"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/submit_btn"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="Submit"
+                    android:textColor="#fff"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp" />
+
+
+            </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

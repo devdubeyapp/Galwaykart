@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1"
+    android:layout_margin="10dp"
+    android:elevation="10dp"
+    app:layout_constraintCircleRadius="10dp"
+    >
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_dialog"
+        android:text="Enter Qty"
+        android:textSize="17dp"
+        android:layout_weight="1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/colorPrimaryDark"
+
+        />
+
+    <EditText
+        android:id="@+id/edit_qty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/colorWhite"
+        android:stretchColumns="*"
+        >
+
+        <TableRow >
+            <TextView
+                android:id="@+id/tv_add_to_cart"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update"
+                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:gravity="center"
+
+                android:clickable="true"
+                android:background="@drawable/roundtextbtn_addcart"
+                />
+
+            <TextView
+                android:id="@+id/tv_cancel_cart"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Cancel"
+                android:textColor="@color/black"
+                android:textSize="17dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:letterSpacing="0.09"
+                android:clickable="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/roundtextbtn_addcart"
+                />
+
+        </TableRow>
+
+    </TableLayout>
+
+
+
+</LinearLayout>

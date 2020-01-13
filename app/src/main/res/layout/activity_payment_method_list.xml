@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    >
+
+    <LinearLayout
+        android:id="@+id/rltosp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/profile_box_style"
+        android:elevation="3dp"
+        android:padding="10dp">
+
+
+        <ProgressBar
+            android:id="@+id/uploadProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/textpayment_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/imageView_Item"
+            android:fontFamily="ARLRDBD"
+            android:text="Item Name"
+            android:textColor="@color/text"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+
+        <Button
+            android:id="@+id/btSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/textView_qty"
+            android:layout_marginTop="10dp"
+
+            android:background="@drawable/border"
+            android:text="Select"
+            android:onClick="openPayment"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "968191855550",
+    "firebase_url": "https://galwaykart.firebaseio.com",
+    "project_id": "galwaykart",
+    "storage_bucket": "galwaykart.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968191855550:android:cb1a53af964cc24a",
+        "android_client_info": {
+          "package_name": "com.galwaykart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968191855550-ufcitbhp8m5ijihhn3dp8luo1ifrl3p9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.galwaykart",
+            "certificate_hash": "4be90ca1ef32626406489c63d4351fbf466a4a5e"
+          }
+        },
+        {
+          "client_id": "968191855550-v0g6rok341hqnqlui60a3g3jga98r7qs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.galwaykart",
+            "certificate_hash": "45aa8e6bd727be195f4421b53572fc3319ff5c45"
+          }
+        },
+        {
+          "client_id": "968191855550-m19rpom4si3h1hkjn3i00eh5p060f4dq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsCOXKgUmiGCDaltrFtQWHVHiWXZDXEL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968191855550-m19rpom4si3h1hkjn3i00eh5p060f4dq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "968191855550-kjm9ruvggoa3ddbvnub8qe86897qc29g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.galwaykart"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

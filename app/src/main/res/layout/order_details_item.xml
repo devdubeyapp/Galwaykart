@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rel_lay1"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="@drawable/background_img_style"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:elevation="3dp"
+
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+       <ImageView
+           android:layout_width="150dp"
+           android:layout_height="150dp"
+           android:id="@+id/img_view_ordered_product"
+           android:background="@drawable/blank"
+           android:layout_marginTop="10dp"
+           android:src="@drawable/blank"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Name - Product id"
+            android:id="@+id/product_name_id"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/img_view_ordered_product"
+            />
+
+        <TextView
+            android:id="@+id/total_product_qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_view_ordered_product"
+            android:layout_below="@+id/product_name_id"
+            android:layout_marginLeft="10dp"
+            android:text="Total qty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Amount : ₹"
+            android:id="@+id/total_product_amt"
+            android:layout_marginLeft="10dp"
+
+            android:layout_toRightOf="@+id/img_view_ordered_product"
+            android:layout_below="@+id/total_product_qty"
+            />
+
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/check_for_return_req"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Return"
+            android:visibility="gone"
+
+            android:layout_toRightOf="@+id/img_view_ordered_product"
+            android:layout_below="@+id/total_product_amt"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Return Qty : 25"
+            android:id="@+id/return_qty_req"
+            android:layout_marginLeft="10dp"
+            android:textSize="16dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:layout_toLeftOf="@+id/bt_edit_qty_icon"
+            android:layout_above="@+id/order_date_time"
+            />
+
+        <Button
+
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/bt_edit_qty_icon"
+            android:background="@drawable/edit_icn"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:layout_above="@+id/order_date_time"
+            />
+
+        <Button
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bt_track_order"
+            android:text="Track Order "
+            android:drawableLeft="@drawable/track"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="2dp"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14dp"
+            android:background="@color/colorwhite"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/order_date_time"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="2017-07-06 12:24:31"/>
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

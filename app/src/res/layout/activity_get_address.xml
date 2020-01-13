@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Get Location"
+            android:id="@+id/btn_get_address"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_get_address"
+            android:text="Address"
+            android:textSize="18dp"
+            android:layout_margin="10dp"
+            android:id="@+id/tv_address"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_address"
+            android:text="Street"
+            android:textSize="18dp"
+            android:layout_margin="10dp"
+            android:id="@+id/tv_street"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_street"
+            android:text="PIN"
+            android:textSize="18dp"
+            android:layout_margin="10dp"
+            android:id="@+id/tv_pin"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_pin"
+            android:text="City"
+            android:textSize="18dp"
+            android:layout_margin="10dp"
+            android:id="@+id/tv_city"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

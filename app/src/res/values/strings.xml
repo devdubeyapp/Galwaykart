@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">GalwayKart</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="higlights"><u><b>HIGHLIGHTS</b></u></string>
+    <string name="rOrder"><u>Return Order</u></string>
+    <string name="trackOrder"><u>Track Order</u></string>
+    <string name="ewallet"><u>E-wallet</u></string>
+    <string name="WishlistList"><u>WishList</u></string>
+    <string name="Wishlist"><u>Add to Wishlist</u></string>
+    <string name="Share"><u>Share</u></string>
+    <string name="supra"><b>SUPRA WOOD</b></string>
+    <string name="price"><b>$ 114</b></string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_net_banking">NetBankingActivity</string>
+    <string name="title_activity_cash_card">CashCardActivity</string>
+    <string name="title_activity_emi">EmiActivity</string>
+    <string name="title_activity_card">CardActivity</string>
+    <string name="title_activity_user_cards">UserCardsActivity</string>
+    <string name="title_activity_payments">PaymentsActivity</string>
+    <string name="pay_now">Pay</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="click_here">Click here</string>
+    <string name="if_cvv_and_expiry_on_card"> &#160;if you have CVV and Expiry on your card</string>
+    <string name="if_dont_cvv_and_expiry_on_card"> &#160;if you don\'t have CVV and Expiry on your card</string>
+    <string name="net_banking">Net Banking</string>
+    <string name="title_activity_merchant_payment">MerchantPaymentActivity</string>
+    <string name="title_activity_verify_api">VerifyApiActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <!--<string name="hello_blank_fragment">Hello blank fragment</string>-->
+
+    <string name="recent_item">Recently View Item</string>
+
+
+    <string name="test">Test</string>
+    <string name="production">Production</string>
+
+    <string-array name="environment_array">
+        <item>@string/production</item>
+        <item>@string/test</item>
+        <!--<item>@string/production</item>-->
+
+    </string-array>
+
+    <string name="use_live_key_in_production_environment">Please use your live merchant key in production environment</string>
+    <string name="could_not_receive_data">Could not receive data</string>
+
+    <string name="enter_pin">Enter Pincode</string>
+    <string name="enter_coupon">Enter Coupon</string>
+    <string name="freshchat_file_provider_authority">com.galwaykart.provider</string>
+
+</resources>

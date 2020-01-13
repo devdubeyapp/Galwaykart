@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:id="@+id/rel_1">
+
+        <RelativeLayout
+            android:id="@+id/common_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+
+            >
+
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    android:elevation="4dp"
+                    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                    app:popupTheme="@style/popUpTheme">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="50dp"
+                            android:clickable="true"
+                            android:id="@+id/ic_back"
+                            android:src="@drawable/back_icon"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="10dp"
+                            />
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:clickable="true"
+                            android:id="@+id/image_view_title"
+                            android:src="@drawable/logo"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@+id/ic_back"
+                            />
+
+
+
+                    </RelativeLayout>
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+        </RelativeLayout>
+
+
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_below="@+id/common_header"
+    android:layout_height="match_parent">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registration"
+        android:gravity="center"
+        android:id="@+id/tv_title"
+        android:textStyle="bold"
+        android:textSize="22dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/underline"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/tv_title"
+        android:background="@color/colorPrimaryDark"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlayout_msg"
+       android:layout_margin="5dp"
+        android:padding="5dp"
+        android:visibility="gone"
+        android:background="@color/colorPrimary"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/password_instruction_text"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:visibility="gone"
+            android:textColor="@color/colorSub"
+            android:id="@+id/tv_title_text"
+            />
+
+        <ImageView
+
+            android:id="@+id/iv_close_instruction"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/close"
+            android:background="@drawable/blank"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/password_instruction"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:visibility="gone"
+            android:textColor="@color/colorYellow"
+            android:layout_below="@+id/tv_title_text"
+
+            />
+
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scroll_view2"
+        android:layout_below="@+id/underline"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rel_layout_main"
+            android:layout_below="@+id/underline">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rel_layout1"
+        >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:text="Customer Type *"
+        android:id="@+id/tv_customer_type"
+        android:visibility="gone"
+        android:textSize="16dp"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/tv_customer_type"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/black"
+        style="@style/spinner_style"
+        android:id="@+id/spinner_customer_type"
+        android:layout_marginTop="5dp"
+
+        />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rel_layout2"
+        android:layout_below="@+id/rel_layout1"
+
+        >
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+           >
+
+            <EditText
+                android:id="@+id/first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:hint="First Name *"
+                android:inputType="textPersonName"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/text_input_layout1"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name *"
+                android:inputType="textPersonName"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/last_name"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/text_input_layout8"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email ID *"
+                android:inputType="textEmailAddress"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/email"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/text_input_layout2"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone No *"
+                android:inputType="number"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+
+                android:maxLength="10"
+                android:id="@+id/phone_no"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/text_input_layout3"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password *"
+                android:inputType="textPassword"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/password"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/text_input_layout4"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm Password *"
+                android:inputType="textPassword"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/confirm_password"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/text_input_layout5"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Distributor Id (optional)"
+                android:maxLength="8"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/ed_dist_id"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+<!--
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/text_input_layout5"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address *"
+                android:inputType="text"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/address"
+
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/text_input_layout9"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="City *"
+                android:inputType="text"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/city"
+
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/text_input_layout10"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="State *"
+                android:inputType="text"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/state"
+
+                />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_layout12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/text_input_layout11"
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="District *"
+                android:inputType="text"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/district"
+
+                />
+
+        </android.support.design.widget.TextInputLayout>
+        -->
+
+
+        <Button
+            android:id="@+id/button_sign_up"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:background="@color/colorPrimaryDark"
+            android:text="Next"
+            android:textColor="#fff"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@+id/text_input_layout9"
+            />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rel_layout3"
+        android:visibility="gone"
+        android:layout_below="@+id/rel_layout2"
+        >
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Distributor ID"
+                android:inputType="textCapCharacters"
+                android:maxLength="8"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/dist_id"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+
+            android:id="@+id/button_proceed"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:background="@color/colorPrimaryDark"
+            android:text="Proceed"
+            android:textColor="#fff"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@+id/text_input_layout6"
+
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rel_layout4"
+        android:visibility="gone"
+
+        android:layout_below="@+id/rel_layout3">
+
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radio_otp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OTP"
+                android:checked="true"
+                />
+
+            <RadioButton
+                android:id="@+id/radio_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IR Gateway Password"
+
+                />
+
+        </RadioGroup>
+
+
+        <!--otp validition-->
+        <RelativeLayout
+            android:id="@+id/relativeLayout_otp_valid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_below="@+id/radioGroup">
+
+            <TextView
+                android:id="@+id/tverror"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="10dp"
+
+                android:text=""
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/red"
+
+
+                />
+
+            <TextView
+                android:id="@+id/tvotpno"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textSize="15dp"
+                android:text="OTP"
+                android:textColor="@color/colorPrimary"
+                android:layout_below="@+id/tverror"
+                android:layout_weight="1"
+
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                />
+            <ImageView
+                android:id="@+id/iv_info"
+                app:srcCompat="@drawable/icon_info"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/tverror"
+                android:layout_toRightOf="@+id/tvotpno"
+                android:clickable="true"
+                />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OTP has been sent to your registered Mobile Number!!!"
+            android:layout_margin="5dp"
+            android:id="@+id/tv_alert"
+            android:layout_marginLeft="10dp"
+            android:textSize="14sp"
+            android:layout_below="@+id/tvotpno"
+
+            />
+
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/tv_alert"
+
+            >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="OTP"
+                android:inputType="text"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:id="@+id/otp"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+
+            android:id="@+id/button_get_otp"
+            style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:background="@color/colorPrimaryDark"
+            android:text="Resend OTP"
+            android:textColor="#fff"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@+id/text_input_layout7"
+            />
+
+        <Button
+
+            android:id="@+id/button_Submit"
+            style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:background="@color/colorPrimaryDark"
+            android:text="Submit"
+            android:textColor="#fff"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@+id/text_input_layout7"
+            android:layout_toRightOf="@+id/button_get_otp"
+            />
+        </RelativeLayout>
+
+        <!--IR Gateway password validation-->
+        <RelativeLayout
+            android:id="@+id/relativeLayout_irgateway_valid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_below="@+id/radioGroup">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please enter your IR Gateway password to proceed"
+                android:layout_margin="5dp"
+                android:id="@+id/tv_alert_2"
+                android:layout_marginLeft="10dp"
+                android:textSize="14sp"
+
+                />
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout_irgatewaypassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_below="@+id/tv_alert_2"
+
+                >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="IR Gateway Password"
+                    android:inputType="text"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:id="@+id/ed_ir_gateway_password"
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Button
+
+                android:id="@+id/button_IR_Gateway_Submit"
+                style="?android:textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold"
+                android:background="@color/colorPrimaryDark"
+                android:text="Submit"
+                android:textColor="#fff"
+                android:layout_marginBottom="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_below="@+id/text_input_layout_irgatewaypassword"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    </ScrollView>
+
+
+
+</RelativeLayout>
+
+    </RelativeLayout>
+
+        <!--<android.support.design.widget.NavigationView-->
+        <!--android:id="@+id/nav_view"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="start"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--app:headerLayout="@layout/nav_header_home_page"-->
+        <!--app:menu="@menu/activity_home_page_drawer" />-->
+
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>

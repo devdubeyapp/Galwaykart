@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/homeicon"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_order"
+            android:icon="@drawable/your_order"
+            android:title="Your Orders" />
+
+        <item
+            android:id="@+id/return_order"
+            android:icon="@drawable/your_order"
+            android:title="@string/rOrder" />
+
+
+        <item
+            android:id="@+id/nav_wishlist"
+            android:icon="@drawable/icon_heart"
+            android:title="@string/WishlistList" />
+
+
+
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/logouticon"
+            android:title="Notification" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/logouticon"
+            android:title="Logout" />
+
+
+        <!--<item-->
+            <!--android:id="@+id/nav_manage"-->
+            <!--android:icon="@drawable/ic_menu_manage"-->
+            <!--android:title="Tools" />-->
+    </group>
+
+
+    <item android:title="Profile">
+        <menu>
+
+            <item
+                android:id="@+id/change_pwd"
+                android:icon="@drawable/ic_change_pwd"
+                android:title="Change Password" />
+
+            <item
+                android:id="@+id/nav_change_email"
+                android:icon="@drawable/ic_change_pwd"
+                android:title="Change Email" />
+
+            <item
+                android:id="@+id/nav_change_mobile"
+                android:icon="@drawable/ic_change_pwd"
+                android:title="Change Mobile" />
+
+            <item
+                android:id="@+id/address_book"
+                android:icon="@drawable/address_book"
+                android:title="Address Book" />
+
+            <item
+                android:id="@+id/nav_ewallet"
+                android:icon="@drawable/icon_wallet"
+                android:title="@string/ewallet" />
+
+        </menu>
+    </item>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/customerlearningPoint"
+                android:icon="@drawable/lawicon"
+                android:title="Customer Help Desk" />
+            <item
+                android:id="@+id/legalabout"
+                android:icon="@drawable/lawicon"
+                android:title="Legal and About" />
+            <item
+                android:id="@+id/version"
+                android:icon="@drawable/lawicon"
+                android:title="Verion - 9.6" />
+        </menu>
+    </item>
+
+
+
+</menu>

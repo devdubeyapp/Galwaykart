@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.galwaykart.HomePageActivity"
+    tools:showIn="@layout/app_bar_home_page"
+    android:orientation="vertical"
+    android:background="#ffffff">
+
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:visibility="gone"
+
+
+        >
+
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+
+        <!--&lt;!&ndash;<TableLayout&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginTop="10dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:weightSum="1">&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<TableRow&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content">&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<com.synnapps.carouselview.CarouselView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/carouselView"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="145dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;app:fillColor="#FFFFFFFF"&ndash;&gt;-->
+                <!--&lt;!&ndash;app:pageColor="#00000000"&ndash;&gt;-->
+                <!--&lt;!&ndash;app:radius="6dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;app:slideInterval="3000"&ndash;&gt;-->
+                <!--&lt;!&ndash;app:strokeColor="#FF777777"&ndash;&gt;-->
+                <!--&lt;!&ndash;app:strokeWidth="1dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:fitsSystemWindows="true"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+
+                <!--&lt;!&ndash;/>&ndash;&gt;-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_CustomerName"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="Welcome"-->
+                <!--android:visibility="gone"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textSize="14dp" />-->
+
+
+
+            <!--<android.support.v4.view.ViewPager-->
+                    <!--android:id="@+id/pager_view_banner"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="170dp"-->
+                    <!--android:scrollIndicators="right"-->
+                    <!--android:layout_marginTop="10dp"-->
+                         <!--android:visibility="gone"-->
+                    <!--android:layout_below="@+id/tv_CustomerName"-->
+                    <!--android:layout_weight="1">-->
+
+                <!--</android.support.v4.view.ViewPager>-->
+
+
+            <!--</TableRow>-->
+
+            <!--User Name:-->
+
+            <!--<TableRow-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+
+                <!--&gt;-->
+
+
+
+            <!--</TableRow>-->
+
+
+            <!--<TableRow-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="15dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvCategoryHead"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text=""-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:textColor="@color/colorPrimary"-->
+                    <!--android:textSize="15dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:layout_below="@+id/pager_view_banner"-->
+
+                    <!--/>-->
+
+            <!--</TableRow>-->
+
+
+            <!--<TableRow-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+
+                <!--android:layout_marginTop="10dp">-->
+
+                <!--<ProgressBar-->
+                    <!--android:id="@+id/progress_bar"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/tvCategoryHead"-->
+                    <!--/>-->
+
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:id="@+id/recyclerView_Category"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="0dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_below="@+id/tvCategoryHead"-->
+                    <!--/>-->
+
+
+            <!--&lt;!&ndash;</TableRow>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<TableRow&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+
+                <!--&lt;!&ndash;&gt;&ndash;&gt;-->
+
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvProductHead"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+
+                    <!--android:layout_weight="1"-->
+                    <!--android:text=""-->
+                    <!--android:layout_below="@+id/recyclerView_Category"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:textColor="@color/colorPrimary"-->
+                    <!--android:textSize="15dp"-->
+                    <!--android:textStyle="bold" />-->
+            <!--&lt;!&ndash;</TableRow>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<TableRow&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_marginTop="10dp">&ndash;&gt;-->
+
+
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:id="@+id/recyclerView_Product"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="2dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:scrollbars="vertical"-->
+                    <!--android:layout_below="@+id/tvProductHead"-->
+                    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+
+        <!--</RelativeLayout>-->
+            <!--&lt;!&ndash;</TableRow>&ndash;&gt;-->
+
+
+        <!--&lt;!&ndash;</TableLayout>&ndash;&gt;-->
+
+    </ScrollView>
+
+
+
+    <!--<com.synnapps.carouselview.CarouselView-->
+        <!--android:id="@+id/carouselView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="145dp"-->
+        <!--app:fillColor="#FFFFFFFF"-->
+        <!--app:pageColor="#00000000"-->
+        <!--app:radius="6dp"-->
+        <!--app:slideInterval="3000"-->
+        <!--app:strokeColor="#FF777777"-->
+        <!--app:strokeWidth="1dp"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:visibility="gone"-->
+
+        <!--/>-->
+
+    <androidx.viewpager.widget.ViewPager
+    android:id="@+id/pager_view_bannerss"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:scrollIndicators="right"
+    android:layout_marginTop="10dp"
+    android:layout_weight="1"
+     >
+
+    </androidx.viewpager.widget.ViewPager>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?actionBarSize"
+        app:tabGravity="fill"
+        android:layout_below="@+id/pager_view_bannerss"
+        app:tabIndicatorColor="@color/colorAccent"
+        app:tabIndicatorHeight="4dp"
+        app:tabTextColor="@color/colorYellow"
+        app:tabSelectedTextColor="@color/colorGolden"
+        app:tabBackground="@color/colorPrimary"
+        app:tabMode="fixed">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabShopByCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shop by Category" />
+
+          <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabTopProducts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top Products" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabTopCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Brands" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabOffer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Offer" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabLayoutss">
+
+    </androidx.viewpager.widget.ViewPager>
+
+
+
+
+    <ImageView
+    android:id="@+id/float_hchat_button"
+    android:layout_width="51dp"
+    android:layout_height="51dp"
+    android:layout_above="@+id/float_offer_button"
+    android:layout_alignParentRight="true"
+    android:layout_margin="10dp"
+    android:clickable="true"
+    android:src="@drawable/freshchat"
+    android:layout_alignParentBottom="true"
+
+    />
+
+
+<ImageView
+    android:id="@+id/float_offer_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+
+    android:layout_alignParentRight="true"
+    android:layout_margin="10dp"
+    android:clickable="true"
+    android:src="@drawable/offer_icon"
+    android:visibility="gone"
+    />
+
+
+
+</RelativeLayout>

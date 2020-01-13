@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rltosp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/profile_box_style"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+
+        <TextView
+            android:id="@+id/text_Customer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="ARLRDBD"
+            android:text="Item Name"
+            android:textColor="@color/text"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/text_Company_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/text_Customer_name"
+            android:fontFamily="ARLRDBD"
+            android:text="Company Name"
+            android:textColor="@color/text"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/text_Street_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/text_Company_name"
+            android:fontFamily="ARLRDBD"
+            android:text="Street Address"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/text_City_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/text_Street_name"
+            android:fontFamily="ARLRDBD"
+            android:text="City Name"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/text_Region_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/text_City_name"
+            android:fontFamily="ARLRDBD"
+            android:text="region Name"
+            android:visibility="gone"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/text_Pincode_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/text_Region_name"
+            android:fontFamily="ARLRDBD"
+            android:text="Pincode Name"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+
+        <TextView
+            android:id="@+id/text_Telephone_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/text_Pincode_name"
+            android:fontFamily="ARLRDBD"
+            android:text="telephone"
+            android:textColor="@color/text"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/bt_Edit_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_Telephone_name"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/border"
+
+            android:text="Edit Address" />
+
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/popUpTheme">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:clickable="true"
+            android:id="@+id/image_view_title"
+            android:src="@drawable/logo"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="5dp"
+            />
+
+            <TextView
+                android:id="@+id/cart_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="0.2"
+                android:background="@drawable/cart"
+                android:gravity="center_vertical|center_horizontal"
+                android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="0"
+                android:textColor="@color/colorwhite"
+                android:textSize="13dp"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true"
+
+                />
+
+
+            <ProgressBar
+                android:layout_width="35dp"
+                android:layout_height="30dp"
+                android:id="@+id/cart_progressBar"
+                android:gravity="center_vertical|center_horizontal"
+                android:paddingBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+
+                />
+
+        <!--<Button-->
+            <!--android:layout_width="90dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:clickable="true"-->
+            <!--android:id="@+id/cart_icon"-->
+            <!--android:drawableRight="@drawable/kart_icon"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:paddingBottom="5dp"-->
+            <!--android:background="@drawable/blank"-->
+            <!--android:paddingRight="30dp"-->
+            <!--android:textAlignment="textEnd"-->
+            <!--android:text="2"-->
+            <!--/>-->
+
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

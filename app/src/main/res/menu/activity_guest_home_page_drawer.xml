@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/homeicon"
+            android:title="Home" />
+
+
+<menu>
+        <item
+            android:id="@+id/nav_Login"
+            android:icon="@drawable/logouticon"
+            android:title="Login" />
+
+    <item
+        android:id="@+id/nav_reg"
+        android:icon="@drawable/logouticon"
+        android:title="Registration" />
+
+    <item
+        android:id="@+id/nav_guest_Notice"
+        android:icon="@drawable/lawicon"
+        android:title="Notification" />
+
+
+    <item
+        android:id="@+id/nav_testimonial"
+        android:icon="@drawable/icon_testimonial"
+        android:title="Testimonial" />
+
+
+    <item
+        android:id="@+id/nav_notice"
+        android:icon="@drawable/icon_news"
+        android:title="News" />
+
+</menu>
+        <!--<item-->
+            <!--android:id="@+id/nav_manage"-->
+            <!--android:icon="@drawable/ic_menu_manage"-->
+            <!--android:title="Tools" />-->
+    </group>
+
+
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/customerlearningPoint"
+                android:icon="@drawable/lawicon"
+                android:title="Customer Help Desk" />
+            <item
+                android:id="@+id/legalabout"
+                android:icon="@drawable/lawicon"
+                android:title="Legal and About" />
+
+            <item
+                android:id="@+id/other_glaze_app"
+                android:icon="@drawable/ic_similar_app"
+                android:title="Other Galway App" />
+
+            <item
+                android:id="@+id/version"
+                android:icon="@drawable/lawicon"
+                android:title="Verion" />
+
+        </menu>
+    </item>
+
+
+
+</menu>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="productDetails"
+            type="com.galwaykart.dbfiles.ProductDataModel" />
+
+    </data>
+
+
+<androidx.drawerlayout.widget.DrawerLayout
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    >
+
+
+    <LinearLayout
+        android:id="@+id/common_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:id="@+id/common_header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+
+            >
+
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/AppTheme.AppBarOverlay">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    android:elevation="4dp"
+                    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                    app:popupTheme="@style/popUpTheme">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="50dp"
+                            android:clickable="true"
+                            android:id="@+id/ic_back"
+                            android:src="@drawable/back_icon"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="10dp"
+                            />
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="50dp"
+                            android:clickable="true"
+                            android:id="@+id/image_view_title"
+                            android:src="@drawable/logo"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@+id/ic_back"
+                            />
+
+
+
+                    </RelativeLayout>
+                </androidx.appcompat.widget.Toolbar>
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+        </RelativeLayout>
+
+
+        <!--<RelativeLayout-->
+               <!--android:layout_width="match_parent"-->
+               <!--android:layout_height="wrap_content"-->
+               <!--android:layout_marginTop="10dp"-->
+               <!--&gt;-->
+           <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_category_view"
+            android:text="@{productDetails.p_category_name}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"
+            />
+
+        <ImageView
+            android:id="@+id/img_cat_banner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollIndicators="right"
+            android:visibility="gone"
+            android:layout_marginTop="2dp"
+            >
+
+        </ImageView>
+
+           <!--</RelativeLayout>-->
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_alert"
+            android:text="No Products Available"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:visibility="gone"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/border"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            >
+
+        <Spinner
+            android:id="@+id/spinner_sorting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/common_header">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:fillViewport="true"
+    android:id="@+id/scroll_view_banner">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    <ImageView
+                android:id="@+id/img_cat_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollIndicators="right"
+
+                android:layout_marginTop="2dp"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:layout_margin="5dp"
+                android:layout_below="@+id/img_cat_banner"
+                android:layoutAnimation="@anim/layout_animation_right_to_left"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+</RelativeLayout>
+
+</ScrollView>
+        </RelativeLayout>
+
+
+
+</RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+
+        app:headerLayout="@layout/nav_header_home_page"
+        app:menu="@menu/activity_home_page_drawer" >
+
+    <ExpandableListView
+        android:id="@+id/expandableListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/nav_header_height"
+        android:background="@android:color/white"
+        android:dividerHeight="1dp"
+        android:layoutDirection="rtl"
+        android:groupIndicator="@drawable/store_info_expandabellist_indicator"
+        />
+
+    </com.google.android.material.navigation.NavigationView>
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
+</layout>
