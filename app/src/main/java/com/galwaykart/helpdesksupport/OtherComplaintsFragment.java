@@ -175,7 +175,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
     void Init() {
 
 
-        jsonOrderDetails();
+
 
         str_qty_array = new ArrayList<String>();
         str_resolution_array = new ArrayList<String>();
@@ -198,6 +198,8 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         capture_image6.setOnClickListener(this);
 
         tv_compaint_submit.setOnClickListener(this);
+
+        jsonOrderDetails();
     }
 
     @Override
@@ -1251,14 +1253,17 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
 
                 stProductData = "{\"qty\":"+str_qty_array.get(i)+"," +
                         "\"resolution\":"+str_resolution_array.get(i)+"," +
+                        "\"order_qty\":"+str_qty_array.get(i)+"," +
                         "\"reason\":"+str_reason_array.get(i)+"," +
                         "\"condition\":"+str_condition_array.get(i)+"," +
                         "\"orderItemId\":"+str_item_id_array.get(i)+"}";
 
             }
-            else{
+            else
+                {
                 stProductData = stProductData+","+"{\"qty\":"+str_qty_array.get(i)+"," +
                         "\"resolution\":"+str_resolution_array.get(i)+"," +
+                        "\"order_qty\":"+str_qty_array.get(i)+"," +
                         "\"reason\":"+str_reason_array.get(i)+"," +
                         "\"condition\":"+str_condition_array.get(i)+"," +
                         "\"orderItemId\":"+str_item_id_array.get(i)+"}";

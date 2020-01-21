@@ -240,7 +240,9 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
                         public void onErrorResponse(VolleyError error) {
                             if (pDialog.isShowing())
                                 pDialog.dismiss();
-                            Log.e("error_re",error.getMessage());
+
+                            CommonFun.showVolleyException(error,ComplaintDetailActivity.this);
+                           // Log.e("error_re",error.getMessage());
 
                         }
                     }) {

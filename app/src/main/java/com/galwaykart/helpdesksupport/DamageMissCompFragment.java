@@ -236,6 +236,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                             if(all_check.equals("")){
                                 all_check="{\"qty\":" +model.getReturn_qty_req()+
                                         ",\"resolution\":" + str_complaint_category_id+
+                                        ",\"order_qty\":" + model.getQty_ordered()+
                                         ",\"reason\":" + str_complaint_category_id+
                                         ",\"condition\":" +str_complaint_category_id+
                                         ",\"orderItemId\":" +model.getProduct_id()+
@@ -245,12 +246,13 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                             {
                                 all_check=all_check+",{\"qty\":" +model.getReturn_qty_req()+
                                         ",\"resolution\":" + str_complaint_category_id+
+                                        ",\"order_qty\":" + model.getQty_ordered()+
                                         ",\"reason\":" + str_complaint_category_id+
                                         ",\"condition\":" +str_complaint_category_id+
                                         ",\"orderItemId\":" +model.getProduct_id()+
                                         "}";
 
-                                Log.e("reture_qty", model.getReturn_qty_req());
+
                             }
 
                         }

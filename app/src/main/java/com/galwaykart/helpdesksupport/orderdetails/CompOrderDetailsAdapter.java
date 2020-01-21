@@ -86,7 +86,6 @@ public class CompOrderDetailsAdapter extends RecyclerView.Adapter<CompOrderDetai
         holder.tv_qty_ordered1.setText(complaintOrderDetailModelList.get(position).getQty_ordered());
         holder.total_product_amt.setText("Price: "+ complaintOrderDetailModelList.get(position).getProduct_price());
 
-
         holder.check_mark.setChecked(complaintModel.getCheck_for_return_req());
         holder.check_mark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -113,7 +112,6 @@ public class CompOrderDetailsAdapter extends RecyclerView.Adapter<CompOrderDetai
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                str_qty_request = parent.getItemAtPosition(position).toString();
                 str_qty_request = parent.getItemAtPosition(position).toString();
                 complaintModel.setReturn_qty_req(str_qty_request);
 

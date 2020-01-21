@@ -2,6 +2,7 @@ package com.galwaykart.profile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.galwaykart.R;
+import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.helpdesksupport.CMSMainActivity;
 
 import java.text.ParseException;
@@ -105,12 +107,32 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             @Override
             public void onClick(View v) {
 
+
+                String selected_order_id = orderListModels.get(position).getOrderid();
+                String selected_order_status = orderListModels.get(position).getStatus();
+                String selected_order_total =orderListModels.get(position).getSubtotal();
+
+
+                SharedPreferences pref=CommonFun.getPreferences(context);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("st_status",selected_order_status);
+                editor.putString("Order_ID",selected_order_id);
+                // editor.putString("selected_order_rtn",selected_order_rtn);
+                editor.putString("entity_id",orderListModels.get(position).getEntity_id());
+
+                editor.putString("selected_order_total",selected_order_total);
+
+                editor.commit();
+
+
                 Intent other_detal_intent = new Intent(context, OrderDetails.class);
                 other_detal_intent.putExtra("entity_id",orderListModels.get(position).getEntity_id());
                 other_detal_intent.putExtra("order_id",orderListModels.get(position).getOrderid());
                 Log.e("entity_id_or_list_adp", orderListModels.get(position).getEntity_id());
                 Log.e("order_id_or_list_adp", orderListModels.get(position).getOrderid());
+
                 context.startActivity(other_detal_intent);
+
 
             }
         });
