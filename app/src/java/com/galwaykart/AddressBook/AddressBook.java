@@ -295,7 +295,9 @@ public class AddressBook extends BaseActivity{
 
         pDialog = new TransparentProgressDialog(AddressBook.this);
         pDialog.setCancelable(false);
-        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT)); pDialog.show();
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        if(!isFinishing())
+            pDialog.show();
 
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url_address, null,
@@ -582,7 +584,9 @@ public class AddressBook extends BaseActivity{
         pDialog = new TransparentProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        pDialog.show();
+        if(!isFinishing())
+            pDialog.show();
+
 
         RequestQueue requestQueue_1= Volley.newRequestQueue(AddressBook.this);
 

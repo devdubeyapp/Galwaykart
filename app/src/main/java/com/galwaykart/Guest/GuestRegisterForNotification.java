@@ -162,6 +162,7 @@ public class GuestRegisterForNotification extends AppCompatActivity {
         pDialog = new TransparentProgressDialog(GuestRegisterForNotification.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        if(!isFinishing())
         pDialog.show();
 
             RequestQueue queue = Volley.newRequestQueue(this);

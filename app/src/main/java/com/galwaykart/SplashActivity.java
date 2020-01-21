@@ -938,7 +938,9 @@ public class SplashActivity extends AppCompatActivity {
         pDialog = new TransparentProgressDialog(SplashActivity.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        pDialog.show();
+        if(!isFinishing())
+            pDialog.show();
+
 
         try {
             final RequestQueue requestQueue = Volley.newRequestQueue(this);

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/main_row_lay">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="6dp"
+        android:elevation="10dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            >
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/date_tv"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:textAllCaps="false"
+                android:maxLines="1"
+                android:text="Date"
+                android:textSize="14dp"
+
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorGrayDark">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/date_tv1"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:text=""
+                android:textSize="14dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/date_tv"
+                android:textColor="@color/colorPrimaryDark"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/order_tv"
+                android:layout_alignParentTop="true"
+
+                android:textAllCaps="false"
+                android:maxLines="1"
+                android:text="Order No"
+                android:textSize="14dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/order_tv1"
+                android:textColor="@color/colorGrayDark">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/order_tv1"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:text=""
+                android:textSize="14dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/colorPrimaryDark"
+              >
+            </TextView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/support_type_tv"
+                android:layout_alignParentLeft="true"
+                android:textAllCaps="false"
+                android:maxLines="1"
+                android:text="Support Type"
+                android:textSize="14dp"
+
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorGrayDark"
+                android:layout_below="@id/date_tv">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/support_type_tv1"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:text=""
+                android:textSize="14dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_toRightOf="@+id/support_type_tv"
+                android:layout_below="@id/date_tv">
+            </TextView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ticket_no_tv"
+                android:layout_alignParentLeft="true"
+                android:textAllCaps="false"
+                android:maxLines="1"
+                android:text="Ticket No"
+                android:textSize="14dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorGrayDark"
+                android:layout_below="@+id/support_type_tv">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:id="@+id/ticket_no_tv1"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:text=""
+                android:textSize="16dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_below="@+id/support_type_tv"
+                android:layout_toRightOf="@+id/ticket_no_tv">
+            </TextView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/status_tv"
+                android:layout_alignParentLeft="true"
+                android:textAllCaps="false"
+                android:maxLines="1"
+                android:text="Status"
+                android:textSize="14dp"
+
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorGrayDark"
+                android:layout_below="@id/ticket_no_tv">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/status_tv1"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:text=""
+                android:textSize="14dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_below="@id/ticket_no_tv"
+                android:layout_toRightOf="@+id/status_tv">
+            </TextView>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/remark_tv"
+                android:layout_alignParentRight="true"
+                android:textAllCaps="false"
+                android:maxLines="1"
+                android:text="Remark"
+                android:textSize="14dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/colorGrayDark"
+                android:visibility="gone"
+                android:layout_below="@+id/ticket_no_tv1">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:id="@+id/remark_tv1"
+                android:textAllCaps="true"
+                android:maxLines="1"
+                android:text="Item is Sort"
+                android:visibility="gone"
+                android:textSize="14dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_below="@+id/remark_tv">
+            </TextView>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</LinearLayout>

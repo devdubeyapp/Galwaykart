@@ -418,9 +418,11 @@ public class CartItemList extends BaseActivity {
             pDialog = new TransparentProgressDialog(CartItemList.this);
             pDialog.setCancelable(false);
             pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            pDialog.show();
+            if(!isFinishing())
+                pDialog.show();
 
-            RequestQueue queue = Volley.newRequestQueue(this);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
             JsonObjectRequest jsObjRequest = null;
             try {
                 stringRequest = new StringRequest(Request.Method.DELETE, st_remove_coupon_url, new Response.Listener<String>() {
@@ -2464,7 +2466,9 @@ public class CartItemList extends BaseActivity {
         pDialog = new TransparentProgressDialog(CartItemList.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        pDialog.show();
+        if(!isFinishing())
+            pDialog.show();
+
 
         RequestQueue queue = Volley.newRequestQueue(this);
         final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, Global_Settings.cart_amount_api, null,

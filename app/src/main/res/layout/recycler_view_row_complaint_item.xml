@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_row_lay"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_weight="2"
+        android:padding="2dp"
+        android:elevation="2dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.3"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_product_name"
+            android:text="Product Name - Product id"
+            android:layout_marginLeft="5dp"
+            android:textStyle="bold"
+            android:textSize="13dp"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/tv_qty_request"
+            android:layout_width="0dp"
+            android:layout_weight=".7"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_product"
+            android:layout_below="@+id/tv_product_name"
+            android:layout_marginLeft="5dp"
+            android:text="Total qty" />
+
+    </LinearLayout>
+</LinearLayout>

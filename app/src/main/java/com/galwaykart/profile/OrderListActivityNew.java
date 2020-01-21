@@ -1,23 +1,23 @@
 package com.galwaykart.profile;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -35,6 +35,12 @@ import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.galwaykart.helpdesksupport.mycomplaint.MyComplaints;
+import com.galwaykart.notification.NotificationAdapter;
+import com.galwaykart.notification.NotificationListActivity;
+import com.galwaykart.notification.NotificationModel;
+import com.galwaykart.testimonial.TestimonialActivity;
+import com.galwaykart.testimonial.TestimonialAdapter;
+import com.galwaykart.testimonial.TestimonialModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -46,11 +52,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by sumitsaini on 9/26/2017.
- */
-
-public class OrderListActivity extends BaseActivity {
+public class OrderListActivityNew extends BaseActivity {
 
     private SharedPreferences pref;
     private String st_token_data="";
@@ -64,15 +66,6 @@ public class OrderListActivity extends BaseActivity {
     public OrderListAdapter orderListAdapter;
 
 
-
-
-    private void goBack(){
-        Intent intent=new Intent(this, HomePageActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        startActivity(intent);
-        CommonFun.finishscreen(this);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +89,7 @@ public class OrderListActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(OrderListActivity.this, MyComplaints.class);
+                Intent intent = new Intent(OrderListActivityNew.this, MyComplaints.class);
                 startActivity(intent);
             }
         });
@@ -107,7 +100,10 @@ public class OrderListActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-     goBack();
+        Intent intent = new Intent(OrderListActivityNew.this, HomePageActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        CommonFun.finishscreen(this);
     }
 
 
@@ -121,13 +117,13 @@ public class OrderListActivity extends BaseActivity {
         st_order_list_url=Global_Settings.api_url+"rest/V1/m-order/1/10";
         Log.d("st_order_list_url",st_order_list_url);
 
-        pDialog = new TransparentProgressDialog(OrderListActivity.this);
+        pDialog = new TransparentProgressDialog(OrderListActivityNew.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
 
         try {
-            RequestQueue requestQueue = Volley.newRequestQueue(OrderListActivity.this);
+            RequestQueue requestQueue = Volley.newRequestQueue(OrderListActivityNew.this);
             // JsonObjectRequest jsObjRequest = null;
             StringRequest stringRequest =
                     new StringRequest(Request.Method.GET, st_order_list_url,
@@ -186,7 +182,7 @@ public class OrderListActivity extends BaseActivity {
 
                                             }
 
-                                            orderListAdapter = new OrderListAdapter(OrderListActivity.this, order_list);
+                                            orderListAdapter = new OrderListAdapter(OrderListActivityNew.this, order_list);
                                             if(orderListAdapter.getItemCount()>0)
                                             {
                                                 order_list_rec_recyclerview.setVisibility(View.VISIBLE);
@@ -220,7 +216,7 @@ public class OrderListActivity extends BaseActivity {
                         public void onErrorResponse(VolleyError error) {
                             if (pDialog.isShowing())
                                 pDialog.dismiss();
-                            CommonFun.showVolleyException(error,OrderListActivity.this);
+                                CommonFun.showVolleyException(error,OrderListActivityNew.this);
 
                         }
                     }) {

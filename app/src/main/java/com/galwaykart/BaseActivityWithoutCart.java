@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 
 import com.galwaykart.address_book.CustomerAddressBook;
 import com.galwaykart.app_promo.AppPromoHome;
+import com.galwaykart.helpdesksupport.mycomplaint.MyComplaints;
 import com.galwaykart.navigationDrawer.ExpandableCustomListAdapter;
 import com.galwaykart.navigationDrawer.MenuModel;
 import com.galwaykart.newsnotice.NoticeActivity;
@@ -216,39 +217,43 @@ public class BaseActivityWithoutCart extends AppCompatActivity
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityWithoutCart.this);
-                    }else if(groupPosition==3 && childPosition == 1){
+                    }
+                    else if(groupPosition==3 && childPosition == 1){
+                        Intent intent_wishlist=new Intent(BaseActivityWithoutCart.this, MyComplaints.class);
+                        intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent_wishlist);
+                        CommonFun.finishscreen(BaseActivityWithoutCart.this);
+                    }
+                    else if(groupPosition==3 && childPosition == 2){
                         Intent intent_wishlist=new Intent(BaseActivityWithoutCart.this, CouponReportActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityWithoutCart.this);
-                    }else if(groupPosition==3 && childPosition == 2){
+                    }
+                    else if(groupPosition==3 && childPosition == 3){
                         Intent intent_wishlist=new Intent(BaseActivityWithoutCart.this, ChangeMobileActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityWithoutCart.this);
-                    }else if(groupPosition==3 && childPosition == 3){
+                    }
+                    else if(groupPosition==3 && childPosition == 4){
                         Intent intent_wishlist=new Intent(BaseActivityWithoutCart.this, ChangePasswordActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityWithoutCart.this);
-                    }else if(groupPosition==3 && childPosition == 4){
+                    }
+                    else if(groupPosition==3 && childPosition == 5){
                         Intent intent_wishlist=new Intent(BaseActivityWithoutCart.this, ChangeEmailActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityWithoutCart.this);
-                    }else if(groupPosition==3 && childPosition == 5){
-//                        SharedPreferences pref;
-//                        pref= CommonFun.getPreferences(getApplicationContext());
-//                        SharedPreferences.Editor editor = pref.edit();
-//                        editor.putString("st_come_from_update","updateaddress");
-//                        editor.commit();
-//
-//                        Intent intent = new Intent(BaseActivityWithoutCart.this, AddNewAddress.class);
-////                      intent.putExtra("st_come_from_update","updateaddress");
-//
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        startActivity(intent);
-//                        CommonFun.finishscreen(BaseActivityWithoutCart.this);
+                    }
+                    else if(groupPosition==3 && childPosition == 6){
+                        SharedPreferences pref;
+                        pref= CommonFun.getPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("st_come_from_update","updateaddress");
+                        editor.commit();
 
                         Intent intent = new Intent(BaseActivityWithoutCart.this, CustomerAddressBook.class);
                         intent.putExtra("st_come_from_update","updateaddress");
@@ -257,7 +262,8 @@ public class BaseActivityWithoutCart extends AppCompatActivity
                         startActivity(intent);
                         CommonFun.finishscreen(BaseActivityWithoutCart.this);
 
-                    }else if(groupPosition==3 && childPosition == 6){
+                    }
+                    else if(groupPosition==3 && childPosition == 7){
                         alertMsg();
                     }
                     else if(groupPosition==4 && childPosition == 0){
@@ -353,6 +359,8 @@ public class BaseActivityWithoutCart extends AppCompatActivity
         MenuModel childModel = new MenuModel("Wishlist", false, false);
         childModelsList.add(childModel);
 
+        childModel = new MenuModel("My complaint", false, false);
+        childModelsList.add(childModel);
 
         childModel = new MenuModel("Voucher Report", false, false);
         childModelsList.add(childModel);

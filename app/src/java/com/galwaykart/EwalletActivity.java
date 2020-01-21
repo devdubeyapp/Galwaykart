@@ -76,7 +76,8 @@ public class EwalletActivity extends BaseActivityWithoutCart {
         pDialog = new TransparentProgressDialog(this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        pDialog.show();
+        if(!isFinishing())
+            pDialog.show();
 
         final RequestQueue requestQueue= Volley.newRequestQueue(this);
 

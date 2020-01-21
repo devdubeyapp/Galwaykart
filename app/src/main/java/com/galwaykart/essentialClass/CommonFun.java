@@ -110,8 +110,6 @@ public class CommonFun {
 
     }
 
-
-
     public static void showVolleyException(VolleyError error,Context context){
         if (error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
             Intent intent=new Intent(context, InternetConnectivityError.class);
@@ -139,7 +137,6 @@ public class CommonFun {
             context.startActivity(intent);
         }
     }
-
 
     public static void showDialog(Context context,String msg) {
         Vibrator vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);

@@ -566,7 +566,8 @@ public class CartItemList extends BaseActivity {
         pDialog = new TransparentProgressDialog(CartItemList.this);
         pDialog.setCancelable(true);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        pDialog.show();
+        if(!isFinishing())
+         pDialog.show();
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest jsObjRequest = new StringRequest(Request.Method.GET, coupon_check_url,
@@ -962,7 +963,9 @@ public class CartItemList extends BaseActivity {
         tokenData = tokenData.replaceAll("\"", "");
         pDialog = new TransparentProgressDialog(CartItemList.this);
         pDialog.setCancelable(false);
-        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT)); pDialog.show();
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        if(!isFinishing())
+            pDialog.show();
 
         RequestQueue queue = Volley.newRequestQueue(this);
         final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, Global_Settings.cart_amount_api, null,
@@ -1110,7 +1113,8 @@ public class CartItemList extends BaseActivity {
         pDialog = new TransparentProgressDialog(CartItemList.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        pDialog.show();
+        if(!isFinishing())
+            pDialog.show();
 
         RequestQueue queue = Volley.newRequestQueue(this);
         final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url_cart_item_list, null,
@@ -1738,7 +1742,9 @@ public class CartItemList extends BaseActivity {
         pDialog = new TransparentProgressDialog(CartItemList.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        pDialog.show();
+        if(!isFinishing())
+            pDialog.show();
+
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsObjRequest = null;
@@ -1920,7 +1926,9 @@ public class CartItemList extends BaseActivity {
         pDialog = new TransparentProgressDialog(CartItemList.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        pDialog.show();
+        if(!isFinishing())
+            pDialog.show();
+
 
 
 //        final String stxt = "{\"cartItem\":{\"qty\": " + final_cart_qty + ",\"quote_id\": \"" + cart_item_quote_id + "\"}}";

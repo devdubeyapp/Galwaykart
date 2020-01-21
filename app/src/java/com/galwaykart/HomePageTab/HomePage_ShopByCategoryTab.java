@@ -440,7 +440,9 @@ public class HomePage_ShopByCategoryTab extends Fragment {
 
         // pDialog = new TransparentProgressDialog(HomePage_ShopByCategoryTab.this);
         pDialog.setCancelable(false);
-        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT)); pDialog.show();
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        if(!isFinishing())
+            pDialog.show();
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest jsObjRequest = new StringRequest(Request.Method.GET, fromurl,

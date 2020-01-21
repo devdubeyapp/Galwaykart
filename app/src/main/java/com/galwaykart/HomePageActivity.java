@@ -16,6 +16,7 @@ import com.galwaykart.address_book.CustomerAddressBook;
 import com.galwaykart.HomePageTab.DataModelHomeAPI;
 import com.galwaykart.app_promo.AppPromoHome;
 import com.galwaykart.app_promo.AppPromotion;
+import com.galwaykart.helpdesksupport.mycomplaint.MyComplaints;
 import com.galwaykart.navigationDrawer.ExpandableCustomListAdapter;
 import com.galwaykart.navigationDrawer.MenuModel;
 import com.galwaykart.newsnotice.NoticeActivity;
@@ -702,32 +703,43 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(HomePageActivity.this);
-                    }else if(groupPosition==3 && childPosition == 1){
+                    }
+                    else if(groupPosition==3 && childPosition == 1){
+                        Intent intent_wishlist=new Intent(HomePageActivity.this, MyComplaints.class);
+                        intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent_wishlist);
+                        CommonFun.finishscreen(HomePageActivity.this);
+                    }
+                    else if(groupPosition==3 && childPosition == 2){
                         Intent intent_wishlist=new Intent(HomePageActivity.this, CouponReportActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(HomePageActivity.this);
-                    }else if(groupPosition==3 && childPosition == 2){
+                    }
+                    else if(groupPosition==3 && childPosition == 3){
                         Intent intent_wishlist=new Intent(HomePageActivity.this, ChangeMobileActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(HomePageActivity.this);
-                    }else if(groupPosition==3 && childPosition == 3){
+                    }
+                    else if(groupPosition==3 && childPosition == 4){
                         Intent intent_wishlist=new Intent(HomePageActivity.this, ChangePasswordActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(HomePageActivity.this);
-                    }else if(groupPosition==3 && childPosition == 4){
+                    }
+                    else if(groupPosition==3 && childPosition == 5){
                         Intent intent_wishlist=new Intent(HomePageActivity.this, ChangeEmailActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(HomePageActivity.this);
-                    }else if(groupPosition==3 && childPosition == 5){
-//                        SharedPreferences pref;
-//                        pref= CommonFun.getPreferences(getApplicationContext());
-//                        SharedPreferences.Editor editor = pref.edit();
-//                        editor.putString("st_come_from_update","updateaddress");
-//                        editor.commit();
+                    }
+                    else if(groupPosition==3 && childPosition == 6){
+                        SharedPreferences pref;
+                        pref= CommonFun.getPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("st_come_from_update","updateaddress");
+                        editor.commit();
 
                         Intent intent = new Intent(HomePageActivity.this, CustomerAddressBook.class);
                         intent.putExtra("st_come_from_update","updateaddress");
@@ -736,7 +748,8 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                         startActivity(intent);
                         CommonFun.finishscreen(HomePageActivity.this);
 
-                    }else if(groupPosition==3 && childPosition == 6){
+                    }
+                    else if(groupPosition==3 && childPosition == 7){
                         alertMsg();
                     }
                     else if(groupPosition==4 && childPosition == 0){
@@ -792,6 +805,9 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         headerList.add(menuModel);
         List<MenuModel> childModelsList = new ArrayList<>();
         MenuModel childModel = new MenuModel("Wishlist", false, false);
+        childModelsList.add(childModel);
+
+        childModel = new MenuModel("My complaint", false, false);
         childModelsList.add(childModel);
 
         childModel = new MenuModel("Voucher Report", false, false);
@@ -1595,7 +1611,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                         //////Log.d("ERROR", "error => " + error.toString());
                         //CommonFun.alertError(context, error.toString());
 
-//                        Intent intent=new Intent(BaseActivity.this, InternetConnectivityError.class);
+//                        Intent intent=new Intent(HomePageActivity.this, InternetConnectivityError.class);
 //                        startActivity(intent);
 
                         //                       Snackbar.make(findViewById(android.R.id.content),"Unable to Fetch Cart\nCheck Your Internet Connectivity",Snackbar.LENGTH_LONG).show();

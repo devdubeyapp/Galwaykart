@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.crashlytics.android.Crashlytics;
 import com.galwaykart.R;
 import com.galwaykart.dbfiles.DatabaseHandler;
 import com.galwaykart.essentialClass.CommonFun;
@@ -76,7 +78,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
 
     SharedPreferences pref;
     int total_head_not_active=0;
-    Context context;
+    Context mContext;
     ProgressBar progress_bar_shopCategory;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,8 +91,12 @@ public class HomePage_ShopByCategoryTab extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        preferences = getActivity().getSharedPreferences("GalwayKart",MODE_PRIVATE);
 
+        mContext=getActivity();
+
+        //Crashlytics.getInstance().crash();
+        preferences = getActivity().getSharedPreferences("GalwayKart",MODE_PRIVATE);
+        pref = getActivity().getSharedPreferences("glazekartapp", MODE_PRIVATE);
 
         progress_bar_shopCategory=(ProgressBar)getActivity().findViewById(R.id.progress_bar_shopCategory);
         product_name_list = new ArrayList<String>();
@@ -115,6 +121,12 @@ public class HomePage_ShopByCategoryTab extends Fragment {
         }
 
 
+        exp_categoryListener();
+
+
+    }
+
+    private void exp_categoryListener() {
         exp_category_list.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
@@ -216,7 +228,6 @@ public class HomePage_ShopByCategoryTab extends Fragment {
         });
 
 
-
         // Listview Group expanded listener
         exp_category_list.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
@@ -239,8 +250,6 @@ public class HomePage_ShopByCategoryTab extends Fragment {
 
             }
         });
-
-
     }
 
     public int GetPixelFromDips(float pixels) {
@@ -458,13 +467,11 @@ public class HomePage_ShopByCategoryTab extends Fragment {
 
                         if(response!=null){
 
-                            pref = CommonFun.getPreferences(getActivity());
+
                             SharedPreferences.Editor editor=pref.edit();
                             editor.putString("categorydata",response);
                             editor.commit();
                             try {
-
-
 
 
                                 JSONObject jsonObj = new JSONObject(String.valueOf(response));
@@ -504,12 +511,17 @@ public class HomePage_ShopByCategoryTab extends Fragment {
 
                                         arr_category_name[data_loop] = category_name;
 
+
+
                                         ////Log.d("category", arr_category_name[data_loop]);
+
+                                        if(c.has("children_data"))
+                                        {
                                         subChildrenData = c.getJSONArray("children_data");
 
 
                                         int length_of_subcategory = subChildrenData.length();
-                                        ////Log.d("lengthofsub", String.valueOf(length_of_subcategory));
+                                        Log.d("lengthofsub", String.valueOf(length_of_subcategory));
 
                                         sub_cat_length_list.add(String.valueOf(length_of_subcategory));
                                         // ////Log.d("category", sub_cat_length_list.get(i));
@@ -534,6 +546,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
                                             ////Log.d("category id", sub_cat_get_id.get(j));
                                             //    }
                                             //dbh.addCategoryList(new CategoryList(category_name,sub_category_name,sub_category_id));
+                                        }
                                         }
                                     }
                                 }

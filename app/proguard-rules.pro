@@ -31,8 +31,8 @@
 -keepattributes Exceptions
 
 -dontwarn org.apache.lang.**
--dontwarn com.payu.payuui.**
--dontwarn com.synnapps.**
+#-dontwarn com.payu.payuui.**
+#-dontwarn com.synnapps.**
 
 ### -- Picasso --
  -dontwarn com.squareup.picasso.**
@@ -56,11 +56,11 @@
 -keep class android.net.http.** { *; }
 -keep class com.android
 
--keep class com.galwaykart.productList
+#-keep class com.galwaykart.productList
 -keep class com.galwaykart.essentialClass.TransparentProgressDialog
--keep class com.galwaykart.CAdapter.GridSpacingItemDecoration
+#-keep class com.galwaykart.CAdapter.GridSpacingItemDecoration
 
--keep class com.galwaykart.productList.RecyclerViewAdapter
+#-keep class com.galwaykart.productList.RecyclerViewAdapter
 ####Keep decoration---
 -keep class com.galwaykart.itemdecorator
 -keep public class * extends android.support.v7.widget.RecyclerView.ItemDecoration
@@ -78,10 +78,10 @@
 ####Keep design---
 -dontwarn android.support.design.**
 -keep class android.support.design.** { *; }
--keep interface android.support.design.** { *; }
--keep public class android.support.design.R$* { *; }
+#-keep interface android.support.design.** { *; }
+#-keep public class android.support.design.R$* { *; }
 
--keep public class * extends android.app.Fragment
+#-keep public class * extends android.app.Fragment
 -keep class com.synnapps.carouselview.CarouselView.** { *; }
 
 #For native methods, see #http://proguard.sourceforge.net/manual/examples.html
@@ -100,4 +100,5 @@
 
 -keepattributes JavascriptInterface
 -keepattributes *Annotation*
-
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception

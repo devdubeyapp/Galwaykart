@@ -1736,7 +1736,6 @@ private void registerUser()
         //Log.d("otp",st_text_msg);
 
         st_get_otp_URL= Global_Settings.otp_url+"?mobile="+st_phone_no+"&otp="+otp_random_no;
-
         pDialog = new TransparentProgressDialog(RegistrationActivity.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
