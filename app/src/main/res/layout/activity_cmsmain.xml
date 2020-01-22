@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_enter"
             android:layout_marginLeft="5dp"
-            android:text="Select complaint type :"
+            android:text="Select query type :"
             android:textColor="@color/colorPrimary"/>
 
         <Spinner

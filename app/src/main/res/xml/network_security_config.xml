@@ -3,7 +3,7 @@
 <base-config cleartextTrafficPermitted="false" />
 
 
-<domain-config cleartextTrafficPermitted="false">
+<domain-config cleartextTrafficPermitted="true">
     <domain includeSubdomains="true">galwaykart.com</domain>
     <domain includeSubdomains="true">galway.co.in</domain>
 

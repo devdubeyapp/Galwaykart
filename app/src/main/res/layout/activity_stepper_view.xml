@@ -50,10 +50,25 @@
             android:layout_below="@+id/tv_title"
             />
 
+        <Button
+            android:id="@+id/tv_trackDetails"
+            style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Track Details"
+            android:layout_below="@+id/underline"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorYellow"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:padding="10dp"
+            />
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/underline"
+            android:layout_below="@+id/tv_trackDetails"
             android:layout_marginBottom="165dp">
 
                 <RelativeLayout
@@ -199,7 +214,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-
+        android:visibility="gone"
         app:headerLayout="@layout/nav_header_home_page"
         app:menu="@menu/activity_home_page_drawer" >
 

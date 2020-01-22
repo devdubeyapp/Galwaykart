@@ -315,37 +315,13 @@
                     android:text="Type"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/details_ly"
-                android:layout_marginTop="15dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Details"
-                    android:textColor="@color/colorPrimary">
-                </TextView>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/complaint_details_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:padding="4dp"
-                    android:scrollbars="vertical" />
-
-
-            </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2"
+                android:layout_marginTop="10dp"
                 >
 
                 <TextView
@@ -355,7 +331,7 @@
                     android:layout_height="wrap_content"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="12dp"
+                    android:textSize="14dp"
                     android:text="Remark"/>
 
                 <TextView
@@ -372,7 +348,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                >
                 <TextView
                     android:id="@+id/tv_remark"
                     android:layout_width="0dp"
@@ -382,6 +360,33 @@
                     android:textColor="@color/black"
                     android:textSize="12dp"
                     android:text="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/details_ly"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Details"
+                    android:textAllCaps="true"
+                    android:textSize="14dp"
+                    android:textColor="@color/colorPrimary">
+                </TextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/complaint_details_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:padding="4dp"
+                    android:scrollbars="vertical" />
+
+
             </LinearLayout>
 
 

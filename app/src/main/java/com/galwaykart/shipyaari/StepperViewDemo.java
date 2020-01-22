@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.baoyachi.stepview.VerticalStepView;
 import com.galwaykart.BaseActivity;
+import com.galwaykart.Legal.WebViewActivity;
 import com.galwaykart.R;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.ExceptionError;
@@ -70,7 +73,7 @@ public class StepperViewDemo extends BaseActivity {
 
     DocumentBuilderFactory builderFactory;
     InputStream inputStream;
-
+     Button tv_trackDetails;
 
 
     @Override
@@ -94,6 +97,9 @@ public class StepperViewDemo extends BaseActivity {
         tv_status_value = (TextView) findViewById(R.id.tv_status_value);
         tv_dt_value = (TextView) findViewById(R.id.tv_dt_value);
         tv_status = (TextView)findViewById(R.id.tv_status);
+
+        tv_trackDetails=findViewById(R.id.tv_trackDetails);
+        tv_trackDetails.setVisibility(View.GONE);
 
         common_header3 = (RelativeLayout) findViewById(R.id.common_header3);
 
@@ -127,6 +133,7 @@ public class StepperViewDemo extends BaseActivity {
         list2.add("Cancelled");
 
 
+
         if(st_selected_shipping_type.equalsIgnoreCase("1")) {
 
         if (st_selected_Track_id.equalsIgnoreCase("0"))
@@ -149,11 +156,14 @@ public class StepperViewDemo extends BaseActivity {
         }
         else if(st_selected_shipping_type.equalsIgnoreCase("3")) {
 
+            tv_trackDetails.setVisibility(View.VISIBLE);
+
             if (st_selected_Track_id.equalsIgnoreCase("0"))
                 setTrackBar(list0, 4);
 
             else {
                 common_header3.setVisibility(View.VISIBLE);
+
                 trackShipmentFedex();
             }
         }
@@ -177,9 +187,25 @@ public class StepperViewDemo extends BaseActivity {
             if(!st_selected_Track_id.equals("0"))
                 tv_tracking_no_value.setText(st_selected_Track_id);
 
-            if(!ship_text.equals("NONE"))
+            if(!ship_text.equals("NONE")) {
                 tv_shipment_value.setText(ship_text);
+
+
+
+
+
+            }
         }
+        tv_trackDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(StepperViewDemo.this, TrackDetailWebViewActivity.class);
+                intent.putExtra("trackUrl","https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber="+st_selected_Track_id);
+                startActivity(intent);
+
+            }
+        });
+
 
     }
 

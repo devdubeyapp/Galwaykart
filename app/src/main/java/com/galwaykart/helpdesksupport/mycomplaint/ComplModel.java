@@ -14,6 +14,40 @@ public class ComplModel {
     private String complaint_type;
     private String isShow;
 
+    private String order_status;
+    private String increment_id;
+    private String complaint_status;
+    private String order_created_at;
+    private String product_name;
+    private String request_qty;
+    private String resolution_title;
+    private String condition_title;
+    private String item_status;
+
+    public String getItem_sku() {
+        return item_sku;
+    }
+
+    public void setItem_sku(String item_sku) {
+        this.item_sku = item_sku;
+    }
+
+    private String item_sku;
+
+
+    public String getProduct_url() {
+        return product_url;
+    }
+
+    public void setProduct_url(String product_url) {
+        this.product_url = product_url;
+    }
+
+    private String product_url;
+
+
+
+
     public String getIsShow() {
         return isShow;
     }
@@ -104,15 +138,7 @@ public class ComplModel {
     }
 
 
-    private String order_status;
-    private String increment_id;
-    private String complaint_status;
-    private String order_created_at;
-    private String product_name;
-    private String request_qty;
-    private String resolution_title;
-    private String condition_title;
-    private String item_status;
+
 
     public String getOrder_status() {
         return order_status;

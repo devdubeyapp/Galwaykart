@@ -38,6 +38,8 @@ import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.galwaykart.helpdesksupport.mycomplaint.ComplAdapter;
 import com.galwaykart.helpdesksupport.mycomplaint.ComplModel;
 import com.galwaykart.helpdesksupport.mycomplaint.MyComplaints;
+import com.galwaykart.profile.OrderDetails;
+import com.galwaykart.profile.OrderListActivity;
 import com.galwaykart.testimonial.TestimonialActivity;
 import com.galwaykart.testimonial.TestimonialAdapter;
 import com.galwaykart.testimonial.TestimonialModel;
@@ -100,7 +102,7 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
     }
 
     private void goBack(){
-        Intent intent=new Intent(this, HomePageActivity.class);
+        Intent intent=new Intent(this, OrderListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
         startActivity(intent);

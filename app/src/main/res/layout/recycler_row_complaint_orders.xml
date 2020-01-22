@@ -3,62 +3,35 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="90dp">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_row_lay"
-        android:background="@drawable/background_img_style"
-        android:orientation="vertical"
-        android:padding="2dp"
-        android:elevation="2dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
 
-        <LinearLayout
+        <RelativeLayout
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_img_style"
+            >
 
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight=".15"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginLeft="1dp">
 
                 <CheckBox
                     android:id="@+id/check_mark"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_centerVertical="true"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight=".3"
-                android:layout_height="80dp"
-                android:layout_marginLeft="3dp"
-                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/img_product"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/check_mark"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/blank"
                     android:src="@drawable/blank" />
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="4dp"
-                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -67,6 +40,7 @@
                     android:id="@+id/tv_product_name"
                     android:layout_marginLeft="5dp"
                     android:textStyle="bold"
+                    android:layout_toRightOf="@+id/img_product"
                     android:textSize="13dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:layout_marginTop="6dp"/>
@@ -89,21 +63,15 @@
                     android:layout_toRightOf="@+id/img_product"
                     android:layout_below="@+id/tv_qty_ordered" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight=".5"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
 
             <Spinner
-                android:layout_width="match_parent"
+                android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:id="@+id/sp_return_req"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/img_product"
+                android:layout_below="@+id/total_product_amt"
                 style="@style/spinner_style"/>
 
                 <TextView
@@ -128,10 +96,7 @@
                     android:text=""
                     android:visibility="gone"/>
 
-            </LinearLayout>
+       </RelativeLayout>
 
-       </LinearLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

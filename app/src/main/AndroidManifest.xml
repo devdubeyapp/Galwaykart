@@ -326,6 +326,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             />
 
+
+        <activity android:name=".shipyaari.TrackDetailWebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
         <activity android:name=".helpdesksupport.CMSMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>

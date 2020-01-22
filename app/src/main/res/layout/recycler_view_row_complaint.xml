@@ -33,7 +33,7 @@
                 android:layout_alignParentLeft="true"
                 android:textAllCaps="false"
                 android:maxLines="1"
-                android:text="Date"
+                android:text="Date :"
                 android:textSize="14dp"
 
                 android:layout_marginTop="5dp"
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/date_tv1"
+                android:id="@+id/date_tv_1"
                 android:textAllCaps="true"
                 android:maxLines="1"
                 android:text=""
@@ -63,7 +63,7 @@
 
                 android:textAllCaps="false"
                 android:maxLines="1"
-                android:text="Order No"
+                android:text="Order No :"
                 android:textSize="14dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
@@ -94,10 +94,10 @@
                 android:layout_alignParentLeft="true"
                 android:textAllCaps="false"
                 android:maxLines="1"
-                android:text="Support Type"
+                android:text="Support Type :"
                 android:textSize="14dp"
 
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colorGrayDark"
                 android:layout_below="@id/date_tv">
             </TextView>
@@ -111,7 +111,7 @@
                 android:text=""
                 android:textSize="14dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_toRightOf="@+id/support_type_tv"
                 android:layout_below="@id/date_tv">
@@ -125,10 +125,10 @@
                 android:layout_alignParentLeft="true"
                 android:textAllCaps="false"
                 android:maxLines="1"
-                android:text="Ticket No"
+                android:text="Ticket No :"
                 android:textSize="14dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colorGrayDark"
                 android:layout_below="@+id/support_type_tv">
             </TextView>
@@ -141,9 +141,9 @@
                 android:textAllCaps="true"
                 android:maxLines="1"
                 android:text=""
-                android:textSize="16dp"
+                android:textSize="14dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_below="@+id/support_type_tv"
                 android:layout_toRightOf="@+id/ticket_no_tv">
@@ -157,10 +157,10 @@
                 android:layout_alignParentLeft="true"
                 android:textAllCaps="false"
                 android:maxLines="1"
-                android:text="Status"
+                android:text="Status :"
                 android:textSize="14dp"
 
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colorGrayDark"
                 android:layout_below="@id/ticket_no_tv">
             </TextView>
@@ -174,7 +174,7 @@
                 android:text=""
                 android:textSize="14dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_below="@id/ticket_no_tv"
                 android:layout_toRightOf="@+id/status_tv">

@@ -84,7 +84,7 @@ public class MyComplaints extends AppCompatActivity implements View.OnClickListe
         ic_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               finish();
+               goBack();
 
             }
         });

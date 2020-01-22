@@ -3,6 +3,7 @@ package com.galwaykart.helpdesksupport.mycomplaint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.galwaykart.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,7 +36,7 @@ public class ComplAdapter extends RecyclerView.Adapter<ComplAdapter.ViewHolder> 
         public ViewHolder(View view) {
             super(view);
             layout = view;
-            date_tv1 = (TextView) view.findViewById(R.id.date_tv1);
+            date_tv1 = (TextView) view.findViewById(R.id.date_tv_1);
             order_tv1 = (TextView) view.findViewById(R.id.order_tv1);
             support_type_tv1 = (TextView) view.findViewById(R.id.support_type_tv1);
             ticket_no_tv1 = (TextView) view.findViewById(R.id.ticket_no_tv1);
@@ -59,7 +63,19 @@ public class ComplAdapter extends RecyclerView.Adapter<ComplAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.date_tv1.setText(complModels.get(position).getCreated_at());
+
+        SimpleDateFormat format1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dt= null;
+        try {
+            dt = format1.parse(complModels.get(position).getCreated_at());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String st_monthNumber  = (String) DateFormat.format("dd-MMM-yyyy",   dt); // month
+//        String st_year         = (String) DateFormat.format("yyyy", dt); // year
+//        String st_sday          = (String) DateFormat.format("dd",   dt); // date
+
+        holder.date_tv1.setText(st_monthNumber);
         holder.order_tv1.setText(complModels.get(position).getOrder_id());
         holder.support_type_tv1.setText(complModels.get(position).getComplaint_type());
         holder.ticket_no_tv1.setText(complModels.get(position).getComplaint_id());

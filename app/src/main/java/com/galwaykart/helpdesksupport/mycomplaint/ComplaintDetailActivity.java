@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -37,7 +38,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -111,7 +114,7 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
         tv_category_type = (TextView) findViewById(R.id.tv_category_type) ;
         tv_remark = (TextView) findViewById(R.id.tv_remark) ;
         details_ly =(LinearLayout) findViewById(R.id.details_ly) ;
-
+        details_ly.setVisibility(View.GONE);
 
 
         /*back_img = (ImageView) findViewById(R.id.back_img);
@@ -186,6 +189,10 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
                                                     complaint_status = jsonObjOrder.getString("complientstatus");
                                                     created_at = jsonObjOrder.getString("created_at");
 
+
+//                                                    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+//                                                    Date createDate=sdf.parse(created_at);
+
                                                     tv_date.setText(created_at);
                                                     tv_ticket_no.setText(complaint_id);
                                                     tv_order_no.setText(order_id);
@@ -194,7 +201,11 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
                                                     tv_category_type.setText(complaint_type);
 
 
-                                                    tv_remark.setText(remarks);
+                                                    if(!remarks.equals("")) {
+                                                        remarks=remarks.replaceAll("<p>","");
+                                                        remarks=remarks.replaceAll("</p>","");
+                                                        tv_remark.setText(remarks);
+                                                    }
 
                                                 }
                                                 if(is_show.equals("1"))
@@ -209,9 +220,13 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
                                                           request_qty = jsonObjItem.getString("request_qty");
                                                           sku = jsonObjItem.getString("sku");
                                                           product_name = jsonObjItem.getString("name");
+                                                          String image=jsonObjItem.getString("image");
+
                                                           ComplModel complModel0 = new ComplModel();
                                                           complModel0.setRequest_qty(request_qty);
                                                           complModel0.setProduct_name(product_name);
+                                                          complModel0.setProduct_url(image);
+                                                          complModel0.setItem_sku(sku);
                                                           complModels12.add(complModel0);
 
                                                         }

@@ -1,6 +1,7 @@
 package com.galwaykart.helpdesksupport.orderdetails;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,8 +56,10 @@ public class CompOrderDetailsAdapter extends RecyclerView.Adapter<CompOrderDetai
             tv_qty_ordered = (TextView) view.findViewById(R.id.tv_qty_ordered);
             tv_qty_ordered1 = (TextView) view.findViewById(R.id.tv_qty_ordered1);
             sp_return_req = (Spinner) view.findViewById(R.id.sp_return_req);
+            sp_return_req.setEnabled(false);
+
             img_product = (ImageView) view.findViewById(R.id.img_product);
-            main_row_lay = (LinearLayout) view.findViewById(R.id.main_row_lay);
+            //main_row_lay = (LinearLayout) view.findViewById(R.id.main_row_lay);
         }
     }
 
@@ -87,26 +90,6 @@ public class CompOrderDetailsAdapter extends RecyclerView.Adapter<CompOrderDetai
         holder.total_product_amt.setText("Price: "+ complaintOrderDetailModelList.get(position).getProduct_price());
 
         holder.check_mark.setChecked(complaintModel.getCheck_for_return_req());
-        holder.check_mark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if(complaintModel.getCheck_for_return_req()==true)
-                {
-                    //holder.sp_return_req.setEnabled(true);
-                    complaintModel.setCheck_for_return_req(false);
-                }
-                else
-                {
-                    //holder.sp_return_req.setEnabled(false);
-                    complaintModel.setCheck_for_return_req(true);
-                }
-
-
-            }
-        });
 
         holder.sp_return_req.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -172,6 +155,30 @@ public class CompOrderDetailsAdapter extends RecyclerView.Adapter<CompOrderDetai
 
         };
 
+
+        ArrayAdapter<String> disable_adapter =
+                new ArrayAdapter<String>(context, R.layout.layout_for_disable_spinner) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+
+                View v = super.getView(position, convertView, parent);
+                if (position == getCount()) {
+                    ((TextView) v.findViewById(R.id.text1)).setText("Qty");
+                    ((TextView) v.findViewById(R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
+                }
+
+                return v;
+            }
+
+            @Override
+            public int getCount() {
+                return super.getCount() - 1; // you dont display last item. It is used as hint.
+            }
+
+        };
+
+
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         qty_ordered_int = Integer.parseInt(complaintOrderDetailModelList.get(position).getQty_ordered());
         Log.e("qty_ordered_int",qty_ordered_int + "");
@@ -184,6 +191,29 @@ public class CompOrderDetailsAdapter extends RecyclerView.Adapter<CompOrderDetai
         adapter.add("Qty");
         holder.sp_return_req.setAdapter(adapter);
         holder.sp_return_req.setSelection(adapter.getCount());
+
+
+        holder.check_mark.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(complaintModel.getCheck_for_return_req()==true)
+                {
+                    complaintModel.setCheck_for_return_req(false);
+                    holder.sp_return_req.setEnabled(false);
+                    //holder.sp_return_req.setAdapter(disable_adapter);
+                }
+                else
+                {
+                    complaintModel.setCheck_for_return_req(true);
+                    holder.sp_return_req.setEnabled(true);
+                    //holder.sp_return_req.setAdapter(adapter);
+                }
+            }
+        });
+
     }
 
 
