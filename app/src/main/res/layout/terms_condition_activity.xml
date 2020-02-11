@@ -176,8 +176,7 @@
             android:textSize="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:layout_marginLeft="20dp"
-            android:clickable="true"
-            />
+            android:clickable="true" />
 
         <TextView
             android:id="@+id/tvPreferredCustomer"
@@ -189,8 +188,19 @@
             android:textSize="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:layout_marginLeft="20dp"
-            android:clickable="true"
-            />
+            android:clickable="true" />
+
+        <TextView
+            android:id="@+id/tvDonationDisclaimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="->  Donation Disclaimer"
+            android:layout_below="@+id/tvPreferredCustomer"
+            android:layout_marginTop="10dp"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginLeft="20dp"
+            android:clickable="true" />
 
 
 

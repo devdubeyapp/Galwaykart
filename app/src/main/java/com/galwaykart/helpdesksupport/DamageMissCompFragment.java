@@ -78,8 +78,6 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
     private String st_token_data="";
 
 
-
-
     LinearLayout ly_write;
     private RecyclerView items_recycler_view;
     private CompOrderDetailsAdapter compOrderDetailsAdapter;

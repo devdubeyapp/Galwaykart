@@ -24,6 +24,7 @@ public class LegalAboutActivity extends AppCompatActivity {
     TextView tvPrivacy,tvShip,tvReturn;
     TextView tvPayment,tvTerms,tvCancel;
     TextView tvActiveDistributor,tvPreferredCustomer;
+    TextView tvDonationDisclaimer;
 
 
     @Override
@@ -62,8 +63,10 @@ public class LegalAboutActivity extends AppCompatActivity {
         tvTerms= (TextView) findViewById(R.id.tvTerms);
         tvCancel= (TextView) findViewById(R.id.tvCancel);
 
+
         tvActiveDistributor= (TextView) findViewById(R.id.tvActiveDistributor);
         tvPreferredCustomer= (TextView) findViewById(R.id.tvPreferredCustomer);
+        tvDonationDisclaimer= (TextView) findViewById(R.id.tvDonationDisclaimer);
 
 
         tvPrivacy.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +158,18 @@ public class LegalAboutActivity extends AppCompatActivity {
 
             }
         });
+
+        tvDonationDisclaimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(LegalAboutActivity.this,WebViewActivity.class);
+                intent.putExtra("comefrom","gaushala-donation");
+                startActivity(intent);
+
+            }
+        });
+
 
 
 
