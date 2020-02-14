@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +42,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,7 +65,9 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
     RecyclerView complaint_details_recycler_view;
     public ComplaintItemAdapter complaintItemAdapter;
 
-
+    TextView tv_cancel_complaint;
+    String customer_id="";
+    String setStatus_id="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +79,60 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
         complaint_id= intent.getStringExtra("complaint_id");
         complaint_type= intent.getStringExtra("complaint_type");
         is_show= intent.getStringExtra("is_show");
-        remarks= intent.getStringExtra("remarks");
+        //remarks= intent.getStringExtra("remarks");
+        customer_id=intent.getStringExtra("customer_id");
+        setStatus_id=intent.getStringExtra("setStatus_id");
+
+        tv_cancel_complaint=findViewById(R.id.tv_cancel_complaint);
+
+        if(setStatus_id.equals("1")){
+            tv_cancel_complaint.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            tv_cancel_complaint.setVisibility(View.GONE);
+        }
+        tv_cancel_complaint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final AlertDialog.Builder b;
+                try
+                {
+                    b = new AlertDialog.Builder(ComplaintDetailActivity.this);
+                    b.setTitle("Alert");
+                    b.setCancelable(false);
+                    b.setMessage("Are you sure want to cancel your complaint ?");
+                    b.setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int whichButton)
+                        {
+                            b.create().dismiss();
+                            String input_data="{\"requestIdHash\" : \""+complaint_id+"\", " +
+                                    "\"customerId\": "+customer_id+"}";
+
+                            String complaint_cancel_url=Global_Settings.api_url+"rest/V1/m-help-requestcancle";
+                            callCancelComplaint(input_data,complaint_cancel_url);
+
+                        }
+                    });
+                    b.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            b.create().dismiss();
+                        }
+                    });
+                    b.create().show();
+                }
+                catch(Exception ex)
+                {
+                }
 
 
+
+            }
+        });
 
         ImageView ic_back=findViewById(R.id.ic_back);
         ic_back.setOnClickListener(new View.OnClickListener() {
@@ -100,20 +158,116 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
     }
 
 
+    private void callCancelComplaint(String input_data,String url)
+    {
+
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(ComplaintDetailActivity.this);
+            StringRequest stringRequest =
+                    new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    if (pDialog.isShowing())
+                                        pDialog.dismiss();
+                                    Log.e("cancelComplaint", response);
+                                    if (response != null) {
+                                        if(Boolean.parseBoolean(response)==true){
+
+                                            Dialog dialog = new Dialog(ComplaintDetailActivity.this);
+                                            dialog.setContentView(R.layout.custom_alert_dialog_design);
+                                            TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                            tv_dialog.setText("your complaint has been successfully cancelled");
+                                            ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
+                                            dialog.show();
+
+                                            new CountDownTimer(2000, 2000) {
+                                                @Override
+                                                public void onTick(long millisUntilFinished) {
+                                                    // TODO Auto-generated method stub
+
+
+
+                                                }
+                                                @Override
+                                                public void onFinish() {
+                                                    if (dialog.isShowing())
+                                                        dialog.dismiss();
+
+                                                    jsonComplaintItem();
+                                                    tv_cancel_complaint.setVisibility(View.GONE);
+
+                                                }
+                                            }.start();
+
+
+                                        }
+
+                                    }
+
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            if (pDialog.isShowing())
+                                pDialog.dismiss();
+
+                            CommonFun.showVolleyException(error,ComplaintDetailActivity.this);
+                            // Log.e("error_re",error.getMessage());
+
+                        }
+                    }) {
+
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json; charset=utf-8";
+                        }
+
+                        @Override
+                        protected String getParamsEncoding() {
+                            return "utf-8";
+                        }
+
+                        @Override
+                        public byte[] getBody() throws AuthFailureError {
+                            return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
+                        }
+
+                        @Override
+                        public Map<String, String> getHeaders () throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+                            //params.put("Content-Type", "application/json");
+                            params.put("Authorization", "Bearer " + st_token_data);
+                            //Log.e("st_token_data..",st_token_data);
+                            return params;
+                        }
+                    };
+
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+            stringRequest.setShouldCache(false);
+            requestQueue.add(stringRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+    }
 
     void Init()
     {
         pref = getSharedPreferences("glazekartapp", MODE_PRIVATE);
         st_token_data=pref.getString("tokenData","");
 
-        tv_date = (TextView) findViewById(R.id.tv_date) ;
-        tv_ticket_no = (TextView) findViewById(R.id.tv_ticket_no) ;
-        tv_status = (TextView) findViewById(R.id.tv_status) ;
-        tv_order_no = (TextView) findViewById(R.id.tv_order_no) ;
-        tv_order_status  = (TextView) findViewById(R.id.tv_order_status) ;
-        tv_category_type = (TextView) findViewById(R.id.tv_category_type) ;
-        tv_remark = (TextView) findViewById(R.id.tv_remark) ;
-        details_ly =(LinearLayout) findViewById(R.id.details_ly) ;
+        tv_date = findViewById(R.id.tv_date);
+        tv_ticket_no = findViewById(R.id.tv_ticket_no);
+        tv_status = findViewById(R.id.tv_status);
+        tv_order_no = findViewById(R.id.tv_order_no);
+        tv_order_status  = findViewById(R.id.tv_order_status);
+        tv_category_type = findViewById(R.id.tv_category_type);
+        tv_remark = findViewById(R.id.tv_remark);
+        details_ly = findViewById(R.id.details_ly);
         details_ly.setVisibility(View.GONE);
 
 
@@ -122,7 +276,7 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 
 
 
-        complaint_details_recycler_view= (RecyclerView) findViewById(R.id.complaint_details_recycler_view);
+        complaint_details_recycler_view= findViewById(R.id.complaint_details_recycler_view);
         complaint_details_recycler_view.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         complaint_details_recycler_view.setLayoutManager(mLayoutManager);
@@ -137,6 +291,8 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
         }
 
     String input_data="";
+    String[] cht_name;
+    String[] cht_msg;
     private void jsonComplaintItem() {
 
         final ArrayList<ComplModel> complModels12 = new ArrayList<>();
@@ -144,7 +300,7 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 
         input_data = "{\"requestId\":\""+complaint_id+"\"}";
         Log.e("input_data",input_data);
-        Log.d("complaint_details_url",st_mycomplaint_details_url);
+        //Log.d("complaint_details_url",st_mycomplaint_details_url);
 
         pref = CommonFun.getPreferences(ComplaintDetailActivity.this);
         String st_token_data=pref.getString("tokenData","");
@@ -201,11 +357,49 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
                                                     tv_category_type.setText(complaint_type);
 
 
-                                                    if(!remarks.equals("")) {
-                                                        remarks=remarks.replaceAll("<p>","");
-                                                        remarks=remarks.replaceAll("</p>","");
-                                                        tv_remark.setText(remarks);
+//                                                    if(!remarks.equals("")) {
+//                                                        remarks=remarks.replaceAll("<p>","");
+//                                                        remarks=remarks.replaceAll("</p>","");
+//                                                        tv_remark.setText(remarks);
+//                                                    }
+
+
+                                                    int total_msg_data=0;
+
+                                                    if(jsonObj.has("message")) {
+                                                        JSONArray jsonArrayItem = jsonObj.getJSONArray("message");
+                                                        total_msg_data=jsonArrayItem.length();
+
+                                                        if (jsonArrayItem.length() > 0) {
+
+                                                            cht_name = new String[jsonArrayItem.length()];
+                                                            cht_msg = new String[jsonArrayItem.length()];
+                                                            for (int i = 0; i < jsonArrayItem.length(); i++) {
+
+                                                                JSONObject jsonObject_msg=jsonArrayItem.getJSONObject(i);
+                                                                cht_msg[i] = jsonObject_msg.getString("message");
+                                                                cht_name[i] = jsonObject_msg.getString("name");
+
+
+                                                            }
+
+                                                        }
                                                     }
+
+                                                    for(int i=0;i<total_msg_data;i++)
+                                                    {
+                                                        remarks="<p style='font-size:16px;font-weight:bold'>"+cht_name[i]+":</p><p style='font-size:14px'>"+cht_msg[i]+"</p><br/>";
+
+                                                    }
+
+                                                    if (Build.VERSION.SDK_INT >= 24) {
+                                                        remarks = String.valueOf(Html.fromHtml(remarks , 0));
+                                                    }
+                                                    else {
+                                                        remarks = String.valueOf(Html.fromHtml(remarks));
+                                                    }
+
+                                                    tv_remark.setText(remarks);
 
                                                 }
                                                 if(is_show.equals("1"))
@@ -274,12 +468,7 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 
                         @Override
                         public byte[] getBody() throws AuthFailureError {
-                            try {
-                                return input_data == null ? null : input_data.getBytes("utf-8");
-                            } catch (UnsupportedEncodingException uee) {
-                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                                return null;
-                            }
+                            return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                         }
 
                         @Override

@@ -67,8 +67,8 @@ public class ShutDown extends AppCompatActivity {
             }
         }
 
-        text_t=(TextView)findViewById(R.id.text_t);
-        imageView=(ImageView)findViewById(R.id.imageView);
+        text_t= findViewById(R.id.text_t);
+        imageView= findViewById(R.id.imageView);
 
         text_t.setVisibility(View.GONE);
         imageView.setVisibility(View.GONE);

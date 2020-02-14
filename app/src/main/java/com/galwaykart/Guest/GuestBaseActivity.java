@@ -88,7 +88,7 @@ public abstract class GuestBaseActivity extends AppCompatActivity
 
     public void initNavigationDrawer(){
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -122,20 +122,20 @@ public abstract class GuestBaseActivity extends AppCompatActivity
 //        }
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.getMenu().clear();
         navigationView.inflateMenu(R.menu.activity_guest_home_page_drawer);
         navigationView.setNavigationItemSelectedListener(this);
 
 
         View header=navigationView.getHeaderView(0);
-        TextView tvCustomerName=(TextView)header.findViewById(R.id.tvCustomerName);
+        TextView tvCustomerName= header.findViewById(R.id.tvCustomerName);
         tvCustomerName.setText("Guest");
 
 //        cart_progressBar=(ProgressBar)toolbar.findViewById(R.id.cart_progressBar);
@@ -173,18 +173,18 @@ public abstract class GuestBaseActivity extends AppCompatActivity
 
         String customer_name=fname+" "+lname;
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
         View header=navigationView.getHeaderView(0);
-        TextView tvCustomerName=(TextView)header.findViewById(R.id.tvCustomerName);
+        TextView tvCustomerName= header.findViewById(R.id.tvCustomerName);
         tvCustomerName.setText(customer_name);
 
         updateMenuTitles(toolbar,"0","true");
@@ -195,7 +195,7 @@ public abstract class GuestBaseActivity extends AppCompatActivity
 
         //MenuItem cartMenuItem = menu.findItem(R.id.action_add_to_cart);
         TextView tv_cartqty;
-        tv_cartqty=(TextView)toolbar.findViewById(R.id.cart_icon);
+        tv_cartqty= toolbar.findViewById(R.id.cart_icon);
         tv_cartqty.setText(count);
         tv_cartqty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,7 +206,7 @@ public abstract class GuestBaseActivity extends AppCompatActivity
             }
         });
 
-        cart_progressBar=(ProgressBar)toolbar.findViewById(R.id.cart_progressBar);
+        cart_progressBar= toolbar.findViewById(R.id.cart_progressBar);
 
         if(progressShow.equalsIgnoreCase("true"))
                 cart_progressBar.setVisibility(View.VISIBLE);
@@ -214,7 +214,7 @@ public abstract class GuestBaseActivity extends AppCompatActivity
             cart_progressBar.setVisibility(View.GONE);
 
         ImageView imageViewIcon;
-        imageViewIcon=(ImageView)toolbar.findViewById(R.id.image_view_title);
+        imageViewIcon= toolbar.findViewById(R.id.image_view_title);
         imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -603,7 +603,7 @@ public abstract class GuestBaseActivity extends AppCompatActivity
         }
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

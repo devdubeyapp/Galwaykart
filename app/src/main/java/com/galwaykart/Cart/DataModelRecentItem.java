@@ -16,12 +16,10 @@ public class DataModelRecentItem extends RealmObject {
 
 
     int p_id;
-
     String p_name;
 
     @PrimaryKey
     String p_sku;
-
     String p_img;
 
     public String getP_price() {
@@ -77,8 +75,5 @@ public class DataModelRecentItem extends RealmObject {
         this.p_price=p_price;
         this.p_id=p_id;
     }
-
-
-
 
 }

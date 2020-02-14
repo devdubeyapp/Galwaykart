@@ -27,6 +27,7 @@ public class LegalAboutActivity extends AppCompatActivity {
     TextView tvDonationDisclaimer;
 
 
+
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
@@ -56,17 +57,16 @@ public class LegalAboutActivity extends AppCompatActivity {
         });
 
 
-        tvPrivacy = (TextView) findViewById(R.id.tvPrivacy);
-        tvShip = (TextView) findViewById(R.id.tvShip);
-        tvReturn = (TextView) findViewById(R.id.tvReturn);
-        tvPayment= (TextView) findViewById(R.id.tvPayment);
-        tvTerms= (TextView) findViewById(R.id.tvTerms);
-        tvCancel= (TextView) findViewById(R.id.tvCancel);
+        tvPrivacy = findViewById(R.id.tvPrivacy);
+        tvShip = findViewById(R.id.tvShip);
+        tvReturn = findViewById(R.id.tvReturn);
+        tvPayment= findViewById(R.id.tvPayment);
+        tvTerms= findViewById(R.id.tvTerms);
+        tvCancel= findViewById(R.id.tvCancel);
 
-
-        tvActiveDistributor= (TextView) findViewById(R.id.tvActiveDistributor);
-        tvPreferredCustomer= (TextView) findViewById(R.id.tvPreferredCustomer);
-        tvDonationDisclaimer= (TextView) findViewById(R.id.tvDonationDisclaimer);
+        tvActiveDistributor= findViewById(R.id.tvActiveDistributor);
+        tvPreferredCustomer= findViewById(R.id.tvPreferredCustomer);
+        tvDonationDisclaimer= findViewById(R.id.tvDonationDisclaimer);
 
 
         tvPrivacy.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +159,7 @@ public class LegalAboutActivity extends AppCompatActivity {
             }
         });
 
+
         tvDonationDisclaimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,7 +170,6 @@ public class LegalAboutActivity extends AppCompatActivity {
 
             }
         });
-
 
 
 

@@ -42,6 +42,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -88,10 +89,14 @@ public class MyComplaints extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        Init();
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Init();
+    }
 
     void Init()
     {
@@ -102,9 +107,9 @@ public class MyComplaints extends AppCompatActivity implements View.OnClickListe
 
 
 
-        tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_title = findViewById(R.id.tv_title);
 
-        complaint_recycler_view= (RecyclerView) findViewById(R.id.complaint_recycler_view);
+        complaint_recycler_view= findViewById(R.id.complaint_recycler_view);
         complaint_recycler_view.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         complaint_recycler_view.setLayoutManager(mLayoutManager);
@@ -136,7 +141,7 @@ public class MyComplaints extends AppCompatActivity implements View.OnClickListe
         input_data = "{\"customerId\":\""+customer_id+"\"}";
         Log.e("input_data",input_data);
         Log.e("customerId",input_data);
-        Log.d("st_mycomplaint_url",st_mycomplaint_url);
+        //Log.d("st_mycomplaint_url",st_mycomplaint_url);
 
         pDialog = new TransparentProgressDialog(MyComplaints.this);
         pDialog.setCancelable(false);
@@ -171,7 +176,6 @@ public class MyComplaints extends AppCompatActivity implements View.OnClickListe
                                                 String complaint_type = jsonObj.getString("complaint_type");
                                                 String isShow = jsonObj.getString("show");
 
-
                                                 Log.e("complaint_id",complaint_id);
                                                 Log.e("order_id",order_id);
                                                 Log.e("created_at", created_at);
@@ -199,7 +203,7 @@ public class MyComplaints extends AppCompatActivity implements View.OnClickListe
                                             }
 
                                             complAdapter = new ComplAdapter(MyComplaints.this, complModels11);
-                                           // complaint_recycler_view.setAdapter(complAdapter);
+                                            //complaint_recycler_view.setAdapter(complAdapter);
                                             if(complAdapter.getItemCount()>0)
                                             {
                                                 complaint_recycler_view.setVisibility(View.VISIBLE);
@@ -245,12 +249,7 @@ public class MyComplaints extends AppCompatActivity implements View.OnClickListe
 
                         @Override
                         public byte[] getBody() throws AuthFailureError {
-                            try {
-                                return input_data == null ? null : input_data.getBytes("utf-8");
-                            } catch (UnsupportedEncodingException uee) {
-                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                                return null;
-                            }
+                            return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                         }
 
                         @Override

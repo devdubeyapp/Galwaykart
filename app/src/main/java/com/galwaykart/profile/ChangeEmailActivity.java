@@ -38,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,15 +80,15 @@ public class ChangeEmailActivity extends BaseActivityWithoutCart {
         );
 
         initNavigationDrawer();
-        edit_email=(EditText)findViewById(R.id.email);
-        edit_password=(EditText)findViewById(R.id.password);
-        edit_otp=(EditText)findViewById(R.id.edit_otp);
+        edit_email= findViewById(R.id.email);
+        edit_password= findViewById(R.id.password);
+        edit_otp= findViewById(R.id.edit_otp);
 
 
-        login_progress=(ProgressBar) findViewById(R.id.login_progress);
+        login_progress= findViewById(R.id.login_progress);
         login_progress.setVisibility(View.GONE);
 
-        email_sign_in_button=(Button)findViewById(R.id.email_sign_in_button);
+        email_sign_in_button= findViewById(R.id.email_sign_in_button);
         email_sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,12 +125,12 @@ public class ChangeEmailActivity extends BaseActivityWithoutCart {
             }
         });
 
-        email_login_form=(RelativeLayout)findViewById(R.id.email_login_form);
+        email_login_form= findViewById(R.id.email_login_form);
         email_login_form.setVisibility(View.VISIBLE);
-        rel_layout_otp=(RelativeLayout)findViewById(R.id.rel_layout_otp);
+        rel_layout_otp= findViewById(R.id.rel_layout_otp);
         rel_layout_otp.setVisibility(View.GONE);
 
-        button_otp_check=(Button)findViewById(R.id.button_otp_check);
+        button_otp_check= findViewById(R.id.button_otp_check);
         button_otp_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -269,12 +270,7 @@ public class ChangeEmailActivity extends BaseActivityWithoutCart {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return input_data == null ? null : input_data.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                        return null;
-                    }
+                    return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override
@@ -420,12 +416,7 @@ public class ChangeEmailActivity extends BaseActivityWithoutCart {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return input_data == null ? null : input_data.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                        return null;
-                    }
+                    return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override

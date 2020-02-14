@@ -197,18 +197,18 @@ Boolean is_rel_cross_app_visible=false;
         context=this;
         initNavigationDrawer();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
 
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager_tabs);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayoutss);
-        tabTopProducts =(TabItem) findViewById(R.id.tabTopProducts);
-        tabTopCategory =(TabItem) findViewById(R.id.tabTopCategory);
-        tabShopByCategory =(TabItem) findViewById(R.id.tabShopByCategory);
-        tabOffer = (TabItem)findViewById(R.id.tabOffer);
+        viewPager = findViewById(R.id.viewPager_tabs);
+        tabLayout = findViewById(R.id.tabLayoutss);
+        tabTopProducts = findViewById(R.id.tabTopProducts);
+        tabTopCategory = findViewById(R.id.tabTopCategory);
+        tabShopByCategory = findViewById(R.id.tabShopByCategory);
+        tabOffer = findViewById(R.id.tabOffer);
 
 
 //        rel_cross_app_promo=(RelativeLayout)findViewById(R.id.rel_cross_app_promo);
@@ -216,7 +216,7 @@ Boolean is_rel_cross_app_visible=false;
 //        is_rel_cross_app_visible=false;
 //
 //
-          pager_view_banner = (ViewPager) findViewById(R.id.pager_view_bannerss);
+          pager_view_banner = findViewById(R.id.pager_view_bannerss);
 
         adapter = new GuestHomePageTabAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
 
@@ -293,7 +293,7 @@ Boolean is_rel_cross_app_visible=false;
             e.printStackTrace();
         }
 
-        float_chat_button=(ImageView) findViewById(R.id.float_hchat_button);
+        float_chat_button= findViewById(R.id.float_hchat_button);
         float_chat_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -302,13 +302,13 @@ Boolean is_rel_cross_app_visible=false;
         });
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
         //TextView tvCustomerName = (TextView) header.findViewById(R.id.tvCustomerName);
@@ -316,7 +316,7 @@ Boolean is_rel_cross_app_visible=false;
 
         //    EditText editText = (EditText) findViewById(R.id.search_view);
 
-        ImageView imageView = (ImageView) findViewById(R.id.image_view_title);
+        ImageView imageView = findViewById(R.id.image_view_title);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -328,7 +328,7 @@ Boolean is_rel_cross_app_visible=false;
             }
         });
 
-        Button bt_show_category = (Button) findViewById(R.id.bt_show_category);
+        Button bt_show_category = findViewById(R.id.bt_show_category);
         bt_show_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -342,8 +342,8 @@ Boolean is_rel_cross_app_visible=false;
             }
         });
 
-        ed_search_view = (SearchView) findViewById(R.id.search_view);
-        EditText searchEditText = (EditText) ed_search_view.findViewById(R.id.search_src_text);
+        ed_search_view = findViewById(R.id.search_view);
+        EditText searchEditText = ed_search_view.findViewById(R.id.search_src_text);
         searchEditText.setTextColor(getResources().getColor(R.color.colorPrimary));
         searchEditText.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 

@@ -146,7 +146,7 @@ public class ProductListActivity extends AppCompatActivity {
         /**
          * Sorting product dropdown
          */
-        spinner_sort=(Spinner)findViewById(R.id.spinner_sorting);
+        spinner_sort= findViewById(R.id.spinner_sorting);
 
         String[] item_sort_by;
         SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());

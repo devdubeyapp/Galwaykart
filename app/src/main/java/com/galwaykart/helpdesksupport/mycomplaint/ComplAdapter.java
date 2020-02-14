@@ -36,13 +36,13 @@ public class ComplAdapter extends RecyclerView.Adapter<ComplAdapter.ViewHolder> 
         public ViewHolder(View view) {
             super(view);
             layout = view;
-            date_tv1 = (TextView) view.findViewById(R.id.date_tv_1);
-            order_tv1 = (TextView) view.findViewById(R.id.order_tv1);
-            support_type_tv1 = (TextView) view.findViewById(R.id.support_type_tv1);
-            ticket_no_tv1 = (TextView) view.findViewById(R.id.ticket_no_tv1);
-            status_tv1 = (TextView) view.findViewById(R.id.status_tv1);
-            remark_tv1 = (TextView) view.findViewById(R.id.remark_tv1);
-            main_row_lay = (LinearLayout) view.findViewById(R.id.main_row_lay);
+            date_tv1 = view.findViewById(R.id.date_tv_1);
+            order_tv1 = view.findViewById(R.id.order_tv1);
+            support_type_tv1 = view.findViewById(R.id.support_type_tv1);
+            ticket_no_tv1 = view.findViewById(R.id.ticket_no_tv1);
+            status_tv1 = view.findViewById(R.id.status_tv1);
+            remark_tv1 = view.findViewById(R.id.remark_tv1);
+            main_row_lay = view.findViewById(R.id.main_row_lay);
         }
     }
 
@@ -86,8 +86,11 @@ public class ComplAdapter extends RecyclerView.Adapter<ComplAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 Intent complaint_detal_intent = new Intent(context, ComplaintDetailActivity.class);
-                Log.d("complaint_id",complModels.get(position).getComplaint_id());
+                //Log.d("complaint_id",complModels.get(position).getComplaint_id());
                 complaint_detal_intent.putExtra("complaint_id",complModels.get(position).getComplaint_id());
+                complaint_detal_intent.putExtra("customer_id",complModels.get(position).getCustomer_id());
+                complaint_detal_intent.putExtra("setStatus_id",complModels.get(position).getStatus_id());
+
                 complaint_detal_intent.putExtra("complaint_type",complModels.get(position).getComplaint_type());
                 complaint_detal_intent.putExtra("is_show",complModels.get(position).getIsShow()); //0 for none,1 for products
                 complaint_detal_intent.putExtra( "remarks",complModels.get(position).getDescription());

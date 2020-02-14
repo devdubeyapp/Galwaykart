@@ -167,11 +167,7 @@ public class GlobalUtilityClass {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        }
-
-        return false;
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
 }

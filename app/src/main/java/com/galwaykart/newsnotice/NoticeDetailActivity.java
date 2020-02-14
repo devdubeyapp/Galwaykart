@@ -74,7 +74,7 @@ public class NoticeDetailActivity extends AppCompatActivity {
             }
         });
 
-        webView = (WebView) findViewById(R.id.webview);
+        webView = findViewById(R.id.webview);
 
         url = Global_Settings.api_url+"rest/V1/m-static-page/";
 

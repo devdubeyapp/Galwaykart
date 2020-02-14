@@ -126,11 +126,11 @@ public class HomePage_CategoryTab extends Fragment {
 
         dataLoad = false;
 
-        progress_bar = (ProgressBar) getActivity().findViewById(R.id.progress_barss);
+        progress_bar = getActivity().findViewById(R.id.progress_barss);
         progress_bar.setVisibility(View.GONE);
 
       //  ed_search_view = (SearchView)  getActivity().findViewById(R.id.search_view);
-         recyclerView_Category = (RecyclerView)getActivity().findViewById(R.id.recyclerView_Categoryss);
+         recyclerView_Category = getActivity().findViewById(R.id.recyclerView_Categoryss);
         recyclerView_Category.setNestedScrollingEnabled(false);
 
         itemdCatList = new ArrayList<>();
@@ -139,7 +139,7 @@ public class HomePage_CategoryTab extends Fragment {
         // list_category=(ListView) findViewById(R.id.list_category);
         //list_product=(ListView) findViewById(R.id.list_product);
 
-        tvCategoryHead = (TextView) getActivity().findViewById(R.id.tvCategoryHeadss);
+        tvCategoryHead = getActivity().findViewById(R.id.tvCategoryHeadss);
 
 //        if (value_email != null && !value_email.equals("")) {
 //

@@ -39,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -105,7 +106,7 @@ public class EditAddress extends BaseActivity{
         pref = CommonFun.getPreferences(getApplicationContext());
 
         arrayList = new ArrayList<HashMap<String,String>>();
-        spinner_state_profile = (Spinner)findViewById(R.id.spinner_state_profile);
+        spinner_state_profile = findViewById(R.id.spinner_state_profile);
 //        chk_same_bill=(CheckBox)findViewById(R.id.chk_same);
 
         /*
@@ -139,16 +140,16 @@ public class EditAddress extends BaseActivity{
         tokenData = pref.getString("tokenData","");
 
 
-        first_name = (EditText)findViewById(R.id.first_name);
-        last_name = (EditText)findViewById(R.id.last_name);
-        company = (EditText)findViewById(R.id.company);
-        phone_no = (EditText)findViewById(R.id.phone_no);
-        street_address = (EditText)findViewById(R.id.street_address);
-        city = (EditText)findViewById(R.id.city);
+        first_name = findViewById(R.id.first_name);
+        last_name = findViewById(R.id.last_name);
+        company = findViewById(R.id.company);
+        phone_no = findViewById(R.id.phone_no);
+        street_address = findViewById(R.id.street_address);
+        city = findViewById(R.id.city);
 
-        zip = (EditText)findViewById(R.id.zip);
-        country = (EditText)findViewById(R.id.country);
-        button_save_address = (Button)findViewById(R.id.button_save_address);
+        zip = findViewById(R.id.zip);
+        country = findViewById(R.id.country);
+        button_save_address = findViewById(R.id.button_save_address);
         button_save_address.setOnClickListener(button_save_addressOnClickListener);
 
         first_name.setText(st_fName);
@@ -277,9 +278,9 @@ public class EditAddress extends BaseActivity{
 
                                         final Dialog dialog = new Dialog(EditAddress.this);
                                         dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                        TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
+                                        TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
                                         tv_dialog.setText("Your address book has been updated successfully...");
-                                        ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+                                        ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                         dialog.show();
 
                                         new CountDownTimer(4000, 4000) {
@@ -343,12 +344,7 @@ public class EditAddress extends BaseActivity{
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
-                        return null;
-                    }
+                    return mRequestBody == null ? null : mRequestBody.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override

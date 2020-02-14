@@ -54,7 +54,7 @@ public class EwalletActivity extends BaseActivityWithoutCart {
         setContentView(R.layout.activity_ewallet);
         initNavigationDrawer();
 
-        text_ewallet=(TextView)findViewById(R.id.text_ewallet);
+        text_ewallet= findViewById(R.id.text_ewallet);
 
         pref = CommonFun.getPreferences(getApplicationContext());
         tokenData = pref.getString("tokenData", "");
@@ -173,7 +173,7 @@ public class EwalletActivity extends BaseActivityWithoutCart {
                         if(response!=null){
                             try {
 
-                                dist_details = new JSONArray(String.valueOf(response));
+                                dist_details = new JSONArray(response);
                                 JSONObject dist_details_object =dist_details.getJSONObject(0);
 
                                 String current_zone = dist_details_object.getString("current_zone");

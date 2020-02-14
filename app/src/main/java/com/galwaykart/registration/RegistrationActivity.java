@@ -48,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -133,25 +134,25 @@ public class RegistrationActivity extends AppCompatActivity {
 
         image_view_title=findViewById(R.id.image_view_title);
 
-        spinner_customer_type = (Spinner)findViewById(R.id.spinner_customer_type);
-        rel_layout1 = (RelativeLayout)findViewById(R.id.rel_layout1);
-        rel_layout2 = (RelativeLayout)findViewById(R.id.rel_layout2);
-        rel_layout3 = (RelativeLayout)findViewById(R.id.rel_layout3);
-        rel_layout4 = (RelativeLayout)findViewById(R.id.rel_layout4);
+        spinner_customer_type = findViewById(R.id.spinner_customer_type);
+        rel_layout1 = findViewById(R.id.rel_layout1);
+        rel_layout2 = findViewById(R.id.rel_layout2);
+        rel_layout3 = findViewById(R.id.rel_layout3);
+        rel_layout4 = findViewById(R.id.rel_layout4);
 //        rlayout_msg = (RelativeLayout)findViewById(R.id.rlayout_msg);
 
-        text_input_layout6=(TextInputLayout)findViewById(R.id.text_input_layout6);
-        text_input_layout8=(TextInputLayout)findViewById(R.id.text_input_layout8);
+        text_input_layout6= findViewById(R.id.text_input_layout6);
+        text_input_layout8= findViewById(R.id.text_input_layout8);
 
         rel_layout3.setVisibility(View.GONE);
         rel_layout1.setVisibility(View.VISIBLE);
         rel_layout2.setVisibility(View.GONE);
 //        rlayout_msg.setVisibility(View.GONE);
 
-        ed_dist_id=(EditText)findViewById(R.id.ed_dist_id);
+        ed_dist_id= findViewById(R.id.ed_dist_id);
         ed_dist_id.setVisibility(View.GONE);
 
-        button_sign_up = (Button)findViewById(R.id.button_sign_up);
+        button_sign_up = findViewById(R.id.button_sign_up);
         if(!st_group_id.equalsIgnoreCase("4")) {
             button_sign_up.setText("Submit");
         }
@@ -161,23 +162,23 @@ public class RegistrationActivity extends AppCompatActivity {
 
         button_sign_up.setOnClickListener(button_sign_upOnClickListener);
 
-        button_proceed = (Button)findViewById(R.id.button_proceed);
+        button_proceed = findViewById(R.id.button_proceed);
         button_proceed.setOnClickListener(button_proceedOnClickListener);
 
-        button_get_otp = (Button)findViewById(R.id.button_get_otp);
+        button_get_otp = findViewById(R.id.button_get_otp);
         button_get_otp.setOnClickListener(button_get_otpOnClickListener);
 
-        button_Submit = (Button)findViewById(R.id.button_Submit);
+        button_Submit = findViewById(R.id.button_Submit);
         button_Submit.setOnClickListener(button_SubmitOnClickListener);
 
-        dist_id = (EditText)findViewById(R.id.dist_id);
-        first_name = (EditText)findViewById(R.id.first_name);
-        last_name = (EditText)findViewById(R.id.last_name);
-        email = (EditText)findViewById(R.id.email);
-        password = (EditText)findViewById(R.id.password);
-        confirm_password = (EditText)findViewById(R.id.confirm_password);
-        otp =  (EditText)findViewById(R.id.otp);
-        phone_no = (EditText)findViewById(R.id.phone_no);
+        dist_id = findViewById(R.id.dist_id);
+        first_name = findViewById(R.id.first_name);
+        last_name = findViewById(R.id.last_name);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        confirm_password = findViewById(R.id.confirm_password);
+        otp = findViewById(R.id.otp);
+        phone_no = findViewById(R.id.phone_no);
 
     }
 
@@ -214,7 +215,7 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        iv_close_instruction=(ImageView)findViewById(R.id.iv_close_instruction);
+        iv_close_instruction= findViewById(R.id.iv_close_instruction);
         iv_close_instruction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -327,13 +328,13 @@ public class RegistrationActivity extends AppCompatActivity {
         });
 
 
-        relativeLayout_otp_valid=(RelativeLayout)findViewById(R.id.relativeLayout_otp_valid);
-        relativeLayout_irgateway_valid=(RelativeLayout)findViewById(R.id.relativeLayout_irgateway_valid);
-        ed_ir_gateway_password=(EditText) findViewById(R.id.ed_ir_gateway_password);
-        button_IR_Gateway_Submit=(Button)findViewById(R.id.button_IR_Gateway_Submit);
-        radio_otp=(RadioButton)findViewById(R.id.radio_otp);
-        radio_password=(RadioButton)findViewById(R.id.radio_password);
-        radioGroup=(RadioGroup)findViewById(R.id.radioGroup);
+        relativeLayout_otp_valid= findViewById(R.id.relativeLayout_otp_valid);
+        relativeLayout_irgateway_valid= findViewById(R.id.relativeLayout_irgateway_valid);
+        ed_ir_gateway_password= findViewById(R.id.ed_ir_gateway_password);
+        button_IR_Gateway_Submit= findViewById(R.id.button_IR_Gateway_Submit);
+        radio_otp= findViewById(R.id.radio_otp);
+        radio_password= findViewById(R.id.radio_password);
+        radioGroup= findViewById(R.id.radioGroup);
 
         //Log.d("st_group_id",st_group_id);
 
@@ -444,7 +445,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 try {
 
                                     //dist_.details = new JSONArray(String.valueOf(response));
-                                    JSONObject jsonObject=new JSONObject(response.toString());
+                                    JSONObject jsonObject=new JSONObject(response);
                                     //JSONObject dist_details_object =dist_details.getJSONObject(0);
 
                                     String st_status = jsonObject.getString("Status");
@@ -475,7 +476,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                                     JSONObject jsonObj = null;
                                     try {
-                                        jsonObj = new JSONObject(String.valueOf(response));
+                                        jsonObj = new JSONObject(response);
                                         if(jsonObj.has("Message"))
                                         {
                                             st_alert_msg = jsonObj.getString("Message");
@@ -523,12 +524,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return input_data == null ? null : input_data.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                        return null;
-                    }
+                    return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                 }
 
             };
@@ -1027,8 +1023,8 @@ private void registerUser()
 
                                 final Dialog dialog = new Dialog(RegistrationActivity.this);
                                 dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                TextView tv_dialog = (TextView)dialog.findViewById(R.id.tv_dialog);
-                                ImageView image_view_dialog = (ImageView)dialog.findViewById(R.id.image_view_dialog);
+                                TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                 tv_dialog.setText("Registered Successfully..Happy Shopping..");
                                 dialog.show();
 
@@ -1083,13 +1079,7 @@ private void registerUser()
         @Override
         public byte[] getBody() throws AuthFailureError {
 
-            try {
-
-                return input_data == null ? null : input_data.getBytes("utf-8");
-            } catch (UnsupportedEncodingException uee) {
-                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                return null;
-            }
+            return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
             //return new byte[0];
         }
 
@@ -1284,7 +1274,7 @@ private void registerUser()
                         if(response!=null){
                             try {
 
-                                dist_details = new JSONArray(String.valueOf(response));
+                                dist_details = new JSONArray(response);
                                 JSONObject dist_details_object =dist_details.getJSONObject(0);
 
                                 st_Fname = dist_details_object.getString("FName");
@@ -1331,7 +1321,7 @@ private void registerUser()
 
                                 JSONObject jsonObj = null;
                                 try {
-                                    jsonObj = new JSONObject(String.valueOf(response));
+                                    jsonObj = new JSONObject(response);
                                     if(jsonObj.has("Message"))
                                     {
                                         st_alert_msg = jsonObj.getString("Message");
@@ -1498,7 +1488,7 @@ private void registerUser()
                         if(response!=null){
                             try {
 
-                                dist_details = new JSONArray(String.valueOf(response));
+                                dist_details = new JSONArray(response);
                                 JSONObject dist_details_object =dist_details.getJSONObject(0);
 
                                 st_Fname = dist_details_object.getString("FName");
@@ -1512,7 +1502,7 @@ private void registerUser()
 
                                 JSONObject jsonObj = null;
                                 try {
-                                    jsonObj = new JSONObject(String.valueOf(response));
+                                    jsonObj = new JSONObject(response);
                                     if(jsonObj.has("Message"))
                                     {
                                         st_alert_msg = jsonObj.getString("Message");
@@ -1665,7 +1655,7 @@ private void registerUser()
                         if(response!=null){
                             try {
 
-                                dist_details = new JSONArray(String.valueOf(response));
+                                dist_details = new JSONArray(response);
                                 JSONObject dist_details_object =dist_details.getJSONObject(0);
 
                                 st_Fname = dist_details_object.getString("employee_name");
@@ -1870,8 +1860,8 @@ private void registerDistributor(){
 
                                     final Dialog dialog = new Dialog(RegistrationActivity.this);
                                     dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                    TextView tv_dialog = (TextView)dialog.findViewById(R.id.tv_dialog);
-                                    ImageView image_view_dialog = (ImageView)dialog.findViewById(R.id.image_view_dialog);
+                                    TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                    ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                     tv_dialog.setText("Registered Successfully..Happy Shopping..");
                                     dialog.show();
 
@@ -1940,13 +1930,7 @@ private void registerDistributor(){
             @Override
             public byte[] getBody() throws AuthFailureError {
 
-                try {
-
-                    return input_data == null ? null : input_data.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                    return null;
-                }
+                return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                 //return new byte[0];
             }
 

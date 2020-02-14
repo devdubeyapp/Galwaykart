@@ -68,17 +68,17 @@ public class TrackYourOrderRtn extends BaseActivity {
         initNavigationDrawer();
         pref = CommonFun.getPreferences(getApplicationContext());
         st_selected_Track_id = pref.getString("st_selected_Track_id", "");
-        tracking_vertical_bar = (ProgressBar) findViewById(R.id.tracking_vertical_bar);
+        tracking_vertical_bar = findViewById(R.id.tracking_vertical_bar);
 
 
-        tv_shipment_value = (TextView) findViewById(R.id.tv_shipment_value);
-        tv_tracking_no_value = (TextView) findViewById(R.id.tv_tracking_no_value);
+        tv_shipment_value = findViewById(R.id.tv_shipment_value);
+        tv_tracking_no_value = findViewById(R.id.tv_tracking_no_value);
 
-        tv_out_of_delivery = (TextView) findViewById(R.id.tv_out_of_delivery);
-        tv_in_transit = (TextView) findViewById(R.id.tv_in_transit);
-        tv_pick_up_process = (TextView) findViewById(R.id.tv_pick_up_process);
-        tv_order_placed = (TextView) findViewById(R.id.tv_order_placed);
-        tv_delivered = (TextView) findViewById(R.id.tv_delivered);
+        tv_out_of_delivery = findViewById(R.id.tv_out_of_delivery);
+        tv_in_transit = findViewById(R.id.tv_in_transit);
+        tv_pick_up_process = findViewById(R.id.tv_pick_up_process);
+        tv_order_placed = findViewById(R.id.tv_order_placed);
+        tv_delivered = findViewById(R.id.tv_delivered);
 
 
         trackShipment();

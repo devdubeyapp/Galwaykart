@@ -87,7 +87,7 @@ public class CouponReportActivity extends BaseActivityWithoutCart {
         initNavigationDrawer();
 
 
-        coupon_report_recycler_view= (RecyclerView) findViewById(R.id.coupon_report_recycler_view);
+        coupon_report_recycler_view= findViewById(R.id.coupon_report_recycler_view);
         coupon_report_recycler_view.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.isSmoothScrollbarEnabled();
@@ -96,10 +96,10 @@ public class CouponReportActivity extends BaseActivityWithoutCart {
 
         cc_list = new ArrayList<>();
 
-        iv_image_no_details=(ImageView)findViewById(R.id.iv_image_no_details);
+        iv_image_no_details= findViewById(R.id.iv_image_no_details);
         iv_image_no_details.setVisibility(View.GONE);
 
-        progress_bar_pegination = (ProgressBar) findViewById(R.id.progress_bar_pegination);
+        progress_bar_pegination = findViewById(R.id.progress_bar_pegination);
       //  loadNextDataFromApi(currentPage);
 //        scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
 //            @Override

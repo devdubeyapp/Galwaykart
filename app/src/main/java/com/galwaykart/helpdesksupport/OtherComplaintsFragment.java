@@ -54,6 +54,7 @@ import com.galwaykart.helpdesksupport.orderdetails.CompOrderDetailsAdapter;
 import com.galwaykart.helpdesksupport.orderdetails.ComplaintOrderDetailModel;
 import com.galwaykart.testimonial.CreateTestimonialActivity;
 import com.galwaykart.testimonial.GlobalUtilityClass;
+import com.google.android.gms.common.internal.service.Common;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -65,6 +66,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -98,6 +100,8 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
     ArrayList<String> str_reason_array = new ArrayList<String>();
     ArrayList<String> str_condition_array = new ArrayList<String>();
     ArrayList<String> str_item_id_array = new ArrayList<String>();
+    ArrayList<String> str_pname_array = new ArrayList<String>();
+    ArrayList<String> str_psku_array = new ArrayList<String>();
 
 
     private ImageView capture_image1, capture_image2, capture_image3, capture_image4, capture_image5, capture_image6;
@@ -136,35 +140,35 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         pref = getActivity().getSharedPreferences("glazekartapp", MODE_PRIVATE);
         st_token_data=pref.getString("tokenData","");
 
-        write_complaint_et = (EditText) v.findViewById(R.id.write_complaint_et);
+        write_complaint_et = v.findViewById(R.id.write_complaint_et);
 
-        ly_write = (LinearLayout) v.findViewById(R.id.ly_write);
+        ly_write = v.findViewById(R.id.ly_write);
         ly_write.setVisibility(View.GONE);
 
-        capture_image1 = (ImageView) v.findViewById(R.id.capture_image1);
-        capture_image2 = (ImageView) v.findViewById(R.id.capture_image2);
-        capture_image3 = (ImageView) v.findViewById(R.id.capture_image3);
-        capture_image4 = (ImageView) v.findViewById(R.id.capture_image4);
-        capture_image5 = (ImageView) v.findViewById(R.id.capture_image5);
-        capture_image6 = (ImageView) v.findViewById(R.id.capture_image6);
+        capture_image1 = v.findViewById(R.id.capture_image1);
+        capture_image2 = v.findViewById(R.id.capture_image2);
+        capture_image3 = v.findViewById(R.id.capture_image3);
+        capture_image4 = v.findViewById(R.id.capture_image4);
+        capture_image5 = v.findViewById(R.id.capture_image5);
+        capture_image6 = v.findViewById(R.id.capture_image6);
 
-        compaint_image_img1 = (ImageView) v.findViewById(R.id.compaint_image_img1);
-        compaint_image_img2 = (ImageView) v.findViewById(R.id.compaint_image_img2);
-        compaint_image_img3 = (ImageView) v.findViewById(R.id.compaint_image_img3);
-        compaint_image_img4 = (ImageView) v.findViewById(R.id.compaint_image_img4);
-        compaint_image_img5 = (ImageView) v.findViewById(R.id.compaint_image_img5);
-        compaint_image_img6 = (ImageView) v.findViewById(R.id.compaint_image_img6);
-
-
-        rl_image1 = (RelativeLayout) v.findViewById(R.id.rl_image1);
-        rl_image2 = (RelativeLayout) v.findViewById(R.id.rl_image2);
-        rl_image3 = (RelativeLayout) v.findViewById(R.id.rl_image3);
-        rl_image4 = (RelativeLayout) v.findViewById(R.id.rl_image4);
-        rl_image5 = (RelativeLayout) v.findViewById(R.id.rl_image5);
-        rl_image6 = (RelativeLayout) v.findViewById(R.id.rl_image6);
+        compaint_image_img1 = v.findViewById(R.id.compaint_image_img1);
+        compaint_image_img2 = v.findViewById(R.id.compaint_image_img2);
+        compaint_image_img3 = v.findViewById(R.id.compaint_image_img3);
+        compaint_image_img4 = v.findViewById(R.id.compaint_image_img4);
+        compaint_image_img5 = v.findViewById(R.id.compaint_image_img5);
+        compaint_image_img6 = v.findViewById(R.id.compaint_image_img6);
 
 
-        tv_compaint_submit = (TextView) v.findViewById(R.id.tv_compaint_submit);
+        rl_image1 = v.findViewById(R.id.rl_image1);
+        rl_image2 = v.findViewById(R.id.rl_image2);
+        rl_image3 = v.findViewById(R.id.rl_image3);
+        rl_image4 = v.findViewById(R.id.rl_image4);
+        rl_image5 = v.findViewById(R.id.rl_image5);
+        rl_image6 = v.findViewById(R.id.rl_image6);
+
+
+        tv_compaint_submit = v.findViewById(R.id.tv_compaint_submit);
 
 
         Init();
@@ -182,7 +186,8 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         str_reason_array = new ArrayList<String>();
         str_condition_array = new ArrayList<String>();
         str_item_id_array = new ArrayList<String>();
-
+        str_pname_array= new ArrayList<String>();
+        str_psku_array= new ArrayList<String>();
 
         rl_image2.setVisibility(View.GONE);
         rl_image3.setVisibility(View.GONE);
@@ -269,7 +274,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
             }
             //if only one image, set capture image here
             compaint_image_img1.setImageBitmap(bitmap);
-            capture_image1.setVisibility(View.GONE);
+            //capture_image1.setVisibility(View.GONE);
             rl_image2.setVisibility(View.VISIBLE);
             tv_compaint_submit.setVisibility(View.VISIBLE);
 
@@ -301,7 +306,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         protected void onPostExecute(String s) {
             //if only one image, set capture image here
             compaint_image_img2.setImageBitmap(bitmap);
-            capture_image2.setVisibility(View.GONE);
+            //capture_image2.setVisibility(View.GONE);
             rl_image3.setVisibility(View.VISIBLE);
 
 
@@ -332,7 +337,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         protected void onPostExecute(String s) {
             //if only one image, set capture image here
             compaint_image_img3.setImageBitmap(bitmap);
-            capture_image3.setVisibility(View.GONE);
+            //capture_image3.setVisibility(View.GONE);
             rl_image4.setVisibility(View.VISIBLE);
 
         }
@@ -362,7 +367,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         protected void onPostExecute(String s) {
             //if only one image, set capture image here
             compaint_image_img4.setImageBitmap(bitmap);
-            capture_image4.setVisibility(View.GONE);
+            //capture_image4.setVisibility(View.GONE);
             rl_image5.setVisibility(View.VISIBLE);
 
         }
@@ -392,7 +397,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         protected void onPostExecute(String s) {
             //if only one image, set capture image here
             compaint_image_img5.setImageBitmap(bitmap);
-            capture_image5.setVisibility(View.GONE);
+            //capture_image5.setVisibility(View.GONE);
             rl_image6.setVisibility(View.VISIBLE);
 
         }
@@ -422,7 +427,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         protected void onPostExecute(String s) {
             //if only one image, set capture image here
             compaint_image_img6.setImageBitmap(bitmap);
-            capture_image6.setVisibility(View.GONE);
+            //capture_image6.setVisibility(View.GONE);
             //end set capture image here
 
         }
@@ -657,10 +662,17 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 20);
     }
+
     private void cameraIntent6() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 21);
     }
+
+
+
+
+
+
 
 
     @Override
@@ -781,7 +793,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
                 bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
                 String path = getPathGalleryImage(bm);
                 imageFile = new File(path);
-                Log.e("path of gallery", imageFile.getAbsolutePath().toString());
+                Log.e("path of gallery", imageFile.getAbsolutePath());
                 Log.e("image path from gallery", path);
 
                 //start convert path to base64
@@ -826,264 +838,264 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         //compaint_image_img1.setVisibility(View.VISIBLE);
 
         compaint_image_img1.setImageBitmap(bm);
-        capture_image1.setVisibility(View.GONE);
+        //capture_image1.setVisibility(View.GONE);
         tv_compaint_submit.setVisibility(View.VISIBLE);
         rl_image2.setVisibility(View.VISIBLE);
 
     }
 
-   private void onSelectFromGalleryResult2(Intent data, int index) {
-      Bitmap bm = null;
-       if (data != null) {
-           try {
+    private void onSelectFromGalleryResult2(Intent data, int index) {
+        Bitmap bm = null;
+        if (data != null) {
+            try {
                 bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
                 String path = getPathGalleryImage(bm);
-               imageFile = new File(path);
-               Log.e("path of gallery", imageFile.getAbsolutePath().toString());
-              Log.e("image path from gallery", path);
+                imageFile = new File(path);
+                Log.e("path of gallery", imageFile.getAbsolutePath());
+                Log.e("image path from gallery", path);
 
-              //start convert path to base64
+                //start convert path to base64
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
                 image_base_64_str_2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 Log.e("encoded base64 bm", image_base_64_str_2);
 
-               switch (index) {
-                   case 1:
-                       image_base_64_str_1 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 2:
-                       image_base_64_str_2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 3:
-                       image_base_64_str_3 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 4:
-                       image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 5:
-                       image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 6:
-                       image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-               }
+                switch (index) {
+                    case 1:
+                        image_base_64_str_1 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 2:
+                        image_base_64_str_2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 3:
+                        image_base_64_str_3 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 4:
+                        image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 5:
+                        image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 6:
+                        image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                }
 
                 //end convert path to base64
 
-           } catch (IOException e) {
-               e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-       }
+        }
         // compaint_image_img1.setVisibility(View.VISIBLE);
         compaint_image_img2.setImageBitmap(bm);
-       capture_image2.setVisibility(View.GONE);
-       rl_image3.setVisibility(View.VISIBLE);
+        //capture_image2.setVisibility(View.GONE);
+        rl_image3.setVisibility(View.VISIBLE);
 
-   }
+    }
 
     private void onSelectFromGalleryResult3(Intent data, int index) {
         Bitmap bm = null;
         if (data != null) {
-           try {
-               bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
-               String path = getPathGalleryImage(bm);
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
+                String path = getPathGalleryImage(bm);
                 imageFile = new File(path);
-               Log.e("path of gallery", imageFile.getAbsolutePath().toString());
+                Log.e("path of gallery", imageFile.getAbsolutePath());
                 Log.e("image path from gallery", path);
 
                 //start convert path to base64
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-               bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
                 image_base_64_str_3 = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-               switch (index) {
-                   case 1:
-                       image_base_64_str_1 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 2:
-                       image_base_64_str_2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 3:
-                       image_base_64_str_3 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 4:
-                       image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 5:
-                       image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 6:
-                       image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-               }
+                switch (index) {
+                    case 1:
+                        image_base_64_str_1 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 2:
+                        image_base_64_str_2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 3:
+                        image_base_64_str_3 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 4:
+                        image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 5:
+                        image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 6:
+                        image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                }
 
 
-               //end convert path to base64
+                //end convert path to base64
 
             } catch (IOException e) {
                 e.printStackTrace();
-           }
+            }
         }
-       // compaint_image_img1.setVisibility(View.VISIBLE);
+        // compaint_image_img1.setVisibility(View.VISIBLE);
         compaint_image_img3.setImageBitmap(bm);
-        capture_image3.setVisibility(View.GONE);
+        //capture_image3.setVisibility(View.GONE);
         rl_image4.setVisibility(View.VISIBLE);
 
     }
 
     private void onSelectFromGalleryResult4(Intent data, int index) {
-       Bitmap bm = null;
-       if (data != null) {
-           try {
-               bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
+        Bitmap bm = null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
                 String path = getPathGalleryImage(bm);
-               imageFile = new File(path);
-                Log.e("path of gallery", imageFile.getAbsolutePath().toString());
+                imageFile = new File(path);
+                Log.e("path of gallery", imageFile.getAbsolutePath());
                 Log.e("image path from gallery", path);
 
                 //start convert path to base64
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
-               image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 Log.e("encoded base64 bm", image_base_64_str_4);
 
-               switch (index) {
-                   case 1:
-                       image_base_64_str_1 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 2:
-                       image_base_64_str_2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 3:
-                       image_base_64_str_3 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 4:
-                       image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 5:
-                       image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 6:
-                       image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-               }
+                switch (index) {
+                    case 1:
+                        image_base_64_str_1 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 2:
+                        image_base_64_str_2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 3:
+                        image_base_64_str_3 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 4:
+                        image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 5:
+                        image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 6:
+                        image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                }
                 //end convert path to base64
 
-           } catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         // compaint_image_img1.setVisibility(View.VISIBLE);
         compaint_image_img4.setImageBitmap(bm);
-       capture_image4.setVisibility(View.GONE);
-       rl_image5.setVisibility(View.VISIBLE);
+        //capture_image4.setVisibility(View.GONE);
+        rl_image5.setVisibility(View.VISIBLE);
 
     }
 
-   private void onSelectFromGalleryResult5(Intent data, int index) {
-       Bitmap bm = null;
+    private void onSelectFromGalleryResult5(Intent data, int index) {
+        Bitmap bm = null;
         if (data != null) {
-           try {
+            try {
                 bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
                 String path = getPathGalleryImage(bm);
-               imageFile = new File(path);
-                Log.e("path of gallery", imageFile.getAbsolutePath().toString());
+                imageFile = new File(path);
+                Log.e("path of gallery", imageFile.getAbsolutePath());
                 Log.e("image path from gallery", path);
 
-               //start convert path to base64
-               ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                //start convert path to base64
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-               byte[] byteArray = byteArrayOutputStream.toByteArray();
-               image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-               Log.e("encoded base64 bm", image_base_64_str_5);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                Log.e("encoded base64 bm", image_base_64_str_5);
 
-               switch (index) {
-                   case 1:
-                       image_base_64_str_1 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 2:
-                       image_base_64_str_2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 3:
-                       image_base_64_str_3 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 4:
-                       image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 5:
-                       image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 6:
-                       image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-               }
-               //end convert path to base64
+                switch (index) {
+                    case 1:
+                        image_base_64_str_1 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 2:
+                        image_base_64_str_2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 3:
+                        image_base_64_str_3 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 4:
+                        image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 5:
+                        image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 6:
+                        image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                }
+                //end convert path to base64
 
             } catch (IOException e) {
-               e.printStackTrace();
-           }
-       }
-       // compaint_image_img1.setVisibility(View.VISIBLE);
+                e.printStackTrace();
+            }
+        }
+        // compaint_image_img1.setVisibility(View.VISIBLE);
         compaint_image_img5.setImageBitmap(bm);
-        capture_image5.setVisibility(View.GONE);
+        //capture_image5.setVisibility(View.GONE);
         rl_image6.setVisibility(View.VISIBLE);
 
     }
 
-   private void onSelectFromGalleryResult6(Intent data, int index) {
-       Bitmap bm = null;
+    private void onSelectFromGalleryResult6(Intent data, int index) {
+        Bitmap bm = null;
         if (data != null) {
-           try {
+            try {
                 bm = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
                 String path = getPathGalleryImage(bm);
                 imageFile = new File(path);
-              Log.e("path of gallery", imageFile.getAbsolutePath().toString());
+                Log.e("path of gallery", imageFile.getAbsolutePath());
                 Log.e("image path from gallery", path);
 
-               //start convert path to base64
+                //start convert path to base64
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-               bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-               byte[] byteArray = byteArrayOutputStream.toByteArray();
-               image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-               Log.e("encoded base64 bm", image_base_64_str_6);
+                bm.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                Log.e("encoded base64 bm", image_base_64_str_6);
 
-               switch (index) {
-                   case 1:
-                       image_base_64_str_1 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 2:
-                       image_base_64_str_2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 3:
-                       image_base_64_str_3 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 4:
-                       image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 5:
-                       image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-                   case 6:
-                       image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                       break;
-               }
+                switch (index) {
+                    case 1:
+                        image_base_64_str_1 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 2:
+                        image_base_64_str_2 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 3:
+                        image_base_64_str_3 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 4:
+                        image_base_64_str_4 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 5:
+                        image_base_64_str_5 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                    case 6:
+                        image_base_64_str_6 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        break;
+                }
 
 
                 //end convert path to base64
 
             } catch (IOException e) {
                 e.printStackTrace();
-           }
+            }
         }
-       // compaint_image_img1.setVisibility(View.VISIBLE);
-       compaint_image_img6.setImageBitmap(bm);
-     capture_image6.setVisibility(View.GONE);
+        // compaint_image_img1.setVisibility(View.VISIBLE);
+        compaint_image_img6.setImageBitmap(bm);
+        //capture_image6.setVisibility(View.GONE);
 
- }
+    }
 
     public String getPathGalleryImage(Bitmap myBitmap) {
 
@@ -1104,7 +1116,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
                     new String[]{f.getPath()},
                     new String[]{"image/jpeg"}, null);
             fo.close();
-            Log.d("TAG", "File Saved::--->" + f.getAbsolutePath());
+            //Log.d("TAG", "File Saved::--->" + f.getAbsolutePath());
 
             return f.getAbsolutePath();
         } catch (IOException e1) {
@@ -1165,7 +1177,8 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
                                                 str_resolution_array.add(str_complaint_category_id);
                                                 str_reason_array.add(str_complaint_category_id);
                                                 str_condition_array.add(str_complaint_category_id);
-                                                str_item_id_array.add(jsonObjFinal.getString("product_id"));
+                                                str_item_id_array.add(jsonObjFinal.getString("item_id"));
+
 
                                                 String order_id = jsonObjFinal.getString("order_id");
                                                 String product_id = jsonObjFinal.getString("product_id");
@@ -1177,18 +1190,15 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
                                                 String order_date_time= jsonObjFinal.getString("updated_at");
                                                 String image = jsonObjFinal.getString("image");
 
-                                                Log.e("order_id",order_id);
-                                                Log.e("product_id",product_id);
-                                                Log.e("sku",sku);
-                                                Log.e("product_type",product_type);
-                                                Log.e("product_name",product_name);
-                                                Log.e("product_price",product_price);
-                                                Log.e("qty_ordered_res",qty_ordered);
-                                                Log.e("order_date_time",order_date_time);
-                                                Log.e("image",image);
+                                                str_pname_array.add(product_name);
+                                                str_psku_array.add(sku);
+
+
                                             }
                                             Log.e("str_qty_array",str_qty_array + "");
                                             Log.e("str_item_id_array",str_item_id_array + "");
+
+
                                             inputProductsDetails();
 
 
@@ -1245,27 +1255,37 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
     }
 
 
+    /**
+     *
+     * Author:
+     */
     public void inputProductsDetails() {
         stProductData = "";
         for(int i=0;i<json_len_arry;i++)
         {
             if (stProductData.equalsIgnoreCase("")){
 
+
+
                 stProductData = "{\"qty\":"+str_qty_array.get(i)+"," +
                         "\"resolution\":"+str_resolution_array.get(i)+"," +
                         "\"order_qty\":"+str_qty_array.get(i)+"," +
-                        "\"reason\":"+str_reason_array.get(i)+"," +
-                        "\"condition\":"+str_condition_array.get(i)+"," +
+                        "\"reason\":"+str_reason_array.get(i)+
+                        ",\"product_name\":\"" +str_pname_array.get(i)+"\""+
+                        ",\"product_sku\":\"" +str_psku_array.get(i)+"\""+
+                        ",\"condition\":"+str_condition_array.get(i)+"," +
                         "\"orderItemId\":"+str_item_id_array.get(i)+"}";
 
             }
             else
-                {
+            {
                 stProductData = stProductData+","+"{\"qty\":"+str_qty_array.get(i)+"," +
                         "\"resolution\":"+str_resolution_array.get(i)+"," +
                         "\"order_qty\":"+str_qty_array.get(i)+"," +
-                        "\"reason\":"+str_reason_array.get(i)+"," +
-                        "\"condition\":"+str_condition_array.get(i)+"," +
+                        "\"reason\":"+str_reason_array.get(i)+
+                        ",\"product_name\":\"" +str_pname_array.get(i)+"\""+
+                        ",\"product_sku\":\"" +str_psku_array.get(i)+"\""+
+                        ",\"condition\":"+str_condition_array.get(i)+"," +
                         "\"orderItemId\":"+str_item_id_array.get(i)+"}";
             }
         }
@@ -1273,44 +1293,44 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
     public void inputImageData() {
         stImageData = "";
 
-            if(!image_base_64_str_1.equals("")) {
-                if (stImageData.equalsIgnoreCase("")) {
+        if(!image_base_64_str_1.equals("")) {
+            if (stImageData.equalsIgnoreCase("")) {
 
 
-                    String image_file_name = entity_id + new Date().getTime() + "_1.png";
+                String image_file_name = entity_id + new Date().getTime() + "_1.png";
 
-                    stImageData = "{\"name\":\"" + image_file_name + "\"," +
+                stImageData = "{\"name\":\"" + image_file_name + "\"," +
+                        "\"ext\":\"" + ".png" + "\"," +
+                        "\"image\":\"" + image_base_64_str_1.trim().replaceAll("\n", "") + "\"}";
+            } else {
+                if (!compaint_image_img2.equals("")) {
+                    String image_file_name = entity_id + new Date().getTime() + "_2.png";
+                    stImageData = stImageData + "," + "{\"name\":\"" + image_file_name + "\"," +
                             "\"ext\":\"" + ".png" + "\"," +
-                            "\"image\":\"" + image_base_64_str_1.trim().replaceAll("\n", "") + "\"}";
-                } else {
-                    if (!compaint_image_img2.equals("")) {
-                        String image_file_name = entity_id + new Date().getTime() + "_2.png";
-                        stImageData = stImageData + "," + "{\"name\":\"" + image_file_name + "\"," +
-                                "\"ext\":\"" + ".png" + "\"," +
-                                "\"image\":\"" + image_base_64_str_2.trim().replaceAll("\n", "") + "\"}";
-                    } else if (!compaint_image_img3.equals("")) {
-                        String image_file_name = entity_id + new Date().getTime() + "_3.png";
-                        stImageData = stImageData + "," + "{\"name\":\"" + image_file_name + "\"," +
-                                "\"ext\":\"" + ".png" + "\"," +
-                                "\"image\":\"" + image_base_64_str_3.trim().replaceAll("\n", "") + "\"}";
-                    } else if (!compaint_image_img4.equals("")) {
-                        String image_file_name = entity_id + new Date().getTime() + "_4.png";
-                        stImageData = stImageData + "," + "{\"name\":\"" + image_file_name + "\"," +
-                                "\"ext\":\"" + ".png" + "\"," +
-                                "\"image\":\"" + image_base_64_str_4.trim().replaceAll("\n", "") + "\"}";
-                    } else if (!compaint_image_img5.equals("")) {
-                        String image_file_name = entity_id + new Date().getTime() + "_5.png";
-                        stImageData = stImageData + "," + "{\"name\":\"" + image_file_name + "\"," +
-                                "\"ext\":\"" + ".png" + "\"," +
-                                "\"image\":\"" + image_base_64_str_5.trim().replaceAll("\n", "") + "\"}";
-                    } else if (!compaint_image_img6.equals("")) {
-                        String image_file_name = entity_id + new Date().getTime() + "_5.png";
-                        stImageData = stImageData + "," + "{\"name\":\"" + image_file_name + "\"," +
-                                "\"ext\":\"" + ".png" + "\"," +
-                                "\"image\":\"" + image_base_64_str_6.trim().replaceAll("\n", "") + "\"}";
-                    }
+                            "\"image\":\"" + image_base_64_str_2.trim().replaceAll("\n", "") + "\"}";
+                } else if (!compaint_image_img3.equals("")) {
+                    String image_file_name = entity_id + new Date().getTime() + "_3.png";
+                    stImageData = stImageData + "," + "{\"name\":\"" + image_file_name + "\"," +
+                            "\"ext\":\"" + ".png" + "\"," +
+                            "\"image\":\"" + image_base_64_str_3.trim().replaceAll("\n", "") + "\"}";
+                } else if (!compaint_image_img4.equals("")) {
+                    String image_file_name = entity_id + new Date().getTime() + "_4.png";
+                    stImageData = stImageData + "," + "{\"name\":\"" + image_file_name + "\"," +
+                            "\"ext\":\"" + ".png" + "\"," +
+                            "\"image\":\"" + image_base_64_str_4.trim().replaceAll("\n", "") + "\"}";
+                } else if (!compaint_image_img5.equals("")) {
+                    String image_file_name = entity_id + new Date().getTime() + "_5.png";
+                    stImageData = stImageData + "," + "{\"name\":\"" + image_file_name + "\"," +
+                            "\"ext\":\"" + ".png" + "\"," +
+                            "\"image\":\"" + image_base_64_str_5.trim().replaceAll("\n", "") + "\"}";
+                } else if (!compaint_image_img6.equals("")) {
+                    String image_file_name = entity_id + new Date().getTime() + "_5.png";
+                    stImageData = stImageData + "," + "{\"name\":\"" + image_file_name + "\"," +
+                            "\"ext\":\"" + ".png" + "\"," +
+                            "\"image\":\"" + image_base_64_str_6.trim().replaceAll("\n", "") + "\"}";
                 }
             }
+        }
 
         Log.e("stImageData",stImageData);
     }
@@ -1332,7 +1352,9 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         //login_group_id, login_fname, login_lname
 
         String st_submit_complaint_url = Global_Settings.api_url + "rest/V1/m-help-requestsubmit";
-        Log.d("st_submit_complaint_url", st_submit_complaint_url);
+        //Log.d("st_submit_complaint_url", st_submit_complaint_url);
+
+        //Log.d("input_data",input_data);
 
         input_data ="{\"storeId\":1," +
                 "\"orderEntityId\":"+entity_id+"," +
@@ -1340,7 +1362,10 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
                 "\"customerlastName\":\""+str_last_name+"\"," +
                 "\"productData\":["+stProductData+"]," +
                 "\"customerId\":"+str_customer_id+"," +
-                "\"comment\":\""+str_write_complaint+"\"" +
+                "\"sourceId\":\"" + "4" + "\"" +
+                ",\"videoUrl\":\"" +"\""+
+                ",\"requestTypeId\":\"" + str_complaint_category_id + "\"" +
+                ",\"comment\":\""+str_write_complaint+"\"" +
                 ",\"imageData\":["+stImageData+"]}";
 
 
@@ -1373,14 +1398,14 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
 
                                         if (respo_status.equals("1"))
                                         {
-                                           // Toast.makeText(getActivity(), message11, Toast.LENGTH_LONG).show();
+                                            // Toast.makeText(getActivity(), message11, Toast.LENGTH_LONG).show();
                                             //Snackbar.make(getActivity().findViewById(android.R.id.content), message11, Snackbar.LENGTH_LONG).show();
 
                                             dialog = new Dialog(getActivity());
                                             dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                            TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
+                                            TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
                                             tv_dialog.setText(message11);
-                                            ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+                                            ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                             dialog.show();
 
                                             new CountDownTimer(2000, 2000) {
@@ -1402,7 +1427,8 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
                                             }.start();
 
                                         } else {
-                                            Snackbar.make(getActivity().findViewById(android.R.id.content), message11, Snackbar.LENGTH_LONG).show();
+                                            //Snackbar.make(getActivity().findViewById(android.R.id.content), message11, Snackbar.LENGTH_LONG).show();
+                                            CommonFun.alertError(getActivity(),message11);
                                         }
                                     }
 
@@ -1411,7 +1437,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
                                 {
                                     if (pDialog.isShowing())
                                         pDialog.dismiss();
-                                       String err_msg="currently, there is no help available";
+                                    String err_msg="currently, there is no help available";
                                 }
                             }
 
@@ -1429,14 +1455,14 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
                         String errorMsg = "";
                         if (response != null && response.data != null) {
                             String errorString = new String(response.data);
-                            Log.d("log_error", errorString);
+                            //Log.d("log_error", errorString);
 
                             try {
                                 JSONObject object = new JSONObject(errorString);
                                 String st_msg = object.getString("message");
                                 String st_code = object.getString("code");
                                 CommonFun.alertError(getActivity(), st_msg);
-                                Log.d("st_code",st_code);
+                                //Log.d("st_code",st_code);
                             } catch (JSONException e) {
                                 //e.printStackTrace();
                                 CommonFun.showVolleyException(error, getActivity());
@@ -1463,12 +1489,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return input_data == null ? null : input_data.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                        return null;
-                    }
+                    return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override

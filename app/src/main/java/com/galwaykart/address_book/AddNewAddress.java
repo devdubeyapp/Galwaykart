@@ -39,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,6 +50,7 @@ import java.util.Set;
  * User can add new Address Activity
  * Billing and Shipping Address
  *
+ * Ankesh Kumar
  */
 
 public class AddNewAddress extends BaseActivity {
@@ -120,7 +122,7 @@ public class AddNewAddress extends BaseActivity {
         //super.onBackPressed();
 
         Intent intent=null;
-        Log.d("stst_comeFrom",st_come_from_update);
+        //Log.d("stst_comeFrom",st_come_from_update);
         if(st_come_from_update.equalsIgnoreCase("updateaddress")) {
             intent = new Intent(AddNewAddress.this, CustomerAddressBook.class);
             intent.putExtra("st_come_from_update","updateaddress");
@@ -187,14 +189,14 @@ public class AddNewAddress extends BaseActivity {
 
         }
 
-        Log.d("total_data", String.valueOf(total_address_data));
+        //Log.d("total_data", String.valueOf(total_address_data));
         calling_first=true;
         pref = CommonFun.getPreferences(getApplicationContext());
         tokenData = pref.getString("tokenData", "");
 
 
         arrayList = new ArrayList<HashMap<String,String>>();
-        spinner_state_profile = (Spinner)findViewById(R.id.spinner_state_profile);
+        spinner_state_profile = findViewById(R.id.spinner_state_profile);
         spinner_state_profile.setEnabled(false);
         st_get_State_URL = Global_Settings.api_url+"rest/V1/m-state/statelist";
 
@@ -216,7 +218,7 @@ public class AddNewAddress extends BaseActivity {
 //                }
 //            }
             //st_come_from_update = pref.getString("st_come_from_update","");
-            Log.d("st_come_from_update",st_come_from_update);
+            //Log.d("st_come_from_update",st_come_from_update);
 
         }
 
@@ -241,8 +243,8 @@ public class AddNewAddress extends BaseActivity {
         login_group_id=pref.getString("login_group_id","");
 
 
-        chk_shipping=(CheckBox)findViewById(R.id.chk_shipping);
-        chk_billing=(CheckBox)findViewById(R.id.chk_billing);
+        chk_shipping= findViewById(R.id.chk_shipping);
+        chk_billing= findViewById(R.id.chk_billing);
 
         if(total_address_data==0){
 
@@ -267,12 +269,12 @@ public class AddNewAddress extends BaseActivity {
         }
 
 
-        tvChkText=(TextView)findViewById(R.id.tvChkText);
+        tvChkText= findViewById(R.id.tvChkText);
 
 
 
         //add_type=pref.getString("addnew","");
-        tv_title_address=(TextView)findViewById(R.id.tv_title_address);
+        tv_title_address= findViewById(R.id.tv_title_address);
 
 
 
@@ -280,19 +282,19 @@ public class AddNewAddress extends BaseActivity {
         tvChkText.setVisibility(View.GONE);
 
 
-        first_name = (EditText)findViewById(R.id.first_name);
-        last_name = (EditText)findViewById(R.id.last_name);
-        company = (EditText)findViewById(R.id.company);
-        phone_no = (EditText)findViewById(R.id.phone_no);
+        first_name = findViewById(R.id.first_name);
+        last_name = findViewById(R.id.last_name);
+        company = findViewById(R.id.company);
+        phone_no = findViewById(R.id.phone_no);
         //phone_no.setVisibility(View.VISIBLE);
 
 
-        street_address = (EditText)findViewById(R.id.street_address);
-        city = (EditText)findViewById(R.id.city);
+        street_address = findViewById(R.id.street_address);
+        city = findViewById(R.id.city);
 
-        zip = (EditText)findViewById(R.id.zip);
-        country = (EditText)findViewById(R.id.country);
-        button_save_address = (Button)findViewById(R.id.button_save_address);
+        zip = findViewById(R.id.zip);
+        country = findViewById(R.id.country);
+        button_save_address = findViewById(R.id.button_save_address);
         country.setVisibility(View.GONE);
 
 
@@ -364,7 +366,7 @@ public class AddNewAddress extends BaseActivity {
     private void getStateCity(Editable editable) {
 
      String st_get_state_city_URL = Global_Settings.galway_wcf_api_url+"Distributor.svc/GetPincodeDetails/"+editable+"/0";
-     Log.d("st_get_state_city_URL",st_get_state_city_URL);
+     //Log.d("st_get_state_city_URL",st_get_state_city_URL);
 
             try {
 
@@ -388,7 +390,7 @@ public class AddNewAddress extends BaseActivity {
 
                                     if(response!=null)
                                     {
-                                        Log.d("VOLLEYresponse", response.toString());
+                                        //Log.d("VOLLEYresponse", response.toString());
                                         JSONArray array = new JSONArray(response);
 
                                         arr_pin_state_id = new String[array.length()];
@@ -445,13 +447,7 @@ public class AddNewAddress extends BaseActivity {
                     @Override
                     public byte[] getBody() throws AuthFailureError {
 
-                        try {
-
-                            return st_input_data == null ? null : st_input_data.getBytes("utf-8");
-                        } catch (UnsupportedEncodingException uee) {
-                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", st_input_data, "utf-8");
-                            return null;
-                        }
+                        return st_input_data == null ? null : st_input_data.getBytes(StandardCharsets.UTF_8);
                         //return new byte[0];
                     }
 
@@ -462,7 +458,7 @@ public class AddNewAddress extends BaseActivity {
                 requestQueue.add(stringRequest);
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.d("error...","Error");
+                //Log.d("error...","Error");
 
             }
     }
@@ -475,7 +471,7 @@ public class AddNewAddress extends BaseActivity {
                     state_pos = i;
                 }
             }
-            Log.d("state_pos", "" + state_pos);
+            //Log.d("state_pos", "" + state_pos);
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddNewAddress.this, android.R.layout.simple_spinner_dropdown_item, arr_state_name);
             spinner_state_profile.setAdapter(adapter);
@@ -505,7 +501,7 @@ public class AddNewAddress extends BaseActivity {
      */
     private void getState() {
 
-        Log.d("st_get_State_URL",st_get_State_URL);
+        //Log.d("st_get_State_URL",st_get_State_URL);
 //        pDialog = new TransparentProgressDialog(AddNewAddress.this);
 //        pDialog.setCancelable(false);
 //        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT)); pDialog.show();
@@ -521,7 +517,7 @@ public class AddNewAddress extends BaseActivity {
 
 //                    if (pDialog.isShowing())
 //                        pDialog.dismiss();
-                    Log.d("st_get_State_URL",response.toString());
+                    //Log.d("st_get_State_URL",response.toString());
 
                     if (response != null) {
                         try {
@@ -560,7 +556,7 @@ public class AddNewAddress extends BaseActivity {
                             ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddNewAddress.this,android.R.layout.simple_spinner_dropdown_item,arr_state_name);
                             spinner_state_profile.setAdapter(adapter);
 
-                            Log.d("itemdata",new_state);
+                            //Log.d("itemdata",new_state);
 
 
                             if (new_state != null && !new_state.equals("")){
@@ -836,8 +832,8 @@ public class AddNewAddress extends BaseActivity {
 
     }
 
-                Log.d("return_data",return_data);
-                Log.d("tokenData",tokenData);
+                //Log.d("return_data",return_data);
+                //Log.d("tokenData",tokenData);
 
                 pDialog = new TransparentProgressDialog(AddNewAddress.this);
                 pDialog.setCancelable(false);
@@ -855,14 +851,14 @@ public class AddNewAddress extends BaseActivity {
 
                                     if (pDialog.isShowing())
                                         pDialog.dismiss();
-                                    Log.d("responsePut", response);
+                                    //Log.d("responsePut", response);
                                     //CommonFun.alertError(AddNewAddress.this,response.toString());
 
 
 //                                    if(st_come_from_update!=null && (!st_come_from_update.equalsIgnoreCase("")))
 //                                    {
 
-                                    Log.d("stst_comeFrom",st_come_from_update);
+                                    //Log.d("stst_comeFrom",st_come_from_update);
                                         if(st_come_from_update.equalsIgnoreCase("updateaddress"))
                                         {
                                             Intent intent = new Intent(AddNewAddress.this, CustomerAddressBook.class);
@@ -960,12 +956,7 @@ public class AddNewAddress extends BaseActivity {
 
                         @Override
                         public byte[] getBody() throws AuthFailureError {
-                            try {
-                                return return_data == null ? null : return_data.getBytes("utf-8");
-                            } catch (UnsupportedEncodingException uee) {
-                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", return_data, "utf-8");
-                                return null;
-                            }
+                            return return_data == null ? null : return_data.getBytes(StandardCharsets.UTF_8);
                         }
 
                         @Override

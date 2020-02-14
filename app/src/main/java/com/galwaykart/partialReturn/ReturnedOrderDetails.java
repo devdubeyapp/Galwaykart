@@ -94,16 +94,16 @@ public class ReturnedOrderDetails extends BaseActivity{
         setContentView(R.layout.activity_returned_order_list);
 
         initNavigationDrawer();
-        tv_title=(TextView)findViewById(R.id.tv_title);
+        tv_title= findViewById(R.id.tv_title);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        tv_order_id=(TextView)findViewById(R.id.tv_order_id);
-        tv_cancel_order = (TextView)findViewById(R.id.tv_cancel_order);
-        tv_order_total = (TextView)findViewById(R.id.tv_order_total);
+        tv_order_id= findViewById(R.id.tv_order_id);
+        tv_cancel_order = findViewById(R.id.tv_cancel_order);
+        tv_order_total = findViewById(R.id.tv_order_total);
         pref = CommonFun.getPreferences(getApplicationContext());
 
 //        st_order_id = pref.getString("Order_ID","");
@@ -133,7 +133,7 @@ public class ReturnedOrderDetails extends BaseActivity{
         //arrayList_order=new ArrayList<OrderDetailsItemModel>();
 
 
-        lv_return_order_list = (ListView) findViewById(R.id.lv_return_order_list);
+        lv_return_order_list = findViewById(R.id.lv_return_order_list);
 
         st_Order_details_URL = Global_Settings.api_url+"glaze/rmaorderdetail.php?rma_id="+st_selected_rma_id;
 
@@ -382,19 +382,19 @@ public class ReturnedOrderDetails extends BaseActivity{
                 convertView = inflater.inflate(R.layout.activity_returned_order_details, null);
                 holder = new Holder();
 
-                holder.img_view_ordered_product = (ImageView)convertView.findViewById(R.id.img_view_ordered_product);
+                holder.img_view_ordered_product = convertView.findViewById(R.id.img_view_ordered_product);
 
-                holder.product_name_id = (TextView) convertView.findViewById(R.id.product_name_id);
-                holder.total_product_amt = (TextView) convertView.findViewById(R.id.total_product_amt);
-                holder.total_product_qty = (TextView) convertView.findViewById(R.id.total_product_qty);
+                holder.product_name_id = convertView.findViewById(R.id.product_name_id);
+                holder.total_product_amt = convertView.findViewById(R.id.total_product_amt);
+                holder.total_product_qty = convertView.findViewById(R.id.total_product_qty);
 
-                holder.req_date_time = (TextView) convertView.findViewById(R.id.req_date_time);
-                holder.reason_id = (TextView) convertView.findViewById(R.id.reason_id);
-                holder.resolution_id = (TextView) convertView.findViewById(R.id.resolution_id);
+                holder.req_date_time = convertView.findViewById(R.id.req_date_time);
+                holder.reason_id = convertView.findViewById(R.id.reason_id);
+                holder.resolution_id = convertView.findViewById(R.id.resolution_id);
 
-                holder.condition_id = (TextView) convertView.findViewById(R.id.condition_id);
-                holder.total_product_qty = (TextView) convertView.findViewById(R.id.total_product_qty);
-                holder.bt_track_order = (Button) convertView.findViewById(R.id.bt_track_order);
+                holder.condition_id = convertView.findViewById(R.id.condition_id);
+                holder.total_product_qty = convertView.findViewById(R.id.total_product_qty);
+                holder.bt_track_order = convertView.findViewById(R.id.bt_track_order);
 
 
                 convertView.setTag(holder);
@@ -406,19 +406,19 @@ public class ReturnedOrderDetails extends BaseActivity{
             }
 
 
-            holder.product_name_id.setText(arrayList.get(position).get(TAG_name).toString());
-            holder.reason_id.setText(arrayList.get(position).get(TAG_reason_id).toString());
-            holder.req_date_time.setText(arrayList.get(position).get(TAG_created_at).toString());
-            holder.resolution_id.setText(arrayList.get(position).get(TAG_resolution_id).toString());
-            holder.condition_id.setText(arrayList.get(position).get(TAG_condition_id).toString());
-            holder.total_product_qty.setText(arrayList.get(position).get(TAG_qty_requested).toString());
+            holder.product_name_id.setText(arrayList.get(position).get(TAG_name));
+            holder.reason_id.setText(arrayList.get(position).get(TAG_reason_id));
+            holder.req_date_time.setText(arrayList.get(position).get(TAG_created_at));
+            holder.resolution_id.setText(arrayList.get(position).get(TAG_resolution_id));
+            holder.condition_id.setText(arrayList.get(position).get(TAG_condition_id));
+            holder.total_product_qty.setText(arrayList.get(position).get(TAG_qty_requested));
 
 
 
 
 
             Picasso.get()
-                    .load(arrayList.get(position).get(TAG_image).toString())
+                    .load(arrayList.get(position).get(TAG_image))
                     .placeholder(R.drawable.imageloading)   // optional
                     .error(R.drawable.noimage)      // optional
                     .resize(150, 150)

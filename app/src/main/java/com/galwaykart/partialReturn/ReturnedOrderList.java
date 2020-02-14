@@ -94,16 +94,16 @@ public class ReturnedOrderList extends BaseActivity {
         queue = Volley.newRequestQueue(this);
 
 
-        iv_image_no_details=(ImageView)findViewById(R.id.iv_image_no_details);
+        iv_image_no_details= findViewById(R.id.iv_image_no_details);
         iv_image_no_details.setVisibility(View.GONE);
         pref = CommonFun.getPreferences(getApplicationContext());
 
         String cust_id=pref.getString("st_login_id","");
 
-        lv_return_order_list = (ListView) findViewById(R.id.lv_return_order_list);
-        tv_cancel_order = (TextView)findViewById(R.id.tv_cancel_order);
+        lv_return_order_list = findViewById(R.id.lv_return_order_list);
+        tv_cancel_order = findViewById(R.id.tv_cancel_order);
         st_Order_id_URL = Global_Settings.api_url+"glaze/rmaorderlist.php?cid="+cust_id;
-        tv_order_id=(TextView)findViewById(R.id.tv_order_id);
+        tv_order_id= findViewById(R.id.tv_order_id);
         tv_order_id.setVisibility(View.GONE);
 
         callOrderList();

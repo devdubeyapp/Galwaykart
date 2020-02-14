@@ -62,11 +62,11 @@ public class ViewPagerAdapterSingleProduct extends PagerAdapter {
 
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View  view = (ViewGroup) layoutInflater.inflate(R.layout.view_pager_single_product, collection, false);
-        ImageView img_banner = (ImageView) view.findViewById(R.id.img_product);
+        View  view = layoutInflater.inflate(R.layout.view_pager_single_product, collection, false);
+        ImageView img_banner = view.findViewById(R.id.img_product);
 
 
-        img=arr_product_images[position].toString();
+        img= arr_product_images[position];
 
         img_banner.setScaleType(ImageView.ScaleType.FIT_XY);
         img_banner.setOnClickListener(new View.OnClickListener() {

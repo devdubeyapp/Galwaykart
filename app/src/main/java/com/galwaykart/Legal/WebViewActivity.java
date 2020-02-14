@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -62,7 +61,7 @@ public class WebViewActivity extends AppCompatActivity {
     FirebaseAnalytics mFirebaseAnalytics;
 
     private void goBack(){
-        Intent intent = new Intent(WebViewActivity.this, HomePageActivity.class);
+        Intent intent = new Intent(WebViewActivity.this, LegalAboutActivity.class);
         startActivity(intent);
         CommonFun.finishscreen(WebViewActivity.this);
     }
@@ -78,6 +77,13 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview_activity);
 
+        //initNavigationDrawer();
+
+//        Toolbar toolbar;
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+
+//        CommonFun.setToolBar(toolbar,this);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle params = new Bundle();
         params.putString("full_text", "faq");
@@ -93,7 +99,7 @@ public class WebViewActivity extends AppCompatActivity {
             }
         });
 
-        webView = (WebView) findViewById(R.id.webview);
+        webView = findViewById(R.id.webview);
 
         String url_part = "";
         String url = "";
@@ -105,6 +111,12 @@ public class WebViewActivity extends AppCompatActivity {
         }
 
         if (!url_part.equals("") && !url_part.equals("customer-help-desk-tutorials.html")) {
+
+
+//            Bundle bundle = new Bundle();
+//            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "faq");
+//            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "faq_name");
+//            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
             url = Global_Settings.terms_url_api + url_part;
 
@@ -148,20 +160,12 @@ public class WebViewActivity extends AppCompatActivity {
         /**
          * Fetch ip of all the cart items
          */
-
-        pDialog = new TransparentProgressDialog(WebViewActivity.this);
-        pDialog.setCancelable(false);
-        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        pDialog.show();
-
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         StringRequest jsonObjectRequest=new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("weburl",response.toString());
-                        if (pDialog.isShowing())
-                            pDialog.dismiss();
+                        ////Log.d("weburl",response.toString());
                         try {
 
                             JSONArray jsonArray = new JSONArray(response);
@@ -179,8 +183,6 @@ public class WebViewActivity extends AppCompatActivity {
 
                             }
                         }catch (JSONException ex){
-                            if (pDialog.isShowing())
-                                pDialog.dismiss();
                             //Log.d("weburl",ex.toString());
                         }
 
@@ -189,8 +191,6 @@ public class WebViewActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (pDialog.isShowing())
-                    pDialog.dismiss();
 
                 CommonFun.showVolleyException(error,WebViewActivity.this);
             }
@@ -266,8 +266,8 @@ public class WebViewActivity extends AppCompatActivity {
          */
         public String getFileName(String url) {
             String filenameWithoutExtension = "";
-            filenameWithoutExtension = String.valueOf(System.currentTimeMillis()
-                    + "." + MimeTypeMap.getFileExtensionFromUrl(url));
+            filenameWithoutExtension = System.currentTimeMillis()
+                    + "." + MimeTypeMap.getFileExtensionFromUrl(url);
             return filenameWithoutExtension;
         }
 

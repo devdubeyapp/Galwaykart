@@ -56,7 +56,7 @@ public class RecyclerViewOfferCategoryAdapter extends RecyclerView.Adapter<Recyc
 
         final DataModelHomeCategory dataModel = mValues.get(position);
 
-        final String current_id=dataModel.getId().toString();
+        final String current_id= dataModel.getId();
 
         Picasso.get()
                 .load(dataModel.getImage())
@@ -88,7 +88,7 @@ public class RecyclerViewOfferCategoryAdapter extends RecyclerView.Adapter<Recyc
                     if(!current_id.equals("") && current_id!=null) {
 
 
-                        pref = mContext.getSharedPreferences("GalwayKart", mContext.MODE_PRIVATE);
+                        pref = mContext.getSharedPreferences("GalwayKart", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("selected_id", current_id);
                         editor.putString("selected_name", "");
@@ -147,9 +147,9 @@ public class RecyclerViewOfferCategoryAdapter extends RecyclerView.Adapter<Recyc
             super(v);
 
 //            v.setOnClickListener(this);
-            textView_name = (TextView) v.findViewById(R.id.textView_name);
-            textView_price = (TextView) v.findViewById(R.id.textView_price);
-            imageView_product = (ImageView) v.findViewById(R.id.imageView_product);
+            textView_name = v.findViewById(R.id.textView_name);
+            textView_price = v.findViewById(R.id.textView_price);
+            imageView_product = v.findViewById(R.id.imageView_product);
 
 
         }

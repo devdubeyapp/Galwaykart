@@ -376,7 +376,7 @@ public class MVVM_HomePage_TopProductRepo {
 
                         //Log.d("resMVVM_Product",response.toString());
 
-                        setPostProductDetail(context,response.toString(),data, finalSt_selected_name);
+                        setPostProductDetail(context, response,data, finalSt_selected_name);
 
 
                     }
@@ -427,7 +427,7 @@ public class MVVM_HomePage_TopProductRepo {
             dataset.clear();
             try {
 
-                JSONObject jsonObject = new JSONObject(String.valueOf(response));
+                JSONObject jsonObject = new JSONObject(response);
 
                 int total_count= Integer.parseInt(jsonObject.getString("total_count"));
                 if(total_count>0) {

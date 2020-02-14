@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by ankesh on 9/13/2017.
@@ -58,7 +59,7 @@ public class GetAccessToken {
 
                 tokenData=response;
                 SharedPreferences pref;
-                pref= mctx.getSharedPreferences("glazekartapp", mctx.MODE_PRIVATE);
+                pref= mctx.getSharedPreferences("glazekartapp", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor=pref.edit();
                 editor.putString("tokenData",tokenData);
                 editor.commit();
@@ -77,12 +78,7 @@ public class GetAccessToken {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                try {
-                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
-                    return null;
-                }
+                return mRequestBody == null ? null : mRequestBody.getBytes(StandardCharsets.UTF_8);
             }
 
 //            @Override

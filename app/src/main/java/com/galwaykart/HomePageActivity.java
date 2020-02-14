@@ -244,15 +244,15 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         context = this;
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager_tabs);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayoutss);
-        tabTopProducts = (TabItem) findViewById(R.id.tabTopProducts);
-        tabTopCategory = (TabItem) findViewById(R.id.tabTopCategory);
-        tabShopByCategory = (TabItem) findViewById(R.id.tabShopByCategory);
-        tabOffer = (TabItem) findViewById(R.id.tabOffer);
+        viewPager = findViewById(R.id.viewPager_tabs);
+        tabLayout = findViewById(R.id.tabLayoutss);
+        tabTopProducts = findViewById(R.id.tabTopProducts);
+        tabTopCategory = findViewById(R.id.tabTopCategory);
+        tabShopByCategory = findViewById(R.id.tabShopByCategory);
+        tabOffer = findViewById(R.id.tabOffer);
 
        // refreshItemCount();
 
@@ -379,8 +379,8 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 //            }
 //        });
 
-        cart_progressBar = (ProgressBar) findViewById(R.id.cart_progressBar);
-        pager_view_banner = (ViewPager) findViewById(R.id.pager_view_bannerss);
+        cart_progressBar = findViewById(R.id.cart_progressBar);
+        pager_view_banner = findViewById(R.id.pager_view_bannerss);
 
         adapter = new HomePageTabPageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
@@ -445,7 +445,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             e.printStackTrace();
         }
 
-        float_chat_button = (ImageView) findViewById(R.id.float_hchat_button);
+        float_chat_button = findViewById(R.id.float_hchat_button);
         float_chat_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -459,13 +459,13 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         prepareMenuData();
         populateExpandableList();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -477,7 +477,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
 
         View header=navigationView.getHeaderView(0);
-        TextView tvCustomerName=(TextView)header.findViewById(R.id.tvCustomerName);
+        TextView tvCustomerName= header.findViewById(R.id.tvCustomerName);
         if(!dist_id.equals(""))
             tvCustomerName.setText(fname + " "+ lname +" \n("+dist_id+")");
         else
@@ -496,7 +496,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
         //    EditText editText = (EditText) findViewById(R.id.search_view);
 
-        ImageView imageView = (ImageView) findViewById(R.id.image_view_title);
+        ImageView imageView = findViewById(R.id.image_view_title);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -507,7 +507,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             }
         });
 
-        Button bt_show_category = (Button) findViewById(R.id.bt_show_category);
+        Button bt_show_category = findViewById(R.id.bt_show_category);
         bt_show_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -521,8 +521,8 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             }
         });
 
-        ed_search_view = (SearchView) findViewById(R.id.search_view);
-        EditText searchEditText = (EditText) ed_search_view.findViewById(R.id.search_src_text);
+        ed_search_view = findViewById(R.id.search_view);
+        EditText searchEditText = ed_search_view.findViewById(R.id.search_src_text);
         searchEditText.setTextColor(getResources().getColor(R.color.colorPrimary));
         searchEditText.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 
@@ -1419,7 +1419,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -1481,7 +1481,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                             // addItemToCart(cart_id);
 
 
-                            String cart_id = response.toString();
+                            String cart_id = response;
                             cart_id = cart_id.replaceAll("\"", "");
 
                             SharedPreferences.Editor editor=pref.edit();
@@ -1656,7 +1656,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
         //MenuItem cartMenuItem = menu.findItem(R.id.action_add_to_cart);
         TextView tv_cartqty;
-        tv_cartqty=(TextView)toolbar.findViewById(R.id.cart_icon);
+        tv_cartqty= toolbar.findViewById(R.id.cart_icon);
         tv_cartqty.setText(count);
         tv_cartqty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1667,7 +1667,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
 
         ImageView imageViewIcon;
-        imageViewIcon=(ImageView)toolbar.findViewById(R.id.image_view_title);
+        imageViewIcon= toolbar.findViewById(R.id.image_view_title);
         imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

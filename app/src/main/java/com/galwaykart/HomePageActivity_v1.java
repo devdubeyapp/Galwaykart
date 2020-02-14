@@ -126,7 +126,7 @@ public class HomePageActivity_v1 extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -213,7 +213,7 @@ public class HomePageActivity_v1 extends AppCompatActivity
             e.printStackTrace();
         }
 
-        float_offer_button=(ImageView) findViewById(R.id.float_offer_button);
+        float_offer_button= findViewById(R.id.float_offer_button);
         float_offer_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -247,16 +247,16 @@ public class HomePageActivity_v1 extends AppCompatActivity
 
         dataLoad = false;
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //pager_view_banner = (ViewPager) findViewById(R.id.pager_view_banner);
 
-        progress_bar = (ProgressBar) findViewById(R.id.progress_bar);
+        progress_bar = findViewById(R.id.progress_bar);
         progress_bar.setVisibility(View.GONE);
 
-        ed_search_view = (SearchView) findViewById(R.id.search_view);
-        EditText searchEditText = (EditText) ed_search_view.findViewById(R.id.search_src_text);
+        ed_search_view = findViewById(R.id.search_view);
+        EditText searchEditText = ed_search_view.findViewById(R.id.search_src_text);
         searchEditText.setTextColor(getResources().getColor(R.color.colorPrimary));
         searchEditText.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 
@@ -274,7 +274,7 @@ public class HomePageActivity_v1 extends AppCompatActivity
 
        // tv_CustomerName = (TextView) findViewById(R.id.tv_CustomerName);
 
-        cart_progressBar = (ProgressBar) findViewById(R.id.cart_progressBar);
+        cart_progressBar = findViewById(R.id.cart_progressBar);
         cart_progressBar.setVisibility(View.GONE);
 
 //        carouselView=(CarouselView)findViewById(R.id.carouselView);
@@ -314,21 +314,21 @@ public class HomePageActivity_v1 extends AppCompatActivity
 
         tv_CustomerName.setText("Hello " + fname + " ,");
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
-        TextView tvCustomerName = (TextView) header.findViewById(R.id.tvCustomerName);
+        TextView tvCustomerName = header.findViewById(R.id.tvCustomerName);
         tvCustomerName.setText(customer_name);
 
         //    EditText editText = (EditText) findViewById(R.id.search_view);
 
-        ImageView imageView = (ImageView) findViewById(R.id.image_view_title);
+        ImageView imageView = findViewById(R.id.image_view_title);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -340,7 +340,7 @@ public class HomePageActivity_v1 extends AppCompatActivity
             }
         });
 
-        Button bt_show_category = (Button) findViewById(R.id.bt_show_category);
+        Button bt_show_category = findViewById(R.id.bt_show_category);
         bt_show_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -745,7 +745,7 @@ public class HomePageActivity_v1 extends AppCompatActivity
 
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -862,7 +862,7 @@ public class HomePageActivity_v1 extends AppCompatActivity
 
         //MenuItem cartMenuItem = menu.findItem(R.id.action_add_to_cart);
         TextView tv_cartqty;
-        tv_cartqty=(TextView)toolbar.findViewById(R.id.cart_icon);
+        tv_cartqty= toolbar.findViewById(R.id.cart_icon);
         tv_cartqty.setText(count);
         tv_cartqty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -873,7 +873,7 @@ public class HomePageActivity_v1 extends AppCompatActivity
 
 
         ImageView imageViewIcon;
-        imageViewIcon=(ImageView)toolbar.findViewById(R.id.image_view_title);
+        imageViewIcon= toolbar.findViewById(R.id.image_view_title);
         imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

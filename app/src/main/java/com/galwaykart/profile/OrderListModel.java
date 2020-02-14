@@ -14,6 +14,17 @@ public class OrderListModel {
     String total_item_count;
     String total_qty_ordered;
     String updated_at;
+    String status_label;
+
+    public String getStatus_label() {
+        return status_label;
+    }
+
+    public void setStatus_label(String status_label) {
+        this.status_label = status_label;
+    }
+
+
 
     public String getUpdated_at() {
         return updated_at;

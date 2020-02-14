@@ -111,15 +111,15 @@ public class OrderDetailsAdapter extends SimpleAdapter {
             convertView = inflater.inflate(R.layout.order_details_item, null);
             holder = new Holder();
 
-            holder.img_view_ordered_product = (ImageView)convertView.findViewById(R.id.img_view_ordered_product);
+            holder.img_view_ordered_product = convertView.findViewById(R.id.img_view_ordered_product);
 
-            holder.product_name_id = (TextView) convertView.findViewById(R.id.product_name_id);
-            holder.total_product_amt = (TextView) convertView.findViewById(R.id.total_product_amt);
-            holder.order_date_time = (TextView) convertView.findViewById(R.id.order_date_time);
-            holder.total_product_qty = (TextView) convertView.findViewById(R.id.total_product_qty);
-            holder.check_for_return_req = (CheckBox)convertView.findViewById(R.id.check_for_return_req);
-            holder.return_qty_req = (TextView)convertView.findViewById(R.id.return_qty_req);
-            holder.bt_edit_qty_icon = (Button)convertView.findViewById(R.id.bt_edit_qty_icon);
+            holder.product_name_id = convertView.findViewById(R.id.product_name_id);
+            holder.total_product_amt = convertView.findViewById(R.id.total_product_amt);
+            holder.order_date_time = convertView.findViewById(R.id.order_date_time);
+            holder.total_product_qty = convertView.findViewById(R.id.total_product_qty);
+            holder.check_for_return_req = convertView.findViewById(R.id.check_for_return_req);
+            holder.return_qty_req = convertView.findViewById(R.id.return_qty_req);
+            holder.bt_edit_qty_icon = convertView.findViewById(R.id.bt_edit_qty_icon);
 
             convertView.setTag(holder);
 
@@ -130,14 +130,14 @@ public class OrderDetailsAdapter extends SimpleAdapter {
         }
 
 
-        holder.product_name_id.setText(arrayList.get(position).get(TAG_name).toString());
-        holder.total_product_amt.setText(arrayList.get(position).get(TAG_original_price).toString());
-        holder.order_date_time.setText(arrayList.get(position).get(TAG_created_at).toString());
-        holder.total_product_qty.setText("Total Quantity:  " +arrayList.get(position).get(TAG_total_qty_ordered).toString());
+        holder.product_name_id.setText(arrayList.get(position).get(TAG_name));
+        holder.total_product_amt.setText(arrayList.get(position).get(TAG_original_price));
+        holder.order_date_time.setText(arrayList.get(position).get(TAG_created_at));
+        holder.total_product_qty.setText("Total Quantity:  " + arrayList.get(position).get(TAG_total_qty_ordered));
 
-        String st_boolean = arrayList.get(position).get(TAG_boolean).toString();
-        String st_edit_rtn = arrayList.get(position).get(TAG_edit_rtn).toString();
-        String st_rtn_qty = arrayList.get(position).get(TAG_edit_rtn).toString();
+        String st_boolean = arrayList.get(position).get(TAG_boolean);
+        String st_edit_rtn = arrayList.get(position).get(TAG_edit_rtn);
+        String st_rtn_qty = arrayList.get(position).get(TAG_edit_rtn);
 
 
         ////////Log.d("st_boolean",st_boolean);
@@ -173,7 +173,7 @@ public class OrderDetailsAdapter extends SimpleAdapter {
 
 
         Picasso.get()
-                .load(arrayList.get(position).get(TAG_image).toString())
+                .load(arrayList.get(position).get(TAG_image))
                 .placeholder(R.drawable.imageloading)   // optional
                 .error(R.drawable.noimage)      // optional
                 .resize(150, 150)

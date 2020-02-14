@@ -58,14 +58,14 @@ public class HomePage_OfferTab extends Fragment {
 
         itemdCatList = new ArrayList<>();
 
-        recyclerView_offer_product=(RecyclerView)getActivity().findViewById(R.id.recyclerView_offer_product);
+        recyclerView_offer_product= getActivity().findViewById(R.id.recyclerView_offer_product);
 
-        iv_image_no_details=(ImageView) getActivity().findViewById(R.id.iv_image_no_details);
+        iv_image_no_details= getActivity().findViewById(R.id.iv_image_no_details);
         iv_image_no_details.setVisibility(View.GONE);
 
-        progress_bar=(ProgressBar)getActivity().findViewById(R.id.progress_bar);
+        progress_bar= getActivity().findViewById(R.id.progress_bar);
         progress_bar.setVisibility(View.GONE);
-        imageView_close=(ImageView)getActivity().findViewById(R.id.iv_close);
+        imageView_close= getActivity().findViewById(R.id.iv_close);
         imageView_close.setVisibility(View.GONE);
         imageView_close.setOnClickListener(new View.OnClickListener() {
             @Override

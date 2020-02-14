@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import androidx.appcompat.widget.Toolbar;
+//import androidx.security.crypto.EncryptedSharedPreferences;
+//import androidx.security.crypto.MasterKeys;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +30,10 @@ import com.galwaykart.address_book.AddNewAddress;
 import com.galwaykart.HomePageActivity;
 import com.galwaykart.Login.LogoutActivity;
 import com.galwaykart.R;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -139,14 +145,14 @@ public class CommonFun {
     }
 
     public static void showDialog(Context context,String msg) {
-        Vibrator vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(100);
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_alert_dialog_design);
-        TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
+        TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
         tv_dialog.setText(msg);
-        ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+        ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
         dialog.show();
 
         new CountDownTimer(2000, 2000) {
@@ -181,13 +187,13 @@ public class CommonFun {
 
 
         TextView tv_cartqty;
-        tv_cartqty=(TextView)toolbar.findViewById(R.id.cart_icon);
+        tv_cartqty= toolbar.findViewById(R.id.cart_icon);
         tv_cartqty.setVisibility(View.GONE);
         ProgressBar cart_progressBar;
-        cart_progressBar=(ProgressBar)toolbar.findViewById(R.id.cart_progressBar);
+        cart_progressBar= toolbar.findViewById(R.id.cart_progressBar);
         cart_progressBar.setVisibility(View.GONE);
         ImageView imageViewIcon;
-        imageViewIcon=(ImageView)toolbar.findViewById(R.id.image_view_title);
+        imageViewIcon= toolbar.findViewById(R.id.image_view_title);
         imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,9 +225,28 @@ public class CommonFun {
     }
 
 
-    public static SharedPreferences getPreferences(Context context){
+    public static SharedPreferences getPreferences(Context mContext){
 
-        SharedPreferences pref = context.getSharedPreferences("glazekartapp", MODE_PRIVATE);
+       SharedPreferences pref = mContext.getSharedPreferences("glazekartapp", MODE_PRIVATE);
+
+//        SharedPreferences pref = null;
+//        try {
+//
+//            String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+//            pref = EncryptedSharedPreferences.create(
+//                   "glazekartapp",
+//                    masterKeyAlias,
+//                    mContext,
+//                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+//                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+//            );
+//        } catch (GeneralSecurityException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
         return pref;
 
     }

@@ -44,6 +44,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -192,19 +193,19 @@ public class UpdateAddressActivity extends BaseActivityWithoutCart {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        spinner_select_franch = (Spinner) findViewById(R.id.spinner_select_franch);
+        spinner_select_franch = findViewById(R.id.spinner_select_franch);
         spinner_select_franch.setVisibility(View.GONE);
-        franch_pin = (EditText)findViewById(R.id.franch_pin);
-        franch_address = (EditText)findViewById(R.id.franch_address);
-        franch_state = (EditText)findViewById(R.id.franch_state);
-        franch_city = (EditText)findViewById(R.id.franch_city);
+        franch_pin = findViewById(R.id.franch_pin);
+        franch_address = findViewById(R.id.franch_address);
+        franch_state = findViewById(R.id.franch_state);
+        franch_city = findViewById(R.id.franch_city);
 
-        button_update_address = (Button)findViewById(R.id.button_update_address);
+        button_update_address = findViewById(R.id.button_update_address);
         button_update_address.setOnClickListener(button_update_addressOnClickListener);
 
         button_update_address.setVisibility(View.VISIBLE);
 
-        button_save_address = (Button)findViewById(R.id.button_save_address);
+        button_save_address = findViewById(R.id.button_save_address);
         button_save_address.setOnClickListener(button_save_addressOnClickListener);
 
         button_save_address.setVisibility(View.GONE);
@@ -533,9 +534,9 @@ public class UpdateAddressActivity extends BaseActivityWithoutCart {
 
                                         final Dialog dialog = new Dialog(UpdateAddressActivity.this);
                                         dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                        TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
+                                        TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
                                         tv_dialog.setText("Your address has been updated successfully...");
-                                        ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+                                        ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                         dialog.setCancelable(false);
                                         dialog.show();
 
@@ -619,12 +620,7 @@ public class UpdateAddressActivity extends BaseActivityWithoutCart {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
-                        return null;
-                    }
+                    return mRequestBody == null ? null : mRequestBody.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override
@@ -672,7 +668,7 @@ public class UpdateAddressActivity extends BaseActivityWithoutCart {
                         if(response!=null){
                             try {
 
-                                franch_details = new JSONArray(String.valueOf(response));
+                                franch_details = new JSONArray(response);
 
                                 int franch_details_arr_length = franch_details.length()+1;
                                 spinner_data = new String[franch_details_arr_length];
@@ -743,7 +739,7 @@ public class UpdateAddressActivity extends BaseActivityWithoutCart {
 
                                 JSONObject jsonObj = null;
                                 try {
-                                    jsonObj = new JSONObject(String.valueOf(response));
+                                    jsonObj = new JSONObject(response);
                                     if(jsonObj.has("Message"))
                                     {
                                         st_alert_msg = jsonObj.getString("Message");

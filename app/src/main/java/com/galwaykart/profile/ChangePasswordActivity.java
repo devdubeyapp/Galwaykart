@@ -39,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -97,10 +98,10 @@ public class ChangePasswordActivity extends BaseActivityWithoutCart {
 
 
 
-        ed_current_password=(EditText)findViewById(R.id.ed_current_password);
-        password = (EditText)findViewById(R.id.password);
-        confirm_password = (EditText)findViewById(R.id.confirm_password);
-        button_change_pwd=(Button)findViewById(R.id.button_change_pwd);
+        ed_current_password= findViewById(R.id.ed_current_password);
+        password = findViewById(R.id.password);
+        confirm_password = findViewById(R.id.confirm_password);
+        button_change_pwd= findViewById(R.id.button_change_pwd);
         button_change_pwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,12 +232,7 @@ public class ChangePasswordActivity extends BaseActivityWithoutCart {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return delivery_data_in == null ? null : delivery_data_in.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", delivery_data_in, "utf-8");
-                        return null;
-                    }
+                    return delivery_data_in == null ? null : delivery_data_in.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override
@@ -265,8 +261,8 @@ public class ChangePasswordActivity extends BaseActivityWithoutCart {
 
         final Dialog dialog = new Dialog(ChangePasswordActivity.this);
         dialog.setContentView(R.layout.custom_alert_dialog_design);
-        TextView tv_dialog = (TextView)dialog.findViewById(R.id.tv_dialog);
-        ImageView image_view_dialog = (ImageView)dialog.findViewById(R.id.image_view_dialog);
+        TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+        ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
         if(new_pwd.equalsIgnoreCase("true"))
             tv_dialog.setText("Your password has been changed successfully...");
         else

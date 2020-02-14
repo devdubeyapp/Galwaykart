@@ -28,18 +28,18 @@ public class ServerErrorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.internet_connectivity_error_activity);
 
-        txt_try_again=(Button)findViewById(R.id.txt_try_again);
+        txt_try_again= findViewById(R.id.txt_try_again);
         txt_try_again.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finishScreen();
             }
         });
-        error_head=(TextView)findViewById(R.id.error_head);
+        error_head= findViewById(R.id.error_head);
         error_head.setText("Unable to reach Server !!! ");
 
 
-        txt_go_home=(Button)findViewById(R.id.txt_go_home);
+        txt_go_home= findViewById(R.id.txt_go_home);
         txt_go_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

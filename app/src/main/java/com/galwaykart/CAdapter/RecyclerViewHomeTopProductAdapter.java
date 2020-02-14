@@ -65,7 +65,7 @@ public class RecyclerViewHomeTopProductAdapter extends RecyclerView.Adapter<Recy
         String login_group_id=pref.getString("login_group_id","");
         if(login_group_id.equals("4")) {
             if (!TextUtils.isEmpty(dataModel.ip))
-                holder.tv_ipss.setText(dataModel.ip.toString());
+                holder.tv_ipss.setText(dataModel.ip);
             else
                 holder.tv_ipss.setVisibility(View.GONE);
         }
@@ -74,7 +74,7 @@ public class RecyclerViewHomeTopProductAdapter extends RecyclerView.Adapter<Recy
             holder.tv_ipss.setVisibility(View.GONE);
         }
 
-        final String current_sku=dataModel.getSku().toString();
+        final String current_sku= dataModel.getSku();
 
         Picasso.get()
                 .load(dataModel.getImage())
@@ -94,7 +94,7 @@ public class RecyclerViewHomeTopProductAdapter extends RecyclerView.Adapter<Recy
                 SharedPreferences pref;
                 pref= CommonFun.getPreferences(mContext);
                 SharedPreferences.Editor editor=pref.edit();
-                editor.putString("showitemsku",current_sku.toString());
+                editor.putString("showitemsku", current_sku);
                 editor.commit();
 
                 String email = pref.getString("user_email","");
@@ -167,11 +167,11 @@ public class RecyclerViewHomeTopProductAdapter extends RecyclerView.Adapter<Recy
             super(v);
 
 //            v.setOnClickListener(this);
-            textView_name = (TextView) v.findViewById(R.id.textView_name);
-            textView_price = (TextView) v.findViewById(R.id.textView_price);
-            imageView_product = (ImageView) v.findViewById(R.id.imageView_product);
-            textView_more_link = (TextView) v.findViewById(R.id.textView_more_link);
-            tv_ipss=(TextView)v.findViewById(R.id.tv_ipss);
+            textView_name = v.findViewById(R.id.textView_name);
+            textView_price = v.findViewById(R.id.textView_price);
+            imageView_product = v.findViewById(R.id.imageView_product);
+            textView_more_link = v.findViewById(R.id.textView_more_link);
+            tv_ipss= v.findViewById(R.id.tv_ipss);
 
         }
 

@@ -75,16 +75,16 @@ public class CartItemShowAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(R.layout.activity_cart_item_list, parent, false);
             holder = new ViewHolder();
-            holder.textView_name = (TextView) convertView.findViewById(R.id.textView_name);
-            holder.textView_itemprice = (TextView) convertView.findViewById(R.id.textView_itemprice);
-            holder.itemqty = (TextView) convertView.findViewById(R.id.itemqty);
+            holder.textView_name = convertView.findViewById(R.id.textView_name);
+            holder.textView_itemprice = convertView.findViewById(R.id.textView_itemprice);
+            holder.itemqty = convertView.findViewById(R.id.itemqty);
 
-            holder.iv_minus_cart_item = (ImageView)convertView.findViewById(R.id.iv_minus_cart_item);
-            holder.add_item = (ImageView)convertView.findViewById(R.id.add_item);
-            holder.btUpdate = (Button)convertView.findViewById(R.id.btUpdate);
-            holder.imageView_Item=(ImageView)convertView.findViewById(R.id.imageView_Item);
+            holder.iv_minus_cart_item = convertView.findViewById(R.id.iv_minus_cart_item);
+            holder.add_item = convertView.findViewById(R.id.add_item);
+            holder.btUpdate = convertView.findViewById(R.id.btUpdate);
+            holder.imageView_Item= convertView.findViewById(R.id.imageView_Item);
 
-            holder.btDelete=(Button)convertView.findViewById(R.id.btDelete);
+            holder.btDelete= convertView.findViewById(R.id.btDelete);
 
             convertView.setTag(holder);
         }

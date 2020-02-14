@@ -66,7 +66,7 @@ public class NoticeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
-        news_recycler_view= (RecyclerView) findViewById(R.id.news_recycler_view);
+        news_recycler_view= findViewById(R.id.news_recycler_view);
         news_recycler_view.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         news_recycler_view.setLayoutManager(mLayoutManager);

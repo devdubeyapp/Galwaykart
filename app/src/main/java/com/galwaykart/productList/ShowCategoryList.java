@@ -125,7 +125,7 @@ public class ShowCategoryList extends BaseActivity {
         sub_cat_get_name=new ArrayList<String>();
         sub_cat_get_id = new ArrayList<String>();
 
-        exp_category_list = (ExpandableListView)findViewById(R.id.exp_category_list);
+        exp_category_list = findViewById(R.id.exp_category_list);
 
 
         DisplayMetrics metrics = new DisplayMetrics();
@@ -166,7 +166,7 @@ public class ShowCategoryList extends BaseActivity {
 //                }
 
                 ////Log.d("lenghtlist",sub_cat_length_list.get(i).toString());
-                if(Integer.parseInt(sub_cat_length_list.get(i).toString())<=0){
+                if(Integer.parseInt(sub_cat_length_list.get(i))<=0){
 
                     SharedPreferences.Editor editor = preferences.edit();
 
@@ -484,7 +484,7 @@ public class ShowCategoryList extends BaseActivity {
 
 
 
-                                JSONObject jsonObj = new JSONObject(String.valueOf(response));
+                                JSONObject jsonObj = new JSONObject(response);
                                 childrenData = jsonObj.getJSONArray("children_data");
 
                                 length_of_all_category=childrenData.length();

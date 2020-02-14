@@ -126,7 +126,7 @@ public class SearchProductActivity extends BaseActivityCommon
             }
         }
 
-        EditText searchEditText = (EditText) binding.searchView.findViewById(R.id.search_src_text);
+        EditText searchEditText = binding.searchView.findViewById(R.id.search_src_text);
         searchEditText.setTextColor(getResources().getColor(R.color.colorPrimary));
         searchEditText.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 

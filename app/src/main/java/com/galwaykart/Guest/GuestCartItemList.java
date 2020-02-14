@@ -207,10 +207,10 @@ public class GuestCartItemList extends GuestBaseActivity {
         offered_cart_item = new ArrayList<>();
 
         found_image_path_blank = false;
-        progress_bar = (ProgressBar) findViewById(R.id.progress_bar);
+        progress_bar = findViewById(R.id.progress_bar);
         progress_bar.setVisibility(View.GONE);
-        tv_txt_view = (TextView) findViewById(R.id.tv_txt_view);
-        tv_total_ip= (TextView)findViewById(R.id.tv_total_ip);
+        tv_txt_view = findViewById(R.id.tv_txt_view);
+        tv_total_ip= findViewById(R.id.tv_total_ip);
 
         SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
         login_group_id=pref.getString("login_group_id","");
@@ -220,24 +220,24 @@ public class GuestCartItemList extends GuestBaseActivity {
 
         st_offer_api_URL=st_offer_api_URL+"?customer_type="+login_group_id;
 
-        tbl_row1 = (TableRow)findViewById(R.id.tbl_row1);
-        tbl_row2 = (TableRow)findViewById(R.id.tbl_row2);
-        tbl_row3 = (TableRow)findViewById(R.id.tbl_row3);
-        btn_remove_coupon = (TextView) findViewById(R.id.btn_remove_coupon);
-        btn_apply_coupon = (TextView) findViewById(R.id.btn_apply_coupon);
-        btn_apply_code = (TextView) findViewById(R.id.btn_apply_code);
+        tbl_row1 = findViewById(R.id.tbl_row1);
+        tbl_row2 = findViewById(R.id.tbl_row2);
+        tbl_row3 = findViewById(R.id.tbl_row3);
+        btn_remove_coupon = findViewById(R.id.btn_remove_coupon);
+        btn_apply_coupon = findViewById(R.id.btn_apply_coupon);
+        btn_apply_code = findViewById(R.id.btn_apply_code);
         btn_apply_coupon.setVisibility(View.GONE);
 
-        txt_coupon = (TextView) findViewById(R.id.txt_coupon);
-        ed_coupon=(EditText)findViewById(R.id.ed_coupon);
-        bt_change_cart = (Button)findViewById(R.id.bt_change_cart);
+        txt_coupon = findViewById(R.id.txt_coupon);
+        ed_coupon= findViewById(R.id.ed_coupon);
+        bt_change_cart = findViewById(R.id.bt_change_cart);
 
-        list_cart_item = (RecyclerView) findViewById(R.id.list_cart_item);
-        recyclerView_RecentItem=(RecyclerView)findViewById(R.id.recyclerView_RecentItem);
+        list_cart_item = findViewById(R.id.list_cart_item);
+        recyclerView_RecentItem= findViewById(R.id.recyclerView_RecentItem);
         list_recent_item=new ArrayList<>();
         listof_cart_item=new ArrayList<>();
 
-        tv_recent_view_item=(TextView)findViewById(R.id.tv_recent_view_item);
+        tv_recent_view_item= findViewById(R.id.tv_recent_view_item);
         tv_recent_view_item.setVisibility(View.GONE);
 
 
@@ -253,16 +253,10 @@ public class GuestCartItemList extends GuestBaseActivity {
 
 
         String st_data=pref.getString("st_dist_id","");
-        if(!st_data.equals("")  && (st_data!=null))
-            user_details_already_fetch=true;
-        else
-            user_details_already_fetch=false;
+        user_details_already_fetch= !st_data.equals("") && (st_data != null);
 
         String st_data_magento=pref.getString("log_user_zone","");
-        if(!st_data_magento.equals("")  && (st_data_magento!=null))
-            user_details_already_fetch=true;
-        else
-            user_details_already_fetch=false;
+        user_details_already_fetch= !st_data_magento.equals("") && (st_data_magento != null);
 
         /**
          * if already fetch user zone from the sales and magento
@@ -291,8 +285,8 @@ public class GuestCartItemList extends GuestBaseActivity {
             //list_cart_item.setAdapter(null);
 
 
-            tv_alert = (TextView) findViewById(R.id.tv_alert);
-            tv_alert_continue = (TextView) findViewById(R.id.tv_alert_continue);
+            tv_alert = findViewById(R.id.tv_alert);
+            tv_alert_continue = findViewById(R.id.tv_alert_continue);
             tv_alert_continue.setPaintFlags(tv_alert_continue.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             tv_alert_continue.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -316,7 +310,7 @@ public class GuestCartItemList extends GuestBaseActivity {
 
 
 
-            btCheckout = (Button) findViewById(R.id.btCheckout);
+            btCheckout = findViewById(R.id.btCheckout);
             btCheckout.setVisibility(View.GONE);
             btCheckout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -536,7 +530,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                         }
                         else{
                             //Log.d("glog","removecoupon1");
-                            CommonFun.alertError(GuestCartItemList.this, response.toString());
+                            CommonFun.alertError(GuestCartItemList.this, response);
                             Intent intent = new Intent(getBaseContext(), ExceptionError.class);
                             startActivity(intent);
                         }
@@ -1193,7 +1187,7 @@ public class GuestCartItemList extends GuestBaseActivity {
 
                             for (int y = 0; y < arr_sku_off.length; y++) {
                                 for (int m= 0; m < arr_sku.length; m++) {
-                                    if (arr_sku_off[y].equalsIgnoreCase(arr_sku[m].toString())) {
+                                    if (arr_sku_off[y].equalsIgnoreCase(arr_sku[m])) {
                                         cart_item_id = arr_item_id[m];
 
                                         deleteCartItem(m, false, "");
@@ -1506,7 +1500,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                 else{
 
                     for (int m= 0; m < arr_sku.length; m++) {
-                        if (st_sku_off1.equalsIgnoreCase(arr_sku[m].toString())) {
+                        if (st_sku_off1.equalsIgnoreCase(arr_sku[m])) {
                             cart_item_id = arr_item_id[m];
 
                             deleteCartItem(m, false, "");
@@ -1656,9 +1650,9 @@ public class GuestCartItemList extends GuestBaseActivity {
         vibrator.vibrate(100);
         final Dialog dialog = new Dialog(GuestCartItemList.this);
         dialog.setContentView(R.layout.custom_alert_dialog_design);
-        TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
+        TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
         tv_dialog.setText("Congratulation!!! Offer Product has been added to your cart..");
-        ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+        ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
         dialog.show();
         new CountDownTimer(2000, 2000) {
             @Override
@@ -1785,7 +1779,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                 List<CartProductImage> contacts = dbh.getCartProductImage(arr_sku[i]);
 
                 for (CartProductImage cn : contacts) {
-                    cart_imagepath = cn.get_image().toString();
+                    cart_imagepath = cn.get_image();
                 }
             }
 
@@ -1820,7 +1814,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                         if (response != null) {
                             try {
 
-                                JSONObject jsonObj = new JSONObject(String.valueOf(response));
+                                JSONObject jsonObj = new JSONObject(response);
 
 
                                 JSONArray custom_data = jsonObj.getJSONArray("custom_attributes");
@@ -3082,22 +3076,22 @@ public class GuestCartItemList extends GuestBaseActivity {
 
                 super(convertView);
 
-                textView_name = (TextView) convertView.findViewById(R.id.textView_name);
-                imageView_Item=(ImageView)convertView.findViewById(R.id.imageView_Item);
-                textView_ip_value = (TextView)convertView.findViewById(R.id.textView_ip_value);
-                textView_ip = (TextView)convertView.findViewById(R.id.textView_ip);
-                textView_itemprice = (TextView) convertView.findViewById(R.id.textView_itemprice);
-                itemqty = (TextView) convertView.findViewById(R.id.itemqty);
-                iv_minus_cart_item = (ImageView)convertView.findViewById(R.id.iv_minus_cart_item);
-                add_item = (ImageView)convertView.findViewById(R.id.add_item);
-                btUpdate = (Button)convertView.findViewById(R.id.btUpdate);
-                btDelete=(Button)convertView.findViewById(R.id.btDelete);
-                ed_qty=(EditText)convertView.findViewById(R.id.ed_qty);
-                spinner_qty=(Spinner)convertView.findViewById(R.id.spinner_qty);
+                textView_name = convertView.findViewById(R.id.textView_name);
+                imageView_Item= convertView.findViewById(R.id.imageView_Item);
+                textView_ip_value = convertView.findViewById(R.id.textView_ip_value);
+                textView_ip = convertView.findViewById(R.id.textView_ip);
+                textView_itemprice = convertView.findViewById(R.id.textView_itemprice);
+                itemqty = convertView.findViewById(R.id.itemqty);
+                iv_minus_cart_item = convertView.findViewById(R.id.iv_minus_cart_item);
+                add_item = convertView.findViewById(R.id.add_item);
+                btUpdate = convertView.findViewById(R.id.btUpdate);
+                btDelete= convertView.findViewById(R.id.btDelete);
+                ed_qty= convertView.findViewById(R.id.ed_qty);
+                spinner_qty= convertView.findViewById(R.id.spinner_qty);
                 //textView_name.setText(arr_item_name[position]);
-                textView_price=(TextView)convertView.findViewById(R.id.textView_price);
+                textView_price= convertView.findViewById(R.id.textView_price);
                 // textView_price.setVisibility(View.GONE);
-                tv_update_qty_alert=(Button) convertView.findViewById(R.id.btUpdateQty);
+                tv_update_qty_alert= convertView.findViewById(R.id.btUpdateQty);
 
             }
 
@@ -3115,11 +3109,11 @@ public class GuestCartItemList extends GuestBaseActivity {
 
             final DataModelCart_v1 dataModel = mValues.get(position);
 
-            final String prod_name=dataModel.getArr_item_name().toString();
+            final String prod_name= dataModel.getArr_item_name();
 
-            final String prod_price=dataModel.getArr_item_price().toString();
+            final String prod_price= dataModel.getArr_item_price();
 
-            final  String prod_ip = dataModel.getProduct_ip().toString();
+            final  String prod_ip = dataModel.getProduct_ip();
 
 
             login_group_id=pref.getString("login_group_id","");
@@ -3300,7 +3294,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                     cart_item_id = arr_item_id[selindexof];
 
 
-                    deleteCartItem(selindexof,true,dataModel.getArr_sku().toString());
+                    deleteCartItem(selindexof,true, dataModel.getArr_sku());
                 }
             });
 
@@ -3358,7 +3352,7 @@ public class GuestCartItemList extends GuestBaseActivity {
             holder.textView_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    openItem(dataModel.getArr_sku().toString());
+                    openItem(dataModel.getArr_sku());
                 }
             });
 
@@ -3396,7 +3390,7 @@ public class GuestCartItemList extends GuestBaseActivity {
 
                     // Toast.makeText(view.getContext(),dataModel.getArr_item_name(),Toast.LENGTH_LONG).show();
 
-                    openItem(dataModel.getArr_sku().toString());
+                    openItem(dataModel.getArr_sku());
 
                 }
             });
@@ -3455,7 +3449,7 @@ public class GuestCartItemList extends GuestBaseActivity {
         private void openItem(String selItemSku){
             //String selItemSku = data;
             SharedPreferences pref;
-            pref =  CommonFun.getPreferences(mContext);;
+            pref =  CommonFun.getPreferences(mContext);
             SharedPreferences.Editor editor = pref.edit();
             editor.putString("showitemsku", selItemSku);
             editor.commit();
@@ -3600,7 +3594,7 @@ public class GuestCartItemList extends GuestBaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = super.getView(position, convertView, parent);
             if (position == POSITION_USER_DEFINED) {
-                TextView tv = (TextView)view.findViewById(android.R.id.text1);
+                TextView tv = view.findViewById(android.R.id.text1);
                 tv.setText(mCustomText);
             }
 

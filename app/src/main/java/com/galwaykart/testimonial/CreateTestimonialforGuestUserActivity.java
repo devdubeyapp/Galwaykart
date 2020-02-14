@@ -50,6 +50,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -86,17 +87,17 @@ public class CreateTestimonialforGuestUserActivity extends AppCompatActivity {
     }
 
     void Init() {
-        name_et = (EditText) findViewById(R.id.name_et);
-        email_et = (EditText) findViewById(R.id.email_et);
-        phone_et = (EditText) findViewById(R.id.phone_et);
-        city_et = (EditText) findViewById(R.id.city_et);
-        title_et = (EditText) findViewById(R.id.title_et);
-        description_et = (EditText) findViewById(R.id.description_et);
+        name_et = findViewById(R.id.name_et);
+        email_et = findViewById(R.id.email_et);
+        phone_et = findViewById(R.id.phone_et);
+        city_et = findViewById(R.id.city_et);
+        title_et = findViewById(R.id.title_et);
+        description_et = findViewById(R.id.description_et);
 
-        capture_image_view = (ImageView) findViewById(R.id.capture_image_view);
-        user_img_view = (CircleImageView) findViewById(R.id.user_img_view);
+        capture_image_view = findViewById(R.id.capture_image_view);
+        user_img_view = findViewById(R.id.user_img_view);
 
-        submit_btn = (Button) findViewById(R.id.submit_btn);
+        submit_btn = findViewById(R.id.submit_btn);
         capture_image_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,7 +241,7 @@ public class CreateTestimonialforGuestUserActivity extends AppCompatActivity {
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(),data.getData());
                 String path = getPathGalleryImage(bm);
                 imageFile = new File(path);
-                Log.e("path of gallery", imageFile.getAbsolutePath().toString());
+                Log.e("path of gallery", imageFile.getAbsolutePath());
                 Log.e("image path from gallery", path);
 
                 //start convert path to base64
@@ -386,12 +387,7 @@ public class CreateTestimonialforGuestUserActivity extends AppCompatActivity {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return input_data == null ? null : input_data.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                        return null;
-                    }
+                    return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override

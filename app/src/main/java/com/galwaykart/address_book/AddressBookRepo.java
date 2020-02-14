@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,7 +87,7 @@ public class AddressBookRepo {
                     public void onResponse(JSONObject response) {
 
                         try {
-                            Log.d("mvvm",response.toString());
+                            //Log.d("mvvm",response.toString());
 
                             JSONObject jsonObject = null;
                             jsonObject = new JSONObject(String.valueOf(response));
@@ -131,7 +132,7 @@ public class AddressBookRepo {
                                          "",
                                                         arr_default_ship,
                                                         arr_default_bill,
-                                                         st_come_from_update.equals("")?true:false,
+                                        st_come_from_update.equals(""),
                                                 true,true);
 
                                 dataset.add(addressDataModel);
@@ -170,16 +171,12 @@ public class AddressBookRepo {
                             // String statusCode = String.valueOf(error.networkResponse.statusCode);
                             //get response body and parse with appropriate encoding
                             if(error.networkResponse.data!=null) {
-                                try {
-                                    body = new String(error.networkResponse.data,"UTF-8");
-                                    CommonFun.alertError(context,body.toString());
-                                    // JSONObject jsonObject=new JSONObject(body.toString());
-                                    // String message=jsonObject.getString("message");
-                                    //CommonFun.alertError(CustomerAddressBook.this,message);
+                                body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                                CommonFun.alertError(context, body);
+                                // JSONObject jsonObject=new JSONObject(body.toString());
+                                // String message=jsonObject.getString("message");
+                                //CommonFun.alertError(CustomerAddressBook.this,message);
 
-                                } catch (UnsupportedEncodingException e) {
-                                    e.printStackTrace();
-                                }
                             }
                         }catch (Exception e){
 
@@ -254,7 +251,7 @@ public class AddressBookRepo {
                 "\"firstname\":\"" +saddressDataModel.st_customer_first_name + "\"}}";
 
 
-        Log.d("return_data",return_data);
+        //Log.d("return_data",return_data);
 
         try {
             String save_address_url = Global_Settings.api_url + "rest/V1/customers/me";
@@ -292,13 +289,7 @@ public class AddressBookRepo {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return return_data == null ? null : return_data.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", return_data, "utf-8");
-                        return null;
-                    }
+                    return return_data == null ? null : return_data.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override

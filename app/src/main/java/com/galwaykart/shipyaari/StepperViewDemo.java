@@ -45,6 +45,7 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,18 +91,18 @@ public class StepperViewDemo extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stepper_view);
         initNavigationDrawer();
-        step_view = (VerticalStepView) findViewById(R.id.step_view);
+        step_view = findViewById(R.id.step_view);
 
-        tv_shipment_value = (TextView) findViewById(R.id.tv_shipment_value);
-        tv_tracking_no_value = (TextView) findViewById(R.id.tv_tracking_no_value);
-        tv_status_value = (TextView) findViewById(R.id.tv_status_value);
-        tv_dt_value = (TextView) findViewById(R.id.tv_dt_value);
-        tv_status = (TextView)findViewById(R.id.tv_status);
+        tv_shipment_value = findViewById(R.id.tv_shipment_value);
+        tv_tracking_no_value = findViewById(R.id.tv_tracking_no_value);
+        tv_status_value = findViewById(R.id.tv_status_value);
+        tv_dt_value = findViewById(R.id.tv_dt_value);
+        tv_status = findViewById(R.id.tv_status);
 
         tv_trackDetails=findViewById(R.id.tv_trackDetails);
         tv_trackDetails.setVisibility(View.GONE);
 
-        common_header3 = (RelativeLayout) findViewById(R.id.common_header3);
+        common_header3 = findViewById(R.id.common_header3);
 
         pref = CommonFun.getPreferences(getApplicationContext());
         st_selected_Track_id = pref.getString("st_selected_Track_id", "");
@@ -202,7 +203,6 @@ public class StepperViewDemo extends BaseActivity {
                 Intent intent=new Intent(StepperViewDemo.this, TrackDetailWebViewActivity.class);
                 intent.putExtra("trackUrl","https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber="+st_selected_Track_id);
                 startActivity(intent);
-
             }
         });
 
@@ -258,7 +258,7 @@ st_request_URL=Global_Settings.st_sales_api+"DTDCTrackShip/"+st_selected_Track_i
 
 
                             try {
-                                JSONArray jsonArray=new JSONArray(xmlString.toString());
+                                JSONArray jsonArray=new JSONArray(xmlString);
                                 JSONObject jsonObject=jsonArray.getJSONObject(0);
                                 String current_status=jsonObject.getString("CURRENT_STATUS");
                                 //Log.d("xmlstring",current_status);
@@ -516,7 +516,7 @@ st_request_URL=Global_Settings.st_sales_api+"DTDCTrackShip/"+st_selected_Track_i
                         public void onResponse(String response) {
                             if(pDialog.isShowing())
                                 pDialog.dismiss();
-                                Log.d("VOLLEY12345", response);
+                                //Log.d("VOLLEY12345", response);
                             try {
 
                                 JSONObject object = new JSONObject(String.valueOf(response));
@@ -595,12 +595,7 @@ st_request_URL=Global_Settings.st_sales_api+"DTDCTrackShip/"+st_selected_Track_i
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return input_data == null ? null : input_data.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                        return null;
-                    }
+                    return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override

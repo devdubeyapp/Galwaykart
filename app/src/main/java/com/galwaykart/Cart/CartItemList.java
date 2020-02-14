@@ -216,12 +216,12 @@ public class CartItemList extends BaseActivity {
         offered_cart_item = new ArrayList<>();
 
         found_image_path_blank = false;
-        progress_bar = (ProgressBar) findViewById(R.id.progress_bar);
+        progress_bar = findViewById(R.id.progress_bar);
         progress_bar.setVisibility(View.GONE);
-        tv_txt_view = (TextView) findViewById(R.id.tv_txt_view);
-        tv_discount = (TextView) findViewById(R.id.tv_discount);
+        tv_txt_view = findViewById(R.id.tv_txt_view);
+        tv_discount = findViewById(R.id.tv_discount);
         tv_discount.setVisibility(View.GONE);
-        tv_total_ip= (TextView)findViewById(R.id.tv_total_ip);
+        tv_total_ip= findViewById(R.id.tv_total_ip);
 
         SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
         login_group_id=pref.getString("login_group_id","");
@@ -229,27 +229,27 @@ public class CartItemList extends BaseActivity {
            tv_total_ip.setVisibility(View.GONE);
         }
 
-        img_empty_cart=(ImageView)findViewById(R.id.img_empty_cart);
+        img_empty_cart= findViewById(R.id.img_empty_cart);
         st_offer_api_URL=st_offer_api_URL+"?customer_type="+login_group_id;
 
 
-        tbl_row1 = (TableRow)findViewById(R.id.tbl_row1);
-        tbl_row2 = (TableRow)findViewById(R.id.tbl_row2);
-        tbl_row3 = (TableRow)findViewById(R.id.tbl_row3);
-        btn_remove_coupon = (TextView) findViewById(R.id.btn_remove_coupon);
-        btn_apply_coupon = (TextView) findViewById(R.id.btn_apply_coupon);
-        btn_apply_code = (TextView) findViewById(R.id.btn_apply_code);
-        txt_coupon = (TextView) findViewById(R.id.txt_coupon);
-        ed_coupon=(EditText)findViewById(R.id.ed_coupon);
-        bt_change_cart = (Button)findViewById(R.id.bt_change_cart);
+        tbl_row1 = findViewById(R.id.tbl_row1);
+        tbl_row2 = findViewById(R.id.tbl_row2);
+        tbl_row3 = findViewById(R.id.tbl_row3);
+        btn_remove_coupon = findViewById(R.id.btn_remove_coupon);
+        btn_apply_coupon = findViewById(R.id.btn_apply_coupon);
+        btn_apply_code = findViewById(R.id.btn_apply_code);
+        txt_coupon = findViewById(R.id.txt_coupon);
+        ed_coupon= findViewById(R.id.ed_coupon);
+        bt_change_cart = findViewById(R.id.bt_change_cart);
 
-        list_cart_item = (RecyclerView) findViewById(R.id.list_cart_item);
-        recyclerView_RecentItem=(RecyclerView)findViewById(R.id.recyclerView_RecentItem);
+        list_cart_item = findViewById(R.id.list_cart_item);
+        recyclerView_RecentItem= findViewById(R.id.recyclerView_RecentItem);
         recyclerView_RecentItem.setVisibility(View.GONE);
         list_recent_item=new ArrayList<>();
         listof_cart_item=new ArrayList<>();
 
-        tv_recent_view_item=(TextView)findViewById(R.id.tv_recent_view_item);
+        tv_recent_view_item= findViewById(R.id.tv_recent_view_item);
         tv_recent_view_item.setVisibility(View.GONE);
 
 
@@ -307,16 +307,10 @@ public class CartItemList extends BaseActivity {
 
 
         String st_data=pref.getString("st_dist_id","");
-        if(!st_data.equals("")  && (st_data!=null))
-            user_details_already_fetch=true;
-        else
-            user_details_already_fetch=false;
+        user_details_already_fetch= !st_data.equals("") && (st_data != null);
 
         String st_data_magento=pref.getString("log_user_zone","");
-        if(!st_data_magento.equals("")  && (st_data_magento!=null))
-            user_details_already_fetch=true;
-        else
-            user_details_already_fetch=false;
+        user_details_already_fetch= !st_data_magento.equals("") && (st_data_magento != null);
 
         /**
          * if already fetch user zone from the sales and magento
@@ -337,8 +331,8 @@ public class CartItemList extends BaseActivity {
              * init controls
              */
             //list_cart_item.setAdapter(null);
-            tv_alert = (TextView) findViewById(R.id.tv_alert);
-            tv_alert_continue = (TextView) findViewById(R.id.tv_alert_continue);
+            tv_alert = findViewById(R.id.tv_alert);
+            tv_alert_continue = findViewById(R.id.tv_alert_continue);
             tv_alert_continue.setPaintFlags(tv_alert_continue.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             tv_alert_continue.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -362,7 +356,7 @@ public class CartItemList extends BaseActivity {
             tokenData = pref.getString("tokenData", "");
             // tokenData = "jqb3cv661kcx69qc300icrxaco8573h0";
 
-            btCheckout = (Button) findViewById(R.id.btCheckout);
+            btCheckout = findViewById(R.id.btCheckout);
             btCheckout.setVisibility(View.GONE);
             btCheckout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -409,7 +403,7 @@ public class CartItemList extends BaseActivity {
 
                     String entered_code = ed_coupon.getText().toString().trim();
                     st_apply_coupon_URL = Global_Settings.api_url + "rest/V1/m-carts/mine/coupons/" + entered_code;
-                    Log.d("st_apply_coupon_URL", st_apply_coupon_URL);
+                    //Log.d("st_apply_coupon_URL", st_apply_coupon_URL);
                     applyCoupon(st_apply_coupon_URL);
 
                     /*String entered_code = ed_coupon.getText().toString().trim();
@@ -451,7 +445,7 @@ public class CartItemList extends BaseActivity {
 
 
             st_remove_coupon_URL = Global_Settings.api_url+"rest/V1/carts/mine/coupons";
-            Log.d("st_remove_coupon_URL",st_remove_coupon_URL);
+            //Log.d("st_remove_coupon_URL",st_remove_coupon_URL);
 
             //removeCoupon(st_remove_coupon_URL);
             //callCartItemList();
@@ -561,7 +555,7 @@ public class CartItemList extends BaseActivity {
 
         String coupon_check_url=Global_Settings.api_url+"rest/V1/carts/mine/coupons/";
 
-        Log.d("coupon_url",coupon_check_url);
+        //Log.d("coupon_url",coupon_check_url);
         tokenData = tokenData.replaceAll("\"", "");
         pDialog = new TransparentProgressDialog(CartItemList.this);
         pDialog.setCancelable(true);
@@ -575,7 +569,7 @@ public class CartItemList extends BaseActivity {
 
                     @Override
                     public void onResponse(String response) {
-                        Log.d("responseafterapplied", response.toString());
+                        //Log.d("responseafterapplied", response.toString());
                         //CommonFun.alertError(CartItemList.this, response.toString());
                         if(pDialog.isShowing())
                             pDialog.dismiss();
@@ -585,7 +579,7 @@ public class CartItemList extends BaseActivity {
 
                         try {
 
-                            String st_coupon=response.toString();
+                            String st_coupon= response;
                             if(TextUtils.isEmpty(st_coupon) || st_coupon.equalsIgnoreCase("[]"))
                             {
                                 callCartItemList();
@@ -736,7 +730,7 @@ public class CartItemList extends BaseActivity {
                         }
                         else{
                             //Log.d("glog","removecoupon1");
-                            CommonFun.alertError(CartItemList.this, response.toString());
+                            CommonFun.alertError(CartItemList.this, response);
                             Intent intent = new Intent(getBaseContext(), ExceptionError.class);
                             startActivity(intent);
                         }
@@ -835,6 +829,7 @@ public class CartItemList extends BaseActivity {
     }
     private void applyCoupon(String st_apply_coupon_url) {
 
+        Log.d("CoResponse",st_apply_coupon_url);
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest putRequest = new StringRequest(Request.Method.PUT, st_apply_coupon_url,
                 new Response.Listener<String>()
@@ -842,7 +837,7 @@ public class CartItemList extends BaseActivity {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        Log.d("Response", response);
+                        Log.d("CoResponse", response);
 
                         try {
 
@@ -1128,7 +1123,7 @@ public class CartItemList extends BaseActivity {
                         if (pDialog.isShowing())
                             pDialog.dismiss();
 
-                        Log.d("responsecartitmelist", String.valueOf(response));
+                        //Log.d("responsecartitmelist", String.valueOf(response));
 
 
                         try {
@@ -1142,7 +1137,7 @@ public class CartItemList extends BaseActivity {
                             if(jsonObj.has("ip"))
                             {
                                total_ip=jsonObj.getString("ip");
-                               Log.d("totalip",total_ip);
+                               //Log.d("totalip",total_ip);
                             }
 
                             is_error=jsonObj.getString("is_error");
@@ -1294,7 +1289,7 @@ public class CartItemList extends BaseActivity {
 
                            if(jsonObj.has("ip")) {
                                tv_total_ip.setText("Total IP : " + jsonObj.getString("ip") );
-                               Log.d("totalipSegment",total_ip);
+                               //Log.d("totalipSegment",total_ip);
                            }
 
                        }
@@ -2307,23 +2302,23 @@ public class CartItemList extends BaseActivity {
 
                 super(convertView);
 
-                textView_name = (TextView) convertView.findViewById(R.id.textView_name);
-                imageView_Item=(ImageView)convertView.findViewById(R.id.imageView_Item);
-                textView_ip_value = (TextView)convertView.findViewById(R.id.textView_ip_value);
-                textView_ip = (TextView)convertView.findViewById(R.id.textView_ip);
-                textView_itemprice = (TextView) convertView.findViewById(R.id.textView_itemprice);
-                itemqty = (TextView) convertView.findViewById(R.id.itemqty);
-                iv_minus_cart_item = (ImageView)convertView.findViewById(R.id.iv_minus_cart_item);
-                add_item = (ImageView)convertView.findViewById(R.id.add_item);
-                btUpdate = (Button)convertView.findViewById(R.id.btUpdate);
-                btDelete=(Button)convertView.findViewById(R.id.btDelete);
-                ed_qty=(EditText)convertView.findViewById(R.id.ed_qty);
-                spinner_qty=(Spinner)convertView.findViewById(R.id.spinner_qty);
+                textView_name = convertView.findViewById(R.id.textView_name);
+                imageView_Item= convertView.findViewById(R.id.imageView_Item);
+                textView_ip_value = convertView.findViewById(R.id.textView_ip_value);
+                textView_ip = convertView.findViewById(R.id.textView_ip);
+                textView_itemprice = convertView.findViewById(R.id.textView_itemprice);
+                itemqty = convertView.findViewById(R.id.itemqty);
+                iv_minus_cart_item = convertView.findViewById(R.id.iv_minus_cart_item);
+                add_item = convertView.findViewById(R.id.add_item);
+                btUpdate = convertView.findViewById(R.id.btUpdate);
+                btDelete= convertView.findViewById(R.id.btDelete);
+                ed_qty= convertView.findViewById(R.id.ed_qty);
+                spinner_qty= convertView.findViewById(R.id.spinner_qty);
                 //textView_name.setText(arr_item_name[position]);
-                textView_price=(TextView)convertView.findViewById(R.id.textView_price);
+                textView_price= convertView.findViewById(R.id.textView_price);
                 // textView_price.setVisibility(View.GONE);
-                tv_update_qty_alert=(Button) convertView.findViewById(R.id.btUpdateQty);
-                tv_msg=(TextView)convertView.findViewById(R.id.tvv_msg);
+                tv_update_qty_alert= convertView.findViewById(R.id.btUpdateQty);
+                tv_msg= convertView.findViewById(R.id.tvv_msg);
 
             }
 
@@ -2341,11 +2336,11 @@ public class CartItemList extends BaseActivity {
 
             final DataModelCart_v1 dataModel = mValues.get(position);
 
-            final String prod_name=dataModel.getArr_item_name().toString();
+            final String prod_name= dataModel.getArr_item_name();
 
-            final String prod_price=dataModel.getArr_item_price().toString();
+            final String prod_price= dataModel.getArr_item_price();
 
-            final  String prod_ip = dataModel.getProduct_ip().toString();
+            final  String prod_ip = dataModel.getProduct_ip();
 
 
             login_group_id=pref.getString("login_group_id","");
@@ -2417,13 +2412,10 @@ public class CartItemList extends BaseActivity {
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
                     String selqty=holder.spinner_qty.getSelectedItem().toString();
-                    Log.d("selqty",selqty);
+                    //Log.d("selqty",selqty);
 
                     holder.totalCount++;
-                    if(holder.totalCount<=1)
-                        holder.is_start=true;
-                    else
-                        holder.is_start=false;
+                    holder.is_start= holder.totalCount <= 1;
 
                         try {
                             if (Integer.parseInt(holder.spinner_qty.getSelectedItem().toString()) < 6) {
@@ -2433,21 +2425,21 @@ public class CartItemList extends BaseActivity {
 
                             }
                         } catch (NumberFormatException ex) {
-                            Log.d("selqty","NumberFormatException");
+                            //Log.d("selqty","NumberFormatException");
                             //Log.d("getData", holder.spinner_qty.getSelectedItem().toString());
                             openAlertQtyList(position,holder, adapter3, dataModel);
 
                         }catch (NullPointerException ex) {
 
-                            Log.d("selqty","NullPointerException");
+                            //Log.d("selqty","NullPointerException");
 
-                        Log.d("exception", ex.toString());
+                        //Log.d("exception", ex.toString());
                     }
                 }
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
 
-                    Log.d("selqty","noselected");
+                    //Log.d("selqty","noselected");
 
                 }
 
@@ -2523,7 +2515,7 @@ public class CartItemList extends BaseActivity {
                     cart_item_id = arr_item_id[selindexof];
 
 
-                    deleteCartItem(selindexof,true,dataModel.getArr_sku().toString());
+                    deleteCartItem(selindexof,true, dataModel.getArr_sku());
                 }
             });
 
@@ -2577,7 +2569,7 @@ public class CartItemList extends BaseActivity {
             holder.textView_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    openItem(dataModel.getArr_sku().toString());
+                    openItem(dataModel.getArr_sku());
                 }
             });
 
@@ -2613,7 +2605,7 @@ public class CartItemList extends BaseActivity {
                 public void onClick(View view) {
 
                     // Toast.makeText(view.getContext(),dataModel.getArr_item_name(),Toast.LENGTH_LONG).show();
-                    openItem(dataModel.getArr_sku().toString());
+                    openItem(dataModel.getArr_sku());
 
                 }
             });
@@ -2634,7 +2626,7 @@ public class CartItemList extends BaseActivity {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 if (position == POSITION_USER_DEFINED) {
-                    TextView tv = (TextView)view.findViewById(android.R.id.text1);
+                    TextView tv = view.findViewById(android.R.id.text1);
                     tv.setText(mCustomText);
                 }
 
@@ -2707,7 +2699,7 @@ public class CartItemList extends BaseActivity {
         private void openItem(String selItemSku){
             //String selItemSku = data;
             SharedPreferences pref;
-            pref =  CommonFun.getPreferences(mContext);;
+            pref =  CommonFun.getPreferences(mContext);
             SharedPreferences.Editor editor = pref.edit();
             editor.putString("showitemsku", selItemSku);
             editor.commit();

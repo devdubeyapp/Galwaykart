@@ -113,7 +113,7 @@ public class AddressList extends BaseActivity {
 
         preferences = CommonFun.getPreferences(getApplicationContext());
         pref = CommonFun.getPreferences(getApplicationContext());
-        list_address = (ListView) findViewById(R.id.list_address);
+        list_address = findViewById(R.id.list_address);
 
 
         arr_telephone = new String[2];
@@ -203,14 +203,14 @@ public class AddressList extends BaseActivity {
             SharedPreferences pref;
             pref = CommonFun.getPreferences(getApplicationContext());
             SharedPreferences.Editor editor = pref.edit();
-            editor.putString("arr_customer_id", arr_customer_id[i].toString());
-            editor.putString("arr_telephone", arr_telephone[i].toString());
-            editor.putString("arr_postcode", arr_postcode[i].toString());
-            editor.putString("arr_region", arr_region[i].toString());
-            editor.putString("arr_firstname", arr_firstname[i].toString());
-            editor.putString("arr_lastname", arr_lastname[i].toString());
-            editor.putString("arr_company", arr_company[i].toString());
-            editor.putString("arr_state", arr_state[i].toString());
+            editor.putString("arr_customer_id", arr_customer_id[i]);
+            editor.putString("arr_telephone", arr_telephone[i]);
+            editor.putString("arr_postcode", arr_postcode[i]);
+            editor.putString("arr_region", arr_region[i]);
+            editor.putString("arr_firstname", arr_firstname[i]);
+            editor.putString("arr_lastname", arr_lastname[i]);
+            editor.putString("arr_company", arr_company[i]);
+            editor.putString("arr_state", arr_state[i]);
             editor.commit();
 
 
@@ -232,11 +232,11 @@ public class AddressList extends BaseActivity {
 
         initNavigationDrawer();
 
-        rel_no_address = (RelativeLayout) findViewById(R.id.rel_no_address);
-        btn_add_address = (Button) findViewById(R.id.btn_add_address);
+        rel_no_address = findViewById(R.id.rel_no_address);
+        btn_add_address = findViewById(R.id.btn_add_address);
         btn_add_address.setVisibility(View.GONE);
 
-     tv_title_address = (TextView) findViewById(R.id.tv_title_address);
+     tv_title_address = findViewById(R.id.tv_title_address);
 
         String add_type = preferences.getString("addnew", "");
         if (add_type != null && !add_type.equals("")) {
@@ -250,11 +250,11 @@ public class AddressList extends BaseActivity {
 
 
 
-        btn_add_new_address = (Button) findViewById(R.id.btn_add_new_address);
+        btn_add_new_address = findViewById(R.id.btn_add_new_address);
         btn_add_new_address.setVisibility(View.GONE);
 
 
-        btn_change_address=(Button)findViewById(R.id.btn_change_address);
+        btn_change_address= findViewById(R.id.btn_change_address);
         btn_change_address.setVisibility(View.GONE);
 
     }

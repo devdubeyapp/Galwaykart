@@ -333,23 +333,23 @@ public class GuestMainActivity extends GuestBaseActivity {
 
 
         show_recent_item=false;
-        img_close_write_review=(ImageView)findViewById(R.id.img_close_write_review);
+        img_close_write_review= findViewById(R.id.img_close_write_review);
 
-        llayout_product=(LinearLayout)findViewById(R.id.llayout_product);
-        rel_layout_review=(RelativeLayout)findViewById(R.id.rel_layout_review);
-        product_rating_new=(RatingBar)findViewById(R.id.product_rating_new);
-        live=(RadioButton)findViewById(R.id.live);
+        llayout_product= findViewById(R.id.llayout_product);
+        rel_layout_review= findViewById(R.id.rel_layout_review);
+        product_rating_new= findViewById(R.id.product_rating_new);
+        live= findViewById(R.id.live);
 
 
-        recycle_view_size=(RecyclerView)findViewById(R.id.recycle_view_size);
-        recycle_view_color=(RecyclerView)findViewById(R.id.recycle_view_color);
-        rel_horizontal_view=(RelativeLayout)findViewById(R.id.rel_horizontal_view);
+        recycle_view_size= findViewById(R.id.recycle_view_size);
+        recycle_view_color= findViewById(R.id.recycle_view_color);
+        rel_horizontal_view= findViewById(R.id.rel_horizontal_view);
         rel_horizontal_view.setVisibility(View.GONE);
 
 
 
-        local=(RadioButton)findViewById(R.id.local);
-        toggle=(RadioGroup)findViewById(R.id.toggle);
+        local= findViewById(R.id.local);
+        toggle= findViewById(R.id.toggle);
         live.setChecked(true);
         live.setTextColor(getResources().getColor(R.color.colorwhite));
         local.setTextColor(getResources().getColor(R.color.black));
@@ -396,29 +396,29 @@ public class GuestMainActivity extends GuestBaseActivity {
             }
         });
 
-        list_review=(ListView)findViewById(R.id.list_review);
+        list_review= findViewById(R.id.list_review);
         list_review.setVisibility(View.GONE);
 
         itemRatingList=new ArrayList<>();
 
-        ed_comment=(EditText)findViewById(R.id.ed_nickname);
-        ed_nickname=(EditText)findViewById(R.id.ed_comment);
-        ed_rating=(RatingBar)findViewById(R.id.ed_rating);
+        ed_comment= findViewById(R.id.ed_nickname);
+        ed_nickname= findViewById(R.id.ed_comment);
+        ed_rating= findViewById(R.id.ed_rating);
 
-        progressBar_write_review=(ProgressBar)findViewById(R.id.progressBar_write_review);
+        progressBar_write_review= findViewById(R.id.progressBar_write_review);
         progressBar_write_review.setVisibility(View.GONE);
-        progressBar_read_review=(ProgressBar)findViewById(R.id.progressBar_read_review);
+        progressBar_read_review= findViewById(R.id.progressBar_read_review);
         progressBar_read_review.setVisibility(View.GONE);
 
-        check_available_response = (TableLayout)findViewById(R.id.check_available_response);
-        check_available = (TableLayout)findViewById(R.id.check_available);
+        check_available_response = findViewById(R.id.check_available_response);
+        check_available = findViewById(R.id.check_available);
 
-        btn_check_availablity = (TextView)findViewById(R.id.btn_check_availablity);
+        btn_check_availablity = findViewById(R.id.btn_check_availablity);
 
-        btn_change_pin= (TextView)findViewById(R.id.btn_change_pin);
-        tv_availability_response= (TextView)findViewById(R.id.tv_availability_response);
+        btn_change_pin= findViewById(R.id.btn_change_pin);
+        tv_availability_response= findViewById(R.id.tv_availability_response);
 
-        ed_pincode = (EditText)findViewById(R.id.ed_pincode);
+        ed_pincode = findViewById(R.id.ed_pincode);
 
         btn_check_availablity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -460,7 +460,7 @@ public class GuestMainActivity extends GuestBaseActivity {
         });
 
 
-        btn_submit_review=(Button)findViewById(R.id.btn_submit_review);
+        btn_submit_review= findViewById(R.id.btn_submit_review);
         btn_submit_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -483,14 +483,14 @@ public class GuestMainActivity extends GuestBaseActivity {
         });
 
 
-        linear_write_review=(LinearLayout)findViewById(R.id.linear_write_review);
+        linear_write_review= findViewById(R.id.linear_write_review);
         linear_write_review.setVisibility(View.GONE);
         img_close_write_review.setVisibility(View.GONE);
 
         /**
          * Write Review
          */
-        tv_write_review=(TextView)findViewById(R.id.tv_write_review);
+        tv_write_review= findViewById(R.id.tv_write_review);
         tv_write_review.setVisibility(View.GONE);
         tv_write_review.setPaintFlags(tv_write_review.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         tv_write_review.setOnClickListener(new View.OnClickListener() {
@@ -514,13 +514,13 @@ public class GuestMainActivity extends GuestBaseActivity {
             }
         });
 
-        tv_review_alert=(TextView)findViewById(R.id.tv_review_alert);
+        tv_review_alert= findViewById(R.id.tv_review_alert);
         tv_review_alert.setVisibility(View.GONE);
         //list_review.setNestedScrollingEnabled(false);
 
 
 
-        recyclerView_Rating=(RecyclerView)findViewById(R.id.recyclerView_Rating);
+        recyclerView_Rating= findViewById(R.id.recyclerView_Rating);
 
         recyclerView_Rating.setLayoutManager(new LinearLayoutManager(this));
 
@@ -579,7 +579,7 @@ public class GuestMainActivity extends GuestBaseActivity {
          * share Images
          */
 
-        img_share=(TextView)findViewById(R.id.img_share);
+        img_share= findViewById(R.id.img_share);
         img_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -609,17 +609,17 @@ public class GuestMainActivity extends GuestBaseActivity {
             }
         });
 
-        pager_indicator=(LinearLayout)findViewById(R.id.viewPagerCountDots);
-        product_rating=(RatingBar)findViewById(R.id.product_rating);
+        pager_indicator= findViewById(R.id.viewPagerCountDots);
+        product_rating= findViewById(R.id.product_rating);
         product_rating.setNumStars(5);
-        product_rating_new=(RatingBar)findViewById(R.id.product_rating_new);
+        product_rating_new= findViewById(R.id.product_rating_new);
         product_rating_new.setNumStars(5);
         //product_rating.setRating(3.4f);
 
         long_d_hide=false;
         //SharedPreferences preferences;
         preferences = CommonFun.getPreferences(getApplicationContext());
-        tv_Wish_list=(TextView)findViewById(R.id.tv_Wish_list_new);
+        tv_Wish_list= findViewById(R.id.tv_Wish_list_new);
         tv_Wish_list.setVisibility(View.GONE);
         //tvDiscPrice = (TextView)findViewById(R.id.tvDiscPrice);
 
@@ -627,7 +627,7 @@ public class GuestMainActivity extends GuestBaseActivity {
         ////Log.d("st_logged_gp_id",st_logged_gp_id);
 
         page=0;
-        pager_view_products=(ViewPager)findViewById(R.id.pager_view_products);
+        pager_view_products= findViewById(R.id.pager_view_products);
 
         pager_view_products.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -744,12 +744,12 @@ public class GuestMainActivity extends GuestBaseActivity {
         preferences = CommonFun.getPreferences(getApplicationContext());
         tokenData=preferences.getString("tokenData","");
 
-        tvItemName=(TextView)findViewById(R.id.tvItemName);
-        tvItemPrice=(TextView)findViewById(R.id.tvItemPrice);
-        tvItemShort=(TextView)findViewById(R.id.tvItemShort);
-        tvItemLong=(TextView)findViewById(R.id.tvItemLong);
-        tv_add_to_cart=(TextView)findViewById(R.id.tv_add_to_cart);
-        tvItemLong_title=(TextView)findViewById(R.id.tvItemLong_title);
+        tvItemName= findViewById(R.id.tvItemName);
+        tvItemPrice= findViewById(R.id.tvItemPrice);
+        tvItemShort= findViewById(R.id.tvItemShort);
+        tvItemLong= findViewById(R.id.tvItemLong);
+        tv_add_to_cart= findViewById(R.id.tv_add_to_cart);
+        tvItemLong_title= findViewById(R.id.tvItemLong_title);
 
         tvItemLong_title.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -788,8 +788,8 @@ public class GuestMainActivity extends GuestBaseActivity {
         });
 
 
-        tv_associate_products = (TextView) findViewById(R.id.tv_associate_products);
-        tv_associate_products_details = (TextView) findViewById(R.id.tv_associate_products_details);
+        tv_associate_products = findViewById(R.id.tv_associate_products);
+        tv_associate_products_details = findViewById(R.id.tv_associate_products_details);
 
 
         arrayList = new ArrayList<DataModelCart>();
@@ -797,10 +797,10 @@ public class GuestMainActivity extends GuestBaseActivity {
         st_token_data = preferences.getString("tokenData","");
         ////Log.d("MainActivity",st_token_data);
 
-        ed_qty=(EditText)findViewById(R.id.ed_qty);
+        ed_qty= findViewById(R.id.ed_qty);
         ed_qty.setVisibility(View.GONE);
 
-        img_view_product_image=(ImageView)findViewById(R.id.img_view_product_image);
+        img_view_product_image= findViewById(R.id.img_view_product_image);
 
 //        String[] items1 = new String[]{"BLACK - GOLD", "RED - GOLD", "PURPLE - GOLD"};
 //        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, R.layout.spinner_item, items1);
@@ -810,7 +810,7 @@ public class GuestMainActivity extends GuestBaseActivity {
 //        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.spinner_item, items2);
 //        dropdown2.setAdapter(adapter2);
 
-        spinner_qty = (Spinner)findViewById(R.id.spinner_qty);
+        spinner_qty = findViewById(R.id.spinner_qty);
 
         String[] items3 = new String[]{"1", "2", "3",
                 "4", "5", "6",
@@ -1157,7 +1157,7 @@ public class GuestMainActivity extends GuestBaseActivity {
                         if(response!=null){
                             try {
 
-                                JSONObject jsonObj = new JSONObject(String.valueOf(response));
+                                JSONObject jsonObj = new JSONObject(response);
                                 JSONArray jsonArray = jsonObj.getJSONArray("additems");
 
                                 String st_get_wishList_Status = jsonArray.getString(0);
@@ -1171,9 +1171,9 @@ public class GuestMainActivity extends GuestBaseActivity {
 
                                 final Dialog dialog = new Dialog(GuestMainActivity.this);
                                 dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                TextView tv_dialog = (TextView)dialog.findViewById(R.id.tv_dialog);
-                                ImageView image_view_dialog = (ImageView)dialog.findViewById(R.id.image_view_dialog);
-                                tv_dialog.setText(st_get_wishList_Status.toString());
+                                TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
+                                tv_dialog.setText(st_get_wishList_Status);
                                 dialog.show();
 
 
@@ -1301,7 +1301,7 @@ public class GuestMainActivity extends GuestBaseActivity {
                         if(response!=null){
                             try {
 
-                                jsonObj = new JSONObject(String.valueOf(response));
+                                jsonObj = new JSONObject(response);
 
                                 status_product=jsonObj.getString("status");
                                 product_type=jsonObj.getString("type_id");
@@ -1854,10 +1854,10 @@ public class GuestMainActivity extends GuestBaseActivity {
                 }
 
                 if (is_salable == false) {
-                    RelativeLayout spinnerlinear = (RelativeLayout) findViewById(R.id.spinnerlinear);
+                    RelativeLayout spinnerlinear = findViewById(R.id.spinnerlinear);
                     spinnerlinear.setVisibility(View.GONE);
 
-                    TableLayout check_available = (TableLayout) findViewById(R.id.check_available);
+                    TableLayout check_available = findViewById(R.id.check_available);
                     check_available.setVisibility(View.GONE);
                     tv_add_to_cart.setEnabled(false);
                     if (is_salable_text != null && !is_salable_text.equalsIgnoreCase("")) {
@@ -1954,7 +1954,7 @@ public class GuestMainActivity extends GuestBaseActivity {
                     } else
                         image_path = image_path + st_product_image;
                 }
-                dbh.addCartProductImage(new CartProductImage(product_sku.toString(), image_path.toString()));
+                dbh.addCartProductImage(new CartProductImage(product_sku, image_path));
 
                 short_desc = short_desc.replaceAll("</li>", "<br/>");
 
@@ -1987,7 +1987,7 @@ public class GuestMainActivity extends GuestBaseActivity {
 //                                    else {
 
 
-                insertToDbRecentItem(product_name, product_sku, image_path.toString(), product_price);
+                insertToDbRecentItem(product_name, product_sku, image_path, product_price);
 
                // checkWishList();
 
@@ -2185,7 +2185,7 @@ public class GuestMainActivity extends GuestBaseActivity {
 
 
 
-                            String cart_id = response.toString();
+                            String cart_id = response;
                             cart_id = cart_id.replaceAll("\"", "");
 
                             SharedPreferences.Editor editor= preferences.edit();
@@ -2635,8 +2635,8 @@ public class GuestMainActivity extends GuestBaseActivity {
 
                                         dialog = new Dialog(GuestMainActivity.this);
                                         dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                        TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
-                                        ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+                                        TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                        ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                         dialog.show();
 
                                         new CountDownTimer(2000, 2000) {

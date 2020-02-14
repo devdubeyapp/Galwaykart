@@ -84,9 +84,9 @@ public class OrderDetails extends BaseActivityWithoutCart {
         orderhash=pref.getString("orderhash","");
 
         String orderpono=pref.getString("orderpono","");
-        tv_order_status=(TextView)findViewById(R.id.tv_order_status);
+        tv_order_status= findViewById(R.id.tv_order_status);
 
-        tvOrderList=(TextView)findViewById(R.id.tvOrderList);
+        tvOrderList= findViewById(R.id.tvOrderList);
         tvOrderList.setPaintFlags(tv_order_status.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         tvOrderList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +127,7 @@ public class OrderDetails extends BaseActivityWithoutCart {
         dbh.deleteAllData();
 
 
-        tvContinueShop=(TextView)findViewById(R.id.tvContinueShop);
+        tvContinueShop= findViewById(R.id.tvContinueShop);
         tvContinueShop.setPaintFlags(tv_order_status.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         tvContinueShop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,8 +143,8 @@ public class OrderDetails extends BaseActivityWithoutCart {
         });
 
 
-        underline3=(View)findViewById(R.id.underline3);
-        lv_order_list=(ListView)findViewById(R.id.lv_order_list);
+        underline3= findViewById(R.id.underline3);
+        lv_order_list= findViewById(R.id.lv_order_list);
         lv_order_list.setVisibility(View.GONE);
         //callOrderDetails();
 

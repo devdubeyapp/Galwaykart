@@ -16,7 +16,7 @@ public class TestScroll extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testscroll);
-        llayout=(LinearLayout)findViewById(R.id.llayout);
+        llayout= findViewById(R.id.llayout);
 
         for (int i = 1; i <= 20; i++) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

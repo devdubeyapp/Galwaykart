@@ -98,7 +98,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
         preferences = getActivity().getSharedPreferences("GalwayKart",MODE_PRIVATE);
         pref = getActivity().getSharedPreferences("glazekartapp", MODE_PRIVATE);
 
-        progress_bar_shopCategory=(ProgressBar)getActivity().findViewById(R.id.progress_bar_shopCategory);
+        progress_bar_shopCategory= getActivity().findViewById(R.id.progress_bar_shopCategory);
         product_name_list = new ArrayList<String>();
         product_id_list = new ArrayList<String>();
         category_name_list = new ArrayList<String>();
@@ -106,7 +106,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
         sub_cat_get_name=new ArrayList<String>();
         sub_cat_get_id = new ArrayList<String>();
 
-        exp_category_list = (ExpandableListView)getActivity().findViewById(R.id.exp_category_list);
+        exp_category_list = getActivity().findViewById(R.id.exp_category_list);
 
 
         DisplayMetrics metrics = new DisplayMetrics();
@@ -136,7 +136,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
 
                 String selname=arr_category_name[i].toLowerCase();
 
-                if(Integer.parseInt(sub_cat_length_list.get(i).toString())<=0){
+                if(Integer.parseInt(sub_cat_length_list.get(i))<=0){
 
                     SharedPreferences.Editor editor = preferences.edit();
 
@@ -474,7 +474,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
                             try {
 
 
-                                JSONObject jsonObj = new JSONObject(String.valueOf(response));
+                                JSONObject jsonObj = new JSONObject(response);
                                 childrenData = jsonObj.getJSONArray("children_data");
 
                                 length_of_all_category=childrenData.length();
@@ -521,7 +521,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
 
 
                                         int length_of_subcategory = subChildrenData.length();
-                                        Log.d("lengthofsub", String.valueOf(length_of_subcategory));
+                                        //Log.d("lengthofsub", String.valueOf(length_of_subcategory));
 
                                         sub_cat_length_list.add(String.valueOf(length_of_subcategory));
                                         // ////Log.d("category", sub_cat_length_list.get(i));

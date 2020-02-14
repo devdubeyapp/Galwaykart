@@ -109,10 +109,10 @@ public class AddMultipleAddress extends BaseActivity{
         pref = CommonFun.getPreferences(getApplicationContext());
 
         arrayList = new ArrayList<HashMap<String,String>>();
-        spinner_state_profile = (Spinner)findViewById(R.id.spinner_state_profile);
+        spinner_state_profile = findViewById(R.id.spinner_state_profile);
        // chk_same_bill=(CheckBox)findViewById(R.id.chk_same);
 
-        tv_title_address = (TextView)findViewById(R.id.tv_title_address);
+        tv_title_address = findViewById(R.id.tv_title_address);
         tv_title_address.setText("Billing Address");
 
         /*
@@ -136,16 +136,16 @@ public class AddMultipleAddress extends BaseActivity{
         st_coming_from = pref.getString("coming_from","");
 
 
-        first_name = (EditText)findViewById(R.id.first_name);
-        last_name = (EditText)findViewById(R.id.last_name);
-        company = (EditText)findViewById(R.id.company);
-        phone_no = (EditText)findViewById(R.id.phone_no);
-        street_address = (EditText)findViewById(R.id.street_address);
-        city = (EditText)findViewById(R.id.city);
+        first_name = findViewById(R.id.first_name);
+        last_name = findViewById(R.id.last_name);
+        company = findViewById(R.id.company);
+        phone_no = findViewById(R.id.phone_no);
+        street_address = findViewById(R.id.street_address);
+        city = findViewById(R.id.city);
 
-        zip = (EditText)findViewById(R.id.zip);
-        country = (EditText)findViewById(R.id.country);
-        button_save_address = (Button)findViewById(R.id.button_save_address);
+        zip = findViewById(R.id.zip);
+        country = findViewById(R.id.country);
+        button_save_address = findViewById(R.id.button_save_address);
         button_save_address.setOnClickListener(button_save_addressOnClickListener);
 
 
@@ -253,8 +253,8 @@ public class AddMultipleAddress extends BaseActivity{
 
                             final Dialog dialog = new Dialog(AddMultipleAddress.this);
                             dialog.setContentView(R.layout.custom_alert_dialog_design);
-                            TextView tv_dialog = (TextView)dialog.findViewById(R.id.tv_dialog);
-                            ImageView image_view_dialog = (ImageView)dialog.findViewById(R.id.image_view_dialog);
+                            TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                            ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                             tv_dialog.setText(st_new_add_reg);
                             dialog.show();
 

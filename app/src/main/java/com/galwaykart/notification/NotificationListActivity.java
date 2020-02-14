@@ -92,7 +92,7 @@ public class NotificationListActivity extends AppCompatActivity {
 
         tv_notice=findViewById(R.id.tv_notice);
 
-        notification_recycler_view= (RecyclerView) findViewById(R.id.notification_recycler_view);
+        notification_recycler_view= findViewById(R.id.notification_recycler_view);
         notification_recycler_view.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         notification_recycler_view.setLayoutManager(mLayoutManager);
@@ -158,7 +158,7 @@ public class NotificationListActivity extends AppCompatActivity {
         }
 
         st_notification_url = Global_Settings.api_url +
-        "glaze/notify/getNotification.php?userid="+st_login_id+"&start=1&next=50&type="+String.valueOf(log_type);
+        "glaze/notify/getNotification.php?userid="+st_login_id+"&start=1&next=50&type="+ log_type;
 
         //Log.d("st_notification_url",st_notification_url);
         pDialog = new TransparentProgressDialog(NotificationListActivity.this);

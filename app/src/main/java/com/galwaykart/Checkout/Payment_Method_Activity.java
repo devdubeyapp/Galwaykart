@@ -41,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -153,7 +154,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
     protected void onResume() {
         super.onResume();
 
-        list_payment_method = (ListView) findViewById(R.id.list_payment_method);
+        list_payment_method = findViewById(R.id.list_payment_method);
         url_cart_item_list = com.galwaykart.essentialClass.Global_Settings.api_url+"rest/V1/carts/mine";
 
         pref = CommonFun.getPreferences(getApplicationContext());
@@ -464,7 +465,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                                     List<CartProductImage> contacts = dbh.getCartProductImage(arr_sku[i]);
 
                                     for (CartProductImage cn : contacts) {
-                                        cart_imagepath = cn.get_image().toString();
+                                        cart_imagepath = cn.get_image();
                                     }
                                 }
 
@@ -678,7 +679,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
 
         itemList = new ArrayList<HashMap<String, String>>();
 
-        Log.d("payment_meth989999",payment_method_url);
+        //Log.d("payment_meth989999",payment_method_url);
 
         pDialog = new TransparentProgressDialog(this);
         pDialog.setCancelable(false);
@@ -699,7 +700,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                                 pDialog.dismiss();
 
 
-                            Log.d("response9858585695", response.toString());
+                            //Log.d("response9858585695", response.toString());
 
 
                             //CommonFun.alertError(Payment_Method_Activity.this,response.toString());
@@ -1492,12 +1493,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return order_id_method_data == null ? null : order_id_method_data.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        //VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", order_id_method_data, "utf-8");
-                        return null;
-                    }
+                    return order_id_method_data == null ? null : order_id_method_data.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override
@@ -2270,7 +2266,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                         if(response!=null){
                             try {
 
-                                dist_details = new JSONArray(String.valueOf(response));
+                                dist_details = new JSONArray(response);
                                 JSONObject dist_details_object =dist_details.getJSONObject(0);
 
                                 String current_zone = dist_details_object.getString("current_zone");

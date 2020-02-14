@@ -70,6 +70,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
@@ -189,16 +190,16 @@ public class LoginActivity extends AppCompatActivity {
 
         email_login_form=findViewById(R.id.email_login_form);
 
-        login_progress = (ProgressBar) findViewById(R.id.login_progress);
+        login_progress = findViewById(R.id.login_progress);
         pDialog = new TransparentProgressDialog(this);
-        tv_forget_pwd = (TextView) findViewById(R.id.tv_forget_pwd);
-        ly_opt_forgot = (LinearLayout) findViewById(R.id.ly_opt_forgot);
-        tv_send_otp = (TextView) findViewById(R.id.tv_send_otp);
+        tv_forget_pwd = findViewById(R.id.tv_forget_pwd);
+        ly_opt_forgot = findViewById(R.id.ly_opt_forgot);
+        tv_send_otp = findViewById(R.id.tv_send_otp);
         edit_otp=findViewById(R.id.edit_otp);
 
 
 
-        common_header = (RelativeLayout)findViewById(R.id.common_header);
+        common_header = findViewById(R.id.common_header);
 
         ImageView ic_back=findViewById(R.id.ic_back);
         ic_back.setOnClickListener(new View.OnClickListener() {
@@ -209,8 +210,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        tv_create_an_acc = (TextView) findViewById(R.id.tv_create_an_acc);
-        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        tv_create_an_acc = findViewById(R.id.tv_create_an_acc);
+        mEmailSignInButton = findViewById(R.id.email_sign_in_button);
 
         button_otp_check=findViewById(R.id.button_otp_check);
         button_otp_check.setOnClickListener(new View.OnClickListener(){
@@ -230,10 +231,10 @@ public class LoginActivity extends AppCompatActivity {
         });
         // Set up the login form.
 
-        mEmailView = (EditText) findViewById(R.id.email);
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mEmailView = findViewById(R.id.email);
+        mPasswordView = findViewById(R.id.password);
 
-        rel_layout_otp = (RelativeLayout) findViewById(R.id.rel_layout_otp);
+        rel_layout_otp = findViewById(R.id.rel_layout_otp);
         rel_layout_otp.setVisibility(View.GONE);
         iv_close=findViewById(R.id.iv_close);
         iv_close.setOnClickListener(new View.OnClickListener(){
@@ -265,7 +266,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        tv_forget_email=(TextView) findViewById(R.id.tv_forget_email);
+        tv_forget_email= findViewById(R.id.tv_forget_email);
         tv_forget_email.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -279,7 +280,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        img_logo=(ImageView)findViewById(R.id.img_logo);
+        img_logo= findViewById(R.id.img_logo);
         img_logo.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -293,9 +294,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        lay2=(TextInputLayout)findViewById(R.id.lay2);
+        lay2= findViewById(R.id.lay2);
 
-        lay1=(TextInputLayout)findViewById(R.id.lay1);
+        lay1= findViewById(R.id.lay1);
 
         tv_create_an_acc.setOnClickListener(new OnClickListener() {
             @Override
@@ -585,13 +586,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        Log.e("mobile_number",json_input_data1s);
-                        return json_input_data1s == null ? null : json_input_data1s.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", json_input_data1s, "utf-8");
-                        return null;
-                    }
+                    Log.e("mobile_number",json_input_data1s);
+                    return json_input_data1s == null ? null : json_input_data1s.getBytes(StandardCharsets.UTF_8);
                 }
             };
 
@@ -651,8 +647,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                     final Dialog dialog = new Dialog(LoginActivity.this);
                                     dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                    TextView tv_dialog = (TextView)dialog.findViewById(R.id.tv_dialog);
-                                    ImageView image_view_dialog = (ImageView)dialog.findViewById(R.id.image_view_dialog);
+                                    TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                    ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                     tv_dialog.setText("Reset Password Instruction has been sent to your registered Email ID..");
                                     dialog.show();
 
@@ -670,7 +666,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                                     Timer timer=new Timer();
-                                    timer.schedule(timerTask,6000);;
+                                    timer.schedule(timerTask,6000);
                                 }
 
 
@@ -737,12 +733,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
-                        return null;
-                    }
+                    return mRequestBody == null ? null : mRequestBody.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override
@@ -860,7 +851,7 @@ private void callLogin(){
                 //CommonFun.alertError(LoginActivity.this,response);
 
                 try {
-                    JSONObject jsonObject_msg=new JSONObject(response.toString());
+                    JSONObject jsonObject_msg=new JSONObject(response);
                     String msg=jsonObject_msg.getString("message");
                     CommonFun.alertError(LoginActivity.this,msg);
 
@@ -904,16 +895,12 @@ private void callLogin(){
                         String statusCode = String.valueOf(error.networkResponse.statusCode);
                         //get response body and parse with appropriate encoding
                         if (error.networkResponse.data != null) {
-                            try {
-                                body = new String(error.networkResponse.data, "UTF-8");
-                                // CommonFun.alertError(LoginActivity.this,body.toString());
-                                JSONObject jsonObject = new JSONObject(body.toString());
-                                String message = jsonObject.getString("message");
-                                CommonFun.alertError(LoginActivity.this, message);
+                            body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                            // CommonFun.alertError(LoginActivity.this,body.toString());
+                            JSONObject jsonObject = new JSONObject(body);
+                            String message = jsonObject.getString("message");
+                            CommonFun.alertError(LoginActivity.this, message);
 
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                            }
                         }
                     } catch (Exception e) {
 
@@ -932,13 +919,8 @@ private void callLogin(){
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                try {
-//                    login_progress.setVisibility(View.INVISIBLE);
-                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
-                    return null;
-                }
+                //                    login_progress.setVisibility(View.INVISIBLE);
+                return mRequestBody == null ? null : mRequestBody.getBytes(StandardCharsets.UTF_8);
             }
         };
 

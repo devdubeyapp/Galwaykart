@@ -115,37 +115,37 @@ public class AddressUpdateAdapter extends SimpleAdapter {
             convertView = inflater.inflate(R.layout.update_address_list, null);
             holder = new Holder();
 
-            holder.text_City_name = (TextView) convertView.findViewById(R.id.text_City_name);
-            holder.text_Street_name = (TextView) convertView.findViewById(R.id.text_Street_name);
-            holder.text_Telephone_name = (TextView) convertView.findViewById(R.id.text_Telephone_name);
-            holder.text_Pincode_name = (TextView) convertView.findViewById(R.id.text_Pincode_name);
-            holder.text_Customer_name = (TextView) convertView.findViewById(R.id.text_Customer_name);
-            holder.text_Company_name = (TextView) convertView.findViewById(R.id.text_Company_name);
-            holder.bt_Edit_address = (Button) convertView.findViewById(R.id.bt_Edit_address);
+            holder.text_City_name = convertView.findViewById(R.id.text_City_name);
+            holder.text_Street_name = convertView.findViewById(R.id.text_Street_name);
+            holder.text_Telephone_name = convertView.findViewById(R.id.text_Telephone_name);
+            holder.text_Pincode_name = convertView.findViewById(R.id.text_Pincode_name);
+            holder.text_Customer_name = convertView.findViewById(R.id.text_Customer_name);
+            holder.text_Company_name = convertView.findViewById(R.id.text_Company_name);
+            holder.bt_Edit_address = convertView.findViewById(R.id.bt_Edit_address);
 
 
             convertView.setTag(holder);
 
         }
 
-        company_name = itemList.get(position).get(TAG_company).toString();
+        company_name = itemList.get(position).get(TAG_company);
 
         if (company_name.equalsIgnoreCase("")) {
-            holder.text_City_name.setText(itemList.get(position).get(TAG_city).toString());
-            holder.text_Street_name.setText(itemList.get(position).get(TAG_street).toString());
-            holder.text_Telephone_name.setText(itemList.get(position).get(TAG_telephone).toString());
-            holder.text_Pincode_name.setText(itemList.get(position).get(TAG_postcode).toString());
-            holder.text_Customer_name.setText(itemList.get(position).get(TAG_customer_name).toString());
+            holder.text_City_name.setText(itemList.get(position).get(TAG_city));
+            holder.text_Street_name.setText(itemList.get(position).get(TAG_street));
+            holder.text_Telephone_name.setText(itemList.get(position).get(TAG_telephone));
+            holder.text_Pincode_name.setText(itemList.get(position).get(TAG_postcode));
+            holder.text_Customer_name.setText(itemList.get(position).get(TAG_customer_name));
             holder.text_Company_name.setVisibility(View.GONE);
         } else {
 
 
-            holder.text_City_name.setText(itemList.get(position).get(TAG_city).toString());
-            holder.text_Street_name.setText(itemList.get(position).get(TAG_street).toString());
-            holder.text_Telephone_name.setText("T: "+ itemList.get(position).get(TAG_telephone).toString());
-            holder.text_Pincode_name.setText("Pin: " + itemList.get(position).get(TAG_postcode).toString());
-            holder.text_Customer_name.setText(itemList.get(position).get(TAG_customer_name).toString());
-            holder.text_Company_name.setText(itemList.get(position).get(TAG_company).toString());
+            holder.text_City_name.setText(itemList.get(position).get(TAG_city));
+            holder.text_Street_name.setText(itemList.get(position).get(TAG_street));
+            holder.text_Telephone_name.setText("T: "+ itemList.get(position).get(TAG_telephone));
+            holder.text_Pincode_name.setText("Pin: " + itemList.get(position).get(TAG_postcode));
+            holder.text_Customer_name.setText(itemList.get(position).get(TAG_customer_name));
+            holder.text_Company_name.setText(itemList.get(position).get(TAG_company));
         }
 
 
@@ -153,13 +153,13 @@ public class AddressUpdateAdapter extends SimpleAdapter {
             @Override
             public void onClick(View v) {
 
-                String selected_address_id = itemList.get(position).get(TAG_address_id).toString();
-                String selected_address_fName = itemList.get(position).get(TAG_firstname).toString();
-                String selected_address_lName = itemList.get(position).get(TAG_lastname).toString();
-                String selected_address_tel_no = itemList.get(position).get(TAG_telephone).toString();
-                String selected_address_city = itemList.get(position).get(TAG_city).toString();
-                String selected_address_street = itemList.get(position).get(TAG_street).toString();
-                String selected_address_pin = itemList.get(position).get(TAG_postcode).toString();
+                String selected_address_id = itemList.get(position).get(TAG_address_id);
+                String selected_address_fName = itemList.get(position).get(TAG_firstname);
+                String selected_address_lName = itemList.get(position).get(TAG_lastname);
+                String selected_address_tel_no = itemList.get(position).get(TAG_telephone);
+                String selected_address_city = itemList.get(position).get(TAG_city);
+                String selected_address_street = itemList.get(position).get(TAG_street);
+                String selected_address_pin = itemList.get(position).get(TAG_postcode);
 
                 SharedPreferences pref;
                 pref = CommonFun.getPreferences(ctx);

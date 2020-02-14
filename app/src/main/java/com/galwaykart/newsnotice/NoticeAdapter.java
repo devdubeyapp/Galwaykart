@@ -39,10 +39,10 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             layout = view;
             Snackbar snackbar;
 
-            news_tv = (TextView) view.findViewById(R.id.news_tv);
-            image = (ImageView) view.findViewById(R.id.image);
-            main_row_lay = (LinearLayout) view.findViewById(R.id.main_row_lay);
-            tv_readmore= (TextView) view.findViewById(R.id.tv_readmore);
+            news_tv = view.findViewById(R.id.news_tv);
+            image = view.findViewById(R.id.image);
+            main_row_lay = view.findViewById(R.id.main_row_lay);
+            tv_readmore= view.findViewById(R.id.tv_readmore);
         }
     }
 

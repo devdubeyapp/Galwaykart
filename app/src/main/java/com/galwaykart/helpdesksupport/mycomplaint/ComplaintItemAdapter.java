@@ -31,11 +31,11 @@ public class ComplaintItemAdapter extends RecyclerView.Adapter<ComplaintItemAdap
         public ViewHolder(View view) {
             super(view);
             layout = view;
-            tv_product_sku=(TextView) view.findViewById(R.id.tv_product_sku);
-            tv_product_name = (TextView) view.findViewById(R.id.tv_product_name);
-            tv_qty_request = (TextView) view.findViewById(R.id.tv_qty_request);
+            tv_product_sku= view.findViewById(R.id.tv_product_sku);
+            tv_product_name = view.findViewById(R.id.tv_product_name);
+            tv_qty_request = view.findViewById(R.id.tv_qty_request);
           //  main_row_lay = (LinearLayout) view.findViewById(R.id.main_row_lay);
-            imageView_product=(ImageView)view.findViewById(R.id.imageView_product);
+            imageView_product= view.findViewById(R.id.imageView_product);
         }
     }
 

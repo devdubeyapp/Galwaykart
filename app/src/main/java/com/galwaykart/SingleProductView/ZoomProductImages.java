@@ -51,11 +51,11 @@ public class ZoomProductImages extends Activity {
         for(int i=0;i<total_length;i++)
             arr_product_images[i]= pref.getString("zoomimagearray_"+i,"");
 
-        imageView=(ImageView)findViewById(R.id.imgProduct);
+        imageView= findViewById(R.id.imgProduct);
         setImage(img_name,imageView);
         setProductImagePager();
 
-        ImageView imageView_Close=(ImageView)findViewById(R.id.imgClose);
+        ImageView imageView_Close= findViewById(R.id.imgClose);
         imageView_Close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +87,7 @@ public class ZoomProductImages extends Activity {
     private  void  setProductImagePager(){
 
 
-        pager_indicator=(LinearLayout)findViewById(R.id.viewPagerCountDots);
+        pager_indicator= findViewById(R.id.viewPagerCountDots);
 
         dots=new ImageView[arr_product_images.length];
         for (int i = 0; i < arr_product_images.length; i++) {

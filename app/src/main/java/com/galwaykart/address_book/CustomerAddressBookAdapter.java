@@ -30,6 +30,7 @@ import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -132,22 +133,22 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
             convertView = inflater.inflate(R.layout.activity_default_shipping_address_list, null);
             holder = new Holder();
 
-            holder.textCity_name = (TextView) convertView.findViewById(R.id.textCity_name);
-            holder.textStreet_name = (TextView) convertView.findViewById(R.id.textStreet_name);
-            holder.textTelephone_name = (TextView) convertView.findViewById(R.id.textTelephone_name);
-            holder.textPincode_name = (TextView) convertView.findViewById(R.id.textPincode_name);
-            holder.textCustomer_name = (TextView) convertView.findViewById(R.id.textCustomer_name);
-            holder.textCompany_name = (TextView) convertView.findViewById(R.id.textCompany_name);
-            holder.btEdit = (Button)convertView.findViewById(R.id.btEdit);
-            holder.btselect = (Button)convertView.findViewById(R.id.btselect);
-            holder.bt_edit_add_icon = (Button)convertView.findViewById(R.id.bt_edit_add_icon);
-            holder.bt_delete_add_icon=(Button)convertView.findViewById(R.id.bt_delete_add_icon);
+            holder.textCity_name = convertView.findViewById(R.id.textCity_name);
+            holder.textStreet_name = convertView.findViewById(R.id.textStreet_name);
+            holder.textTelephone_name = convertView.findViewById(R.id.textTelephone_name);
+            holder.textPincode_name = convertView.findViewById(R.id.textPincode_name);
+            holder.textCustomer_name = convertView.findViewById(R.id.textCustomer_name);
+            holder.textCompany_name = convertView.findViewById(R.id.textCompany_name);
+            holder.btEdit = convertView.findViewById(R.id.btEdit);
+            holder.btselect = convertView.findViewById(R.id.btselect);
+            holder.bt_edit_add_icon = convertView.findViewById(R.id.bt_edit_add_icon);
+            holder.bt_delete_add_icon= convertView.findViewById(R.id.bt_delete_add_icon);
            // holder.btChangeAddress=(Button)convertView.findViewById(R.id.btChangeAddress);
             convertView.setTag(holder);
 
         }
 
-         company_name= itemList.get(position).get(TAG_company).toString();
+         company_name= itemList.get(position).get(TAG_company);
 
 
         SharedPreferences pref = CommonFun.getPreferences(ctx);
@@ -212,7 +213,7 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                             String tokenData = pref.getString("tokenData", "");
 
 
-                            String  st_attribute_value_mob =  itemList.get(position).get(TAG_telephone).toString().trim();
+                            String  st_attribute_value_mob =  itemList.get(position).get(TAG_telephone).trim();
 
                             Set<String> all_address_id;
                             all_address_id=new HashSet<String>();
@@ -221,8 +222,8 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                             ArrayList<String> address_list = new ArrayList<String>(all_address_id);
 
                             String st_add_id="";
-                            String address_id=itemList.get(position).get(TAG_id).toString();
-                            Log.d("return_data",address_id);
+                            String address_id= itemList.get(position).get(TAG_id);
+                            //Log.d("return_data",address_id);
 
                             if(address_list.size()>0){
 
@@ -241,14 +242,14 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
 
                             return_data = "{\"customer\":" +
                                     "{\"email\":\"" + email + "\"," +
-                                    "\"lastname\":\"" + itemList.get(position).get(TAG_lastname).toString() + "\",\"group_id\":"+login_group_id+","+
+                                    "\"lastname\":\"" + itemList.get(position).get(TAG_lastname) + "\",\"group_id\":"+login_group_id+","+
                                     "\"custom_attributes\":[{\"value\":\""+st_attribute_value_mob+"\",\"attribute_code\":\"mobile_number\"}]," +
                                     "\"addresses\":" +
                                     "[" +
                                     st_add_id +"]," +
                                     "\"website_id\":\"1\"," +
                                     "\"store_id\":\"1\"," +
-                                    "\"firstname\":\"" +itemList.get(position).get(TAG_firstname).toString() + "\"}}";
+                                    "\"firstname\":\"" + itemList.get(position).get(TAG_firstname) + "\"}}";
 
                             callDeleteAPI(return_data,tokenData,ctx,position);
 
@@ -286,19 +287,19 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                     Intent intent = new Intent(ctx, AddNewAddress.class);
                     intent.putExtra("add_new","no");
                     intent.putExtra("selecteddata","done");
-                    intent.putExtra("region",itemList.get(position).get(TAG_region).toString());
-                    intent.putExtra("address_id",itemList.get(position).get(TAG_id).toString());
-                    intent.putExtra("first_name",itemList.get(position).get(TAG_firstname).toString());
-                    intent.putExtra("last_name",itemList.get(position).get(TAG_lastname).toString());
-                    intent.putExtra("phone_no",itemList.get(position).get(TAG_telephone).toString());
-                    intent.putExtra("zip",itemList.get(position).get(TAG_postcode).toString());
+                    intent.putExtra("region", itemList.get(position).get(TAG_region));
+                    intent.putExtra("address_id", itemList.get(position).get(TAG_id));
+                    intent.putExtra("first_name", itemList.get(position).get(TAG_firstname));
+                    intent.putExtra("last_name", itemList.get(position).get(TAG_lastname));
+                    intent.putExtra("phone_no", itemList.get(position).get(TAG_telephone));
+                    intent.putExtra("zip", itemList.get(position).get(TAG_postcode));
                    // intent.putExtra("state_",itemList.get(position).get(TAG_region).toString());
-                    intent.putExtra("city",itemList.get(position).get(TAG_city).toString());
-                    intent.putExtra("street_address",itemList.get(position).get(TAG_street).toString());
-                    intent.putExtra("st_come_from_update",itemList.get(position).get(TAG_show_select).toString().equalsIgnoreCase("false")?"updateaddress":"");
-                    intent.putExtra("total_address_data",itemList.get(position).get("total_data").toString());
-                    intent.putExtra("default_ship",itemList.get(position).get("default_ship").toString());
-                    intent.putExtra("default_bill",itemList.get(position).get("default_bill").toString());
+                    intent.putExtra("city", itemList.get(position).get(TAG_city));
+                    intent.putExtra("street_address", itemList.get(position).get(TAG_street));
+                    intent.putExtra("st_come_from_update", itemList.get(position).get(TAG_show_select).equalsIgnoreCase("false")?"updateaddress":"");
+                    intent.putExtra("total_address_data", itemList.get(position).get("total_data"));
+                    intent.putExtra("default_ship", itemList.get(position).get("default_ship"));
+                    intent.putExtra("default_bill", itemList.get(position).get("default_bill"));
 
 
                     intent.putExtra("","");
@@ -312,21 +313,21 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
 
 
         if(company_name.equalsIgnoreCase("")) {
-            holder.textCity_name.setText(itemList.get(position).get(TAG_city).toString());
-            holder.textStreet_name.setText(itemList.get(position).get(TAG_street).toString());
-            holder.textTelephone_name.setText("T: " +itemList.get(position).get(TAG_telephone).toString());
-            holder.textPincode_name.setText("Pin :"+itemList.get(position).get(TAG_postcode).toString());
-            holder.textCustomer_name.setText(itemList.get(position).get(TAG_firstname).toString()+" "+ itemList.get(position).get(TAG_lastname));
+            holder.textCity_name.setText(itemList.get(position).get(TAG_city));
+            holder.textStreet_name.setText(itemList.get(position).get(TAG_street));
+            holder.textTelephone_name.setText("T: " + itemList.get(position).get(TAG_telephone));
+            holder.textPincode_name.setText("Pin :"+ itemList.get(position).get(TAG_postcode));
+            holder.textCustomer_name.setText(itemList.get(position).get(TAG_firstname) +" "+ itemList.get(position).get(TAG_lastname));
             holder.textCompany_name.setVisibility(View.GONE);
         }
         else {
 
 
-            holder.textCity_name.setText(itemList.get(position).get(TAG_city).toString());
-            holder.textStreet_name.setText(itemList.get(position).get(TAG_street).toString());
-            holder.textTelephone_name.setText("T: " +itemList.get(position).get(TAG_telephone).toString());
-            holder.textPincode_name.setText("Pin :"+itemList.get(position).get(TAG_postcode).toString());
-            holder.textCustomer_name.setText(itemList.get(position).get(TAG_firstname).toString()+" "+ itemList.get(position).get(TAG_lastname));
+            holder.textCity_name.setText(itemList.get(position).get(TAG_city));
+            holder.textStreet_name.setText(itemList.get(position).get(TAG_street));
+            holder.textTelephone_name.setText("T: " + itemList.get(position).get(TAG_telephone));
+            holder.textPincode_name.setText("Pin :"+ itemList.get(position).get(TAG_postcode));
+            holder.textCustomer_name.setText(itemList.get(position).get(TAG_firstname) +" "+ itemList.get(position).get(TAG_lastname));
 //            holder.textCompany_name.setText(itemList.get(position).get(TAG_company).toString());
         }
 
@@ -343,7 +344,7 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                 editor.commit();
 
 
-                CommonFun.OpenNewAddress((Activity)ctx,"",1);
+                CommonFun.OpenNewAddress(ctx,"",1);
 
 
             }
@@ -355,7 +356,7 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
             holder.btselect.setVisibility(View.GONE);
         }
 
-        Log.d("TAG_show_select",is_show_select_button);
+        //Log.d("TAG_show_select",is_show_select_button);
         holder.btselect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -370,19 +371,19 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
 
                 SharedPreferences.Editor editor= pref.edit();
                 editor.putString("st_selected_address","Franchisee");
-                editor.putString("telephone",itemList.get(position).get(TAG_telephone).toString());
-                editor.putString("postcode",itemList.get(position).get(TAG_postcode).toString());
-                editor.putString("city",itemList.get(position).get(TAG_city).toString());
+                editor.putString("telephone", itemList.get(position).get(TAG_telephone));
+                editor.putString("postcode", itemList.get(position).get(TAG_postcode));
+                editor.putString("city", itemList.get(position).get(TAG_city));
 
-                editor.putString("region_code",itemList.get(position).get(TAG_region_code).toString());
-                editor.putString("region",itemList.get(position).get(TAG_region).toString());
-                editor.putString("region_id",itemList.get(position).get(TAG_region_id).toString());
+                editor.putString("region_code", itemList.get(position).get(TAG_region_code));
+                editor.putString("region", itemList.get(position).get(TAG_region));
+                editor.putString("region_id", itemList.get(position).get(TAG_region_id));
 
-                editor.putString("add_line1",itemList.get(position).get(TAG_street).toString());
+                editor.putString("add_line1", itemList.get(position).get(TAG_street));
                 editor.putString("country_id","IN");
                 editor.putString("default_billing","true");
-                editor.putString("firstname",itemList.get(position).get(TAG_firstname).toString());
-                editor.putString("lastname",itemList.get(position).get(TAG_lastname).toString());
+                editor.putString("firstname", itemList.get(position).get(TAG_firstname));
+                editor.putString("lastname", itemList.get(position).get(TAG_lastname));
                 editor.commit();
 
                 Intent intent = new Intent(ctx, DeliveryTypeActivity.class);
@@ -401,7 +402,7 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
 
     private void callDeleteAPI(String return_data,String tokenData,Context context, int cur_position){
 
-        Log.d("return_data",return_data);
+        //Log.d("return_data",return_data);
 
         TransparentProgressDialog pDialog;
         pDialog = new TransparentProgressDialog(context);
@@ -421,10 +422,10 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
 
                             if (pDialog.isShowing())
                                 pDialog.dismiss();
-                            Log.d("responsePut", response);
+                            //Log.d("responsePut", response);
 
                                 Intent intent = new Intent(context, CustomerAddressBook.class);
-                                 intent.putExtra("st_come_from_update",itemList.get(cur_position).get(TAG_show_select).toString().equalsIgnoreCase("false")?"updateaddress":"");
+                                 intent.putExtra("st_come_from_update", itemList.get(cur_position).get(TAG_show_select).equalsIgnoreCase("false")?"updateaddress":"");
                                 context.startActivity(intent);
                                 CommonFun.finishscreen((Activity) context);
 
@@ -439,7 +440,7 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                         pDialog.dismiss();
 
                     //CommonFun.alertError(DeliveryTypeActivity.this,error.toString());
-                    CommonFun.showVolleyException(error, (Activity)context);
+                    CommonFun.showVolleyException(error, context);
                 }
             }) {
 
@@ -456,12 +457,7 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return return_data == null ? null : return_data.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", return_data, "utf-8");
-                        return null;
-                    }
+                    return return_data == null ? null : return_data.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override

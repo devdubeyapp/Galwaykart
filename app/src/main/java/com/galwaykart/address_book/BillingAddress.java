@@ -81,15 +81,15 @@ public class BillingAddress extends BaseActivity {
         tokenData = preferences.getString("tokenData","");
 //        tokenData = "ituo1gwphqdjidohau02y4dbu6880rof";
 
-        rel_no_address = (RelativeLayout)findViewById(R.id.rel_no_address);
-        btn_add_address = (Button)findViewById(R.id.btn_add_address);
+        rel_no_address = findViewById(R.id.rel_no_address);
+        btn_add_address = findViewById(R.id.btn_add_address);
         btn_add_address.setOnClickListener(btn_add_addressOnClickListener);
 
-        list_address=(ListView)findViewById(R.id.list_address);
+        list_address= findViewById(R.id.list_address);
 
         url_address= Global_Settings.api_url+"rest/V1/customers/me/billingAddress";
 
-        tv_title_address=(TextView)findViewById(R.id.tv_title_address);
+        tv_title_address= findViewById(R.id.tv_title_address);
         tv_title_address.setText("Billing Address");
 
 

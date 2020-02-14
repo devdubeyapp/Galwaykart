@@ -39,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -100,7 +101,7 @@ public class NewRegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reg_for_distributor);
         //     initNavigationDrawer();
         pref = CommonFun.getPreferences(getApplicationContext());
-        button_sign_up=(Button)findViewById(R.id.button_sign_up);
+        button_sign_up= findViewById(R.id.button_sign_up);
         button_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,11 +109,11 @@ public class NewRegistrationActivity extends AppCompatActivity {
             }
         });
 
-        spinner_select_franch = (Spinner) findViewById(R.id.spinner_select_franch);
-        franch_pin = (EditText)findViewById(R.id.franch_pin);
-        franch_address = (EditText)findViewById(R.id.franch_address);
-        franch_state = (EditText)findViewById(R.id.franch_state);
-        franch_city = (EditText)findViewById(R.id.franch_city);
+        spinner_select_franch = findViewById(R.id.spinner_select_franch);
+        franch_pin = findViewById(R.id.franch_pin);
+        franch_address = findViewById(R.id.franch_address);
+        franch_state = findViewById(R.id.franch_state);
+        franch_city = findViewById(R.id.franch_city);
 
         st_Get_Franch_Details_URL = Global_Settings.galway_api_url+"returnAPi/Load_franchisee_details";
 
@@ -219,7 +220,7 @@ public class NewRegistrationActivity extends AppCompatActivity {
 
 
                                 try {
-                                           JSONObject jsonObj = new JSONObject(String.valueOf(response));
+                                           JSONObject jsonObj = new JSONObject(response);
                                             String status_msg=jsonObj.getString("registration");
                                             if(status_msg.contains("successfully"))
                                             {
@@ -236,8 +237,8 @@ public class NewRegistrationActivity extends AppCompatActivity {
 
                                                 final Dialog dialog = new Dialog(NewRegistrationActivity.this);
                                                 dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                                TextView tv_dialog = (TextView)dialog.findViewById(R.id.tv_dialog);
-                                                ImageView image_view_dialog = (ImageView)dialog.findViewById(R.id.image_view_dialog);
+                                                TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                                ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                                 tv_dialog.setText("Registered Successfully..Happy Shopping..");
                                                 dialog.show();
 
@@ -308,13 +309,7 @@ public class NewRegistrationActivity extends AppCompatActivity {
             @Override
             public byte[] getBody() throws AuthFailureError {
 
-                try {
-
-                    return input_data == null ? null : input_data.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                    return null;
-                }
+                return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                 //return new byte[0];
             }
 
@@ -394,7 +389,7 @@ public class NewRegistrationActivity extends AppCompatActivity {
                         if(response!=null){
                             try {
 
-                                franch_details = new JSONArray(String.valueOf(response));
+                                franch_details = new JSONArray(response);
                                 int franch_details_arr_length = franch_details.length();
                                 spinner_data = new String[franch_details_arr_length];
                                 arr_franchisee_address = new String[franch_details_arr_length];
@@ -447,7 +442,7 @@ public class NewRegistrationActivity extends AppCompatActivity {
 
                                 JSONObject jsonObj = null;
                                 try {
-                                    jsonObj = new JSONObject(String.valueOf(response));
+                                    jsonObj = new JSONObject(response);
                                     if(jsonObj.has("Message"))
                                     {
                                         st_alert_msg = jsonObj.getString("Message");

@@ -36,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -287,8 +288,8 @@ public class  MainActivity extends AppCompatActivity implements PaytmPaymentTran
 
                                         final Dialog dialog = new Dialog(MainActivity.this);
                                         dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                        TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
-                                        ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+                                        TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                        ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
 
                                         if(st_save_status.equalsIgnoreCase("1")) {
 
@@ -381,12 +382,7 @@ public class  MainActivity extends AppCompatActivity implements PaytmPaymentTran
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return delivery_data_in == null ? null : delivery_data_in.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", delivery_data_in, "utf-8");
-                        return null;
-                    }
+                    return delivery_data_in == null ? null : delivery_data_in.getBytes(StandardCharsets.UTF_8);
                 }
 
 //                @Override
@@ -501,8 +497,8 @@ public class  MainActivity extends AppCompatActivity implements PaytmPaymentTran
 
                                 final Dialog dialog = new Dialog(MainActivity.this);
                                 dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                TextView tv_dialog = (TextView)dialog.findViewById(R.id.tv_dialog);
-                                ImageView image_view_dialog = (ImageView)dialog.findViewById(R.id.image_view_dialog);
+                                TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                 tv_dialog.setText("Oops!!! Something Wrong\nCannot place your order\nPlease Try Again");
                                 dialog.show();
 

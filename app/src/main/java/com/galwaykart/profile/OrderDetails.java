@@ -60,6 +60,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -142,7 +143,7 @@ public class OrderDetails extends BaseActivity {
             st_selected_order_item_id="",input_data="",dataValuesSales="",input_data_sales="",
             return_request_url="";
     int current_pos;
-    String arr_enter_qty[];
+    String[] arr_enter_qty;
     Button btn_return_submit;
     String[] arr_return_item;
 
@@ -163,7 +164,7 @@ public class OrderDetails extends BaseActivity {
 
 
 
-        tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_title = findViewById(R.id.tv_title);
         pref = CommonFun.getPreferences(getApplicationContext());
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("st_qty", "");
@@ -174,15 +175,15 @@ public class OrderDetails extends BaseActivity {
 
 //***********************************************************************************************************************************
 
-        tv_order_id = (TextView) findViewById(R.id.tv_order_id);
-        tv_cancel_order = (TextView) findViewById(R.id.tv_cancel_order);
-        tv_re_order = (TextView) findViewById(R.id.tv_re_order);
+        tv_order_id = findViewById(R.id.tv_order_id);
+        tv_cancel_order = findViewById(R.id.tv_cancel_order);
+        tv_re_order = findViewById(R.id.tv_re_order);
         tv_re_order.setPaintFlags(tv_re_order.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
 
         //SharedPreferences pref;
         pref= CommonFun.getPreferences(getApplicationContext());
-        tv_order_total = (TextView) findViewById(R.id.tv_order_total);
-        btn_return_submit = (Button) findViewById(R.id.btn_return_submit);
+        tv_order_total = findViewById(R.id.tv_order_total);
+        btn_return_submit = findViewById(R.id.btn_return_submit);
         pref = CommonFun.getPreferences(getApplicationContext());
 
         //Log.d("tokenData",pref.getString("tokenData",""));
@@ -249,7 +250,7 @@ public class OrderDetails extends BaseActivity {
 
         arrayList = new ArrayList<HashMap<String, String>>();
         //arrayList_order=new ArrayList<OrderDetailsItemModel>();
-        lv_order_details = (ListView) findViewById(R.id.lv_order_details);
+        lv_order_details = findViewById(R.id.lv_order_details);
         lv_order_details.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -332,7 +333,7 @@ public class OrderDetails extends BaseActivity {
         st_Order_details_URL= Global_Settings.api_url+"rest/V1/m-order/view/"+st_entity_id;
 
 
-        Log.d("st_Order_details_URL", st_Order_details_URL);
+        //Log.d("st_Order_details_URL", st_Order_details_URL);
         // st_Order_details_URL = "http://www.galwaykart.in/glaze/order_details.php?id=000018118";
         //////Log.d("st_Order_details_URL",st_Order_details_URL);
         //callOrderDetails();
@@ -348,7 +349,7 @@ public class OrderDetails extends BaseActivity {
                     cancelOrder();
                 } else if (st_cancel_return.equalsIgnoreCase("Return Order")) {
                     for (int i = 0; i < arr_boolean.length; i++) {
-                        if (!arr_boolean[i].toString().equalsIgnoreCase("true")) {
+                        if (!arr_boolean[i].equalsIgnoreCase("true")) {
                             arr_boolean[i] = "true";
                             btn_return_submit.setVisibility(View.VISIBLE);
                         } else {
@@ -403,7 +404,7 @@ public class OrderDetails extends BaseActivity {
                             pDialog.dismiss();
                         try {
                             //Log.d("onCartResponse", response.toString());
-                            String cart_id = response.toString();
+                            String cart_id = response;
                             cart_id = cart_id.replaceAll("\"", "");
                             SharedPreferences.Editor editor=pref.edit();
                             editor.putString("guest_cart_id",cart_id);
@@ -566,13 +567,8 @@ public class OrderDetails extends BaseActivity {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        Log.e("Order_ID",json_input_data1s);
-                        return json_input_data1s == null ? null : json_input_data1s.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", json_input_data1s, "utf-8");
-                        return null;
-                    }
+                    Log.e("Order_ID",json_input_data1s);
+                    return json_input_data1s == null ? null : json_input_data1s.getBytes(StandardCharsets.UTF_8);
                 }
             };
 
@@ -662,12 +658,7 @@ public class OrderDetails extends BaseActivity {
                 }
                 @Override
                 public byte[] getBody() {
-                    try {
-                        return input_data_sales == null ? null : input_data_sales.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data_sales, "utf-8");
-                        return null;
-                    }
+                    return input_data_sales == null ? null : input_data_sales.getBytes(StandardCharsets.UTF_8);
                 }
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
@@ -749,12 +740,12 @@ public class OrderDetails extends BaseActivity {
         current_pos = position;
 
         dialog.setContentView(R.layout.return_form_dialog);
-        return_qty = (EditText) dialog.findViewById(R.id.return_qty);
-        final Spinner spinner_resolution = (Spinner) dialog.findViewById(R.id.spinner_resolution);
-        final Spinner spinner_reason = (Spinner)dialog.findViewById(R.id.spinner_reason);
-        final Spinner spinner_condition = (Spinner)dialog.findViewById(R.id.spinner_condition);
-        Button btn_done = (Button) dialog.findViewById(R.id.btn_done);
-        ImageButton imgBtCancel = (ImageButton) dialog.findViewById(R.id.imgBtCancel);
+        return_qty = dialog.findViewById(R.id.return_qty);
+        final Spinner spinner_resolution = dialog.findViewById(R.id.spinner_resolution);
+        final Spinner spinner_reason = dialog.findViewById(R.id.spinner_reason);
+        final Spinner spinner_condition = dialog.findViewById(R.id.spinner_condition);
+        Button btn_done = dialog.findViewById(R.id.btn_done);
+        ImageButton imgBtCancel = dialog.findViewById(R.id.imgBtCancel);
 
 
         pref = CommonFun.getPreferences(getApplicationContext());
@@ -821,7 +812,7 @@ public class OrderDetails extends BaseActivity {
         imgBtCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!arr_check_rtn_btn[current_pos].toString().equalsIgnoreCase("notClickalbe")) {
+                if(!arr_check_rtn_btn[current_pos].equalsIgnoreCase("notClickalbe")) {
                     arr_check_rtn_btn[current_pos] = "Clickable";
                     setListAdapter();
                 }
@@ -930,7 +921,7 @@ public class OrderDetails extends BaseActivity {
                     }
                     else {
 
-                        if (!arr_edit_rtn_qty[current_pos].toString().equalsIgnoreCase("true")) {
+                        if (!arr_edit_rtn_qty[current_pos].equalsIgnoreCase("true")) {
                             arr_edit_rtn_qty[current_pos] = "true";
                         }
 
@@ -941,7 +932,7 @@ public class OrderDetails extends BaseActivity {
 
                         arr_req_rtn_qty[current_pos] = st_qty;
                         SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("st_qty", arr_req_rtn_qty[current_pos].toString());
+                        editor.putString("st_qty", arr_req_rtn_qty[current_pos]);
                         editor.putString("st_selected_reason",st_selected_reason);
                         editor.putString("st_selected_resolution",st_selected_resolution);
                         editor.putString("st_selected_condition",st_selected_condition);
@@ -964,7 +955,7 @@ public class OrderDetails extends BaseActivity {
 
     private void requestForReturn(int position,String selected_sku) {
 
-            if(!arr_return_index[position].toString().equalsIgnoreCase("true")) {
+            if(!arr_return_index[position].equalsIgnoreCase("true")) {
                 arr_return_index[position] = "true";
 
             }
@@ -992,12 +983,12 @@ public class OrderDetails extends BaseActivity {
         if(arr_return_index[position].equalsIgnoreCase("true")) {
 
             dialog.setContentView(R.layout.return_form_dialog);
-            return_qty = (EditText) dialog.findViewById(R.id.return_qty);
-            final Spinner spinner_resolution = (Spinner) dialog.findViewById(R.id.spinner_resolution);
-            final Spinner spinner_reason = (Spinner) dialog.findViewById(R.id.spinner_reason);
-            final Spinner spinner_condition = (Spinner) dialog.findViewById(R.id.spinner_condition);
-            Button btn_done = (Button) dialog.findViewById(R.id.btn_done);
-            ImageButton imgBtCancel = (ImageButton) dialog.findViewById(R.id.imgBtCancel);
+            return_qty = dialog.findViewById(R.id.return_qty);
+            final Spinner spinner_resolution = dialog.findViewById(R.id.spinner_resolution);
+            final Spinner spinner_reason = dialog.findViewById(R.id.spinner_reason);
+            final Spinner spinner_condition = dialog.findViewById(R.id.spinner_condition);
+            Button btn_done = dialog.findViewById(R.id.btn_done);
+            ImageButton imgBtCancel = dialog.findViewById(R.id.imgBtCancel);
 
 
             pref = CommonFun.getPreferences(getApplicationContext());
@@ -1061,7 +1052,7 @@ public class OrderDetails extends BaseActivity {
             imgBtCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!arr_check_rtn_btn[current_pos].toString().equalsIgnoreCase("notClickalbe")) {
+                    if (!arr_check_rtn_btn[current_pos].equalsIgnoreCase("notClickalbe")) {
                         arr_check_rtn_btn[current_pos] = "Clickable";
                         setListAdapter();
                     }
@@ -1169,7 +1160,7 @@ public class OrderDetails extends BaseActivity {
                             CommonFun.alertError(OrderDetails.this, "Request for return quantity should be less then Ordered Quantity");
                         } else {
 
-                            if (!arr_edit_rtn_qty[current_pos].toString().equalsIgnoreCase("true")) {
+                            if (!arr_edit_rtn_qty[current_pos].equalsIgnoreCase("true")) {
                                 arr_edit_rtn_qty[current_pos] = "true";
                             }
 
@@ -1182,7 +1173,7 @@ public class OrderDetails extends BaseActivity {
                             arr_req_rtn_qty[current_pos] = st_qty;
                             //////Log.d("current_qty",arr_req_rtn_qty[current_pos].toString());
                             SharedPreferences.Editor editor = pref.edit();
-                            editor.putString("st_qty", arr_req_rtn_qty[current_pos].toString());
+                            editor.putString("st_qty", arr_req_rtn_qty[current_pos]);
                             editor.putString("st_selected_reason", st_selected_reason);
                             editor.putString("st_selected_resolution", st_selected_resolution);
                             editor.putString("st_selected_condition", st_selected_condition);
@@ -1242,9 +1233,9 @@ public class OrderDetails extends BaseActivity {
 
                                     final Dialog dialog = new Dialog(OrderDetails.this);
                                     dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                    TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
-                                    ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
-                                    tv_dialog.setText(st_msg.toString());
+                                    TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                    ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
+                                    tv_dialog.setText(st_msg);
                                     dialog.show();
 
 
@@ -1304,12 +1295,7 @@ public class OrderDetails extends BaseActivity {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return input_data == null ? null : input_data.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                        return null;
-                    }
+                    return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override
@@ -1489,9 +1475,9 @@ public class OrderDetails extends BaseActivity {
 
                                 final Dialog dialog = new Dialog(OrderDetails.this);
                                 dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                TextView tv_dialog = (TextView)dialog.findViewById(R.id.tv_dialog);
-                                ImageView image_view_dialog = (ImageView)dialog.findViewById(R.id.image_view_dialog);
-                                tv_dialog.setText(st_Order_Cancel_Status.toString());
+                                TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
+                                tv_dialog.setText(st_Order_Cancel_Status);
                                 dialog.show();
 
 
@@ -1625,7 +1611,7 @@ public class OrderDetails extends BaseActivity {
         pref = CommonFun.getPreferences(getApplicationContext());
         st_token_data=pref.getString("tokenData","");
 
-        Log.d("st_Order_details_URL",st_token_data);
+        //Log.d("st_Order_details_URL",st_token_data);
 
         arrayList.clear();
         pDialog = new TransparentProgressDialog(OrderDetails.this);
@@ -1643,7 +1629,7 @@ public class OrderDetails extends BaseActivity {
                     if (pDialog.isShowing())
                         pDialog.dismiss();
 
-                    Log.d("st_Order_details_URL",response.toString());
+                    //Log.d("st_Order_details_URL",response.toString());
 
                     if (response != null) {
                         try {
@@ -1766,15 +1752,15 @@ public class OrderDetails extends BaseActivity {
                                 hashMap.put(TAG_created_at, st_product_order_date);
                                 hashMap.put(TAG_total_qty_ordered,st_total_qty_ordered);
                                 hashMap.put(TAG_original_price, "Amount: ₹ "+st_product_amt);
-                                hashMap.put(TAG_boolean,arr_boolean[i].toString());
-                                hashMap.put(TAG_rtn_check,arr_return_index[i].toString());
-                                hashMap.put(TAG_edit_rtn,arr_edit_rtn_qty[i].toString());
-                                hashMap.put(TAG_qty_rtn,arr_rtn_qty[i].toString());
-                                hashMap.put(TAG_enter_qty_rtn,arr_enter_qty[i].toString());
-                                hashMap.put(TAG_isClickable,arr_check_rtn_btn[i].toString());
-                                hashMap.put(TAG_trigger_no_sale,arr_tracking_id[i].toString());
-                                hashMap.put(TAG_sku,arr_sku[i].toString());
-                                hashMap.put(TAG_TRACK_ORDER,arr_track_order[i].toString());
+                                hashMap.put(TAG_boolean, arr_boolean[i]);
+                                hashMap.put(TAG_rtn_check, arr_return_index[i]);
+                                hashMap.put(TAG_edit_rtn, arr_edit_rtn_qty[i]);
+                                hashMap.put(TAG_qty_rtn, arr_rtn_qty[i]);
+                                hashMap.put(TAG_enter_qty_rtn, arr_enter_qty[i]);
+                                hashMap.put(TAG_isClickable, arr_check_rtn_btn[i]);
+                                hashMap.put(TAG_trigger_no_sale, arr_tracking_id[i]);
+                                hashMap.put(TAG_sku, arr_sku[i]);
+                                hashMap.put(TAG_TRACK_ORDER, arr_track_order[i]);
 
 
 
@@ -1938,16 +1924,16 @@ public class OrderDetails extends BaseActivity {
                 convertView = inflater.inflate(R.layout.order_details_item, null);
                 holder = new Holder();
 
-                holder.img_view_ordered_product = (ImageView)convertView.findViewById(R.id.img_view_ordered_product);
+                holder.img_view_ordered_product = convertView.findViewById(R.id.img_view_ordered_product);
 
-                holder.product_name_id = (TextView) convertView.findViewById(R.id.product_name_id);
-                holder.total_product_amt = (TextView) convertView.findViewById(R.id.total_product_amt);
-                holder.order_date_time = (TextView) convertView.findViewById(R.id.order_date_time);
-                holder.total_product_qty = (TextView) convertView.findViewById(R.id.total_product_qty);
-                holder.check_for_return_req = (CheckBox)convertView.findViewById(R.id.check_for_return_req);
-                holder.return_qty_req = (TextView)convertView.findViewById(R.id.return_qty_req);
-                holder.bt_track_order = (Button) convertView.findViewById(R.id.bt_track_order);
-                holder.bt_edit_qty_icon = (Button)convertView.findViewById(R.id.bt_edit_qty_icon);
+                holder.product_name_id = convertView.findViewById(R.id.product_name_id);
+                holder.total_product_amt = convertView.findViewById(R.id.total_product_amt);
+                holder.order_date_time = convertView.findViewById(R.id.order_date_time);
+                holder.total_product_qty = convertView.findViewById(R.id.total_product_qty);
+                holder.check_for_return_req = convertView.findViewById(R.id.check_for_return_req);
+                holder.return_qty_req = convertView.findViewById(R.id.return_qty_req);
+                holder.bt_track_order = convertView.findViewById(R.id.bt_track_order);
+                holder.bt_edit_qty_icon = convertView.findViewById(R.id.bt_edit_qty_icon);
                 convertView.setTag(holder);
 
             }
@@ -1955,15 +1941,15 @@ public class OrderDetails extends BaseActivity {
 
                 holder = (Holder) convertView.getTag();
             }
-            holder.product_name_id.setText(arrayList.get(position).get(TAG_name).toString());
-            holder.total_product_amt.setText(arrayList.get(position).get(TAG_original_price).toString());
-            holder.order_date_time.setText(arrayList.get(position).get(TAG_created_at).toString());
-            holder.total_product_qty.setText("Total Quantity:  " +arrayList.get(position).get(TAG_total_qty_ordered).toString());
+            holder.product_name_id.setText(arrayList.get(position).get(TAG_name));
+            holder.total_product_amt.setText(arrayList.get(position).get(TAG_original_price));
+            holder.order_date_time.setText(arrayList.get(position).get(TAG_created_at));
+            holder.total_product_qty.setText("Total Quantity:  " + arrayList.get(position).get(TAG_total_qty_ordered));
 
 //            String st_boolean = arrayList.get(position).get(TAG_boolean).toString();
-            String st_boolean = arr_boolean[position].toString();
-            String st_edit_rtn = arr_edit_rtn_qty[position].toString();
-            String st_track_order_option=arr_track_order[position].toString();
+            String st_boolean = arr_boolean[position];
+            String st_edit_rtn = arr_edit_rtn_qty[position];
+            String st_track_order_option= arr_track_order[position];
             //////Log.d("st_track_order_option",st_track_order_option);
 
             if(st_track_order_option.equalsIgnoreCase("true"))
@@ -1971,7 +1957,7 @@ public class OrderDetails extends BaseActivity {
             else if(st_track_order_option.equalsIgnoreCase("false"))
                 holder.bt_track_order.setVisibility(View.GONE);
 
-            String st_isClickable = arr_check_rtn_btn[position].toString();
+            String st_isClickable = arr_check_rtn_btn[position];
            // ////Log.d("st_boolean",st_boolean);
 
             if(st_isClickable.equalsIgnoreCase("notClickalbe")){
@@ -1980,7 +1966,7 @@ public class OrderDetails extends BaseActivity {
 //                holder.check_for_return_req.setEnabled(false);
                 holder.bt_edit_qty_icon.setVisibility(View.VISIBLE);
                 holder.return_qty_req.setVisibility(View.VISIBLE);
-                holder.return_qty_req.setText("Return Qty :"+arr_enter_qty[position].toString());
+                holder.return_qty_req.setText("Return Qty :"+ arr_enter_qty[position]);
             }
             else{
                 holder.check_for_return_req.setChecked(false);
@@ -2030,7 +2016,7 @@ public class OrderDetails extends BaseActivity {
                 @Override
                 public void onClick(View v) {
 
-                    String st_selected_sku = arrayList.get(position).get(TAG_sku).toString();
+                    String st_selected_sku = arrayList.get(position).get(TAG_sku);
 
                     requestForReturn(position,st_selected_sku);
 
@@ -2060,7 +2046,7 @@ public class OrderDetails extends BaseActivity {
 
 
             Picasso.get()
-                    .load(arrayList.get(position).get(TAG_image).toString())
+                    .load(arrayList.get(position).get(TAG_image))
                     .placeholder(R.drawable.imageloading)   // optional
                     .error(R.drawable.noimage)      // optional
                     .resize(150, 150)

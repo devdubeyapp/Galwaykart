@@ -54,6 +54,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -138,13 +139,13 @@ public class WishListDetails extends BaseActivity {
         st_customer_id = pref.getString("st_login_id","");
         ////Log.d("st_customer_id",st_customer_id);
 
-        iv_image_no_details=(ImageView)findViewById(R.id.iv_image_no_details);
+        iv_image_no_details= findViewById(R.id.iv_image_no_details);
         iv_image_no_details.setVisibility(View.GONE);
         /**
          * init controls
          */
-        list_wishlist_item = (ListView) findViewById(R.id.list_wishlist_item);
-        tv_alert_wishlist = (TextView)findViewById(R.id.tv_alert_wishlist);
+        list_wishlist_item = findViewById(R.id.list_wishlist_item);
+        tv_alert_wishlist = findViewById(R.id.tv_alert_wishlist);
 
         tv_alert_wishlist.setVisibility(View.GONE);
         list_wishlist_item.setVisibility(View.VISIBLE);
@@ -611,9 +612,9 @@ public class WishListDetails extends BaseActivity {
 
                               final Dialog dialog = new Dialog(WishListDetails.this);
                               dialog.setContentView(R.layout.custom_alert_dialog_design);
-                              TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
+                              TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
                               tv_dialog.setText("Item moved to cart");
-                              ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+                              ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                               dialog.show();
 
                               new CountDownTimer(2000, 2000) {
@@ -649,9 +650,9 @@ public class WishListDetails extends BaseActivity {
 
                               final Dialog dialog = new Dialog(WishListDetails.this);
                               dialog.setContentView(R.layout.custom_alert_dialog_design);
-                              TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
+                              TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
                               tv_dialog.setText(msg);
-                              ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+                              ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                               dialog.show();
 
                               new CountDownTimer(2000, 2000) {
@@ -687,9 +688,9 @@ public class WishListDetails extends BaseActivity {
 
                           final Dialog dialog = new Dialog(WishListDetails.this);
                           dialog.setContentView(R.layout.custom_alert_dialog_design);
-                          TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
+                          TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
                           tv_dialog.setText(msg);
-                          ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+                          ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                           dialog.show();
 
                           new CountDownTimer(2000, 2000) {
@@ -728,9 +729,9 @@ public class WishListDetails extends BaseActivity {
 
                                 final Dialog dialog = new Dialog(WishListDetails.this);
                                 dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
+                                TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
                                 tv_dialog.setText("Item moved to cart");
-                                ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+                                ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                 dialog.show();
 
                                 new CountDownTimer(2000, 2000) {
@@ -787,12 +788,7 @@ public class WishListDetails extends BaseActivity {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                try {
-                    return input_data == null ? null : input_data.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data, "utf-8");
-                    return null;
-                }
+                return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
             }
 
 //            @Override
@@ -858,7 +854,7 @@ public class WishListDetails extends BaseActivity {
                             // addItemToCart(cart_id);
 
 
-                            String cart_id=response.toString();
+                            String cart_id= response;
                             cart_id=cart_id.replaceAll("\"","");
                             callJSONAPIVolley(cart_id,selindexof);
                             //addItemToCart(cart_id,selindexof);
@@ -1054,7 +1050,7 @@ public class WishListDetails extends BaseActivity {
                         if(response!=null){
                             try {
 
-                                JSONObject jsonObj = new JSONObject(String.valueOf(response));
+                                JSONObject jsonObj = new JSONObject(response);
 
                                 Boolean product_type_id=false;
                                 String status_product=jsonObj.getString("status");

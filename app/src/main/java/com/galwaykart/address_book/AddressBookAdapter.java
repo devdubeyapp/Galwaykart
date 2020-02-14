@@ -93,21 +93,21 @@ public class AddressBookAdapter extends SimpleAdapter {
             convertView = inflater.inflate(R.layout.activity_default_shipping_address_list, null);
             holder = new Holder();
 
-            holder.textCity_name = (TextView) convertView.findViewById(R.id.textCity_name);
-            holder.textStreet_name = (TextView) convertView.findViewById(R.id.textStreet_name);
-            holder.textTelephone_name = (TextView) convertView.findViewById(R.id.textTelephone_name);
-            holder.textPincode_name = (TextView) convertView.findViewById(R.id.textPincode_name);
-            holder.textCustomer_name = (TextView) convertView.findViewById(R.id.textCustomer_name);
-            holder.textCompany_name = (TextView) convertView.findViewById(R.id.textCompany_name);
-            holder.btEdit = (Button)convertView.findViewById(R.id.btEdit);
-            holder.btselect = (Button)convertView.findViewById(R.id.btselect);
-            holder.bt_edit_add_icon = (Button)convertView.findViewById(R.id.bt_edit_add_icon);
+            holder.textCity_name = convertView.findViewById(R.id.textCity_name);
+            holder.textStreet_name = convertView.findViewById(R.id.textStreet_name);
+            holder.textTelephone_name = convertView.findViewById(R.id.textTelephone_name);
+            holder.textPincode_name = convertView.findViewById(R.id.textPincode_name);
+            holder.textCustomer_name = convertView.findViewById(R.id.textCustomer_name);
+            holder.textCompany_name = convertView.findViewById(R.id.textCompany_name);
+            holder.btEdit = convertView.findViewById(R.id.btEdit);
+            holder.btselect = convertView.findViewById(R.id.btselect);
+            holder.bt_edit_add_icon = convertView.findViewById(R.id.bt_edit_add_icon);
            // holder.btChangeAddress=(Button)convertView.findViewById(R.id.btChangeAddress);
             convertView.setTag(holder);
 
         }
 
-         company_name= itemList.get(position).get(TAG_company).toString();
+         company_name= itemList.get(position).get(TAG_company);
 
 
         pref = CommonFun.getPreferences(ctx);
@@ -165,14 +165,14 @@ public class AddressBookAdapter extends SimpleAdapter {
 
                     Intent intent = new Intent(ctx,AddNewAddress.class);
                     intent.putExtra("add_new","no");
-                    intent.putExtra("st_come_from_update",itemList.get(position).get("st_come_from_update").toString());
-                    intent.putExtra("first_name",itemList.get(position).get(TAG_firstname).toString());
-                    intent.putExtra("last_name",itemList.get(position).get(TAG_lastname).toString());
-                    intent.putExtra("phone_no",itemList.get(position).get(TAG_telephone).toString());
-                    intent.putExtra("zip",itemList.get(position).get(TAG_postcode).toString());
-                    intent.putExtra("city",itemList.get(position).get(TAG_city).toString());
-                    intent.putExtra("street_address",itemList.get(position).get(TAG_street).toString());
-                    intent.putExtra("region",itemList.get(position).get(TAG_region).toString());
+                    intent.putExtra("st_come_from_update", itemList.get(position).get("st_come_from_update"));
+                    intent.putExtra("first_name", itemList.get(position).get(TAG_firstname));
+                    intent.putExtra("last_name", itemList.get(position).get(TAG_lastname));
+                    intent.putExtra("phone_no", itemList.get(position).get(TAG_telephone));
+                    intent.putExtra("zip", itemList.get(position).get(TAG_postcode));
+                    intent.putExtra("city", itemList.get(position).get(TAG_city));
+                    intent.putExtra("street_address", itemList.get(position).get(TAG_street));
+                    intent.putExtra("region", itemList.get(position).get(TAG_region));
                     ctx.startActivity(intent);
                     CommonFun.finishscreen((Activity)ctx);
 
@@ -182,21 +182,21 @@ public class AddressBookAdapter extends SimpleAdapter {
         //}
 
         if(company_name.equalsIgnoreCase("")) {
-            holder.textCity_name.setText(itemList.get(position).get(TAG_city).toString());
-            holder.textStreet_name.setText(itemList.get(position).get(TAG_street).toString());
-            holder.textTelephone_name.setText(itemList.get(position).get(TAG_telephone).toString());
-            holder.textPincode_name.setText(itemList.get(position).get(TAG_postcode).toString());
-            holder.textCustomer_name.setText(itemList.get(position).get(TAG_firstname).toString());
+            holder.textCity_name.setText(itemList.get(position).get(TAG_city));
+            holder.textStreet_name.setText(itemList.get(position).get(TAG_street));
+            holder.textTelephone_name.setText(itemList.get(position).get(TAG_telephone));
+            holder.textPincode_name.setText(itemList.get(position).get(TAG_postcode));
+            holder.textCustomer_name.setText(itemList.get(position).get(TAG_firstname));
             holder.textCompany_name.setVisibility(View.GONE);
         }
         else {
 
 
-            holder.textCity_name.setText(itemList.get(position).get(TAG_city).toString());
-            holder.textStreet_name.setText(itemList.get(position).get(TAG_street).toString());
-            holder.textTelephone_name.setText(itemList.get(position).get(TAG_telephone).toString());
-            holder.textPincode_name.setText(itemList.get(position).get(TAG_postcode).toString());
-            holder.textCustomer_name.setText(itemList.get(position).get(TAG_firstname).toString());
+            holder.textCity_name.setText(itemList.get(position).get(TAG_city));
+            holder.textStreet_name.setText(itemList.get(position).get(TAG_street));
+            holder.textTelephone_name.setText(itemList.get(position).get(TAG_telephone));
+            holder.textPincode_name.setText(itemList.get(position).get(TAG_postcode));
+            holder.textCustomer_name.setText(itemList.get(position).get(TAG_firstname));
 //            holder.textCompany_name.setText(itemList.get(position).get(TAG_company).toString());
         }
 
@@ -207,13 +207,13 @@ public class AddressBookAdapter extends SimpleAdapter {
 
 
                 Intent intent = new Intent(ctx,AddNewAddress.class);
-                intent.putExtra("st_come_from_update",itemList.get(position).get("st_come_from_update").toString());
-                intent.putExtra("first_name",itemList.get(position).get(TAG_firstname).toString());
-                intent.putExtra("last_name",itemList.get(position).get(TAG_lastname).toString());
-                intent.putExtra("phone_no",itemList.get(position).get(TAG_telephone).toString());
-                intent.putExtra("zip",itemList.get(position).get(TAG_postcode).toString());
-                intent.putExtra("city",itemList.get(position).get(TAG_city).toString());
-                intent.putExtra("street_address",itemList.get(position).get(TAG_street).toString());
+                intent.putExtra("st_come_from_update", itemList.get(position).get("st_come_from_update"));
+                intent.putExtra("first_name", itemList.get(position).get(TAG_firstname));
+                intent.putExtra("last_name", itemList.get(position).get(TAG_lastname));
+                intent.putExtra("phone_no", itemList.get(position).get(TAG_telephone));
+                intent.putExtra("zip", itemList.get(position).get(TAG_postcode));
+                intent.putExtra("city", itemList.get(position).get(TAG_city));
+                intent.putExtra("street_address", itemList.get(position).get(TAG_street));
                 ctx.startActivity(intent);
                 CommonFun.finishscreen((Activity)ctx);
 
@@ -231,7 +231,7 @@ public class AddressBookAdapter extends SimpleAdapter {
                 SharedPreferences pref;
                 pref = CommonFun.getPreferences(ctx);
 
-                String st_selected_address  = itemList.get(position).get(TAG_selected_address).toString();
+                String st_selected_address  = itemList.get(position).get(TAG_selected_address);
                 //Log.d("st_select",st_selected_address);
                 SharedPreferences.Editor editor= pref.edit();
                 editor.putString("st_selected_address",st_selected_address);

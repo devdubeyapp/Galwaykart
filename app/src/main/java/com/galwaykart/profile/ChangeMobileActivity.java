@@ -44,6 +44,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,15 +100,15 @@ public class ChangeMobileActivity extends AppCompatActivity {
         });
 
 
-        mobile_et=(EditText)findViewById(R.id.mobile_et);
-        edit_otp=(EditText)findViewById(R.id.edit_otp);
-        continue_btn=(Button) findViewById(R.id.continue_btn);
-        button_otp_check=(Button) findViewById(R.id.button_otp_check);
+        mobile_et= findViewById(R.id.mobile_et);
+        edit_otp= findViewById(R.id.edit_otp);
+        continue_btn= findViewById(R.id.continue_btn);
+        button_otp_check= findViewById(R.id.button_otp_check);
 
-        rel_layout_otp = (RelativeLayout) findViewById(R.id.rel_layout_otp);
-        rel_lay_mobile = (RelativeLayout) findViewById(R.id.rel_lay_mobile);
+        rel_layout_otp = findViewById(R.id.rel_layout_otp);
+        rel_lay_mobile = findViewById(R.id.rel_lay_mobile);
 
-        tverror=(TextView)findViewById(R.id.tverror);
+        tverror= findViewById(R.id.tverror);
 
         rel_lay_mobile.setVisibility(View.VISIBLE);
         rel_layout_otp.setVisibility(View.GONE);
@@ -278,13 +279,8 @@ public class ChangeMobileActivity extends AppCompatActivity {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        Log.e("mobile_number", json_input_data1s);
-                        return json_input_data1s == null ? null : json_input_data1s.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", json_input_data1s, "utf-8");
-                        return null;
-                    }
+                    Log.e("mobile_number", json_input_data1s);
+                    return json_input_data1s == null ? null : json_input_data1s.getBytes(StandardCharsets.UTF_8);
                 }
             };
 
@@ -401,13 +397,8 @@ public class ChangeMobileActivity extends AppCompatActivity {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        Log.e("mobile_number",json_input_data1s);
-                        return json_input_data1s == null ? null : json_input_data1s.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", json_input_data1s, "utf-8");
-                        return null;
-                    }
+                    Log.e("mobile_number",json_input_data1s);
+                    return json_input_data1s == null ? null : json_input_data1s.getBytes(StandardCharsets.UTF_8);
                 }
             };
 

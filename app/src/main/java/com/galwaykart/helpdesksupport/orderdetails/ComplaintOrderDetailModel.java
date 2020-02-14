@@ -14,6 +14,16 @@ public class ComplaintOrderDetailModel {
     String return_qty_req= "";
     String image= "";
 
+    public String getQuote_item_id() {
+        return quote_item_id;
+    }
+
+    public void setQuote_item_id(String quote_item_id) {
+        this.quote_item_id = quote_item_id;
+    }
+
+    String quote_item_id="";
+
 
     public String getOrder_id() {
         return order_id;

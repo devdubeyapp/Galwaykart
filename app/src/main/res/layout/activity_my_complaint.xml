@@ -14,9 +14,7 @@
         android:id="@+id/common_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-
-        >
+        android:layout_alignParentTop="true">
 
 
         <com.google.android.material.appbar.AppBarLayout
@@ -77,15 +75,15 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_title"
             android:layout_margin="10dp"
-            android:text="Your Complaints"
+            android:layout_marginTop="10dp"
             android:gravity="center"
+            android:text="Your Complaints"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="20dp"
-            android:layout_marginTop="10dp" >
+            android:textSize="20dp">
 
         </TextView>
 

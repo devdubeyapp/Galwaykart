@@ -35,12 +35,12 @@ public class TestimonialAdapter extends RecyclerView.Adapter<TestimonialAdapter.
         public ViewHolder(View view) {
             super(view);
             layout = view;
-            name_tv = (TextView) view.findViewById(R.id.name_tv);
-            title_tv = (TextView) view.findViewById(R.id.title_tv);
-            description_tv = (TextView) view.findViewById(R.id.description_tv);
-            date_tv = (TextView) view.findViewById(R.id.date_tv);
-            author_image = (CircleImageView) view.findViewById(R.id.author_image);
-            main_row_lay = (LinearLayout) view.findViewById(R.id.main_row_lay);
+            name_tv = view.findViewById(R.id.name_tv);
+            title_tv = view.findViewById(R.id.title_tv);
+            description_tv = view.findViewById(R.id.description_tv);
+            date_tv = view.findViewById(R.id.date_tv);
+            author_image = view.findViewById(R.id.author_image);
+            main_row_lay = view.findViewById(R.id.main_row_lay);
         }
     }
 

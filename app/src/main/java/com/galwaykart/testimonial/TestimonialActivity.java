@@ -69,7 +69,7 @@ public class TestimonialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testimonial);
 
-        testimonial_recycler_view= (RecyclerView) findViewById(R.id.testimonial_recycler_view);
+        testimonial_recycler_view= findViewById(R.id.testimonial_recycler_view);
         testimonial_recycler_view.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         testimonial_recycler_view.setLayoutManager(mLayoutManager);
@@ -86,7 +86,7 @@ public class TestimonialActivity extends AppCompatActivity {
 
         jsonTestimonial();
 
-        add_testimonial_fab = (FloatingActionButton) findViewById(R.id.add_testimonial_fab);
+        add_testimonial_fab = findViewById(R.id.add_testimonial_fab);
 
         if(!isLoggedIn())
             add_testimonial_fab.hide();

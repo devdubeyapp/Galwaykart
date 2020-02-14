@@ -29,7 +29,7 @@ public class ApplicationUpdateActivity extends AppCompatActivity {
         setContentView(R.layout.update_layout);
         //pref= getSharedPreferences("glazeapp", MODE_PRIVATE);
 
-        txt_try_again=(TextView)findViewById(R.id.txt_try_again);
+        txt_try_again= findViewById(R.id.txt_try_again);
         txt_try_again.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

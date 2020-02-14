@@ -1,6 +1,7 @@
 package com.galwaykart;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,12 +44,15 @@ import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.galwaykart.notification.NotificationSplashActivity;
+import com.google.android.gms.common.internal.service.Common;
+import com.scottyab.rootbeer.RootBeer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimerTask;
@@ -102,10 +106,22 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+//        RootBeer rootBeer = new RootBeer(this);
+//        if (rootBeer.isRooted()) {
+//
+//            alertErrorOnExit(this,"Device seems to be vulner able to run application.\nIf message is  incorrect, please contact to developer from play store.");
+//
+//
+//        } else {
+//
+//            init();
+//        }
 
+        init();
+    }
 
-
-        pref=CommonFun.getPreferences(this);
+    private void init() {
+        pref = CommonFun.getPreferences(this);
 //        Bundle bundle = getIntent().getExtras();
 //        if (bundle != null) {
 //            //bundle must contain all info sent in "data" field of the notification
@@ -123,29 +139,27 @@ public class SplashActivity extends AppCompatActivity {
                 for (String key : bundle.keySet()) {
 
                     Object value = bundle.get(key);
-                   // //Log.d("New_Notification_Sp", String.format("%s %s (%s)", key,
-                           // value.toString(), value.getClass().getName()));
+                    // //Log.d("New_Notification_Sp", String.format("%s %s (%s)", key,
+                    // value.toString(), value.getClass().getName()));
                     //notice_title = getIntent().getStringExtra("title");
                     //notice_message = getIntent().getStringExtra("message");
-                    if(key.equalsIgnoreCase("title"))notice_title=value.toString();
-                    if(key.equalsIgnoreCase("message"))notice_message=value.toString();
+                    if (key.equalsIgnoreCase("title")) notice_title = value.toString();
+                    if (key.equalsIgnoreCase("message")) notice_message = value.toString();
 
-                   // //Log.d("New_Notification_Sp",notice_title);
-                   // //Log.d("New_Notification_Sp",notice_message);
+                    // //Log.d("New_Notification_Sp",notice_title);
+                    // //Log.d("New_Notification_Sp",notice_message);
                 }
             }
+        } catch (Exception ex) {
+            // //Log.d("exception",ex.toString());
         }
-        catch (Exception ex){
-           // //Log.d("exception",ex.toString());
-        }
-
 
 
 //        GalwaykartRoomDatabase db= GalwaykartRoomDatabase.getDatabase(getApplication());
 //        ProductDataModelDao productDataModelDao=db.productDataModelDao();
 //          new deleteAllWordsAsyncTask(productDataModelDao).execute();
 
-        if(!notice_title.equals("") && !notice_message.equals("")){
+        if (!notice_title.equals("") && !notice_message.equals("")) {
             ////Log.d("New_Notification_Sp2",notice_title);
             ////Log.d("New_Notification_Sp2",notice_message);
 
@@ -158,44 +172,37 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(intent);
             CommonFun.finishscreen(SplashActivity.this);
 
-        }
-        else {
+        } else {
             Realm realm = Realm.getDefaultInstance();
             try {
-                    long total_data = realm.where(DataModelHomeAPI.class).count();
-                    if (total_data > 0)
-                    {
-                        realm.beginTransaction();
-                        realm.delete(DataModelHomeAPI.class);
-                        realm.commitTransaction();
-                        realm.close();
-                    }
+                long total_data = realm.where(DataModelHomeAPI.class).count();
+                if (total_data > 0) {
+                    realm.beginTransaction();
+                    realm.delete(DataModelHomeAPI.class);
+                    realm.commitTransaction();
+                    realm.close();
+                }
 
                 long total_data_top_product = realm.where(ProductDataModel.class).count();
-                if (total_data_top_product > 0)
-                {
+                if (total_data_top_product > 0) {
                     realm.beginTransaction();
                     realm.delete(ProductDataModel.class);
                     realm.commitTransaction();
                     realm.close();
                 }
 
-            }
-            catch (IllegalStateException ex){
-               // //Log.d("res_res",ex.getMessage());
-            }
-            catch (Exception ex){
-               // //Log.d("res_res",ex.getMessage());
-            }
-            finally {
-                 realm.close();
+            } catch (IllegalStateException ex) {
+                // //Log.d("res_res",ex.getMessage());
+            } catch (Exception ex) {
+                // //Log.d("res_res",ex.getMessage());
+            } finally {
+                realm.close();
             }
             callHomePageAPI();
 
 
             //callNotificationData();
         }
-
     }
 
 
@@ -529,13 +536,8 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                try {
-//                    login_progress.setVisibility(View.INVISIBLE);
-                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
-                    return null;
-                }
+                //                    login_progress.setVisibility(View.INVISIBLE);
+                return mRequestBody == null ? null : mRequestBody.getBytes(StandardCharsets.UTF_8);
             }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -745,13 +747,8 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                try {
-//                    login_progress.setVisibility(View.INVISIBLE);
-                    return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
-                    return null;
-                }
+                //                    login_progress.setVisibility(View.INVISIBLE);
+                return mRequestBody == null ? null : mRequestBody.getBytes(StandardCharsets.UTF_8);
             }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -817,7 +814,7 @@ public class SplashActivity extends AppCompatActivity {
                             // addItemToCart(cart_id);
 
 
-                            String cart_id = response.toString();
+                            String cart_id = response;
                             cart_id = cart_id.replaceAll("\"", "");
 
                             SharedPreferences.Editor editor=pref.edit();
@@ -1003,12 +1000,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 @Override
                 public byte[] getBody() {
-                    try {
-                        return input_data_sales == null ? null : input_data_sales.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_data_sales, "utf-8");
-                        return null;
-                    }
+                    return input_data_sales == null ? null : input_data_sales.getBytes(StandardCharsets.UTF_8);
                 }
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1065,6 +1057,31 @@ public class SplashActivity extends AppCompatActivity {
 
 
 
+    private  void alertErrorOnExit(Context ctx, String errmsg){
+    final AlertDialog.Builder b;
+    try
+    {
+        b = new AlertDialog.Builder(ctx);
+        b.setTitle("Alert");
+        b.setCancelable(false);
+        b.setMessage(errmsg);
+        b.setPositiveButton("OK", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
+                b.create().dismiss();
+                CommonFun.finishscreen(SplashActivity.this);
+            }
+        });
+        b.create().show();
+    }
+    catch(Exception ex)
+    {
+    }
+
+}
+
     private void goToHome()
     {
         SharedPreferences pref;
@@ -1098,6 +1115,7 @@ public class SplashActivity extends AppCompatActivity {
             goToHomePage();
         }
     }
+
 
 
 }

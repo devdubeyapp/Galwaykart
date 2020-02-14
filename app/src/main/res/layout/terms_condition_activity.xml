@@ -176,7 +176,8 @@
             android:textSize="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:layout_marginLeft="20dp"
-            android:clickable="true" />
+            android:clickable="true"
+            />
 
         <TextView
             android:id="@+id/tvPreferredCustomer"
@@ -188,7 +189,8 @@
             android:textSize="20dp"
             android:textColor="@color/colorPrimaryDark"
             android:layout_marginLeft="20dp"
-            android:clickable="true" />
+            android:clickable="true"
+            />
 
         <TextView
             android:id="@+id/tvDonationDisclaimer"
@@ -201,6 +203,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:layout_marginLeft="20dp"
             android:clickable="true" />
+
 
 
 

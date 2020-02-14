@@ -77,11 +77,11 @@ public class RecentItemAdapter extends RecyclerView.Adapter<RecentItemAdapter.Vi
 
 
 
-            textView_name = (TextView) convertView.findViewById(R.id.textView_name);
-            imageView_Item=(ImageView)convertView.findViewById(R.id.imageView_Item);
+            textView_name = convertView.findViewById(R.id.textView_name);
+            imageView_Item= convertView.findViewById(R.id.imageView_Item);
 
 
-            textView_itemprice = (TextView) convertView.findViewById(R.id.textView_itemprice);
+            textView_itemprice = convertView.findViewById(R.id.textView_itemprice);
             textView_itemprice.setVisibility(View.GONE);
 
         }
@@ -94,10 +94,10 @@ public class RecentItemAdapter extends RecyclerView.Adapter<RecentItemAdapter.Vi
 
         final DataModelRecentItem dataModel = mValues.get(position);
 
-        final String prod_name=dataModel.getP_name().toString();
-        final String img_name=dataModel.getP_img().toString();
-        final String prod_sku=dataModel.getP_sku().toString();
-        final String prod_price=dataModel.getP_price().toString();
+        final String prod_name= dataModel.getP_name();
+        final String img_name= dataModel.getP_img();
+        final String prod_sku= dataModel.getP_sku();
+        final String prod_price= dataModel.getP_price();
 
 
         holder.textView_itemprice.setVisibility(View.VISIBLE);
@@ -108,7 +108,7 @@ public class RecentItemAdapter extends RecyclerView.Adapter<RecentItemAdapter.Vi
             @Override
             public void onClick(View view) {
 
-                openItem(dataModel.getP_sku().toString());
+                openItem(dataModel.getP_sku());
 
 
             }
@@ -118,7 +118,7 @@ public class RecentItemAdapter extends RecyclerView.Adapter<RecentItemAdapter.Vi
             @Override
             public void onClick(View view) {
 
-                openItem(dataModel.getP_sku().toString());
+                openItem(dataModel.getP_sku());
 
             }
         });

@@ -64,12 +64,12 @@ public class WishListItemAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(R.layout.activity_wish_list_item_list, parent, false);
         }
-        holder.textView_wishlist_name = (TextView) convertView.findViewById(R.id.textView_wishlist_name);
-        holder.textView_wishlist_itemprice = (TextView) convertView.findViewById(R.id.textView_wishlist_itemprice);
-        holder.bt_wishlist_Delete = (Button)convertView.findViewById(R.id.bt_wishlist_Delete);
-        holder.imageView_Wishlist_Item=(ImageView)convertView.findViewById(R.id.imageView_Wishlist_Item);
+        holder.textView_wishlist_name = convertView.findViewById(R.id.textView_wishlist_name);
+        holder.textView_wishlist_itemprice = convertView.findViewById(R.id.textView_wishlist_itemprice);
+        holder.bt_wishlist_Delete = convertView.findViewById(R.id.bt_wishlist_Delete);
+        holder.imageView_Wishlist_Item= convertView.findViewById(R.id.imageView_Wishlist_Item);
 
-        wishlist_imagepath = arr_image[position].toString();
+        wishlist_imagepath = arr_image[position];
 
         holder.textView_wishlist_name.setText(arr_wishlist_name[position]);
         holder.textView_wishlist_itemprice.setText(arr_wishlist_price[position]);

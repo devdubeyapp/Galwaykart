@@ -41,6 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -110,7 +111,7 @@ public class UpdateAddressForOthersActivity extends BaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pref= CommonFun.getPreferences(getApplicationContext());
 
-        rel_address_field = (RelativeLayout)findViewById(R.id.rel_address_field);
+        rel_address_field = findViewById(R.id.rel_address_field);
 
         address_id= pref.getString("address_id","");
 
@@ -120,7 +121,7 @@ public class UpdateAddressForOthersActivity extends BaseActivity {
 
         arrayList = new ArrayList<HashMap<String, String>>();
 
-        spinner_state_profile = (Spinner) findViewById(R.id.spinner_state_profile);
+        spinner_state_profile = findViewById(R.id.spinner_state_profile);
         st_get_State_URL = Global_Settings.api_url + "glaze/statelist.php";
 
         spinner_state_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -177,10 +178,10 @@ public class UpdateAddressForOthersActivity extends BaseActivity {
 
 
        // chk_same_bill = (CheckBox) findViewById(R.id.chk_same);
-        tvChkText = (TextView) findViewById(R.id.tvChkText);
+        tvChkText = findViewById(R.id.tvChkText);
 
         add_type = pref.getString("addnew", "");
-        tv_title_address = (TextView) findViewById(R.id.tv_title_address);
+        tv_title_address = findViewById(R.id.tv_title_address);
 
         if (add_type.equalsIgnoreCase("billing")) {
             tv_title_address.setText("Billing Address");
@@ -208,16 +209,16 @@ public class UpdateAddressForOthersActivity extends BaseActivity {
         coming_from = pref.getString("st_coming_from", "");
 
 
-        first_name = (EditText) findViewById(R.id.first_name);
-        last_name = (EditText) findViewById(R.id.last_name);
-        company = (EditText) findViewById(R.id.company);
-        phone_no = (EditText) findViewById(R.id.phone_no);
-        street_address = (EditText) findViewById(R.id.street_address);
-        city = (EditText) findViewById(R.id.city);
+        first_name = findViewById(R.id.first_name);
+        last_name = findViewById(R.id.last_name);
+        company = findViewById(R.id.company);
+        phone_no = findViewById(R.id.phone_no);
+        street_address = findViewById(R.id.street_address);
+        city = findViewById(R.id.city);
 
-        zip = (EditText) findViewById(R.id.zip);
-        country = (EditText) findViewById(R.id.country);
-        button_save_address = (Button) findViewById(R.id.button_save_address);
+        zip = findViewById(R.id.zip);
+        country = findViewById(R.id.country);
+        button_save_address = findViewById(R.id.button_save_address);
         country.setVisibility(View.GONE);
 
         if (coming_from.equalsIgnoreCase("Adapter")) {
@@ -447,9 +448,9 @@ public class UpdateAddressForOthersActivity extends BaseActivity {
 
                                         final Dialog dialog = new Dialog(UpdateAddressForOthersActivity.this);
                                         dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                        TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
+                                        TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
                                         tv_dialog.setText("Your address book has been updated successfully...");
-                                        ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+                                        ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                         dialog.show();
 
                                         new CountDownTimer(4000, 4000) {
@@ -509,12 +510,7 @@ public class UpdateAddressForOthersActivity extends BaseActivity {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
-                        return null;
-                    }
+                    return mRequestBody == null ? null : mRequestBody.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override

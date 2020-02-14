@@ -35,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -98,8 +99,6 @@ public class CustomerAddressBook extends BaseActivity {
             arr_firstname,arr_lastname,arr_state,arr_customer_id,arr_company,arr_address_id,arr_region_id,arr_region_code,
     arr_default_ship,arr_default_bill;
 
-            ;
-
     String login_group_id="";
     HashSet<String> arrayList_AddressId;
     public Bundle bundle;
@@ -150,13 +149,13 @@ public class CustomerAddressBook extends BaseActivity {
         if(st_come_from_update.equalsIgnoreCase("updateaddress"))
             is_show_select_button="false";
 
-        Log.d("customer","customer_addressbook");
+        //Log.d("customer","customer_addressbook");
         preferences = CommonFun.getPreferences(getApplicationContext());
 
         pref = CommonFun.getPreferences(getApplicationContext());
 
 
-        list_address = (ListView) findViewById(R.id.list_address);
+        list_address = findViewById(R.id.list_address);
 
         itemList=new ArrayList<HashMap<String, String>>();
 
@@ -178,8 +177,8 @@ public class CustomerAddressBook extends BaseActivity {
 //        tokenData = "ituo1gwphqdjidohau02y4dbu6880rof";
         //  Log.d("tokenData123",tokenData);
 
-        rel_no_address = (RelativeLayout) findViewById(R.id.rel_no_address);
-        btn_add_address = (Button) findViewById(R.id.btn_add_address);
+        rel_no_address = findViewById(R.id.rel_no_address);
+        btn_add_address = findViewById(R.id.btn_add_address);
         btn_add_address.setOnClickListener(btn_add_addressOnClickListener);
 
 
@@ -187,7 +186,7 @@ public class CustomerAddressBook extends BaseActivity {
         url_address = Global_Settings.api_url + "rest/V1/customers/me";
         // Log.d("url_address", url_address);
 
-        tv_title_address = (TextView) findViewById(R.id.tv_title_address);
+        tv_title_address = findViewById(R.id.tv_title_address);
 
         String add_type = preferences.getString("addnew", "");
         if (add_type != null && !add_type.equals("")) {
@@ -201,14 +200,14 @@ public class CustomerAddressBook extends BaseActivity {
 
         //callAddressBookList();
 
-        btn_add_new_address = (Button) findViewById(R.id.btn_add_new_address);
+        btn_add_new_address = findViewById(R.id.btn_add_new_address);
 
         btn_add_new_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
-                Log.d("total_data_2", String.valueOf(total_address_count));
+                //Log.d("total_data_2", String.valueOf(total_address_count));
                 Intent intent = new Intent(CustomerAddressBook.this,AddNewAddress.class);
                 intent.putExtra("add_new","new");
                 intent.putExtra("st_come_from_update",st_come_from_update);
@@ -222,7 +221,7 @@ public class CustomerAddressBook extends BaseActivity {
         });
 
 
-        btn_change_address=(Button)findViewById(R.id.btn_change_address);
+        btn_change_address= findViewById(R.id.btn_change_address);
         btn_change_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -318,8 +317,8 @@ public class CustomerAddressBook extends BaseActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("response987654", response.toString());
-                        Log.d("response987654", response.toString());
+                        //Log.d("response987654", response.toString());
+                        //Log.d("response987654", response.toString());
                         if(pDialog.isShowing())
                             pDialog.dismiss();
 
@@ -488,7 +487,7 @@ public class CustomerAddressBook extends BaseActivity {
                                         hashMap.put("default_ship",arr_default_ship[i]);
                                         hashMap.put("default_bill",arr_default_bill[i]);
 
-                                        Log.d("total_data", String.valueOf(total_address_count));
+                                        //Log.d("total_data", String.valueOf(total_address_count));
 
                                         itemList.add(hashMap);
 
@@ -549,16 +548,12 @@ public class CustomerAddressBook extends BaseActivity {
                            // String statusCode = String.valueOf(error.networkResponse.statusCode);
                             //get response body and parse with appropriate encoding
                             if(error.networkResponse.data!=null) {
-                                try {
-                                    body = new String(error.networkResponse.data,"UTF-8");
-                                    CommonFun.alertError(CustomerAddressBook.this,body.toString());
-                                    // JSONObject jsonObject=new JSONObject(body.toString());
-                                    // String message=jsonObject.getString("message");
-                                    //CommonFun.alertError(CustomerAddressBook.this,message);
+                                body = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                                CommonFun.alertError(CustomerAddressBook.this, body);
+                                // JSONObject jsonObject=new JSONObject(body.toString());
+                                // String message=jsonObject.getString("message");
+                                //CommonFun.alertError(CustomerAddressBook.this,message);
 
-                                } catch (UnsupportedEncodingException e) {
-                                    e.printStackTrace();
-                                }
                             }
                         }catch (Exception e){
 

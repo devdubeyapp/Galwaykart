@@ -54,6 +54,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -177,16 +178,16 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
         //Toast.makeText(this, "Build No: " + payUSdkDetails.getSdkBuildNumber() + "\n Build Type: " + payUSdkDetails.getSdkBuildType() + " \n Build Flavor: " + payUSdkDetails.getSdkFlavor() + "\n Application Id: " + payUSdkDetails.getSdkApplicationId() + "\n Version Code: " + payUSdkDetails.getSdkVersionCode() + "\n Version Name: " + payUSdkDetails.getSdkVersionName(), Toast.LENGTH_LONG).show();
 
         String user_email=pref.getString("login_email","");
-        editTextEmail=(EditText)findViewById(R.id.editTextEmail);
+        editTextEmail= findViewById(R.id.editTextEmail);
         editTextEmail.setText(user_email);
-        editTextAmount=(EditText)findViewById(R.id.editTextAmount);
+        editTextAmount= findViewById(R.id.editTextAmount);
 
         email=user_email;
 
         firstname=pref.getString("login_fname","");
 
         //Lets setup the environment spinner
-        environmentSpinner = (Spinner) findViewById(R.id.spinner_environment);
+        environmentSpinner = findViewById(R.id.spinner_environment);
         //  List<String> list = new ArrayList<String>();
         String[] environmentArray = getResources().getStringArray(R.array.environment_array);
 /*        list.add("Test");
@@ -739,7 +740,7 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
         if (null != mPaymentParams.getOfferKey())
             postParamsBuffer.append(concatParams(PayuConstants.OFFER_KEY, mPaymentParams.getOfferKey()));
 
-        String postParams = postParamsBuffer.charAt(postParamsBuffer.length() - 1) == '&' ? postParamsBuffer.substring(0, postParamsBuffer.length() - 1).toString() : postParamsBuffer.toString();
+        String postParams = postParamsBuffer.charAt(postParamsBuffer.length() - 1) == '&' ? postParamsBuffer.substring(0, postParamsBuffer.length() - 1) : postParamsBuffer.toString();
 
         // lets make an api call
         GetHashesFromServerTask getHashesFromServerTask = new GetHashesFromServerTask();
@@ -781,7 +782,7 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
                 // get the payuConfig first
                 String postParam = postParams[0];
 
-                byte[] postParamsByte = postParam.getBytes("UTF-8");
+                byte[] postParamsByte = postParam.getBytes(StandardCharsets.UTF_8);
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
@@ -968,7 +969,7 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
                     //TODO Deploy a file on your server for storing cardToken and merchantHash nad replace below url with your server side file url.
                     URL url = new URL("https://payu.herokuapp.com/store_merchant_hash");
 
-                    byte[] postParamsByte = postParams.getBytes("UTF-8");
+                    byte[] postParamsByte = postParams.getBytes(StandardCharsets.UTF_8);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
@@ -1027,7 +1028,7 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
                     //TODO Replace below url with your server side file url.
                     URL url = new URL("https://payu.herokuapp.com/get_merchant_hashes");
 
-                    byte[] postParamsByte = postParams.getBytes("UTF-8");
+                    byte[] postParamsByte = postParams.getBytes(StandardCharsets.UTF_8);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
@@ -1099,7 +1100,7 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
                     //TODO Replace below url with your server side file url.
                     URL url = new URL("https://payu.herokuapp.com/delete_merchant_hash");
 
-                    byte[] postParamsByte = postParams.getBytes("UTF-8");
+                    byte[] postParamsByte = postParams.getBytes(StandardCharsets.UTF_8);
 
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
@@ -1146,7 +1147,7 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
             //TODO Replace below url with your server side file url.
             URL url = new URL("https://payu.herokuapp.com/get_merchant_hashes");
 
-            byte[] postParamsByte = postParams.getBytes("UTF-8");
+            byte[] postParamsByte = postParams.getBytes(StandardCharsets.UTF_8);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");

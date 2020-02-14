@@ -72,8 +72,8 @@ public class ViewPagerAdapterBanner extends PagerAdapter
 
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View  view = (ViewGroup) layoutInflater.inflate(R.layout.view_pager_items, collection, false);
-        ImageView img_banner = (ImageView) view.findViewById(R.id.img_banner);
+        View  view = layoutInflater.inflate(R.layout.view_pager_items, collection, false);
+        ImageView img_banner = view.findViewById(R.id.img_banner);
 
         img_banner.setScaleType(ImageView.ScaleType.FIT_XY);
         img_banner.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +87,7 @@ public class ViewPagerAdapterBanner extends PagerAdapter
                 {
                     //////Log.d("clicked", banner_image_catid[position]);
                     SharedPreferences pref;
-                    pref= mContext.getSharedPreferences("GalwayKart", mContext.MODE_PRIVATE);
+                    pref= mContext.getSharedPreferences("GalwayKart", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("selected_id",banner_image_catid[position]);
                     editor.putString("selected_name","");

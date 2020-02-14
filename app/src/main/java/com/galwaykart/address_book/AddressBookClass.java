@@ -149,7 +149,7 @@ public class AddressBookClass extends BaseActivity{
 
         }
 
-        list_address = (ListView) findViewById(R.id.list_address);
+        list_address = findViewById(R.id.list_address);
 
         itemList=new ArrayList<HashMap<String, String>>();
 
@@ -182,8 +182,8 @@ public class AddressBookClass extends BaseActivity{
 //        tokenData = "ituo1gwphqdjidohau02y4dbu6880rof";
       //  //Log.d("tokenData123",tokenData);
 
-        rel_no_address = (RelativeLayout) findViewById(R.id.rel_no_address);
-        btn_add_address = (Button) findViewById(R.id.btn_add_address);
+        rel_no_address = findViewById(R.id.rel_no_address);
+        btn_add_address = findViewById(R.id.btn_add_address);
         btn_add_address.setOnClickListener(btn_add_addressOnClickListener);
 
 
@@ -191,7 +191,7 @@ public class AddressBookClass extends BaseActivity{
         url_address = Global_Settings.api_url + "rest/V1/customers/me/shippingAddress";
        // //Log.d("url_address", url_address);
 
-        tv_title_address = (TextView) findViewById(R.id.tv_title_address);
+        tv_title_address = findViewById(R.id.tv_title_address);
 
         String add_type = preferences.getString("addnew", "");
         if (add_type != null && !add_type.equals("")) {
@@ -205,7 +205,7 @@ public class AddressBookClass extends BaseActivity{
         //callAddressBookList();
 
 
-        btn_add_new_address = (Button) findViewById(R.id.btn_add_new_address);
+        btn_add_new_address = findViewById(R.id.btn_add_new_address);
         btn_add_new_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -229,7 +229,7 @@ public class AddressBookClass extends BaseActivity{
         });
 
 
-        btn_change_address=(Button)findViewById(R.id.btn_change_address);
+        btn_change_address= findViewById(R.id.btn_change_address);
         btn_change_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

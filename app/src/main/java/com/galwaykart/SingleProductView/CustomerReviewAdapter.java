@@ -84,11 +84,11 @@ public class CustomerReviewAdapter extends RecyclerView.Adapter<CustomerReviewAd
 
 
 
-            ratingBar = (RatingBar) v.findViewById(R.id.rating_customer);
+            ratingBar = v.findViewById(R.id.rating_customer);
             ratingBar.setNumStars(5);
-            text_detail = (TextView) v.findViewById(R.id.text_desc);
-            text_title = (TextView) v.findViewById(R.id.text_title);
-            text_nickname = (TextView) v.findViewById(R.id.text_nickname);
+            text_detail = v.findViewById(R.id.text_desc);
+            text_title = v.findViewById(R.id.text_title);
+            text_nickname = v.findViewById(R.id.text_nickname);
 
 
         }
@@ -128,10 +128,10 @@ public class CustomerReviewAdapter extends RecyclerView.Adapter<CustomerReviewAd
 
         final DataModelProductReview dataModel = mValues.get(position);
 
-        final String st_detail=dataModel.getTAG_detail().toString();
-        final String st_title=dataModel.getTAG_title().toString();
-        final String st_nickname=dataModel.getTAG_nickname().toString();
-        final String st_rating=dataModel.getTAG_rating().toString();
+        final String st_detail= dataModel.getTAG_detail();
+        final String st_title= dataModel.getTAG_title();
+        final String st_nickname= dataModel.getTAG_nickname();
+        final String st_rating= dataModel.getTAG_rating();
 
 
         holder.text_detail.setText(st_detail);

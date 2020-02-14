@@ -31,14 +31,14 @@ public class CouponReportAdapter extends RecyclerView.Adapter<CouponReportAdapte
         public ViewHolder(View view) {
             super(view);
             layout = view;
-            sr_no_tv = (TextView) view.findViewById(R.id.sr_no_tv);
-            coupon_type_tv = (TextView) view.findViewById(R.id.coupon_type_tv);
-            amount_tv = (TextView) view.findViewById(R.id.amount_tv);
-            created_date_tv = (TextView) view.findViewById(R.id.created_date_tv);
-            expired_date_tv = (TextView) view.findViewById(R.id.expired_date_tv);
-            coupon_code_tv = (TextView) view.findViewById(R.id.coupon_code_tv);
-            used_reference_tv = (TextView) view.findViewById(R.id.used_reference_tv);
-            main_row_lay = (LinearLayout) view.findViewById(R.id.main_row_lay);
+            sr_no_tv = view.findViewById(R.id.sr_no_tv);
+            coupon_type_tv = view.findViewById(R.id.coupon_type_tv);
+            amount_tv = view.findViewById(R.id.amount_tv);
+            created_date_tv = view.findViewById(R.id.created_date_tv);
+            expired_date_tv = view.findViewById(R.id.expired_date_tv);
+            coupon_code_tv = view.findViewById(R.id.coupon_code_tv);
+            used_reference_tv = view.findViewById(R.id.used_reference_tv);
+            main_row_lay = view.findViewById(R.id.main_row_lay);
 
         }
     }

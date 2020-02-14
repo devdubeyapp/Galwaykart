@@ -82,16 +82,16 @@ public class OrderListActivity extends BaseActivity {
         initNavigationDrawer();
 
         pref = getSharedPreferences("glazekartapp", MODE_PRIVATE);
-        tv_title = (TextView) findViewById(R.id.tv_title);
-        iv_image_no_details = (ImageView) findViewById(R.id.iv_image_no_details);
+        tv_title = findViewById(R.id.tv_title);
+        iv_image_no_details = findViewById(R.id.iv_image_no_details);
 
-        order_list_rec_recyclerview = (RecyclerView) findViewById(R.id.order_list_rec_recyclerview);
+        order_list_rec_recyclerview = findViewById(R.id.order_list_rec_recyclerview);
 
         order_list_rec_recyclerview.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         order_list_rec_recyclerview.setLayoutManager(mLayoutManager);
 
-        tv_my_complaint = (TextView) findViewById(R.id.tv_my_complaint);
+        tv_my_complaint = findViewById(R.id.tv_my_complaint);
         tv_my_complaint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,10 +116,10 @@ public class OrderListActivity extends BaseActivity {
     public void jsonOrderList() {
         final ArrayList<OrderListModel> order_list = new ArrayList<>();
         st_token_data = pref.getString("tokenData","");
-        Log.d("st_token_data",st_token_data);
+        //Log.d("st_token_data",st_token_data);
 
         st_order_list_url=Global_Settings.api_url+"rest/V1/m-order/1/10";
-        Log.d("st_order_list_url",st_order_list_url);
+        //Log.d("st_order_list_url",st_order_list_url);
 
         pDialog = new TransparentProgressDialog(OrderListActivity.this);
         pDialog.setCancelable(false);
@@ -156,17 +156,9 @@ public class OrderListActivity extends BaseActivity {
                                                 String grand_total = jsonObjFinal.getString("grand_total");
                                                 String total_item_count = jsonObjFinal.getString("total_item_count");
                                                 String total_qty_ordered = jsonObjFinal.getString("total_qty_ordered");
+                                                String status_label = jsonObjFinal.getString("status_label");
 
-                                                Log.e("orderid",orderid);
-                                                Log.e("increment_id",increment_id);
-                                                Log.e("entity_id", entity_id);
-                                                Log.e("status",status);
-                                                Log.e("created_at",created_at);
-                                                Log.e("updated_at",updated_at);
-                                                Log.e("subtotal",subtotal);
-                                                Log.e("grand_total",grand_total);
-                                                Log.e("total_item_count",total_item_count);
-                                                Log.e("total_qty_ordered",total_qty_ordered);
+
 
                                                 OrderListModel orderListModel = new OrderListModel();
                                                 orderListModel.setOrderid(orderid);
@@ -178,6 +170,7 @@ public class OrderListActivity extends BaseActivity {
                                                 orderListModel.setSubtotal(subtotal);
                                                 orderListModel.setGrand_total(grand_total);
                                                 orderListModel.setTotal_item_count(total_item_count);
+                                                orderListModel.setStatus_label(status_label);
                                                 orderListModel.setTotal_qty_ordered(total_qty_ordered);
                                                 order_list.add(orderListModel);
 

@@ -95,7 +95,7 @@ public class BaseActivityWithoutCart extends AppCompatActivity
 
     public void initNavigationDrawer(){
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 //        actionBar.setCustomView(R.layout.my_action_bar);
@@ -115,13 +115,13 @@ public class BaseActivityWithoutCart extends AppCompatActivity
         prepareMenuData();
         populateExpandableList();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -145,7 +145,7 @@ public class BaseActivityWithoutCart extends AppCompatActivity
 
 
         View header=navigationView.getHeaderView(0);
-        TextView tvCustomerName=(TextView)header.findViewById(R.id.tvCustomerName);
+        TextView tvCustomerName= header.findViewById(R.id.tvCustomerName);
         if(!dist_id.equals(""))
             tvCustomerName.setText(customer_name +" \n("+dist_id+")");
         else
@@ -439,18 +439,18 @@ public class BaseActivityWithoutCart extends AppCompatActivity
 
         String customer_name=fname+" "+lname;
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
         View header=navigationView.getHeaderView(0);
-        TextView tvCustomerName=(TextView)header.findViewById(R.id.tvCustomerName);
+        TextView tvCustomerName= header.findViewById(R.id.tvCustomerName);
         tvCustomerName.setText(customer_name);
 
         updateMenuTitles(toolbar,"0");
@@ -461,7 +461,7 @@ public class BaseActivityWithoutCart extends AppCompatActivity
 
         //MenuItem cartMenuItem = menu.findItem(R.id.action_add_to_cart);
 
-        tv_cartqty=(TextView)toolbar.findViewById(R.id.cart_icon);
+        tv_cartqty= toolbar.findViewById(R.id.cart_icon);
         tv_cartqty.setText(count);
         tv_cartqty.setVisibility(View.GONE);
         tv_cartqty.setOnClickListener(new View.OnClickListener() {
@@ -472,11 +472,11 @@ public class BaseActivityWithoutCart extends AppCompatActivity
             }
         });
 
-        cart_progressBar=(ProgressBar)toolbar.findViewById(R.id.cart_progressBar);
+        cart_progressBar= toolbar.findViewById(R.id.cart_progressBar);
         cart_progressBar.setVisibility(View.GONE);
 
 
-        imageViewIcon=(ImageView)toolbar.findViewById(R.id.image_view_title);
+        imageViewIcon= toolbar.findViewById(R.id.image_view_title);
         imageViewIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -752,7 +752,7 @@ public class BaseActivityWithoutCart extends AppCompatActivity
 
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

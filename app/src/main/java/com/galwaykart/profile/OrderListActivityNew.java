@@ -75,16 +75,16 @@ public class OrderListActivityNew extends BaseActivity {
         initNavigationDrawer();
 
         pref = getSharedPreferences("glazekartapp", MODE_PRIVATE);
-        tv_title = (TextView) findViewById(R.id.tv_title);
-        iv_image_no_details = (ImageView) findViewById(R.id.iv_image_no_details);
+        tv_title = findViewById(R.id.tv_title);
+        iv_image_no_details = findViewById(R.id.iv_image_no_details);
 
-        order_list_rec_recyclerview = (RecyclerView) findViewById(R.id.order_list_rec_recyclerview);
+        order_list_rec_recyclerview = findViewById(R.id.order_list_rec_recyclerview);
 
         order_list_rec_recyclerview.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         order_list_rec_recyclerview.setLayoutManager(mLayoutManager);
 
-        tv_my_complaint = (TextView) findViewById(R.id.tv_my_complaint);
+        tv_my_complaint = findViewById(R.id.tv_my_complaint);
         tv_my_complaint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,10 +112,10 @@ public class OrderListActivityNew extends BaseActivity {
     public void jsonOrderList() {
         final ArrayList<OrderListModel> order_list = new ArrayList<>();
         st_token_data = pref.getString("tokenData","");
-        Log.d("st_token_data",st_token_data);
+        //Log.d("st_token_data",st_token_data);
 
         st_order_list_url=Global_Settings.api_url+"rest/V1/m-order/1/10";
-        Log.d("st_order_list_url",st_order_list_url);
+        //Log.d("st_order_list_url",st_order_list_url);
 
         pDialog = new TransparentProgressDialog(OrderListActivityNew.this);
         pDialog.setCancelable(false);

@@ -38,15 +38,15 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         public ViewHolder(View view) {
             super(view);
             layout = view;
-            order_id = (TextView) view.findViewById(R.id.order_id);
-            total_qty = (TextView) view.findViewById(R.id.total_qty);
-            total_amt = (TextView) view.findViewById(R.id.total_amt);
-            text_view_date = (TextView) view.findViewById(R.id.text_view_date);
-            tv_year = (TextView) view.findViewById(R.id.tv_year);
-            tv_create_complaint = (TextView) view.findViewById(R.id.tv_create_complaint);
-            tv_view_order_details = (TextView) view.findViewById(R.id.tv_view_order_details);
+            order_id = view.findViewById(R.id.order_id);
+            total_qty = view.findViewById(R.id.total_qty);
+            total_amt = view.findViewById(R.id.total_amt);
+            text_view_date = view.findViewById(R.id.text_view_date);
+            tv_year = view.findViewById(R.id.tv_year);
+            tv_create_complaint = view.findViewById(R.id.tv_create_complaint);
+            tv_view_order_details = view.findViewById(R.id.tv_view_order_details);
 
-            rel_lay1 = (RelativeLayout) view.findViewById(R.id.rel_lay1);
+            rel_lay1 = view.findViewById(R.id.rel_lay1);
         }
     }
 
@@ -88,6 +88,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
 
         Log.e("st_sday",st_sday);
         Log.e("st_year", st_year);
+        String is_need_help=orderListModels.get(position).getStatus_label().toLowerCase();
+        if(is_need_help.contains("delivered") || is_need_help.contains("shipped"))
+            holder.tv_create_complaint.setVisibility(View.VISIBLE);
+        else
+            holder.tv_create_complaint.setVisibility(View.GONE);
 
         holder.tv_create_complaint.setOnClickListener(new View.OnClickListener() {
             @Override

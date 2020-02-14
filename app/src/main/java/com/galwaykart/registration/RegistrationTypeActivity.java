@@ -39,7 +39,7 @@ public class RegistrationTypeActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_type);
-        spinner_customer_type = (Spinner)findViewById(R.id.spinner_customer_type);
+        spinner_customer_type = findViewById(R.id.spinner_customer_type);
         adapter = new ArrayAdapter<String>(RegistrationTypeActivity.this,android.R.layout.simple_spinner_dropdown_item,
                 spinner_data);
         spinner_customer_type.setAdapter(adapter);
@@ -88,7 +88,7 @@ public class RegistrationTypeActivity extends AppCompatActivity {
 
 
 
-        button_sign_up=(Button)findViewById(R.id.button_sign_up);
+        button_sign_up= findViewById(R.id.button_sign_up);
         button_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

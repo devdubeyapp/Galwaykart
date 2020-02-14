@@ -88,6 +88,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -312,24 +313,24 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         str_sku_bundal = new ArrayList<String>();
 
         show_recent_item=false;
-        img_close_write_review=(ImageView)findViewById(R.id.img_close_write_review);
+        img_close_write_review= findViewById(R.id.img_close_write_review);
 
-        llayout_product=(LinearLayout)findViewById(R.id.llayout_product);
-        rel_layout_review=(RelativeLayout)findViewById(R.id.rel_layout_review);
-        product_rating_new=(RatingBar)findViewById(R.id.product_rating_new);
-        live=(RadioButton)findViewById(R.id.live);
+        llayout_product= findViewById(R.id.llayout_product);
+        rel_layout_review= findViewById(R.id.rel_layout_review);
+        product_rating_new= findViewById(R.id.product_rating_new);
+        live= findViewById(R.id.live);
 
         //recycle_view_size = (RecyclerView)findViewById(R.id.recycle_view_size);
         //recycle_view_Container = (LinearLayout)findViewById(R.id.recycle_view_Container);
 
-        recycle_view_size=(RecyclerView)findViewById(R.id.recycle_view_size);
-        recycle_view_color=(RecyclerView)findViewById(R.id.recycle_view_color);
-        rel_horizontal_view=(RelativeLayout)findViewById(R.id.rel_horizontal_view);
+        recycle_view_size= findViewById(R.id.recycle_view_size);
+        recycle_view_color= findViewById(R.id.recycle_view_color);
+        rel_horizontal_view= findViewById(R.id.rel_horizontal_view);
         rel_horizontal_view.setVisibility(View.GONE);
 
 
-        local=(RadioButton)findViewById(R.id.local);
-        toggle=(RadioGroup)findViewById(R.id.toggle);
+        local= findViewById(R.id.local);
+        toggle= findViewById(R.id.toggle);
         live.setChecked(true);
         live.setTextColor(getResources().getColor(R.color.colorwhite));
         local.setTextColor(getResources().getColor(R.color.black));
@@ -367,29 +368,29 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             }
         });
 
-        list_review=(ListView)findViewById(R.id.list_review);
+        list_review= findViewById(R.id.list_review);
         list_review.setVisibility(View.GONE);
 
         itemRatingList=new ArrayList<>();
 
-        ed_comment=(EditText)findViewById(R.id.ed_nickname);
-        ed_nickname=(EditText)findViewById(R.id.ed_comment);
-        ed_rating=(RatingBar)findViewById(R.id.ed_rating);
+        ed_comment= findViewById(R.id.ed_nickname);
+        ed_nickname= findViewById(R.id.ed_comment);
+        ed_rating= findViewById(R.id.ed_rating);
 
-        progressBar_write_review=(ProgressBar)findViewById(R.id.progressBar_write_review);
+        progressBar_write_review= findViewById(R.id.progressBar_write_review);
         progressBar_write_review.setVisibility(View.GONE);
-        progressBar_read_review=(ProgressBar)findViewById(R.id.progressBar_read_review);
+        progressBar_read_review= findViewById(R.id.progressBar_read_review);
         progressBar_read_review.setVisibility(View.GONE);
 
-        check_available_response = (TableLayout)findViewById(R.id.check_available_response);
-        check_available = (TableLayout)findViewById(R.id.check_available);
+        check_available_response = findViewById(R.id.check_available_response);
+        check_available = findViewById(R.id.check_available);
 
-        btn_check_availablity = (TextView)findViewById(R.id.btn_check_availablity);
+        btn_check_availablity = findViewById(R.id.btn_check_availablity);
 
-        btn_change_pin= (TextView)findViewById(R.id.btn_change_pin);
-        tv_availability_response= (TextView)findViewById(R.id.tv_availability_response);
+        btn_change_pin= findViewById(R.id.btn_change_pin);
+        tv_availability_response= findViewById(R.id.tv_availability_response);
 
-        ed_pincode = (EditText)findViewById(R.id.ed_pincode);
+        ed_pincode = findViewById(R.id.ed_pincode);
 
         btn_check_availablity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -424,7 +425,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 check_available.setVisibility(View.VISIBLE);
             }
         });
-        btn_submit_review=(Button)findViewById(R.id.btn_submit_review);
+        btn_submit_review= findViewById(R.id.btn_submit_review);
         btn_submit_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -445,14 +446,14 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             }
         });
 
-        linear_write_review=(LinearLayout)findViewById(R.id.linear_write_review);
+        linear_write_review= findViewById(R.id.linear_write_review);
         linear_write_review.setVisibility(View.GONE);
         img_close_write_review.setVisibility(View.GONE);
 
         /**
          * Write Review
          */
-        tv_write_review=(TextView)findViewById(R.id.tv_write_review);
+        tv_write_review= findViewById(R.id.tv_write_review);
         tv_write_review.setPaintFlags(tv_write_review.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         tv_write_review.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -475,11 +476,11 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             }
         });
 
-        tv_review_alert=(TextView)findViewById(R.id.tv_review_alert);
+        tv_review_alert= findViewById(R.id.tv_review_alert);
         tv_review_alert.setVisibility(View.GONE);
         //list_review.setNestedScrollingEnabled(false);
 
-        recyclerView_Rating=(RecyclerView)findViewById(R.id.recyclerView_Rating);
+        recyclerView_Rating= findViewById(R.id.recyclerView_Rating);
 
         recyclerView_Rating.setLayoutManager(new LinearLayoutManager(this));
 
@@ -502,7 +503,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
          * share Images
          */
 
-        img_share=(TextView)findViewById(R.id.img_share);
+        img_share= findViewById(R.id.img_share);
         img_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -532,24 +533,24 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             }
         });
 
-        pager_indicator=(LinearLayout)findViewById(R.id.viewPagerCountDots);
-        product_rating=(RatingBar)findViewById(R.id.product_rating);
+        pager_indicator= findViewById(R.id.viewPagerCountDots);
+        product_rating= findViewById(R.id.product_rating);
         product_rating.setNumStars(5);
-        product_rating_new=(RatingBar)findViewById(R.id.product_rating_new);
+        product_rating_new= findViewById(R.id.product_rating_new);
         product_rating_new.setNumStars(5);
         //product_rating.setRating(3.4f);
 
         long_d_hide=false;
         //SharedPreferences preferences;
         preferences = CommonFun.getPreferences(getApplicationContext());
-        tv_Wish_list=(TextView)findViewById(R.id.tv_Wish_list_new);
+        tv_Wish_list= findViewById(R.id.tv_Wish_list_new);
         //tvDiscPrice = (TextView)findViewById(R.id.tvDiscPrice);
 
         st_logged_gp_id = preferences.getString("login_group_id","");
         ////Log.d("st_logged_gp_id",st_logged_gp_id);
 
         page=0;
-        pager_view_products=(ViewPager)findViewById(R.id.pager_view_products);
+        pager_view_products= findViewById(R.id.pager_view_products);
 
         pager_view_products.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -614,14 +615,14 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         preferences = CommonFun.getPreferences(getApplicationContext());
         tokenData=preferences.getString("tokenData","");
 
-        tvItemName=(TextView)findViewById(R.id.tvItemName);
-        tvItemPrice=(TextView)findViewById(R.id.tvItemPrice);
-        tvItemShort=(TextView)findViewById(R.id.tvItemShort);
-        tvItemLong=(TextView)findViewById(R.id.tvItemLong);
-        tv_add_to_cart=(TextView)findViewById(R.id.tv_add_to_cart);
-        tvItemLong_title=(TextView)findViewById(R.id.tvItemLong_title);
-        tv_associate_products = (TextView) findViewById(R.id.tv_associate_products);
-        tv_associate_products_details = (TextView) findViewById(R.id.tv_associate_products_details);
+        tvItemName= findViewById(R.id.tvItemName);
+        tvItemPrice= findViewById(R.id.tvItemPrice);
+        tvItemShort= findViewById(R.id.tvItemShort);
+        tvItemLong= findViewById(R.id.tvItemLong);
+        tv_add_to_cart= findViewById(R.id.tv_add_to_cart);
+        tvItemLong_title= findViewById(R.id.tvItemLong_title);
+        tv_associate_products = findViewById(R.id.tv_associate_products);
+        tv_associate_products_details = findViewById(R.id.tv_associate_products_details);
 
 
 
@@ -666,12 +667,12 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         st_token_data = preferences.getString("tokenData","");
         //Log.d("wishlists",st_token_data);
 
-        ed_qty=(EditText)findViewById(R.id.ed_qty);
+        ed_qty= findViewById(R.id.ed_qty);
         ed_qty.setVisibility(View.GONE);
 
-        img_view_product_image=(ImageView)findViewById(R.id.img_view_product_image);
+        img_view_product_image= findViewById(R.id.img_view_product_image);
 
-        spinner_qty = (Spinner)findViewById(R.id.spinner_qty);
+        spinner_qty = findViewById(R.id.spinner_qty);
 
         String[] items3 = new String[]{"1", "2", "3",
                 "4", "5", "6",
@@ -746,10 +747,11 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
        // opens "gkart.realm"
         try {
 
-            long count = realm.where(DataModelRecentItem.class).count();
+           // long count = realm.where(DataModelRecentItem.class).count();
 
             try {
-                 nextID = Integer.parseInt(String.valueOf(realm.where(DataModelRecentItem.class).max("p_id")))+1;
+                 nextID = Integer.parseInt(String.valueOf(realm.where(DataModelRecentItem.class)
+                         .max("p_id")))+1;
             }
             catch (NullPointerException ex){
                 nextID=1;
@@ -798,9 +800,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
             realm.beginTransaction();
 
-// Add a product
+            // Add a product
             DataModelRecentItem r_product = realm.createObject(DataModelRecentItem.class, product_sku);
-
 
             //r_product=new DataModelRecentItem(product_name,product_sku,image_path);
             r_product.setP_id(nextID);
@@ -1051,12 +1052,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                try {
-                    return input_string == null ? null : input_string.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_string, "utf-8");
-                    return null;
-                }
+                return input_string == null ? null : input_string.getBytes(StandardCharsets.UTF_8);
             }
 
         };
@@ -1698,13 +1694,13 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                         sel_p_json=response;
 
-                        //Log.d("singleProDetails",response.toString());
+                        Log.d("singleProDetails", response);
 
                         //   CommonFun.alertError(MainActivity.this,response.toString());
                         if(response!=null){
                             try {
 
-                                jsonObj = new JSONObject(String.valueOf(response));
+                                jsonObj = new JSONObject(response);
 
                                 status_product=jsonObj.getString("status");
                                 product_type=jsonObj.getString("type_id");
@@ -2003,10 +1999,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 }
 
                 if (is_salable == false) {
-                    RelativeLayout spinnerlinear = (RelativeLayout) findViewById(R.id.spinnerlinear);
+                    RelativeLayout spinnerlinear = findViewById(R.id.spinnerlinear);
                     spinnerlinear.setVisibility(View.GONE);
 
-                    TableLayout check_available = (TableLayout) findViewById(R.id.check_available);
+                    TableLayout check_available = findViewById(R.id.check_available);
                     check_available.setVisibility(View.GONE);
                     tv_add_to_cart.setEnabled(false);
                     if (is_salable_text != null && !is_salable_text.equalsIgnoreCase("")) {
@@ -2103,7 +2099,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                     } else
                         image_path = image_path + st_product_image;
                 }
-                dbh.addCartProductImage(new CartProductImage(product_sku.toString(), image_path.toString()));
+                dbh.addCartProductImage(new CartProductImage(product_sku, image_path));
 
                 short_desc = short_desc.replaceAll("</li>", "<br/>");
 
@@ -2136,7 +2132,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 //                                    else {
 
 
-                insertToDbRecentItem(product_name, product_sku, image_path.toString(), product_price);
+                insertToDbRecentItem(product_name, product_sku, image_path, product_price);
 
                 checkWishList();
 
@@ -2399,7 +2395,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                         try {
 
                            if(product_type.equalsIgnoreCase("configurable")) {
-                               String cart_id = response.toString();
+                               String cart_id = response;
                                cart_id = cart_id.replaceAll("\"", "");
 
                                Boolean can_colorproceed=true,can_csizeproceed=true;
@@ -2428,7 +2424,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                            }
                            else
                            {
-                               String cart_id = response.toString();
+                               String cart_id = response;
                                cart_id = cart_id.replaceAll("\"", "");
                                addItemToCart(cart_id);
                            }
@@ -2457,7 +2453,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                             CommonFun.alertError(MainActivity.this, "Please try to add maximum of 25 qty");
                         } else
                             CommonFun.showVolleyException(error, MainActivity.this);
-                        //////Log.d("ERROR","error => "+error.toString());
+                           Log.d("ERROR","error => "+error.toString());
                         //CommonFun.alertError(MainActivity.this,error.toString());
                     }
                 }
@@ -2555,14 +2551,33 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                 }
 
+                String st_configurable_json="";
+                if(!stSelectedAttIdColor.equals(""))
+                {
+
+                    st_configurable_json="{\"optionId\":"+stSelectedAttIdColor+"," +
+                        "\"optionValue\":"+stSelectedAttIndexColor+"}" ;
+
+                }
+                if(!stSelectedAttIdSize.equals("")) {
+                    if (st_configurable_json.equals("")){
+                                st_configurable_json = "{\"optionId\":" + stSelectedAttIdSize + "," +
+                                "\"optionValue\":" + stSelectedAttIndexSize + "}";
+                        }
+                    else
+                    {
+                        st_configurable_json = st_configurable_json+",{\"optionId\":" + stSelectedAttIdSize + "," +
+                                "\"optionValue\":" + stSelectedAttIndexSize + "}";
+                    }
+                }
+
                 strProduct = "{\"cartItem\": {\"sku\": \""+product_sku+"\"," +
                         "\"qty\": \""+cartqty+"\"," +
                         "\"quote_id\": \""+cart_id+"\"," +
-                        "\"productOption\":{\"extensionAttributes\":{\"configurable_item_options\":[{\"optionId\":"+stSelectedAttIdColor+"," +
-                        "\"optionValue\":"+stSelectedAttIndexColor+"}," +
-                        "{\"optionId\":"+stSelectedAttIdSize+"," +
-                        "\"optionValue\":"+stSelectedAttIndexSize+"}]}}}}";
-                //Log.d("strProduct",strProduct);
+                        "\"productOption\":{\"extensionAttributes\":" +
+                        "{\"configurable_item_options\":" +
+                            "[" + st_configurable_json+ "]}}}}";
+                Log.d("strProduct",strProduct);
 
 
             }
@@ -2627,8 +2642,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                                             dialog = new Dialog(MainActivity.this);
                                             dialog.setContentView(R.layout.custom_alert_dialog_design);
-                                            TextView tv_dialog = (TextView) dialog.findViewById(R.id.tv_dialog);
-                                            ImageView image_view_dialog = (ImageView) dialog.findViewById(R.id.image_view_dialog);
+                                            TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                            ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
                                             dialog.show();
 
                                             new CountDownTimer(2000, 2000) {

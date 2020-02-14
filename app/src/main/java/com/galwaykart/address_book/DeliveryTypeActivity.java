@@ -37,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -194,7 +195,7 @@ public class DeliveryTypeActivity extends BaseActivityWithoutCart {
         if(region_id.equals(""))
             region_id="0";
 
-        list_delivery_type = (ListView) findViewById(R.id.list_delivery_type);
+        list_delivery_type = findViewById(R.id.list_delivery_type);
 
         delivery_type_URL = Global_Settings.api_url+"rest/V1/m-carts/mine/estimate-shipping-methods";
 
@@ -230,10 +231,10 @@ public class DeliveryTypeActivity extends BaseActivityWithoutCart {
                         "\"same_as_billing\" : \"" + same_as_billing + "\"}}";
 
 
-        Log.d("delivery_data_in", delivery_data_in);
+        //Log.d("delivery_data_in", delivery_data_in);
 
         check_pin_url= Global_Settings.api_custom_url+"pincode_check.php?postcode="+postcode;
-        Log.d("check_pin_url",check_pin_url);
+        //Log.d("check_pin_url",check_pin_url);
         callDeliveryTypeList();
       //  checkPinCode();
         //callDeliveryTypeList();
@@ -263,8 +264,8 @@ public class DeliveryTypeActivity extends BaseActivityWithoutCart {
 
                             if(pDialog.isShowing())
                                 pDialog.dismiss();
-                            Log.d("responseDelivery", response);
-                            Log.d("response", response);
+                            //Log.d("responseDelivery", response);
+                            //Log.d("response", response);
                             try {
                                 array = new JSONArray(response);
 
@@ -339,7 +340,7 @@ public class DeliveryTypeActivity extends BaseActivityWithoutCart {
      */
     private void callDeliveryTypeList() {
 
-        Log.d("tokendata",tokenData);
+        //Log.d("tokendata",tokenData);
 
         pDialog = new TransparentProgressDialog(DeliveryTypeActivity.this);
         pDialog.setCancelable(false);
@@ -357,8 +358,8 @@ public class DeliveryTypeActivity extends BaseActivityWithoutCart {
 
                     if(pDialog.isShowing())
                         pDialog.dismiss();
-                    Log.d("response", response);
-                    Log.d("response", response);
+                    //Log.d("response", response);
+                    //Log.d("response", response);
                     try {
                         array = new JSONArray(response);
                         int arr_length = array.length();
@@ -498,12 +499,7 @@ public class DeliveryTypeActivity extends BaseActivityWithoutCart {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return delivery_data_in == null ? null : delivery_data_in.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", delivery_data_in, "utf-8");
-                        return null;
-                    }
+                    return delivery_data_in == null ? null : delivery_data_in.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override
@@ -619,7 +615,7 @@ private void getPaymentMethod(String shipping_info_string, final Boolean callFro
             "}";
 
 
-    Log.d("shipstring_delivery",shipping_info_string);
+    //Log.d("shipstring_delivery",shipping_info_string);
 
 
 
@@ -628,7 +624,7 @@ private void getPaymentMethod(String shipping_info_string, final Boolean callFro
 
         itemList = new ArrayList<HashMap<String, String>>();
 
-        Log.d("payment_meth_ship_URL",payment_method_url);
+        //Log.d("payment_meth_ship_URL",payment_method_url);
 
         pDialog = new TransparentProgressDialog(this);
         pDialog.setCancelable(false);
@@ -645,7 +641,7 @@ private void getPaymentMethod(String shipping_info_string, final Boolean callFro
                         public void onResponse(JSONObject response) {
                             if (pDialog.isShowing())
                                 pDialog.dismiss();
-                            Log.d("response_pay_method", response.toString());
+                            //Log.d("response_pay_method", response.toString());
 
                             //CommonFun.alertError(Payment_Method_Activity.this,response.toString());
                             if (response != null) {

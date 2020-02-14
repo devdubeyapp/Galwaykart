@@ -27,5 +27,5 @@ public class GroupHeadContent {
     }
     public void setCountryList(ArrayList<MenuHeadContent> countryList) {
         this.countryList = countryList;
-    };
+    }
 }

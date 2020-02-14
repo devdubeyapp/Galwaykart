@@ -60,11 +60,11 @@ public class OfferPopUpActivity extends Activity {
 //
 //        llayout_banner.addView(imageView);
 
-        recyclerView_offer_product=(RecyclerView)findViewById(R.id.recyclerView_offer_product);
+        recyclerView_offer_product= findViewById(R.id.recyclerView_offer_product);
 
-        progress_bar=(ProgressBar)findViewById(R.id.progress_bar);
+        progress_bar= findViewById(R.id.progress_bar);
         progress_bar.setVisibility(View.GONE);
-        imageView_close=(ImageView)findViewById(R.id.iv_close);
+        imageView_close= findViewById(R.id.iv_close);
         imageView_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +123,7 @@ public class OfferPopUpActivity extends Activity {
                                 String jsonObject_category=jsonArray_category.getString(i);
 
                                 String catid="";
-                                String catimage=jsonObject_category.toString();
+                                String catimage= jsonObject_category;
                                 //String catid=jsonObject_category.getString("id");
                                 //String  catimage=jsonObject_category.getString("image");
 

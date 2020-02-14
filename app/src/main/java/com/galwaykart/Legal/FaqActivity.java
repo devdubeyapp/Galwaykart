@@ -83,7 +83,7 @@ public class FaqActivity extends AppCompatActivity {
             }
         });
 
-        webView = (WebView) findViewById(R.id.webview);
+        webView = findViewById(R.id.webview);
 
         String url_part = "";
         String url = "";
@@ -244,8 +244,8 @@ public class FaqActivity extends AppCompatActivity {
          */
         public String getFileName(String url) {
             String filenameWithoutExtension = "";
-            filenameWithoutExtension = String.valueOf(System.currentTimeMillis()
-                    + "." + MimeTypeMap.getFileExtensionFromUrl(url));
+            filenameWithoutExtension = System.currentTimeMillis()
+                    + "." + MimeTypeMap.getFileExtensionFromUrl(url);
             return filenameWithoutExtension;
         }
 

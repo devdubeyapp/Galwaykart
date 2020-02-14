@@ -48,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -246,12 +247,12 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
 
 
-        tv_shipping_address=(TextView)findViewById(com.galwaykart.R.id.tv_shipping_address);
+        tv_shipping_address= findViewById(R.id.tv_shipping_address);
         tv_shipping_address.setText(shipment_address);
 
-        list_order_list=(ListView)findViewById(com.galwaykart.R.id.list_order_list);
+        list_order_list= findViewById(R.id.list_order_list);
 
-        btConfirmOrder=(Button)findViewById(com.galwaykart.R.id.btConfirmOrder);
+        btConfirmOrder= findViewById(R.id.btConfirmOrder);
         btConfirmOrder.setVisibility(View.GONE);
         btConfirmOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -287,7 +288,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
         if(is_data_load==false) {
 
-            tv_txt_view = (TextView) findViewById(com.galwaykart.R.id.tv_txt_view);
+            tv_txt_view = findViewById(R.id.tv_txt_view);
             pref = CommonFun.getPreferences(getApplicationContext());
             cart_amount = pref.getString("cartamount", "");
             inc_tax = pref.getString("arr_amount", "");
@@ -310,7 +311,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
             cb_donation_msg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Log.d("isChecked", String.valueOf(isChecked));
+                    //Log.d("isChecked", String.valueOf(isChecked));
 
                     if(isFirstTime == true) {
                          openDonationBox();
@@ -344,7 +345,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                 stNewDonationAmt = ed_edit_donation.getText().toString().trim();
                 if (!stNewDonationAmt.equalsIgnoreCase("")) {
                     gawalaDonationAmt = Integer.parseInt(stNewDonationAmt);
-                    Log.d("stNewDonationAmt", stNewDonationAmt);
+                    //Log.d("stNewDonationAmt", stNewDonationAmt);
                     if (gawalaDonationAmt >= 0) {
                         callDonationApi(stNewDonationAmt);
                     } else {
@@ -386,7 +387,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
             public void onResponse(String response) {
 
                 try {
-                    Log.d("responseDonation", response);
+                    //Log.d("responseDonation", response);
 
                     Intent intent = new Intent(ConfirmationActivity.this, ConfirmationActivity.class);
                     startActivity(intent);
@@ -441,7 +442,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                    Log.d("call_resConfirmation", response.toString());
+                    //Log.d("call_resConfirmation", response.toString());
 //                        CommonFun.alertError(ConfirmationActivity.this, response.toString());
 
                         lstadapter=null;
@@ -527,7 +528,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                     List<CartProductImage> contacts = dbh.getCartProductImage(arr_sku[i]);
 
                                     for (CartProductImage cn : contacts) {
-                                        cart_imagepath = cn.get_image().toString();
+                                        cart_imagepath = cn.get_image();
                                     }
 
                                 }
@@ -749,7 +750,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                         if(arr_sku[j].equalsIgnoreCase(current_product_sku)){
                                             if(Integer.parseInt(arr_qty[j])>Integer.parseInt(current_product_qty)){
 
-                                               deleteCartItem(arr_item_id[j].toString());
+                                               deleteCartItem(arr_item_id[j]);
 
 
                                             }
@@ -798,12 +799,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
                 @Override
                 public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return check_stock_xml == null ? null : check_stock_xml.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", check_stock_url, "utf-8");
-                        return null;
-                    }
+                    return check_stock_xml == null ? null : check_stock_xml.getBytes(StandardCharsets.UTF_8);
                 }
 
                 @Override
@@ -976,7 +972,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("log_response", response.toString());
+                        //Log.d("log_response", response.toString());
 //                        CommonFun.alertError(ConfirmationActivity.this, response.toString());
 
                         lstadapter=null;
@@ -1076,7 +1072,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                             "Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
                                             "<br/>Shipping Charge: " + inc_tax +"<br/>"+
 
-                                             stDonationTitle+": ₹ " +String.valueOf(stDonationValue)+"<br/>"+
+                                             stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
                                             sst_disc+
                                             "Total Amount: ₹ " + st_base_grand_total;
 
@@ -1096,7 +1092,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                 String sst_disc=(disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
                                 String st_text="Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
                                         "<br/>Shipping Charge: " + inc_tax +"<br/>"+
-                                        stDonationTitle+": ₹ " +String.valueOf(stDonationValue)+"<br/>"+
+                                        stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
                                         sst_disc+"<br/>"+
                                         "Total Amount:" + st_base_grand_total;
 

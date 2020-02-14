@@ -92,11 +92,11 @@ public class NotificationSplashActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.notification_dialog_layout,null);
 
-        final TextView noti_title = (TextView)view.findViewById(R.id.noti_title);
-        final TextView title_tv = (TextView)view.findViewById(R.id.title_tv);
-        final TextView description_tv = (TextView)view.findViewById(R.id.description_tv);
-        final TextView continue_tv = (TextView)view.findViewById(R.id.continue_tv);
-        final TextView skip_tv = (TextView)view.findViewById(R.id.skip_tv);
+        final TextView noti_title = view.findViewById(R.id.noti_title);
+        final TextView title_tv = view.findViewById(R.id.title_tv);
+        final TextView description_tv = view.findViewById(R.id.description_tv);
+        final TextView continue_tv = view.findViewById(R.id.continue_tv);
+        final TextView skip_tv = view.findViewById(R.id.skip_tv);
 
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setView(view);

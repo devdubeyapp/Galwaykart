@@ -50,15 +50,15 @@ public class CompOrderDetailsAdapter extends RecyclerView.Adapter<CompOrderDetai
             layout = view;
             Snackbar snackbar;
 
-            check_mark = (CheckBox) view.findViewById(R.id.check_mark);
-            tv_product_name = (TextView) view.findViewById(R.id.tv_product_name);
-            total_product_amt = (TextView) view.findViewById(R.id.total_product_amt);
-            tv_qty_ordered = (TextView) view.findViewById(R.id.tv_qty_ordered);
-            tv_qty_ordered1 = (TextView) view.findViewById(R.id.tv_qty_ordered1);
-            sp_return_req = (Spinner) view.findViewById(R.id.sp_return_req);
+            check_mark = view.findViewById(R.id.check_mark);
+            tv_product_name = view.findViewById(R.id.tv_product_name);
+            total_product_amt = view.findViewById(R.id.total_product_amt);
+            tv_qty_ordered = view.findViewById(R.id.tv_qty_ordered);
+            tv_qty_ordered1 = view.findViewById(R.id.tv_qty_ordered1);
+            sp_return_req = view.findViewById(R.id.sp_return_req);
             sp_return_req.setEnabled(false);
 
-            img_product = (ImageView) view.findViewById(R.id.img_product);
+            img_product = view.findViewById(R.id.img_product);
             //main_row_lay = (LinearLayout) view.findViewById(R.id.main_row_lay);
         }
     }
