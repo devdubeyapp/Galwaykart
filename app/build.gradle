@@ -70,7 +70,7 @@ dependencies {
     implementation 'com.github.baoyachi:StepView:1.9'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.cardview:cardview:1.0.0"
-    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
 
     /**
      * third party integration
@@ -99,8 +99,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:19.0.0'
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
-    //implementation "androidx.security:security-crypto:1.0.0-alpha02"
+  //  implementation "androidx.security:security-crypto:1.0.0-alpha02"
 
+    implementation 'com.github.scottyab:rootbeer:0.0.7'
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.16.4'
+    implementation 'com.iceteck.silicompressorr:silicompressor:2.2.3'
+    implementation 'com.github.tcking:giraffecompressor:0.1.4'
 
 }
 apply plugin: 'com.google.gms.google-services'
