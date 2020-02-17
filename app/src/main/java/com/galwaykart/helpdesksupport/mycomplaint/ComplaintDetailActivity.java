@@ -52,14 +52,14 @@ import java.util.Map;
 public class ComplaintDetailActivity extends AppCompatActivity implements View.OnClickListener
 {
 
-    TextView tv_date, tv_ticket_no,tv_status, tv_order_no,tv_order_status, tv_category_type, tv_remark;
+    TextView tv_date, tv_ticket_no,tv_status, tv_order_no,tv_order_status, tv_category_type, tv_remark, tv_admin_remark;
     TextView str_date, str_ticket_no,str_status, str_order_no, str_category_type;
-    LinearLayout details_ly;
+    LinearLayout ly_admin_remark, details_ly;
 
     private String complaint_id="", complaint_type="", is_show="";
     private SharedPreferences pref;
     private String st_token_data="";
-    String remarks="";
+    String remarks="", customer_remarks="", admin_remarks="";
 
     TransparentProgressDialog pDialog;
     RecyclerView complaint_details_recycler_view;
@@ -114,6 +114,9 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 
                             String complaint_cancel_url=Global_Settings.api_url+"rest/V1/m-help-requestcancle";
                             callCancelComplaint(input_data,complaint_cancel_url);
+
+                            /*Intent intent11 = new Intent(ComplaintDetailActivity.this, MyComplaints.class);
+                            startActivity((intent11));*/
 
                         }
                     });
@@ -267,6 +270,11 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
         tv_order_status  = findViewById(R.id.tv_order_status);
         tv_category_type = findViewById(R.id.tv_category_type);
         tv_remark = findViewById(R.id.tv_remark);
+        tv_admin_remark = findViewById(R.id.tv_admin_remark);
+
+        ly_admin_remark = findViewById(R.id.ly_admin_remark);
+        ly_admin_remark.setVisibility(View.GONE);
+
         details_ly = findViewById(R.id.details_ly);
         details_ly.setVisibility(View.GONE);
 
@@ -288,7 +296,7 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View v) {
-        }
+    }
 
     String input_data="";
     String[] cht_name;
@@ -335,26 +343,26 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 
 
 //                                            for(int j = 0; j<jsonArray.length(); j++) {
-                                                JSONObject jsonObj= jsonArray.getJSONObject(0);
-                                                JSONArray jsonArrayOrder = jsonObj.getJSONArray("order");
-                                                for(int k=0; k<jsonArrayOrder.length();k++)
-                                                {
-                                                    JSONObject jsonObjOrder = jsonArrayOrder.getJSONObject(k);
-                                                    order_status = jsonObjOrder.getString("order_status");
-                                                    order_id = jsonObjOrder.getString("increment_id");
-                                                    complaint_status = jsonObjOrder.getString("complientstatus");
-                                                    created_at = jsonObjOrder.getString("created_at");
+                                            JSONObject jsonObj= jsonArray.getJSONObject(0);
+                                            JSONArray jsonArrayOrder = jsonObj.getJSONArray("order");
+                                            for(int k=0; k<jsonArrayOrder.length();k++)
+                                            {
+                                                JSONObject jsonObjOrder = jsonArrayOrder.getJSONObject(k);
+                                                order_status = jsonObjOrder.getString("order_status");
+                                                order_id = jsonObjOrder.getString("increment_id");
+                                                complaint_status = jsonObjOrder.getString("complientstatus");
+                                                created_at = jsonObjOrder.getString("created_at");
 
 
 //                                                    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 //                                                    Date createDate=sdf.parse(created_at);
 
-                                                    tv_date.setText(created_at);
-                                                    tv_ticket_no.setText(complaint_id);
-                                                    tv_order_no.setText(order_id);
-                                                    tv_order_status.setText(order_status);
-                                                    tv_status.setText(complaint_status);
-                                                    tv_category_type.setText(complaint_type);
+                                                tv_date.setText(created_at);
+                                                tv_ticket_no.setText(complaint_id);
+                                                tv_order_no.setText(order_id);
+                                                tv_order_status.setText(order_status);
+                                                tv_status.setText(complaint_status);
+                                                tv_category_type.setText(complaint_type);
 
 
 //                                                    if(!remarks.equals("")) {
@@ -364,69 +372,95 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 //                                                    }
 
 
-                                                    int total_msg_data=0;
+                                                int total_msg_data=0;
 
-                                                    if(jsonObj.has("message")) {
-                                                        JSONArray jsonArrayItem = jsonObj.getJSONArray("message");
-                                                        total_msg_data=jsonArrayItem.length();
+                                                if(jsonObj.has("message")) {
+                                                    JSONArray jsonArrayItem = jsonObj.getJSONArray("message");
+                                                    total_msg_data=jsonArrayItem.length();
 
-                                                        if (jsonArrayItem.length() > 0) {
+                                                    if (jsonArrayItem.length() > 0) {
 
-                                                            cht_name = new String[jsonArrayItem.length()];
-                                                            cht_msg = new String[jsonArrayItem.length()];
-                                                            for (int i = 0; i < jsonArrayItem.length(); i++) {
+                                                        cht_name = new String[jsonArrayItem.length()];
+                                                        cht_msg = new String[jsonArrayItem.length()];
 
-                                                                JSONObject jsonObject_msg=jsonArrayItem.getJSONObject(i);
-                                                                cht_msg[i] = jsonObject_msg.getString("message");
-                                                                cht_name[i] = jsonObject_msg.getString("name");
+                                                        for (int i = 0; i < jsonArrayItem.length(); i++) {
 
-
-                                                            }
-
+                                                            JSONObject jsonObject_msg=jsonArrayItem.getJSONObject(i);
+                                                            cht_msg[i] = jsonObject_msg.getString("message");
+                                                            cht_name[i] = jsonObject_msg.getString("name");
                                                         }
-                                                    }
-
-                                                    for(int i=0;i<total_msg_data;i++)
-                                                    {
-                                                        remarks="<p style='font-size:16px;font-weight:bold'>"+cht_name[i]+":</p><p style='font-size:14px'>"+cht_msg[i]+"</p><br/>";
 
                                                     }
-
-                                                    if (Build.VERSION.SDK_INT >= 24) {
-                                                        remarks = String.valueOf(Html.fromHtml(remarks , 0));
-                                                    }
-                                                    else {
-                                                        remarks = String.valueOf(Html.fromHtml(remarks));
-                                                    }
-
-                                                    tv_remark.setText(remarks);
-
                                                 }
-                                                if(is_show.equals("1"))
+
+                                                Log.e("total_msg_data", total_msg_data + "");
+
+                                                for(int i=0;i<total_msg_data;i++)
                                                 {
+                                                    //remarks=remarks+"<p style='font-size:16px;font-weight:bold'>"+cht_name[i]+":</p><p style='font-size:14px'>"+cht_msg[i]+"</p><br/>";
 
-                                                    //if(jsonObj.has("items"))
 
-                                                      JSONArray jsonArrayItem = jsonObj.getJSONArray("items");
-                                                      for(int k=0; k<jsonArrayItem.length();k++)
-                                                      {
-                                                          JSONObject jsonObjItem = jsonArrayItem.getJSONObject(k);
-                                                          request_qty = jsonObjItem.getString("request_qty");
-                                                          sku = jsonObjItem.getString("sku");
-                                                          product_name = jsonObjItem.getString("name");
-                                                          String image=jsonObjItem.getString("image");
+                                                    customer_remarks=cht_msg[0];
+                                                    admin_remarks=cht_msg[1];
 
-                                                          ComplModel complModel0 = new ComplModel();
-                                                          complModel0.setRequest_qty(request_qty);
-                                                          complModel0.setProduct_name(product_name);
-                                                          complModel0.setProduct_url(image);
-                                                          complModel0.setItem_sku(sku);
-                                                          complModels12.add(complModel0);
+                                                    Boolean isFound = customer_remarks.contains("http");
 
-                                                        }
-                                                    details_ly.setVisibility(View.VISIBLE);
+                                                    Log.e("customer_remarks", customer_remarks);
+                                                    Log.e("admin_remarks", admin_remarks);
 
                                                 }
+
+                                                if (Build.VERSION.SDK_INT >= 24) {
+                                                    //remarks = String.valueOf(Html.fromHtml(remarks , 0));
+                                                    customer_remarks = String.valueOf(Html.fromHtml(customer_remarks , 0));
+                                                    admin_remarks = String.valueOf(Html.fromHtml(admin_remarks , 0));
+
+                                                    /*admin_remarks=cht_msg[1];
+                                                    Log.e("admin_remarks", admin_remarks);*/
+                                                }
+                                                else {
+                                                    //remarks = String.valueOf(Html.fromHtml(remarks));
+                                                    customer_remarks = String.valueOf(Html.fromHtml(customer_remarks));
+                                                    admin_remarks = String.valueOf(Html.fromHtml(admin_remarks));
+
+                                                    /*admin_remarks=cht_msg[1];
+                                                    Log.e("admin_remarks", admin_remarks);*/
+                                                }
+
+                                                tv_remark.setText(customer_remarks);
+                                                if(total_msg_data>1)
+                                                {
+                                                    ly_admin_remark.setVisibility(View.VISIBLE);
+                                                    tv_admin_remark.setText(admin_remarks);
+                                                }
+                                                tv_admin_remark.setText(admin_remarks);
+
+                                            }
+                                            if(is_show.equals("1"))
+                                            {
+
+                                                //if(jsonObj.has("items"))
+
+                                                JSONArray jsonArrayItem = jsonObj.getJSONArray("items");
+                                                for(int k=0; k<jsonArrayItem.length();k++)
+                                                {
+                                                    JSONObject jsonObjItem = jsonArrayItem.getJSONObject(k);
+                                                    request_qty = jsonObjItem.getString("request_qty");
+                                                    sku = jsonObjItem.getString("sku");
+                                                    product_name = jsonObjItem.getString("name");
+                                                    String image=jsonObjItem.getString("image");
+
+                                                    ComplModel complModel0 = new ComplModel();
+                                                    complModel0.setRequest_qty(request_qty);
+                                                    complModel0.setProduct_name(product_name);
+                                                    complModel0.setProduct_url(image);
+                                                    complModel0.setItem_sku(sku);
+                                                    complModels12.add(complModel0);
+
+                                                }
+                                                details_ly.setVisibility(View.VISIBLE);
+
+                                            }
 
                                             complaintItemAdapter = new ComplaintItemAdapter(ComplaintDetailActivity.this, complModels12);
                                             complaint_details_recycler_view.setAdapter(complaintItemAdapter);
@@ -451,7 +485,7 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
                                 pDialog.dismiss();
 
                             CommonFun.showVolleyException(error,ComplaintDetailActivity.this);
-                           // Log.e("error_re",error.getMessage());
+                            // Log.e("error_re",error.getMessage());
 
                         }
                     }) {

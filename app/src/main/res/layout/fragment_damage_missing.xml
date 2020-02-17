@@ -30,6 +30,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/ly_write"
@@ -375,17 +382,22 @@
 
             </LinearLayout>
 
-
-
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:text="Upload video"
                 android:layout_marginTop="10dp"
                 android:textSize="15dp"
                 android:textColor="@color/colorPrimary">
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please make sure the video duration time does not exceed more than 1.5 minutes as it may hamper while processing."
+                android:layout_marginTop="5dp"
+                android:textSize="11dp"
+                android:textColor="@color/colorGrayDark">
             </TextView>
 
             <RelativeLayout
@@ -431,8 +443,7 @@
                     android:layout_centerInParent="true"
                     android:indeterminate= "false"
                     android:visibility="visible"
-                    android:progressDrawable="@drawable/circular_progress_bar"
-                />
+                    android:progressDrawable="@drawable/circular_progress_bar" />
 
 
 
@@ -442,7 +453,7 @@
                 android:id="@+id/tv_process_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Processing....."
+                android:text="Please wait....The video is processing!"
                 android:textStyle="bold"
                 android:padding="5dp"
                 android:layout_marginLeft="5dp"

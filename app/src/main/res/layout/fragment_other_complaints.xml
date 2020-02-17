@@ -103,9 +103,9 @@
 
 
                     <ImageView
-                        android:id="@+id/edit_iv1"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:id="@+id/delete_ic1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
@@ -114,9 +114,9 @@
                         android:layout_marginRight="5dp"
                         android:adjustViewBounds="true"
                         android:padding="5dp"
-                        android:background="@drawable/circle_shape"
                         android:visibility="gone"
-                        android:src="@android:drawable/ic_menu_edit"/>
+                        android:background="@drawable/circle_shape"
+                        android:src="@android:drawable/ic_delete"/>
 
                 </RelativeLayout>
                 <RelativeLayout
@@ -150,9 +150,9 @@
                         android:src="@android:drawable/ic_menu_camera"/>
 
                     <ImageView
-                        android:id="@+id/edit_iv"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:id="@+id/delete_ic2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
@@ -163,7 +163,7 @@
                         android:padding="5dp"
                         android:background="@drawable/circle_shape"
                         android:visibility="gone"
-                        android:src="@android:drawable/ic_menu_edit"/>
+                        android:src="@android:drawable/ic_delete"/>
 
                 </RelativeLayout>
                 <RelativeLayout
@@ -197,9 +197,9 @@
                         android:src="@android:drawable/ic_menu_camera"/>
 
                     <ImageView
-                        android:id="@+id/edit_iv3"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:id="@+id/delete_ic3"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
@@ -210,7 +210,7 @@
                         android:padding="5dp"
                         android:background="@drawable/circle_shape"
                         android:visibility="gone"
-                        android:src="@android:drawable/ic_menu_edit"/>
+                        android:src="@android:drawable/ic_delete"/>
 
                 </RelativeLayout>
 
@@ -258,9 +258,9 @@
 
 
                     <ImageView
-                        android:id="@+id/edit_iv4"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:id="@+id/delete_ic4"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
@@ -271,7 +271,7 @@
                         android:padding="5dp"
                         android:background="@drawable/circle_shape"
                         android:visibility="gone"
-                        android:src="@android:drawable/ic_menu_edit"/>
+                        android:src="@android:drawable/ic_delete"/>
 
                 </RelativeLayout>
                 <RelativeLayout
@@ -305,9 +305,9 @@
                         android:src="@android:drawable/ic_menu_camera"/>
 
                     <ImageView
-                        android:id="@+id/edit_iv5"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:id="@+id/delete_ic5"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
@@ -318,7 +318,7 @@
                         android:padding="5dp"
                         android:background="@drawable/circle_shape"
                         android:visibility="gone"
-                        android:src="@android:drawable/ic_menu_edit"/>
+                        android:src="@android:drawable/ic_delete"/>
 
                 </RelativeLayout>
                 <RelativeLayout
@@ -352,9 +352,9 @@
                         android:src="@android:drawable/ic_menu_camera"/>
 
                     <ImageView
-                        android:id="@+id/edit_iv6"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:id="@+id/delete_ic6"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
@@ -365,7 +365,7 @@
                         android:padding="5dp"
                         android:background="@drawable/circle_shape"
                         android:visibility="gone"
-                        android:src="@android:drawable/ic_menu_edit"/>
+                        android:src="@android:drawable/ic_delete"/>
 
                 </RelativeLayout>
 

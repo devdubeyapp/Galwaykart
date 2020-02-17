@@ -201,7 +201,7 @@ public class OrderListActivity extends BaseActivity {
                                             //e.printStackTrace();
                                             if (pDialog.isShowing())
                                                 pDialog.dismiss();
-                                            String err_msg="currently, there is no testimonial available";
+                                            String err_msg="currently, there is no order available";
                                             Snackbar.make(findViewById(android.R.id.content), err_msg, Snackbar.LENGTH_LONG).show();
                                             //tv_notice.setText(err_msg);
                                         }
