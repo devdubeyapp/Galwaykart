@@ -80,6 +80,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
 
     private SharedPreferences pref;
     private String st_token_data="";
+    private String deviceNumber = "7";
 
     LinearLayout ly_write;
     private RecyclerView items_recycler_view;
@@ -1362,7 +1363,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
                 "\"customerlastName\":\""+str_last_name+"\"," +
                 "\"productData\":["+stProductData+"]," +
                 "\"customerId\":"+str_customer_id+"," +
-                "\"sourceId\":\"" + "4" + "\"" +
+                "\"sourceId\":\"" + deviceNumber + "\"" +
                 ",\"videoUrl\":\"" +"\""+
                 ",\"requestTypeId\":\"" + str_complaint_category_id + "\"" +
                 ",\"comment\":\""+str_write_complaint+"\"" +

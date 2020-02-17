@@ -1508,7 +1508,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                        "\"productData\":[" + all_check + "]," +
                        "\"customerId\":" + str_customer_id + "," +
                        "\"comment\":\"" + str_write_complaint + "\"" +
-                       ",\"sourceId\":\"" + "4" + "\"" +
+                       ",\"sourceId\":\"" + deviceNumber + "\"" +
                        ",\"requestTypeId\":\"" + str_complaint_category_id + "\"" +
                        ",\"imageData\":[" + stImageData + "]}";
 
@@ -1582,6 +1582,8 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                             }.start();
 
                                         } else {
+                                            tv_compaint_submit.setText("Upload and Submit");
+                                            tv_compaint_submit.setEnabled(true);
                                             //String err_msg = "Something went wrong!! Please try again";
                                            // Snackbar.make(getActivity().findViewById(android.R.id.content), message11, Snackbar.LENGTH_LONG).show();
                                             CommonFun.alertError(getActivity(),message11);
@@ -1592,10 +1594,14 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                 } catch (Exception e) {
                                     if (pDialog.isShowing())
                                         pDialog.dismiss();
+                                    tv_compaint_submit.setText("Upload and Submit");
+                                    tv_compaint_submit.setEnabled(true);
                                     String err_msg = "currently, there is no help available";
                                 }
                             } else {
                                 String err_msg = "Something went wrong!! Please try again";
+                                tv_compaint_submit.setText("Upload and Submit");
+                                tv_compaint_submit.setEnabled(true);
                                 Snackbar.make(getActivity().findViewById(android.R.id.content), err_msg, Snackbar.LENGTH_LONG).show();
                             }
 
@@ -1866,7 +1872,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
             GiraffeCompressor.init(getActivity());
 
-            tv_process_name.setText("Processing...");
+            tv_process_name.setText("Please wait....The video is processing!");
             tv_process_name.setVisibility(View.VISIBLE);
             GiraffeCompressor.create() //two implementations: mediacodec and ffmpeg,default is mediacodec
                     .input(pathToStoredVideo) //set video to be compressed

@@ -399,41 +399,46 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
                                                 {
                                                     //remarks=remarks+"<p style='font-size:16px;font-weight:bold'>"+cht_name[i]+":</p><p style='font-size:14px'>"+cht_msg[i]+"</p><br/>";
 
-
                                                     customer_remarks=cht_msg[0];
-                                                    admin_remarks=cht_msg[1];
+                                                    tv_remark.setText(customer_remarks);
 
-                                                    Boolean isFound = customer_remarks.contains("http");
+                                                    if(total_msg_data>1)
+                                                    {
+                                                        admin_remarks=cht_msg[1];
+                                                        ly_admin_remark.setVisibility(View.VISIBLE);
+                                                        tv_admin_remark.setText(admin_remarks);
+                                                    }
+                                                    else
+                                                    {
+                                                        tv_remark.setText(customer_remarks);
+                                                    }
 
-                                                    Log.e("customer_remarks", customer_remarks);
+                                                    Log.e("customer_remarks_f", customer_remarks);
                                                     Log.e("admin_remarks", admin_remarks);
 
+                                                    if (Build.VERSION.SDK_INT >= 24) {
+                                                        //remarks = String.valueOf(Html.fromHtml(remarks , 0));
+                                                        customer_remarks = String.valueOf(Html.fromHtml(customer_remarks , 0));
+                                                        admin_remarks = String.valueOf(Html.fromHtml(admin_remarks , 0));
+
+                                                        tv_remark.setText(customer_remarks);
+                                                        tv_admin_remark.setText(admin_remarks);
+                                                    }
+                                                    else {
+                                                        //remarks = String.valueOf(Html.fromHtml(remarks));
+                                                        customer_remarks = String.valueOf(Html.fromHtml(customer_remarks));
+                                                        admin_remarks = String.valueOf(Html.fromHtml(admin_remarks));
+
+                                                        tv_remark.setText(customer_remarks);
+                                                        tv_admin_remark.setText(admin_remarks);
+
+                                                    }
+
+                                                    tv_remark.setText(customer_remarks);
+
                                                 }
 
-                                                if (Build.VERSION.SDK_INT >= 24) {
-                                                    //remarks = String.valueOf(Html.fromHtml(remarks , 0));
-                                                    customer_remarks = String.valueOf(Html.fromHtml(customer_remarks , 0));
-                                                    admin_remarks = String.valueOf(Html.fromHtml(admin_remarks , 0));
 
-                                                    /*admin_remarks=cht_msg[1];
-                                                    Log.e("admin_remarks", admin_remarks);*/
-                                                }
-                                                else {
-                                                    //remarks = String.valueOf(Html.fromHtml(remarks));
-                                                    customer_remarks = String.valueOf(Html.fromHtml(customer_remarks));
-                                                    admin_remarks = String.valueOf(Html.fromHtml(admin_remarks));
-
-                                                    /*admin_remarks=cht_msg[1];
-                                                    Log.e("admin_remarks", admin_remarks);*/
-                                                }
-
-                                                tv_remark.setText(customer_remarks);
-                                                if(total_msg_data>1)
-                                                {
-                                                    ly_admin_remark.setVisibility(View.VISIBLE);
-                                                    tv_admin_remark.setText(admin_remarks);
-                                                }
-                                                tv_admin_remark.setText(admin_remarks);
 
                                             }
                                             if(is_show.equals("1"))
