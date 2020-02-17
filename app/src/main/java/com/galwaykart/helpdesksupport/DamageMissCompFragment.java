@@ -317,6 +317,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                 if (!finalVideoFileName.equals("")) {
                                     tv_compaint_submit.setText("Processing...");
                                     tv_compaint_submit.setEnabled(false);
+                                    iv_complaint_video_capture.setVisibility(View.GONE);
 
 
                                     for (int i = 0; i < complaint_list.size(); i++) {
@@ -1584,6 +1585,8 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                         } else {
                                             tv_compaint_submit.setText("Upload and Submit");
                                             tv_compaint_submit.setEnabled(true);
+                                            iv_complaint_video_capture.setVisibility(View.VISIBLE);
+
                                             //String err_msg = "Something went wrong!! Please try again";
                                            // Snackbar.make(getActivity().findViewById(android.R.id.content), message11, Snackbar.LENGTH_LONG).show();
                                             CommonFun.alertError(getActivity(),message11);
@@ -1596,12 +1599,16 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                         pDialog.dismiss();
                                     tv_compaint_submit.setText("Upload and Submit");
                                     tv_compaint_submit.setEnabled(true);
+                                    iv_complaint_video_capture.setVisibility(View.VISIBLE);
+
                                     String err_msg = "currently, there is no help available";
                                 }
                             } else {
                                 String err_msg = "Something went wrong!! Please try again";
                                 tv_compaint_submit.setText("Upload and Submit");
                                 tv_compaint_submit.setEnabled(true);
+                                iv_complaint_video_capture.setVisibility(View.VISIBLE);
+
                                 Snackbar.make(getActivity().findViewById(android.R.id.content), err_msg, Snackbar.LENGTH_LONG).show();
                             }
 
@@ -1922,6 +1929,8 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                             if (fileSizeInMB > video_size)
                             {
                                 tv_compaint_submit.setText("Upload and Submit");
+                                iv_complaint_video_capture.setVisibility(View.VISIBLE);
+
                                 tv_compaint_submit.setEnabled(true);
                                 Toast.makeText(getActivity(), "file max size is " + video_size + " mb", Toast.LENGTH_LONG).show();
                             }
@@ -1938,6 +1947,8 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
             e.printStackTrace();
             tv_compaint_submit.setText("Upload and Submit");
             tv_compaint_submit.setEnabled(true);
+            iv_complaint_video_capture.setVisibility(View.VISIBLE);
+
         }
 
     }
@@ -2021,6 +2032,8 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
                         tv_compaint_submit.setText("Upload and Submit");
                         tv_compaint_submit.setEnabled(true);
+                        iv_complaint_video_capture.setVisibility(View.VISIBLE);
+
                         Toast.makeText(context,"Failed to upload",Toast.LENGTH_LONG).show();
                         Log.d("aws","failed");
                         tv_process_name.setText("");
@@ -2048,6 +2061,8 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                     Log.d("aws",ex.getMessage());
                     tv_compaint_submit.setText("Upload and Submit");
                     tv_compaint_submit.setEnabled(true);
+                    iv_complaint_video_capture.setVisibility(View.VISIBLE);
+
                 }
             });
         }
