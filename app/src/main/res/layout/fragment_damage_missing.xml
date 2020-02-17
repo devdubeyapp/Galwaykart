@@ -72,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/image_title"
-                    android:text="You can upload maximum 6 attachments"
+                    android:text="You can upload maximum 6 images"
                     android:layout_marginTop="10dp"
                     android:textSize="15dp"
                     android:textColor="@color/colorPrimary">

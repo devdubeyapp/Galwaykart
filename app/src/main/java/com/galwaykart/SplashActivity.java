@@ -45,7 +45,7 @@ import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.galwaykart.notification.NotificationSplashActivity;
 import com.google.android.gms.common.internal.service.Common;
-import com.scottyab.rootbeer.RootBeer;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -106,18 +106,9 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-//        RootBeer rootBeer = new RootBeer(this);
-//        if (rootBeer.isRooted()) {
-//
-//            alertErrorOnExit(this,"Device seems to be vulner able to run application.\nIf message is  incorrect, please contact to developer from play store.");
-//
-//
-//        } else {
-//
-//            init();
-//        }
 
-        init();
+            init();
+
     }
 
     private void init() {

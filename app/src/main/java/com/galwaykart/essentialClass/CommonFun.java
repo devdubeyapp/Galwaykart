@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import androidx.appcompat.widget.Toolbar;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKeys;
 //import androidx.security.crypto.EncryptedSharedPreferences;
 //import androidx.security.crypto.MasterKeys;
 
@@ -227,24 +229,24 @@ public class CommonFun {
 
     public static SharedPreferences getPreferences(Context mContext){
 
-       SharedPreferences pref = mContext.getSharedPreferences("glazekartapp", MODE_PRIVATE);
+      // SharedPreferences pref = mContext.getSharedPreferences("glazekartapp", MODE_PRIVATE);
 
-//        SharedPreferences pref = null;
-//        try {
-//
-//            String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
-//            pref = EncryptedSharedPreferences.create(
-//                   "glazekartapp",
-//                    masterKeyAlias,
-//                    mContext,
-//                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-//                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-//            );
-//        } catch (GeneralSecurityException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        SharedPreferences pref = null;
+        try {
+
+            String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+            pref = EncryptedSharedPreferences.create(
+                   "glazekartapp",
+                    masterKeyAlias,
+                    mContext,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            );
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         return pref;

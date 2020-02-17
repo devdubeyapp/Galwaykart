@@ -12,7 +12,6 @@ import com.freshchat.consumer.sdk.Freshchat;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.CustomImageLoaderFreshChat;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.scottyab.rootbeer.RootBeer;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;

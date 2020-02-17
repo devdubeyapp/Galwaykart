@@ -359,7 +359,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                 } else
                                     CommonFun.alertError(getActivity(), "video attachment is required");
                             } else {
-                                CommonFun.alertError(getActivity(), "atleast one attachment is required");
+                                CommonFun.alertError(getActivity(), "atleast one image is required");
                             }
 
 
@@ -1521,7 +1521,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
        }
        else
        {
-           CommonFun.alertError(getActivity(),"atleast one attachment is required");
+           CommonFun.alertError(getActivity(),"atleast one image is required");
        }
 
 
@@ -1556,7 +1556,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                         if (respo_status.equals("1")) {
                                             //Snackbar.make(getActivity().findViewById(android.R.id.content), message11, Snackbar.LENGTH_LONG).show();
 
-                                            Toast.makeText(getActivity(), message11, Toast.LENGTH_LONG).show();
+                                            //Toast.makeText(getActivity(), message11, Toast.LENGTH_LONG).show();
                                             dialog = new Dialog(getActivity());
                                             dialog.setContentView(R.layout.custom_alert_dialog_design);
                                             TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
@@ -2017,7 +2017,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                 @Override
                 public void onStateChanged(int id, TransferState state) {
                     if (state.equals(TransferState.COMPLETED)) {
-                        Toast.makeText(context,"Success",Toast.LENGTH_LONG).show();
+                        //Toast.makeText(context,"Success",Toast.LENGTH_LONG).show();
                         Log.d("aws","success");
                         tv_process_name.setText("");
                         tv_process_name.setVisibility(View.GONE);
