@@ -200,6 +200,8 @@ public class OrderDetails extends BaseActivity {
         Intent intent = getIntent();
         st_increment_id= intent.getStringExtra("increment_id");
 
+        Log.e("st_increment_id",st_increment_id);
+
         st_order_id = pref.getString("Order_ID", "");
         st_order_status = pref.getString("st_status", "");
         st_order_total_amt = pref.getString("selected_order_total", "");
