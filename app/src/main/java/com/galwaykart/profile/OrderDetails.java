@@ -138,7 +138,8 @@ public class OrderDetails extends BaseActivity {
             arr_product_amt,arr_product_img,arr_edit_rtn_qty,arr_rtn_qty,arr_req_rtn_qty,arr_shipment_type,
     arr_return_index,arr_tracking_id,arr_selected_sku,arr_sku,arr_order_item_id,arr_track_order,
     arr_check_rtn_btn,arr_shipment_text;
-    String st_sales_url="",dataValues="",st_selected_product_id="",st_selected_reason="",st_selected_resolution="",st_selected_condition="",
+    String st_sales_url="";
+    String dataValues="",st_selected_product_id="",st_selected_reason="",st_selected_resolution="",st_selected_condition="",
             cust_id="",st_order_item_id="",st_product_sku="",
             st_selected_order_item_id="",input_data="",dataValuesSales="",input_data_sales="",
             return_request_url="";
@@ -198,11 +199,11 @@ public class OrderDetails extends BaseActivity {
         arrList_selected_sku = new ArrayList<>();
 
         Intent intent = getIntent();
-        st_increment_id= intent.getStringExtra("increment_id");
+        st_increment_id= intent.getStringExtra("increment_id"); // note: previously  Increamnet_ID set in order_id variable
 
         Log.e("st_increment_id",st_increment_id);
 
-        st_order_id = pref.getString("Order_ID", "");
+        st_order_id = pref.getString("Order_ID", ""); // note: previously  Increamnet_ID set in order_id variable. so when need to pass order id then we shuold pass set increamnet id
         st_order_status = pref.getString("st_status", "");
         st_order_total_amt = pref.getString("selected_order_total", "");
         st_order_rtn = pref.getString("selected_order_rtn", "");
@@ -249,7 +250,7 @@ public class OrderDetails extends BaseActivity {
 //      }
         else {
             //tv_cancel_order.setText("Cancel Order");
-            tv_cancel_order.setVisibility(View.GONE);
+            tv_cancel_order.setVisibility(View.GONE); // cancel_tv
         }
 
 
@@ -274,7 +275,7 @@ public class OrderDetails extends BaseActivity {
                 }
                 if (total_return_items > 0) {
                     String data = "{\"cid\":\"" + cust_id + "\"," +
-                            "\"orederid\":\"" + st_order_id + "\"," +
+                            "\"orederid\":\"" + st_increment_id + "\"," +
                             "\"products\":[";
                     for (int i = 0; i < arrList_selected_product_id.size(); i++) {
                         String st_product_id = arrList_selected_product_id.get(i);
@@ -348,8 +349,8 @@ public class OrderDetails extends BaseActivity {
             public void onClick(View v) {
                 String st_cancel_return = tv_cancel_order.getText().toString();
                 if (st_cancel_return.equalsIgnoreCase("Cancel Order")) {
-                    st_Cancel_Order_URL = Global_Settings.api_url + "glaze/order_cancel.php?id=" + st_order_id;
-                    st_sales_url = Global_Settings.st_sales_api + "POCancel?POId=" + st_order_id + "&spmode=0";
+                    st_Cancel_Order_URL = Global_Settings.api_url + "glaze/order_cancel.php?id=" + st_increment_id;
+                    //st_sales_url = Global_Settings.st_sales_api + "POCancel?POId=" + st_increment_id + "&spmode=0";
                     //cancelOrder_SalesAPI();
                     cancelOrder();
                 } else if (st_cancel_return.equalsIgnoreCase("Return Order")) {
