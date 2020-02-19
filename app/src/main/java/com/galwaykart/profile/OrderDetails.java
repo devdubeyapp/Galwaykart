@@ -1351,6 +1351,7 @@ public class OrderDetails extends BaseActivity {
             tv_order_id.setText("Order # " + st_increment_id);
             //tv_cancel_order.setVisibility(View.VISIBLE);
             tv_title.setText("Your Order");
+
         }
         else
         {
