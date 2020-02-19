@@ -139,7 +139,7 @@ public class OrderDetails extends BaseActivity {
             arr_product_amt,arr_product_img,arr_edit_rtn_qty,arr_rtn_qty,arr_req_rtn_qty,arr_shipment_type,
     arr_return_index,arr_tracking_id,arr_selected_sku,arr_sku,arr_order_item_id,arr_track_order,
     arr_check_rtn_btn,arr_shipment_text;
-    String st_sales_url="";
+    String st_sales_url="" ;
     String dataValues="",st_selected_product_id="",st_selected_reason="",st_selected_resolution="",st_selected_condition="",
             cust_id="",st_order_item_id="",st_product_sku="",
             st_selected_order_item_id="",input_data="",dataValuesSales="",input_data_sales="",
