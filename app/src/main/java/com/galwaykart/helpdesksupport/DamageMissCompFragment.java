@@ -210,7 +210,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
 
 
-        pref = getActivity().getSharedPreferences("glazekartapp", MODE_PRIVATE);
+        pref = CommonFun.getPreferences(getActivity());
         st_token_data=pref.getString("tokenData","");
 
         items_recycler_view= v.findViewById(R.id.items_recycler_view);
@@ -1490,7 +1490,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
        if(inputImageData()) {
            String str_write_complaint = write_complaint_et.getText().toString();
 
-           SharedPreferences pref1 = getActivity().getSharedPreferences("glazekartapp", MODE_PRIVATE);
+           SharedPreferences pref1 = CommonFun.getPreferences(getActivity());
            String tokenData = pref1.getString("tokenData", "");
 
            String str_first_name = pref.getString("login_fname", "");

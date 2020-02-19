@@ -105,8 +105,7 @@ public class HomePage_CategoryTab extends Fragment {
 
 
         SharedPreferences pref;
-        pref = getActivity().getSharedPreferences("glazekartapp",
-                getActivity().MODE_PRIVATE);
+        pref = CommonFun.getPreferences(getActivity());
 
         //CommonFun.alertError(HomePageActivity.this,pref.getString("login_customer_id",""));
 
@@ -164,7 +163,7 @@ public class HomePage_CategoryTab extends Fragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         SharedPreferences pref;
-        pref= getActivity().getSharedPreferences("glazekartapp", getActivity().MODE_PRIVATE);
+        pref= CommonFun.getPreferences(getActivity());
 //        String homepage_data=pref.getString("homepage_data","");
 //        if(homepage_data!=null && !homepage_data.equals(""))
 //            setPostOperation(homepage_data);

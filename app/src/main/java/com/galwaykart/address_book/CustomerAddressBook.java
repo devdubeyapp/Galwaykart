@@ -427,7 +427,7 @@ public class CustomerAddressBook extends BaseActivity {
 //
 //                                if(login_group_id.equalsIgnoreCase("4")) {
 //                                    SharedPreferences pref;
-//                                    pref = getSharedPreferences("glazekartapp", MODE_PRIVATE);
+//
 //                                    SharedPreferences.Editor editor = pref.edit();
 //                                    editor.putString("customer_id", customer_id);
 //                                    editor.putString("telephone", telephone);

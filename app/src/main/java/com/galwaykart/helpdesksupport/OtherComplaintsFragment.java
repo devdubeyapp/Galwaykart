@@ -138,7 +138,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
         order_id = getArguments().getString("order_id");
         str_complaint_category_id = getArguments().getString("str_complaint_category_id");
 
-        pref = getActivity().getSharedPreferences("glazekartapp", MODE_PRIVATE);
+        pref =CommonFun.getPreferences(getActivity());
         st_token_data=pref.getString("tokenData","");
 
         write_complaint_et = v.findViewById(R.id.write_complaint_et);
@@ -1344,7 +1344,7 @@ public class OtherComplaintsFragment extends Fragment implements View.OnClickLis
 
         String str_write_complaint = write_complaint_et.getText().toString();
 
-        SharedPreferences pref1 = getActivity().getSharedPreferences("glazekartapp", MODE_PRIVATE);
+        SharedPreferences pref1 = CommonFun.getPreferences(getActivity());
         String tokenData = pref1.getString("tokenData", "");
 
         String str_first_name = pref.getString("login_fname", "");

@@ -81,7 +81,8 @@ public class OrderListActivity extends BaseActivity {
 
         initNavigationDrawer();
 
-        pref = getSharedPreferences("glazekartapp", MODE_PRIVATE);
+        pref=CommonFun.getPreferences(OrderListActivity.this);
+
         tv_title = findViewById(R.id.tv_title);
         iv_image_no_details = findViewById(R.id.iv_image_no_details);
 
@@ -118,7 +119,7 @@ public class OrderListActivity extends BaseActivity {
         st_token_data = pref.getString("tokenData","");
         //Log.d("st_token_data",st_token_data);
 
-        st_order_list_url=Global_Settings.api_url+"rest/V1/m-order/1/10";
+        st_order_list_url=Global_Settings.api_url+"rest/V1/m-order/1/100";
         //Log.d("st_order_list_url",st_order_list_url);
 
         pDialog = new TransparentProgressDialog(OrderListActivity.this);

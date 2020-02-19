@@ -229,7 +229,6 @@ public class CommonFun {
 
     public static SharedPreferences getPreferences(Context mContext){
 
-      // SharedPreferences pref = mContext.getSharedPreferences("glazekartapp", MODE_PRIVATE);
 
         SharedPreferences pref = null;
         try {

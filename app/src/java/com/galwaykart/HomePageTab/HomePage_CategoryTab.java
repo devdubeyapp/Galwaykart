@@ -114,7 +114,7 @@ public class HomePage_CategoryTab extends Fragment {
 
 
         SharedPreferences pref;
-        pref = getActivity().getSharedPreferences("glazekartapp", getActivity().MODE_PRIVATE);
+        pref = CommonFun.get
 
         //CommonFun.alertError(HomePageActivity.this,pref.getString("login_customer_id",""));
 

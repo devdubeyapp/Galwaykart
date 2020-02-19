@@ -96,7 +96,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
 
         //Crashlytics.getInstance().crash();
         preferences = getActivity().getSharedPreferences("GalwayKart",MODE_PRIVATE);
-        pref = getActivity().getSharedPreferences("glazekartapp", MODE_PRIVATE);
+        pref = CommonFun.getPreferences(getActivity());
 
         progress_bar_shopCategory= getActivity().findViewById(R.id.progress_bar_shopCategory);
         product_name_list = new ArrayList<String>();

@@ -166,7 +166,7 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
         complaint_reasons_spinner = findViewById(R.id.complaint_reasons_spinner);
         compCategModels = new ArrayList<>();
 
-        pref = getSharedPreferences("glazekartapp", MODE_PRIVATE);
+        pref = CommonFun.getPreferences(CMSMainActivity.this);
         st_token_data=pref.getString("tokenData","");
 
         /*ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, complaint_category_array);
@@ -405,12 +405,18 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
 
                                         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
 
-                                        for (int j = 0; j < compCategModels.size(); j++) {
-                                            adapter.add(compCategModels.get(j).getTitle());
+                                        if(compCategModels.size()>0) {
+                                            for (int j = 0; j < compCategModels.size(); j++) {
+                                                adapter.add(compCategModels.get(j).getTitle());
+                                            }
+                                            adapter.add("Select Help Query");
+                                            complaint_reasons_spinner.setAdapter(adapter);
+                                            complaint_reasons_spinner.setSelection(adapter.getCount());
                                         }
-                                        adapter.add("Select Help Query");
-                                        complaint_reasons_spinner.setAdapter(adapter);
-                                        complaint_reasons_spinner.setSelection(adapter.getCount());
+                                        else
+                                        {
+                                            CommonFun.alertError(CMSMainActivity.this,"No option available right now");
+                                        }
 
                                     }
 

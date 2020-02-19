@@ -74,7 +74,7 @@ public class OrderListActivityNew extends BaseActivity {
 
         initNavigationDrawer();
 
-        pref = getSharedPreferences("glazekartapp", MODE_PRIVATE);
+        pref = CommonFun.getPreferences(OrderListActivityNew.this);
         tv_title = findViewById(R.id.tv_title);
         iv_image_no_details = findViewById(R.id.iv_image_no_details);
 

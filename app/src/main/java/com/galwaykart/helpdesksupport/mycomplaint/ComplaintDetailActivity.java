@@ -260,7 +260,7 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 
     void Init()
     {
-        pref = getSharedPreferences("glazekartapp", MODE_PRIVATE);
+        pref = CommonFun.getPreferences(ComplaintDetailActivity.this);
         st_token_data=pref.getString("tokenData","");
 
         tv_date = findViewById(R.id.tv_date);

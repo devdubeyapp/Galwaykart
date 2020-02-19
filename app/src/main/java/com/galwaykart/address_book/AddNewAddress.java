@@ -624,7 +624,7 @@ public class AddNewAddress extends BaseActivity {
 //        getState();
 
 //        SharedPreferences pref;
-//        pref = getSharedPreferences("glazekartapp", MODE_PRIVATE);
+//
 //        SharedPreferences.Editor editor = pref.edit();
 //
 //        editor.putString("new_telephone", address_telephone);

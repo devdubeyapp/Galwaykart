@@ -101,7 +101,7 @@ public class MyComplaints extends AppCompatActivity implements View.OnClickListe
     void Init()
     {
 
-        pref = getSharedPreferences("glazekartapp", MODE_PRIVATE);
+        pref = CommonFun.getPreferences(MyComplaints.this);
         st_token_data=pref.getString("tokenData","");
         customer_id =pref.getString("login_id","");
 

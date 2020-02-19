@@ -427,7 +427,7 @@ public class LogoutActivity extends AppCompatActivity{
         editor.commit();
 
 
-        SharedPreferences settings = getSharedPreferences("glazekartapp", Context.MODE_PRIVATE);
+        SharedPreferences settings = CommonFun.getPreferences(LogoutActivity.this);
         settings.edit().clear().commit();
 
     }
