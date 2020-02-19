@@ -137,6 +137,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 Log.e("entity_id_or_list_adp", orderListModels.get(position).getEntity_id());
                 Log.e("order_id_or_list_adp", orderListModels.get(position).getOrderid());
 
+
                 context.startActivity(other_detal_intent);
 
 
