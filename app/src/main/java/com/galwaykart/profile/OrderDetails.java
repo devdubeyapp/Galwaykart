@@ -132,6 +132,7 @@ public class OrderDetails extends BaseActivity {
             st_product_amt="",st_order_status="",st_trigger_no_sale="",return_request_sales_url="",st_shipmentType=""
             ,st_product_name="",st_product_order_date="",st_order_total_amt="";
 
+
     TextView tv_title,tv_order_total;
 
     String[] arr_product_id={},arr_product_name={},arr_product_qty={},arr_boolean={},arr_product_order_date,
