@@ -128,7 +128,7 @@ public class OrderDetails extends BaseActivity {
     String st_qty="";
     String st_track_order_option="",st_order_rtn="";
 
-    String st_order_id = "",st_product_image = "",st_product_id="",st_total_qty_ordered="",st_selected_qty="",
+    String st_order_id = "", st_increment_id="", st_product_image = "",st_product_id="",st_total_qty_ordered="",st_selected_qty="",
             st_product_amt="",st_order_status="",st_trigger_no_sale="",return_request_sales_url="",st_shipmentType=""
             ,st_product_name="",st_product_order_date="",st_order_total_amt="";
 
@@ -196,6 +196,9 @@ public class OrderDetails extends BaseActivity {
         arrList_selected_reason = new ArrayList<>();
         arrList_entered_qty = new ArrayList<>();
         arrList_selected_sku = new ArrayList<>();
+
+        Intent intent = getIntent();
+        st_increment_id= intent.getStringExtra("increment_id");
 
         st_order_id = pref.getString("Order_ID", "");
         st_order_status = pref.getString("st_status", "");
@@ -469,8 +472,12 @@ public class OrderDetails extends BaseActivity {
         tokenData = preferences.getString("tokenData", "");
         st_re_order_URL = Global_Settings.api_url + "rest/V1/mobile/reorder";
 //        tokenData = tokenData.replaceAll("\"", "");
-        final String json_input_data1s = "{\"orderIncrementId\":\""+st_order_id+"\"}";
+        final String json_input_data1s = "{\"orderIncrementId\":\""+st_increment_id+"\"}";
         //Log.d("url_JSON",st_re_order_URL);
+
+        Log.e("st_order_id",st_order_id);
+        Log.e("st_increment_id",st_increment_id);
+
 
         pDialog = new TransparentProgressDialog(OrderDetails.this);
         pDialog.setCancelable(false);
@@ -1341,7 +1348,7 @@ public class OrderDetails extends BaseActivity {
         if(listAdapter.getCount() >0 ) {
             lv_order_details.invalidate();
             lv_order_details.setAdapter(listAdapter);
-            tv_order_id.setText("Order # " + st_order_id);
+            tv_order_id.setText("Order # " + st_increment_id);
             //tv_cancel_order.setVisibility(View.VISIBLE);
             tv_title.setText("Your Order");
         }
