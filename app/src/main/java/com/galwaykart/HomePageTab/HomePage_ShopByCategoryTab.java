@@ -509,45 +509,54 @@ public class HomePage_ShopByCategoryTab extends Fragment {
 
                                         data_loop++;
 
-                                        arr_category_name[data_loop] = category_name;
+                                        try {
+
+
+                                            arr_category_name[data_loop] = category_name;
+
+
+                                            ////Log.d("category", arr_category_name[data_loop]);
+
+                                            if (c.has("children_data")) {
+                                                subChildrenData = c.getJSONArray("children_data");
+
+
+                                                int length_of_subcategory = subChildrenData.length();
+                                                //Log.d("lengthofsub", String.valueOf(length_of_subcategory));
+
+                                                sub_cat_length_list.add(String.valueOf(length_of_subcategory));
+                                                // ////Log.d("category", sub_cat_length_list.get(i));
+
+                                                for (int j = 0; j < length_of_subcategory; j++) {
+
+
+                                                    JSONObject j_sub_data = subChildrenData.getJSONObject(j);
+
+                                                    String sub_category_active = j_sub_data.getString("is_active");
+
+                                                    // if(!sub_category_active.equalsIgnoreCase("false")) {
+                                                    sub_category_name = j_sub_data.getString("name");
+                                                    sub_category_id = j_sub_data.getString("id");
+
+                                                    ////Log.d("sub", sub_category_name);
+                                                    ////Log.d("sub ID", sub_category_id);
+
+                                                    sub_cat_get_name.add(sub_category_name);
+                                                    sub_cat_get_id.add(sub_category_id);
+                                                    ////Log.d("category", sub_cat_get_name.get(j));
+                                                    ////Log.d("category id", sub_cat_get_id.get(j));
+                                                    //    }
+                                                    //dbh.addCategoryList(new CategoryList(category_name,sub_category_name,sub_category_id));
+                                                }
+                                            }
+
+                                        }catch (IndexOutOfBoundsException ex){
 
 
 
-                                        ////Log.d("category", arr_category_name[data_loop]);
-
-                                        if(c.has("children_data"))
-                                        {
-                                        subChildrenData = c.getJSONArray("children_data");
-
-
-                                        int length_of_subcategory = subChildrenData.length();
-                                        //Log.d("lengthofsub", String.valueOf(length_of_subcategory));
-
-                                        sub_cat_length_list.add(String.valueOf(length_of_subcategory));
-                                        // ////Log.d("category", sub_cat_length_list.get(i));
-
-                                        for (int j = 0; j < length_of_subcategory; j++) {
-
-
-                                            JSONObject j_sub_data = subChildrenData.getJSONObject(j);
-
-                                            String sub_category_active = j_sub_data.getString("is_active");
-
-                                            // if(!sub_category_active.equalsIgnoreCase("false")) {
-                                            sub_category_name = j_sub_data.getString("name");
-                                            sub_category_id = j_sub_data.getString("id");
-
-                                            ////Log.d("sub", sub_category_name);
-                                            ////Log.d("sub ID", sub_category_id);
-
-                                            sub_cat_get_name.add(sub_category_name);
-                                            sub_cat_get_id.add(sub_category_id);
-                                            ////Log.d("category", sub_cat_get_name.get(j));
-                                            ////Log.d("category id", sub_cat_get_id.get(j));
-                                            //    }
-                                            //dbh.addCategoryList(new CategoryList(category_name,sub_category_name,sub_category_id));
                                         }
-                                        }
+
+
                                     }
                                 }
 

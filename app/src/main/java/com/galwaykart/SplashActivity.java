@@ -183,8 +183,10 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
             } catch (IllegalStateException ex) {
+                realm.close();
                 // //Log.d("res_res",ex.getMessage());
             } catch (Exception ex) {
+                realm.close();
                 // //Log.d("res_res",ex.getMessage());
             } finally {
                 realm.close();
@@ -278,6 +280,8 @@ public class SplashActivity extends AppCompatActivity {
             jsonObj = new JSONObject(String.valueOf(response));
             JSONArray jsonArray_banner=jsonObj.getJSONArray("banners");
             String  st_cat_head=jsonObj.getString("category_title");
+
+            realm.beginTransaction();
             for(int i=0;i<jsonArray_banner.length();i++){
                 JSONObject jsonObject_category=jsonArray_banner.getJSONObject(i);
 
@@ -286,7 +290,7 @@ public class SplashActivity extends AppCompatActivity {
                     String catimage = jsonObject_category.getString("banner_name");
                     String banner_image_sku= jsonObject_category.getString("sku");
 
-                realm.beginTransaction();
+
                 DataModelHomeAPI dataModelHomeAPI=realm.createObject(DataModelHomeAPI.class);
 
                 dataModelHomeAPI.setCat_title(st_cat_head);
@@ -296,10 +300,15 @@ public class SplashActivity extends AppCompatActivity {
                     dataModelHomeAPI.setP_sku(banner_image_sku);
                     dataModelHomeAPI.setP_name("");
                     dataModelHomeAPI.setP_price("");
-                realm.commitTransaction();
+
 
             }
+            realm.commitTransaction();
+            realm.close();
 
+
+            Realm realm_1=Realm.getDefaultInstance();
+            realm_1.beginTransaction();
 
             try {
 
@@ -328,8 +337,8 @@ public class SplashActivity extends AppCompatActivity {
 //                    ProductDataModel productDataModel = new ProductDataModel(pname, pip, "", psku, pimage,
 //                            "", "", login_group_id);
 
-                      realm.beginTransaction();
-                          ProductDataModel productDataModel=realm.createObject(ProductDataModel.class);
+
+                          ProductDataModel productDataModel=realm_1.createObject(ProductDataModel.class);
                           productDataModel.setPname(pname);
                           productDataModel.setIp(pip);
                           productDataModel.setPrice("");
@@ -338,20 +347,23 @@ public class SplashActivity extends AppCompatActivity {
                           productDataModel.setP_category_id("");
                           productDataModel.setP_category_name("");
                           productDataModel.setLogin_user_id(login_group_id);
-                      realm.commitTransaction();
+
 
 
                   //  //Log.d("res_res", "commit_trans");
                 }
+                realm_1.commitTransaction();
             }
             catch (JSONException ex){
 
+                realm_1.close();
             }
 
             callNotificationData();
 
 
         } catch (JSONException e) {
+
 
             e.printStackTrace();
         }

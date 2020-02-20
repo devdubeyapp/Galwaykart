@@ -21,14 +21,10 @@ android {
         applicationId "com.galwaykart"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 78
-        versionName "9.13"
-
-//        jackOptions {
-//            enabled true;
-//        }
-
+        versionCode 79
+        versionName "9.13.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {

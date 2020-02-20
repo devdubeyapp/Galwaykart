@@ -830,10 +830,10 @@ st_request_URL=Global_Settings.st_sales_api+"DTDCTrackShip/"+st_selected_Track_i
     }
 
     private  void goBack() {
-        Intent intent=new Intent(StepperViewDemo.this,OrderDetails.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        startActivity(intent);
+//        Intent intent=new Intent(StepperViewDemo.this,OrderDetails.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//        startActivity(intent);
         CommonFun.finishscreen(this);
     }
 }

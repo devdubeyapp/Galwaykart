@@ -200,10 +200,13 @@ public class OrderDetails extends BaseActivity {
         arrList_entered_qty = new ArrayList<>();
         arrList_selected_sku = new ArrayList<>();
 
-        Intent intent = getIntent();
-        st_increment_id= intent.getStringExtra("increment_id"); // note: previously  Increamnet_ID set in order_id variable
 
-        Log.e("st_increment_id",st_increment_id);
+        Intent intent = getIntent();
+        try {
+            st_increment_id = intent.getStringExtra("increment_id"); // note: previously  Increamnet_ID set in order_id variable
+        }catch (Exception ex){
+
+        }
 
         st_order_id = pref.getString("Order_ID", ""); // note: previously  Increamnet_ID set in order_id variable. so when need to pass order id then we shuold pass set increamnet id
         st_order_status = pref.getString("st_status", "");
@@ -744,7 +747,7 @@ public class OrderDetails extends BaseActivity {
 
         Intent intent = new Intent(OrderDetails.this, StepperViewDemo.class);
         startActivity(intent);
-        CommonFun.finishscreen(OrderDetails.this);
+        //CommonFun.finishscreen(OrderDetails.this);
 
     }
 
