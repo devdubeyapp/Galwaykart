@@ -34,6 +34,58 @@
 #-dontwarn com.payu.payuui.**
 #-dontwarn com.synnapps.**
 
+
+
+##-keep class com.galwaykart.helpdesksupport.** { *; }
+#
+#-keep class com.github.tcking.** { *; }
+#
+#
+#-keepnames class com.amazonaws.**
+#-keepnames class com.amazon.**
+## Request handlers defined in request.handlers
+#-keep class com.amazonaws.services.**.*Handler
+## The following are referenced but aren't required to run
+#-dontwarn com.fasterxml.jackson.**
+#-dontwarn org.apache.commons.logging.**
+#-dontwarn com.amazonaws.**
+## The SDK has several references of Apache HTTP client
+#-dontwarn com.amazonaws.http.**
+#-dontwarn com.amazonaws.metrics.**
+#-dontwarn com.amazonaws.services.s3.**
+#-dontwarn com.amazonaws.services.sqs.**
+#-dontnote com.amazonaws.services.sqs.QueueUrlHandler
+#
+#-dontwarn rx.**
+#-keep class rx.internal.util.unsafe.** { *; }
+#-keep class rx.schedulers.Schedulers {
+#public static *;
+#}
+#-keep class rx.schedulers.ImmediateScheduler {
+#public *;
+#}
+#-keep class rx.schedulers.TestScheduler {
+#public *;
+#}
+#-keep class rx.schedulers.Schedulers {
+#public static ** test();
+#}
+#
+#-dontwarn sun.misc.**
+#
+#-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+# long producerIndex;
+#long consumerIndex;
+#}
+#-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+#    rx.internal.util.atomic.LinkedQueueNode producerNode;
+#}
+#-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+#    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+#}
+#-dontnote rx.internal.util.PlatformDependent
+
+
 ### -- Picasso --
  -dontwarn com.squareup.picasso.**
  -dontwarn com.squareup.okhttp.**
@@ -84,6 +136,7 @@
 #-keep public class * extends android.app.Fragment
 -keep class com.synnapps.carouselview.CarouselView.** { *; }
 
+
 #For native methods, see #http://proguard.sourceforge.net/manual/examples.html
 #native
 #-keepclasseswithmembernames class * {
@@ -97,6 +150,20 @@
 -keepclassmembers class com.paytm.pgsdk.PaytmWebView$PaytmJavaScriptInterface {
    public *;
 }
+
+
+
+#-dontwarn android.opengl.**
+
+
+#-keepclassmembernames class com.github.tcking.giraffecompressor{
+#    public *;
+#}
+#
+#
+#-keepclassmembernames class com.amazonaws {
+#    public *;
+#}
 
 -keepattributes JavascriptInterface
 -keepattributes *Annotation*
