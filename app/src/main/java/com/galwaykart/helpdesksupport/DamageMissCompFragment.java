@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaScannerConnection;
@@ -25,10 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +54,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.util.IOUtils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -81,8 +85,11 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -272,6 +279,8 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
     }
 
+    String orVideoFileName="";
+
     @Override
     public void onClick(View v) {
 
@@ -324,7 +333,9 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                         ComplaintOrderDetailModel model = complaint_list.get(i);
                                         if (model.getCheck_for_return_req() == true) {
 
+                                            orVideoFileName=finalVideoFileName;
                                             finalVideoFileName = "https://galwaykart-helpdesk-videos.s3.ap-south-1.amazonaws.com/" + finalVideoFileName;
+
 
                                             if (all_check.equals("")) {
                                                 all_check = "{\"qty\":" + model.getReturn_qty_req() +
@@ -355,7 +366,16 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                         }
                                     }
 
-                                    compressVideoAndUpload(finalVideoFileName);
+                                   // compressVideoAndUpload(finalVideoFileName);
+                                    Log.d("File_Path_1",getFileDestinationPath()+"/"+orVideoFileName);
+                                    File f_upload=new File(pathToStoredVideo);
+
+                                    tv_compaint_submit.setText("Uploading...");
+                                    tv_compaint_submit.setEnabled(false);
+
+
+                                    uploadtos3(getActivity(),f_upload);
+
                                 } else
                                     CommonFun.alertError(getActivity(), "video attachment is required");
                             } else {
@@ -795,7 +815,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 21);
     }
-
+    File tempFile;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -855,71 +875,139 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                 case CAMERA_CAPTURE_VIDEO_REQUEST_CODE:
 
                     if(data!=null) {
-                        fileUri = data.getData();
 
-                        pathToStoredVideo = getRealPathFromURIPath(fileUri, getActivity());
-                        //Log.d("vid", "Recorded Video Path " + pathToStoredVideo);
+                        try {
+                            InputStream inputStream=getActivity().getContentResolver().openInputStream(data.getData());
 
-                        pref = CommonFun.getPreferences(getActivity());
-                        String dist_id=pref.getString("log_user_id", "").toLowerCase();
-                        String videoFileName=dist_id+"_"+imgfilename+".mp4";
+                            try {
+                                tempFile = File.createTempFile("abcd", ".mp4");
+
+                                //tempFile.deleteOnExit();
+                                try (FileOutputStream out = new FileOutputStream(tempFile)) {
+                                    IOUtils.copy(inputStream, out);
+
+                                    try {
+
+                                        Bitmap bitmap_video= ThumbnailUtils.createVideoThumbnail(tempFile.getPath(), MediaStore.Video.Thumbnails.MINI_KIND);
+                                        iv_complaint_video.setImageBitmap(bitmap_video);
+
+                                        uploadtos3(getActivity(),tempFile);
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
 
-                        if (pathToStoredVideo != null && !pathToStoredVideo.equalsIgnoreCase("")) {
-                            //String filePath = SiliCompressor.with(this).compressVideo(pathToStoredVideo, destinationDirectory);
-
-                            finalVideoFileName=videoFileName;
-                           // compressVideoAndUpload(videoFileName);
-
-                            Bitmap bitmap_video= ThumbnailUtils.createVideoThumbnail(pathToStoredVideo, MediaStore.Video.Thumbnails.MINI_KIND);
-                            iv_complaint_video.setImageBitmap(bitmap_video);
-
-                        } else {
-                            Toast.makeText(getActivity(), "Please select video file from gallery", Toast.LENGTH_LONG)
-                                    .show();
                         }
+                        catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                        Log.d("datasok",tempFile.getPath());
+
+
+
+//                        fileUri = data.getData();
+//
+//                        pathToStoredVideo = getRealPathFromURIPath(fileUri, getActivity());
+//
+//                        File file=new File(pathToStoredVideo);
+////                      Log.d("vidfile",file.getAbsolutePath());
+//
+////                        try {
+////                         ParcelFileDescriptor datas =getActivity().getContentResolver().openFileDescriptor(fileUri,"r");
+////
+////                            FileDescriptor fileDescriptor=datas.getFileDescriptor();
+////                            FileOutputStream fileOutputStream=new FileOutputStream(fileDescriptor);
+////
+////                            try {
+////                                datas.close();
+////                            } catch (IOException e) {
+////                                e.printStackTrace();
+////                            }
+////
+////                            Log.d("vidfile", "Recorded Video Path " + pathToStoredVideo);
+////                        } catch (FileNotFoundException e) {
+////                            e.printStackTrace();
+////                        }
+//
+//
+//                        pref = CommonFun.getPreferences(getActivity());
+//                        String dist_id=pref.getString("log_user_id", "").toLowerCase();
+//                        String videoFileName=dist_id+"_"+imgfilename+".mp4";
+//
+//
+//                        if (pathToStoredVideo != null && !pathToStoredVideo.equalsIgnoreCase("")) {
+//                            //String filePath = SiliCompressor.with(this).compressVideo(pathToStoredVideo, destinationDirectory);
+//
+//                            finalVideoFileName=videoFileName;
+//                           // compressVideoAndUpload(videoFileName);
+//
+//                           // Bitmap bitmap_video= ThumbnailUtils.createVideoThumbnail(pathToStoredVideo, MediaStore.Video.Thumbnails.MINI_KIND);
+//                            try {
+//                                Bitmap thumbnail =
+//                                        getActivity().getContentResolver().loadThumbnail(
+//                                                fileUri, new Size(640, 480), null);
+//
+//                                iv_complaint_video.setImageBitmap(thumbnail);
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//
+//
+//                        } else {
+//                            Toast.makeText(getActivity(), "Please select video file from gallery", Toast.LENGTH_LONG)
+//                                    .show();
+//                        }
                     }
 
                     break;
             }
         }
 
-        else if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE && resultCode==Activity.RESULT_OK) {
-
-            if(data!=null) {
-                fileUri = data.getData();
-
-                pathToStoredVideo = getRealPathFromURIPath(fileUri, getActivity());
-                //Log.d("vid", "Recorded Video Path " + pathToStoredVideo);
-                String videoFileName=imgfilename+".mp4";
-
-                if (pathToStoredVideo != null && !pathToStoredVideo.equalsIgnoreCase("")) {
-                    //String filePath = SiliCompressor.with(this).compressVideo(pathToStoredVideo, destinationDirectory);
-
-                    finalVideoFileName=videoFileName;
-                    //compressVideoAndUpload(videoFileName);
-
-                } else {
-                    Toast.makeText(getActivity(), "Please select video file from gallery", Toast.LENGTH_LONG)
-                            .show();
-                }
-            }
-        }
-
-        else if (requestCode == CAMERA_Camera_CAPTURE_VIDEO_REQUEST_CODE && resultCode==Activity.RESULT_OK) {
-
-            if(data!=null) {
-                fileUri = data.getData();
-                filePath=fileUri.getPath();
-                pathToStoredVideo=filePath;
-                //pathToStoredVideo = getRealPathFromURIPath(fileUri, this);
-                Log.d("vid", "Recorded Video Path " + pathToStoredVideo);
-                String videoFileName=imgfilename+".mp4";
-                finalVideoFileName=videoFileName;
-                //compressVideoAndUpload(videoFileName);
-
-            }
-        }
+//        else if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE && resultCode==Activity.RESULT_OK) {
+//
+//            if(data!=null) {
+//                fileUri = data.getData();
+//
+//                pathToStoredVideo = getRealPathFromURIPath(fileUri, getActivity());
+//                //Log.d("vid", "Recorded Video Path " + pathToStoredVideo);
+//                String videoFileName=imgfilename+".mp4";
+//
+//                if (pathToStoredVideo != null && !pathToStoredVideo.equalsIgnoreCase("")) {
+//                    //String filePath = SiliCompressor.with(this).compressVideo(pathToStoredVideo, destinationDirectory);
+//
+//                    finalVideoFileName=videoFileName;
+//                    //compressVideoAndUpload(videoFileName);
+//
+//                } else {
+//                    Toast.makeText(getActivity(), "Please select video file from gallery", Toast.LENGTH_LONG)
+//                            .show();
+//                }
+//            }
+//        }
+//
+//        else if (requestCode == CAMERA_Camera_CAPTURE_VIDEO_REQUEST_CODE && resultCode==Activity.RESULT_OK) {
+//
+//            if(data!=null) {
+//                fileUri = data.getData();
+//                filePath=fileUri.getPath();
+//                pathToStoredVideo=filePath;
+//                //pathToStoredVideo = getRealPathFromURIPath(fileUri, this);
+//                Log.d("vid", "Recorded Video Path " + pathToStoredVideo);
+//                String videoFileName=imgfilename+".mp4";
+//                finalVideoFileName=videoFileName;
+//                //compressVideoAndUploads(videoFileName);
+//
+//            }
+//        }
 
 
     }
@@ -1778,7 +1866,11 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
             Intent intent = new Intent(
                     Intent.ACTION_PICK,
                     android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(Intent.createChooser(intent, "Select a Video "), CAMERA_CAPTURE_VIDEO_REQUEST_CODE);
+            intent.setType("video/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            if(intent.resolveActivity(getActivity().getPackageManager())!=null) {
+                startActivityForResult(Intent.createChooser(intent, "Select a Video "), CAMERA_CAPTURE_VIDEO_REQUEST_CODE);
+            }
         }
         catch (Exception e){
 
@@ -1872,87 +1964,87 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
 
 
-    private void compressVideoAndUpload(String videoFileName)
-    {
-        try {
-            // filePath = SiliCompressor.with(getActivity()).compressVideo(fileUri, getFileDestinationPath());
-
-            GiraffeCompressor.init(getActivity());
-
-            tv_process_name.setText("Please wait....The video is processing!");
-            tv_process_name.setVisibility(View.VISIBLE);
-            GiraffeCompressor.create() //two implementations: mediacodec and ffmpeg,default is mediacodec
-                    .input(pathToStoredVideo) //set video to be compressed
-                    .output(getFileDestinationPath()+"/"+videoFileName) //set compressed video output
-                    .bitRate(2573600)
-                    .resizeFactor(1.0f)
-                    .ready()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<GiraffeCompressor.Result>() {
-                        @Override
-                        public void onCompleted() {
-
-                        }
-                        @Override
-                        public void onError(Throwable e) {
-
-                            tv_process_name.setText("");
-                            tv_process_name.setVisibility(View.GONE);
-
-                            e.printStackTrace();
-
-                        }
-
-                        @Override
-                        public void onNext(GiraffeCompressor.Result s) {
-
-                            tv_process_name.setText("");
-                            tv_process_name.setVisibility(View.GONE);
-
-                            Log.d("File_Path_1",getFileDestinationPath()+"/"+finalVideoFileName);
-                            File f_upload=new File(getFileDestinationPath()+"/"+finalVideoFileName);
-
-
-                            //File f_upload=new File(pathToStoredVideo);
-                            int video_size = 50;
-
-                            // Get length of file in bytes
-                            long fileSizeInBytes = f_upload.length();
-                            // Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
-                            long fileSizeInKB = fileSizeInBytes / 1024;
-                            // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
-                            long fileSizeInMB = fileSizeInKB / 1024;
-
-
-                            progress_bar_video.setMax((int) fileSizeInBytes);
-
-                            if (fileSizeInMB > video_size)
-                            {
-                                tv_compaint_submit.setText("Upload and Submit");
-                                iv_complaint_video_capture.setVisibility(View.VISIBLE);
-
-                                tv_compaint_submit.setEnabled(true);
-                                Toast.makeText(getActivity(), "file max size is " + video_size + " mb", Toast.LENGTH_LONG).show();
-                            }
-                            else
-                            {
-                                tv_compaint_submit.setText("Uploading...");
-                                tv_compaint_submit.setEnabled(false);
-                                uploadtos3(getActivity(),f_upload);
-                            }
-
-                        }
-                    });
-        } catch (Exception e) {
-            e.printStackTrace();
-            tv_compaint_submit.setText("Upload and Submit");
-            tv_compaint_submit.setEnabled(true);
-            iv_complaint_video_capture.setVisibility(View.VISIBLE);
-
-        }
-
-    }
-
+//    private void compressVideoAndUpload(String videoFileName)
+//    {
+//        try {
+//            // filePath = SiliCompressor.with(getActivity()).compressVideo(fileUri, getFileDestinationPath());
+//
+//            GiraffeCompressor.init(getActivity());
+//
+//            tv_process_name.setText("Please wait....The video is processing!");
+//            tv_process_name.setVisibility(View.VISIBLE);
+//            GiraffeCompressor.create() //two implementations: mediacodec and ffmpeg,default is mediacodec
+//                    .input(pathToStoredVideo) //set video to be compressed
+//                    .output(getFileDestinationPath()+"/"+videoFileName) //set compressed video output
+//                    .bitRate(2573600)
+//                    .resizeFactor(1.0f)
+//                    .ready()
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Subscriber<GiraffeCompressor.Result>() {
+//                        @Override
+//                        public void onCompleted() {
+//
+//                        }
+//                        @Override
+//                        public void onError(Throwable e) {
+//
+//                            tv_process_name.setText("");
+//                            tv_process_name.setVisibility(View.GONE);
+//
+//                            e.printStackTrace();
+//
+//                        }
+//
+//                        @Override
+//                        public void onNext(GiraffeCompressor.Result s) {
+//
+//                            tv_process_name.setText("");
+//                            tv_process_name.setVisibility(View.GONE);
+//
+//                            Log.d("File_Path_1",getFileDestinationPath()+"/"+finalVideoFileName);
+//                            File f_upload=new File(getFileDestinationPath()+"/"+finalVideoFileName);
+//
+//
+//                            //File f_upload=new File(pathToStoredVideo);
+//                            int video_size = 50;
+//
+//                            // Get length of file in bytes
+//                            long fileSizeInBytes = f_upload.length();
+//                            // Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
+//                            long fileSizeInKB = fileSizeInBytes / 1024;
+//                            // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
+//                            long fileSizeInMB = fileSizeInKB / 1024;
+//
+//
+//                            progress_bar_video.setMax((int) fileSizeInBytes);
+//
+//                            if (fileSizeInMB > video_size)
+//                            {
+//                                tv_compaint_submit.setText("Upload and Submit");
+//                                iv_complaint_video_capture.setVisibility(View.VISIBLE);
+//
+//                                tv_compaint_submit.setEnabled(true);
+//                                Toast.makeText(getActivity(), "file max size is " + video_size + " mb", Toast.LENGTH_LONG).show();
+//                            }
+//                            else
+//                            {
+//                                tv_compaint_submit.setText("Uploading...");
+//                                tv_compaint_submit.setEnabled(false);
+//                                uploadtos3(getActivity(),f_upload);
+//                            }
+//
+//                        }
+//                    });
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            tv_compaint_submit.setText("Upload and Submit");
+//            tv_compaint_submit.setEnabled(true);
+//            iv_complaint_video_capture.setVisibility(View.VISIBLE);
+//
+//        }
+//
+//    }
+//
 
     String compressFileUpload="";
 
@@ -1973,9 +2065,13 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
     private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
 
-        String[] projection = { MediaStore.Images.Media.DATA };
+        String[] projection = {
+                MediaStore.Video.Media._ID,
+                MediaStore.Video.Media.DISPLAY_NAME,
+                MediaStore.Video.Media.DURATION,
+                MediaStore.Video.Media.SIZE };
         Cursor cursor = activity.getContentResolver().query(contentURI, projection,  null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
         cursor.moveToFirst();
         return cursor.getString(column_index);
     }

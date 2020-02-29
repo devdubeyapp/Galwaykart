@@ -44,14 +44,12 @@ import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.galwaykart.notification.NotificationSplashActivity;
-import com.google.android.gms.common.internal.service.Common;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -107,7 +105,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
 
-            init();
+        init();
 
     }
 
@@ -121,6 +119,9 @@ public class SplashActivity extends AppCompatActivity {
 //            }
 //            //Log.d("New_Notification_Sp",getIntent().getStringExtra("notification").toString());
 //        }
+
+
+
 
 
         try {
@@ -434,6 +435,8 @@ public class SplashActivity extends AppCompatActivity {
 
 
             } else {
+
+
 
                 Intent innew = new Intent(SplashActivity.this, GuestHomePageActivity.class);
                 innew.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

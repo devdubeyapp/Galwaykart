@@ -13,8 +13,6 @@ import android.os.Vibrator;
 import androidx.appcompat.widget.Toolbar;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
-//import androidx.security.crypto.EncryptedSharedPreferences;
-//import androidx.security.crypto.MasterKeys;
 
 import android.view.View;
 import android.widget.ImageView;

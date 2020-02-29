@@ -329,7 +329,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
             }
         }
 
-        arr_category_name=new String[length_of_all_category-total_head_not_active];
+        //arr_category_name=new String[length_of_all_category-total_head_not_active];
 
         length_of_all_category=childrenData.length();
         arr_category_name=new String[length_of_all_category-total_head_not_active];
@@ -368,11 +368,15 @@ public class HomePage_ShopByCategoryTab extends Fragment {
              */
             if (!category_active.equalsIgnoreCase("false")) {
 
-                data_loop++;
+                try {
+                    data_loop++;
 
-                arr_category_name[data_loop] = category_name;
-                arr_category_id[data_loop] = category_id;
-
+                    arr_category_name[data_loop] = category_name;
+                    arr_category_id[data_loop] = category_id;
+                }
+                catch (ArrayIndexOutOfBoundsException ex){
+                    data_loop--;
+                }
 
 
                 ////Log.d("category", arr_category_name[data_loop] + " " + arr_category_id[data_loop]);
