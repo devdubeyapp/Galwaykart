@@ -100,10 +100,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class DamageMissCompFragment extends Fragment implements View.OnClickListener {
 
@@ -374,7 +370,8 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                     tv_compaint_submit.setEnabled(false);
 
 
-                                    uploadtos3(getActivity(),f_upload);
+                                    uploadtos3(getActivity(),tempFile);
+
 
                                 } else
                                     CommonFun.alertError(getActivity(), "video attachment is required");
@@ -880,23 +877,56 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                             InputStream inputStream=getActivity().getContentResolver().openInputStream(data.getData());
 
                             try {
-                                tempFile = File.createTempFile("abcd", ".mp4");
+                                pref = CommonFun.getPreferences(getActivity());
+                                String dist_id=pref.getString("log_user_id", "").toLowerCase();
+
+                                if(dist_id!=null && !dist_id.equals("")){
+                                    dist_id="file";
+                                }
+
+                                tempFile = File.createTempFile(dist_id+"_abcd", ".mp4");
 
                                 //tempFile.deleteOnExit();
                                 try (FileOutputStream out = new FileOutputStream(tempFile)) {
                                     IOUtils.copy(inputStream, out);
 
-                                    try {
 
-                                        Bitmap bitmap_video= ThumbnailUtils.createVideoThumbnail(tempFile.getPath(), MediaStore.Video.Thumbnails.MINI_KIND);
-                                        iv_complaint_video.setImageBitmap(bitmap_video);
+                                    int video_size = 200;
 
-                                        uploadtos3(getActivity(),tempFile);
+                                    // Get length of file in bytes
+                                    long fileSizeInBytes = tempFile.length();
+                                    // Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
+                                    long fileSizeInKB = fileSizeInBytes / 1024;
+                                    // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
+                                    long fileSizeInMB = fileSizeInKB / 1024;
 
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+
+                                    progress_bar_video.setMax((int) fileSizeInBytes);
+
+                                    if (fileSizeInMB > video_size) {
+                                        tv_compaint_submit.setText("Upload and Submit");
+                                        iv_complaint_video_capture.setVisibility(View.VISIBLE);
+
+                                        tv_compaint_submit.setEnabled(true);
+                                        Toast.makeText(getActivity(), "file max size is " + video_size + " mb", Toast.LENGTH_LONG).show();
+                                    } else {
+
+
+                                        try {
+
+                                            Bitmap bitmap_video = ThumbnailUtils.createVideoThumbnail(tempFile.getPath(), MediaStore.Video.Thumbnails.MINI_KIND);
+                                            iv_complaint_video.setImageBitmap(bitmap_video);
+
+                                            //uploadtos3(getActivity(),tempFile);
+                                            finalVideoFileName = tempFile.getName();
+                                            Log.d("filename", finalVideoFileName);
+
+
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+
                                     }
-
                                 }
 
                             } catch (IOException e) {

@@ -97,6 +97,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
         holder.tv_create_complaint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent cms_detal_intent = new Intent(context, CMSMainActivity.class);
                 cms_detal_intent.putExtra("entity_id",orderListModels.get(position).getEntity_id());
                 cms_detal_intent.putExtra("order_id",orderListModels.get(position).getOrderid());
@@ -104,6 +105,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 Log.e("entity_id_or_list_adp", orderListModels.get(position).getEntity_id());
                 Log.e("order_id_or_list_adp", orderListModels.get(position).getOrderid());
                 context.startActivity(cms_detal_intent);
+
             }
         });
 

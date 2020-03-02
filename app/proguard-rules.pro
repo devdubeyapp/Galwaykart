@@ -41,49 +41,49 @@
 #-keep class com.github.tcking.** { *; }
 #
 #
-#-keepnames class com.amazonaws.**
-#-keepnames class com.amazon.**
-## Request handlers defined in request.handlers
-#-keep class com.amazonaws.services.**.*Handler
-## The following are referenced but aren't required to run
-#-dontwarn com.fasterxml.jackson.**
-#-dontwarn org.apache.commons.logging.**
-#-dontwarn com.amazonaws.**
-## The SDK has several references of Apache HTTP client
-#-dontwarn com.amazonaws.http.**
-#-dontwarn com.amazonaws.metrics.**
-#-dontwarn com.amazonaws.services.s3.**
-#-dontwarn com.amazonaws.services.sqs.**
-#-dontnote com.amazonaws.services.sqs.QueueUrlHandler
-#
-#-dontwarn rx.**
-#-keep class rx.internal.util.unsafe.** { *; }
-#-keep class rx.schedulers.Schedulers {
-#public static *;
-#}
-#-keep class rx.schedulers.ImmediateScheduler {
-#public *;
-#}
-#-keep class rx.schedulers.TestScheduler {
-#public *;
-#}
-#-keep class rx.schedulers.Schedulers {
-#public static ** test();
-#}
-#
-#-dontwarn sun.misc.**
-#
-#-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-# long producerIndex;
-#long consumerIndex;
-#}
-#-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-#    rx.internal.util.atomic.LinkedQueueNode producerNode;
-#}
-#-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
-#    rx.internal.util.atomic.LinkedQueueNode consumerNode;
-#}
-#-dontnote rx.internal.util.PlatformDependent
+-keepnames class com.amazonaws.**
+-keepnames class com.amazon.**
+# Request handlers defined in request.handlers
+-keep class com.amazonaws.services.**.*Handler
+# The following are referenced but aren't required to run
+-dontwarn com.fasterxml.jackson.**
+-dontwarn org.apache.commons.logging.**
+-dontwarn com.amazonaws.**
+# The SDK has several references of Apache HTTP client
+-dontwarn com.amazonaws.http.**
+-dontwarn com.amazonaws.metrics.**
+-dontwarn com.amazonaws.services.s3.**
+-dontwarn com.amazonaws.services.sqs.**
+-dontnote com.amazonaws.services.sqs.QueueUrlHandler
+
+-dontwarn rx.**
+-keep class rx.internal.util.unsafe.** { *; }
+-keep class rx.schedulers.Schedulers {
+public static *;
+}
+-keep class rx.schedulers.ImmediateScheduler {
+public *;
+}
+-keep class rx.schedulers.TestScheduler {
+public *;
+}
+-keep class rx.schedulers.Schedulers {
+public static ** test();
+}
+
+-dontwarn sun.misc.**
+
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+ long producerIndex;
+ long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+-dontnote rx.internal.util.PlatformDependent
 
 
 ### -- Picasso --
