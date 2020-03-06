@@ -33,6 +33,7 @@ import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import org.apache.http.util.EncodingUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,13 +100,28 @@ public class TrackDetailWebViewActivity extends AppCompatActivity {
             webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             webView.getSettings().setJavaScriptEnabled(true);
             //wb.getSettings().setPluginState(WebSettings.PluginState.ON);
-            webView.getSettings().setAllowFileAccess(true);
+            webView.getSettings().setAllowFileAccess(false);
             webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
             WebChromeClient myWebChromeClient = new MyWebChromeClient();
             webView.setWebChromeClient(myWebChromeClient);
 
             webView.loadUrl(url);
+
+//            String html = "<!DOCTYPE html>" +
+//                    "<html>" +
+//                    "<body" +
+//                    "<form target=\"_blank\" name=\"traceStatusForm\" method=\"post\" action=\"http://www.bluedarttrackings.in/tracking.php\">\n" +
+//                    "            <input type=\"hidden\" name=\"number\" value=\"20135663354\">\n" +
+//                    "            <input style=\"opacity:0;\" id=\"radioBtn2\" name=\"option\" checked=\"checked\" type=\"radio\" value=\"waybill\">\n" +
+//                    "            <input type=\"submit\" value=\" Track Order ( blue dart tracking ) \" />\n" +
+//                    "        </form>" +
+//                    "</body>" +
+//                    "</html>";
+//            webView.loadData(html, "text/html", "UTF-8");
+
+//            String postData = "number=20135663354&option=waybill";
+//            webView.postUrl("http://www.bluedarttrackings.in/tracking.php", postData.getBytes());
 
             pDialog = new TransparentProgressDialog(TrackDetailWebViewActivity.this);
             pDialog.setCancelable(true);

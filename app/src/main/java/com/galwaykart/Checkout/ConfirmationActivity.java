@@ -535,7 +535,8 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                             }
 
                             JSONArray jsonArray_Subtotal = jsonObj.getJSONArray("total_segments");
-                            for(int k=0;k<jsonArray_Subtotal.length();k++){
+                            for(int k=0;k<jsonArray_Subtotal.length();k++)
+                            {
                                 JSONObject jsonObject=jsonArray_Subtotal.getJSONObject(k);
 
                                 if(jsonObject.getString("code").equalsIgnoreCase("donation"))

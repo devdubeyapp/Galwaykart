@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -108,6 +111,11 @@ public class StepperViewDemo extends BaseActivity {
         st_selected_Track_id = pref.getString("st_selected_Track_id", "");
         st_selected_shipping_type = pref.getString("st_selected_shipping_type","");
 
+
+        st_selected_Track_id="20135663354";
+        st_selected_shipping_type="2";
+
+
         //Log.d("st_selected_Track_id", st_selected_Track_id);
         //Log.d("st_shipping_type", st_selected_shipping_type);
 
@@ -137,6 +145,7 @@ public class StepperViewDemo extends BaseActivity {
 
         if(st_selected_shipping_type.equalsIgnoreCase("1")) {
 
+        tv_trackDetails.setVisibility(View.VISIBLE);
         if (st_selected_Track_id.equalsIgnoreCase("0"))
             setTrackBar(list0, 4);
 
@@ -200,9 +209,23 @@ public class StepperViewDemo extends BaseActivity {
         tv_trackDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(StepperViewDemo.this, TrackDetailWebViewActivity.class);
-                intent.putExtra("trackUrl","https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber="+st_selected_Track_id);
-                startActivity(intent);
+
+             if(st_selected_shipping_type.equalsIgnoreCase("1")) {
+
+                 Intent intent = new Intent(StepperViewDemo.this, TrackDetailWebViewActivity.class);
+                 intent.putExtra("trackUrl", "https://seller.shipyaari.com/avn_ci/siteadmin/track/trackShipment/" + st_selected_Track_id);
+                 startActivity(intent);
+             }
+             else if(st_selected_shipping_type.equalsIgnoreCase("3")) {
+                 Intent intent = new Intent(StepperViewDemo.this, TrackDetailWebViewActivity.class);
+                 intent.putExtra("trackUrl", "https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber=" + st_selected_Track_id);
+                 startActivity(intent);
+             }
+
+
+
+
+
             }
         });
 

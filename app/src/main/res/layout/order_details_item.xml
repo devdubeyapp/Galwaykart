@@ -113,7 +113,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="14dp"
             android:background="@color/colorwhite"
-
+            android:visibility="gone"
             />
 
         <TextView
