@@ -47,7 +47,9 @@ public class Global_Settings {
     public static final String api_glaze_url=galway_wcf_api_url+"Distributor.svc/";
 
     //public static final String shipyaari_api_url="http://192.168.10.6:81/glaze/";
-    public static final String shipyaari_api_url="https://seller.shipyaari.com/logistic/webservice/shipyaaritrackNew.php?";
+    //public static final String shipyaari_api_url="https://seller.shipyaari.com/logistic/webservice/shipyaaritrackNew.php?";
+    public static final String shipyaari_api_url="https://seller.shipyaari.com/avn_ci/siteadmin/track/track_api/";
+
     public static final String api_custom_url=api_url+"glaze/";
     public static final String Notification_api_url=api_url+"glaze/notify/";
     public static final String cart_amount_api=api_url+"rest/V1/m-carts/mine/totals";

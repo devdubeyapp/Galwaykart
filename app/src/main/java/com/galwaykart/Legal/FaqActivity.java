@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JsResult;
 import android.webkit.MimeTypeMap;
@@ -143,7 +144,7 @@ public class FaqActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        ////Log.d("weburl",response.toString());
+                        Log.d("weburl",response.toString());
                         try {
 
                             JSONArray jsonArray = new JSONArray(response);

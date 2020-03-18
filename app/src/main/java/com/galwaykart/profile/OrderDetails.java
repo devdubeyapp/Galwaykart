@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -149,6 +150,9 @@ public class OrderDetails extends BaseActivity {
     String[] arr_enter_qty;
     Button btn_return_submit;
     String[] arr_return_item;
+    TextView bt_track_order;
+    String order_grand_total="";
+    TextView tv_shipping_address;
 
     @Override
     public void onBackPressed() {
@@ -178,6 +182,20 @@ public class OrderDetails extends BaseActivity {
 
 //***********************************************************************************************************************************
 
+        bt_track_order=findViewById(R.id.bt_track_order);
+        bt_track_order.setVisibility(View.GONE);
+        bt_track_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                trackYourOrder(0);
+
+            }
+        });
+
+        tv_shipping_address=findViewById(R.id.tv_shipping_address);
+
+
         tv_order_id = findViewById(R.id.tv_order_id);
         tv_cancel_order = findViewById(R.id.tv_cancel_order);
         tv_re_order = findViewById(R.id.tv_re_order);
@@ -204,6 +222,8 @@ public class OrderDetails extends BaseActivity {
         Intent intent = getIntent();
         try {
             st_increment_id = intent.getStringExtra("increment_id"); // note: previously  Increamnet_ID set in order_id variable
+            order_grand_total= intent.getStringExtra("order_grand_total");
+
         }catch (Exception ex){
 
         }
@@ -1645,7 +1665,7 @@ public class OrderDetails extends BaseActivity {
                     if (pDialog.isShowing())
                         pDialog.dismiss();
 
-                    //Log.d("st_Order_details_URL",response.toString());
+                    Log.d("st_Order_details_URL",response.toString());
 
                     if (response != null) {
                         try {
@@ -1756,9 +1776,11 @@ public class OrderDetails extends BaseActivity {
 
                                 if(st_order_status.equalsIgnoreCase("canceled")){
                                     arr_track_order[i] = "false";
+                                    bt_track_order.setVisibility(View.GONE);
                                 }
                                 else{
                                     arr_track_order[i] = "true";
+                                    bt_track_order.setVisibility(View.VISIBLE);
                                 }
 
                                 hashMap = new HashMap<String, String>();
@@ -1804,9 +1826,42 @@ public class OrderDetails extends BaseActivity {
 
                             String st_donation_text=(donation_amout.equals("")||donation_amout.equals("0"))?"":(donation_title+" : ₹ "+donation_amout+"\n");
 
-                            tv_order_total.setText(tv_order_total.getText() +
-                                    "\n"+st_donation_text+
-                                    "\nShipping Address:\n"+st_ship_street+", "+st_ship_city+"\n"+st_ship_region+" ,"+st_ship_postcode);
+                            String base_subtotal=jsonObject.getString("base_subtotal");
+                            String shipping_amount=jsonObject.getString("shipping_amount");
+                            String disc_amount=jsonObject.getString("discount_amount");
+
+                            String sst_disc= (disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
+
+
+                            tv_shipping_address.setText("Shipping Address:"+st_ship_street+", "+st_ship_city+"\n"+st_ship_region+" ,"+st_ship_postcode+"\n");
+
+                            String st_text=
+                                    "Cart Subtotal ("+ st_total_qty_ordered + " item) <br/>Inc Tax: ₹ " + base_subtotal +
+                                    "<br/>Shipping Charge: " + shipping_amount +"<br/>"+
+                                    st_donation_text +"<br/>"+
+                                    sst_disc+
+                                    "Total Amount: ₹ " + order_grand_total;
+
+
+                            tv_order_total.setText(Html.fromHtml(st_text));
+
+
+
+//                            String sst_disc= (disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
+//
+//                            String ip_text=st_total_cart_ip.equals("")?"":"Total IP: " + st_total_cart_ip;
+//                            String st_text = "<b>"+ip_text+"<br/>" +
+//                                    "-------------------------------</b><br/>" +
+//                                    "Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
+//                                    "<br/>Shipping Charge: " + inc_tax +"<br/>"+
+//
+//                                    stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
+//                                    sst_disc+
+//                                    "Total Amount: ₹ " + st_base_grand_total;
+//
+//
+//                            tv_txt_view.setText(Html.fromHtml(st_text));
+
 
                            // ////Log.d("itemListafter",arrayList+"");
                             setListAdapter();
@@ -1969,7 +2024,7 @@ public class OrderDetails extends BaseActivity {
             //////Log.d("st_track_order_option",st_track_order_option);
 
             if(st_track_order_option.equalsIgnoreCase("true"))
-                holder.bt_track_order.setVisibility(View.VISIBLE);
+                holder.bt_track_order.setVisibility(View.GONE);//Visible earlier
             else if(st_track_order_option.equalsIgnoreCase("false"))
                 holder.bt_track_order.setVisibility(View.GONE);
 

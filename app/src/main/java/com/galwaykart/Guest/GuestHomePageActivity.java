@@ -427,7 +427,7 @@ Boolean is_rel_cross_app_visible=false;
         try {
             jsonArray_banner = new JSONArray(response);
 
-            //Log.d("res_res", String.valueOf(total_banner_item)+ jsonArray_banner.length());
+            Log.d("res_res", String.valueOf(total_banner_item)+ jsonArray_banner.length());
 
             if(total_banner_item>0) {
                 banner_image = new String[total_banner_item];

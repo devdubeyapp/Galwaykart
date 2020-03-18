@@ -111,4 +111,5 @@
 
     <string name="st_donation_text">* Gaushala donation will not be refundable</string>
     <string name="safety_net_api_key"> Your API Key </string>
+    <string name="st_track_order"><u>Track Order</u></string>
 </resources>

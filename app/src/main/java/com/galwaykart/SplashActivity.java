@@ -44,6 +44,7 @@ import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.galwaykart.notification.NotificationSplashActivity;
+import com.galwaykart.shipyaari.TrackDetailWebViewActivity;
 
 
 import org.json.JSONArray;
@@ -104,6 +105,9 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+//        Intent intent=new Intent(SplashActivity.this, .class);
+//        startActivity(intent);
+//        CommonFun.finishscreen(SplashActivity.this);
 
         init();
 

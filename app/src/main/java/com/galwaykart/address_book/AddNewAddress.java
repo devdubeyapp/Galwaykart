@@ -138,7 +138,9 @@ public class AddNewAddress extends BaseActivity {
             intent.putExtra("st_come_from_update","");
         }
 
-
+/**
+ * Add new address
+ */
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         CommonFun.finishscreen(this);

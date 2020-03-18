@@ -311,7 +311,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         freshUser.setFirstName(fname);
         freshUser.setLastName(lname);
         freshUser.setEmail(value_email);
-//        freshUser.setPhone("+91", "9790987495");
+
 
         try {
             Freshchat.getInstance(getApplicationContext()).setUser(freshUser);
