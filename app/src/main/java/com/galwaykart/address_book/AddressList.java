@@ -45,6 +45,7 @@ public class AddressList extends BaseActivity {
     final String TAG_firstname= "firstname";
     final String TAG_lastname = "lastname";
     final String TAG_customer_id = "customer_id";
+
     SharedPreferences preferences;
     RelativeLayout rel_no_address;
     int length_of_street;
@@ -99,10 +100,7 @@ public class AddressList extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-
-
         //if(isAddressLoad==false)
-
         // getUserDetails();
     }
 
@@ -126,7 +124,6 @@ public class AddressList extends BaseActivity {
         arr_add_line = new String[2];
         arr_company = new String[2];
 
-
         itemList=new ArrayList<HashMap<String, String>>();
 
         new_telephone = pref.getString("new_telephone", "");
@@ -140,7 +137,6 @@ public class AddressList extends BaseActivity {
         new_region_id = pref.getString("new_region_id", "");
         new_add_line1 = pref.getString("new_add_line1", "");
         new_country_id = pref.getString("new_country_id", "");
-
 
         telephone = pref.getString("telephone", "");
         postcode = pref.getString("postcode", "");
@@ -192,13 +188,7 @@ public class AddressList extends BaseActivity {
 
             //Log.d("arr_customer_id",arr_customer_id[i].toString());
             //Log.d("arr_add_line",arr_add_line[i].toString());
-            //Log.d("arr_telephone",arr_telephone[i].toString());
-            //Log.d("arr_postcode",arr_postcode[i].toString());
-            //Log.d("arr_region",arr_region[i].toString());
-            //Log.d("arr_firstname",arr_firstname[i].toString());
-            //Log.d("arr_lastname",arr_lastname[i].toString());
-            //Log.d("arr_company",arr_company[i].toString());
-            //Log.d("arr_state",arr_state[i].toString());
+
 
             SharedPreferences pref;
             pref = CommonFun.getPreferences(getApplicationContext());
@@ -277,7 +267,6 @@ public class AddressList extends BaseActivity {
 
     private void updateAddressList() {
 
-
         ListAdapter lstadapter = new AddressBookAdapter(AddressList.this, itemList, R.layout.activity_default_shipping_address_list,
                 new String[]{TAG_street, TAG_telephone, TAG_postcode, TAG_city, TAG_firstname, TAG_company},
                 new int[]{R.id.textStreet_name,
@@ -286,7 +275,6 @@ public class AddressList extends BaseActivity {
                         R.id.textCity_name,
                         R.id.textCustomer_name,
                         R.id.textCompany_name
-
                 }
         );
 

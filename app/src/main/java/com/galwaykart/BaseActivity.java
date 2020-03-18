@@ -203,13 +203,23 @@ public abstract class BaseActivity extends AppCompatActivity
                             startActivity(intent);
                             CommonFun.finishscreen(BaseActivity.this);
                         }
-                        else if(groupPosition == 5){
+
+                        else if(groupPosition==4)
+                        {
+                            Intent intent_wishlist=new Intent(BaseActivity.this, WebViewActivity.class);
+                            intent_wishlist.putExtra("comefrom","customer-help-desk-tutorials.html");
+                            intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent_wishlist);
+                            CommonFun.finishscreen(BaseActivity.this);
+                        }
+
+                        else if(groupPosition == 6){
                             Intent intent=new Intent(BaseActivity.this, TestimonialActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             CommonFun.finishscreen(BaseActivity.this);
                         }
-                        else if(groupPosition == 6){
+                        else if(groupPosition == 7){
                             Intent intent=new Intent(BaseActivity.this, NoticeActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -286,23 +296,24 @@ public abstract class BaseActivity extends AppCompatActivity
                     else if(groupPosition==3 && childPosition == 7){
                         alertMsg();
                     }
-                    else if(groupPosition==4 && childPosition == 0){
+                    /*else if(groupPosition==4 && childPosition == 0){
                         Intent intent_wishlist=new Intent(BaseActivity.this, WebViewActivity.class);
                         intent_wishlist.putExtra("comefrom","customer-help-desk-tutorials.html");
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivity.this);
-                    }else if(groupPosition==4 && childPosition == 1){
+                    }*/
+                    else if(groupPosition==5 && childPosition == 0){
                         Intent intent_wishlist=new Intent(BaseActivity.this, LegalAboutActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivity.this);
-                    }else if(groupPosition==4 && childPosition == 2){
+                    }else if(groupPosition==5 && childPosition == 1){
                         Intent intent_wishlist=new Intent(BaseActivity.this, AppPromoHome.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivity.this);
-                    }else if(groupPosition==4 && childPosition == 3){
+                    }else if(groupPosition==5 && childPosition == 2){
 //                        Intent intent_wishlist=new Intent(HomePageActivity.this, LogoutActivity.class);
 //                        intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 //                        startActivity(intent_wishlist);
@@ -370,13 +381,16 @@ public abstract class BaseActivity extends AppCompatActivity
             childList.put(menuModel, childModelsList);
         }
 
+        menuModel = new MenuModel("Customer HelpDesk", true, false); //Menu of Android Tutorial. No sub menus
+        headerList.add(menuModel);
+
         childModelsList = new ArrayList<>();
         menuModel = new MenuModel("Settings", true, true); //Menu of Python Tutorials
         headerList.add(menuModel);
         List<MenuModel> childModelsSettingList = new ArrayList<>();
 
-        childModel = new MenuModel("Customer HelpDesk", false, false);
-        childModelsList.add(childModel);
+        /*childModel = new MenuModel("Customer HelpDesk", false, false);
+        childModelsList.add(childModel);*/
 
         childModel = new MenuModel("Legal and About", false, false);
         childModelsList.add(childModel);
@@ -384,17 +398,7 @@ public abstract class BaseActivity extends AppCompatActivity
         childModel = new MenuModel("Other Galway App", false, false);
         childModelsList.add(childModel);
 
-        PackageInfo pInfo = null;
-        String version="";
-        try {
-            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            version ="Version: "+ pInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
 
-        childModel = new MenuModel(version, false, false);
-        childModelsList.add(childModel);
 
         if (menuModel.hasChildren) {
             childList.put(menuModel, childModelsList);
@@ -408,6 +412,19 @@ public abstract class BaseActivity extends AppCompatActivity
         if (menuModel.hasChildren) {
             childList.put(menuModel, childModelsList);
         }
+
+        PackageInfo pInfo = null;
+        String version="";
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            version ="Version: "+ pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        menuModel = new MenuModel(version, true, false);
+        headerList.add(menuModel);
+
     }
 
     private void alertMsg() {

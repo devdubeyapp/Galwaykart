@@ -69,21 +69,9 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
     SharedPreferences pref;
     Context ctx;
     String return_data="";
-    /**
-     * Constructor
-     *
-     * @param context  The context where the View associated with this SimpleAdapter is running
-     * @param data     A List of Maps. Each entry in the List corresponds to one row in the list. The
-     *                 Maps contain the data for each row, and should include all the entries specified in
-     *                 "from"
-     *
-     * @param resource Resource identifier of a view layout that defines the views for this list
-     *                 item. The layout file should include at least those named views defined in "to"
-     * @param from     A list of column names that will be added to the Map associated with each
-     *                 item.
-     * @param to       The views that should display column in the "from" parameter. These should all be
-     *                 TextViews. The first N views in this list are given the values of the first N columns
-     */
+
+
+
     public CustomerAddressBookAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
 
@@ -154,36 +142,6 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
         SharedPreferences pref = CommonFun.getPreferences(ctx);
         String login_group_id=pref.getString("login_group_id","");
 
-      //  if(login_group_id.equals("4")) {
-
-          //  String st_edit_add = itemList.get(position).get(TAG_edit).toString();
-
-//            if (st_edit_add.equalsIgnoreCase("true")) {
-//
-//                holder.bt_edit_add_icon.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                        Intent intent = new Intent(ctx, AddNewAddress.class);
-//                        ctx.startActivity(intent);
-//                        CommonFun.finishscreen((Activity) ctx);
-//
-//                    }
-//                });
-//
-//            } else {
-//                holder.bt_edit_add_icon.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                        Intent intent = new Intent(ctx, UpdateAddressActivity.class);
-//                        intent.putExtra("addressupdate", "checkout");
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        ctx.startActivity(intent);
-//                        CommonFun.finishscreen((Activity) ctx);
-//
-//                    }
-//                });
 
 
         holder.bt_delete_add_icon.setOnClickListener(new View.OnClickListener() {
@@ -283,10 +241,10 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                     //SharedPreferences.Editor editor = pref.edit();
                     //editor.putStringSet("st_come_from_update","updateaddressCheckout");
                    // editor.commit();
-
                     Intent intent = new Intent(ctx, AddNewAddress.class);
                     intent.putExtra("add_new","no");
                     intent.putExtra("selecteddata","done");
+                    intent.putExtra("is_default_ship_edit","no");
                     intent.putExtra("region", itemList.get(position).get(TAG_region));
                     intent.putExtra("address_id", itemList.get(position).get(TAG_id));
                     intent.putExtra("first_name", itemList.get(position).get(TAG_firstname));
@@ -321,8 +279,6 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
             holder.textCompany_name.setVisibility(View.GONE);
         }
         else {
-
-
             holder.textCity_name.setText(itemList.get(position).get(TAG_city));
             holder.textStreet_name.setText(itemList.get(position).get(TAG_street));
             holder.textTelephone_name.setText("T: " + itemList.get(position).get(TAG_telephone));
@@ -352,6 +308,7 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
 
 
         String is_show_select_button=itemList.get(position).get(TAG_show_select);
+        Log.e("TAG_show_select",TAG_show_select);
         if(is_show_select_button.equalsIgnoreCase("false")) {
             holder.btselect.setVisibility(View.GONE);
         }
@@ -365,9 +322,6 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                 pref = CommonFun.getPreferences(ctx);
 
                 //String st_selected_address  = itemList.get(position).get(TAG_selected_address).toString();
-
-
-
 
                 SharedPreferences.Editor editor= pref.edit();
                 editor.putString("st_selected_address","Franchisee");

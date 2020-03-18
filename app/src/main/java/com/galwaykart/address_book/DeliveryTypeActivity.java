@@ -155,17 +155,7 @@ public class DeliveryTypeActivity extends BaseActivityWithoutCart {
             login_email = pref.getString("login_email", "");
         }
         else if(st_selected_address.equalsIgnoreCase("Home")) {
-//            region = pref.getString("new_region", "");
-//            region_id = pref.getString("new_region_id", "");
-//            region_code = pref.getString("new_region_code", "");
-//            country_id = pref.getString("new_country_id", "");
-//            add_line1 = pref.getString("new_add_line1", "");
-//            postcode = pref.getString("new_postcode", "");
-//            city_name = pref.getString("new_city", "");
-//            firstname = pref.getString("new_firstname", "");
-//            lastname = pref.getString("new_lastname", "");
-//            login_email = pref.getString("login_email", "");
-//            telephone = pref.getString("new_telephone", "");
+
             customer_id = pref.getString("customer_id", "");
             telephone = pref.getString("telephone", "");
             postcode = pref.getString("postcode", "");
@@ -365,13 +355,11 @@ public class DeliveryTypeActivity extends BaseActivityWithoutCart {
                         int arr_length = array.length();
 
                         arr_method_code=new String[arr_length];
-                         arr_carrier_code=new String[arr_length];
+                        arr_carrier_code=new String[arr_length];
                         arr_amount=new String[arr_length];
 
-
                         total_arr_length=arr_length;
-
-                        ////Log.d("totalklength", String.valueOf(arr_length));
+                        //Log.d("totalklength", String.valueOf(arr_length));
 
 
 
@@ -610,16 +598,10 @@ private void getPaymentMethod(String shipping_info_string, final Boolean callFro
             "\"email\": \"" + login_email + "\", " +
             "\"telephone\": \"" + telephone + "\" }," +
             "\"shipping_carrier_code\": \"" + carrier_code + "\", " +
-            "\"shipping_method code\": \"" + method_code + "\" " +
+            "\"shipping_method_code\": \"" + method_code + "\" " +
             "}" +
             "}";
-
-
-    //Log.d("shipstring_delivery",shipping_info_string);
-
-
-
-
+    Log.d("shipstring_delivery",shipping_info_string);
 
 
         itemList = new ArrayList<HashMap<String, String>>();
@@ -641,9 +623,6 @@ private void getPaymentMethod(String shipping_info_string, final Boolean callFro
                         public void onResponse(JSONObject response) {
                             if (pDialog.isShowing())
                                 pDialog.dismiss();
-                            //Log.d("response_pay_method", response.toString());
-
-                            //CommonFun.alertError(Payment_Method_Activity.this,response.toString());
                             if (response != null) {
 
                                 Intent intent=new Intent(DeliveryTypeActivity.this, ConfirmationActivity.class);

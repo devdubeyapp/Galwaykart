@@ -254,130 +254,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         tabShopByCategory = findViewById(R.id.tabShopByCategory);
         tabOffer = findViewById(R.id.tabOffer);
 
-       // refreshItemCount();
-
-
-//        rel_cross_app_promo=(RelativeLayout)findViewById(R.id.rel_cross_app_promo);
-//        rel_cross_app_promo.setVisibility(View.GONE);
-//        is_rel_cross_app_visible=false;
-//
-//        TextView iv_app_promo=findViewById(R.id.app_promo);
-//        iv_app_promo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(is_rel_cross_app_visible==false) {
-//                    rel_cross_app_promo.setVisibility(View.VISIBLE);
-//                    is_rel_cross_app_visible=true;
-//                }
-//                else
-//                {
-//                    rel_cross_app_promo.setVisibility(View.GONE);
-//                    is_rel_cross_app_visible=false;
-//                }
-//            }
-//        });
-//
-//        imageView_app_galway=findViewById(R.id.imageView_app_galway);
-//        tv_app_galway=findViewById(R.id.tv_app_galway);
-//
-//        imageView_app_galway.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openAppPromotionDetail("com.glaze.admin");
-//            }
-//        });
-//        tv_app_galway.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openAppPromotionDetail("com.glaze.admin");
-//            }
-//        });
-//
-//        btn_glazegalway=findViewById(R.id.btn_glazegalway);
-//        btn_glazegalway.setText(CommonFun.is_Install_Or_Not("com.glaze.admin",this)?"Open":"Install");
-//        btn_glazegalway.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                nav_open_click("com.glaze.admin");
-//            }
-//        });
-//
-//        //Galwaykart
-//        imageView_app_galwaykart=findViewById(R.id.imageView_app_galwaykart);
-//        imageView_app_galwaykart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openAppPromotionDetail("com.glazegalway");
-//            }
-//        });
-//
-//        tv_app_galwaykart=findViewById(R.id.tv_app_galwaykart);
-//        tv_app_galwaykart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openAppPromotionDetail("com.glazegalway");
-//            }
-//        });
-//
-//        btn_galwaykart=findViewById(R.id.btn_galwaykart);
-//        btn_galwaykart.setText(CommonFun.is_Install_Or_Not("com.glazegalway",this)?"Open":"Install");
-//        btn_galwaykart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                nav_open_click("com.glazegalway");
-//            }
-//        });
-//
-//
-//        imageView_app_galwayexam=findViewById(R.id.imageView_app_galwayexam);
-//        imageView_app_galwayexam.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openAppPromotionDetail("com.glaze.galwayexamsystem");
-//            }
-//        });
-//
-//        tv_app_galwayexam=findViewById(R.id.tv_app_galwayexam);
-//        tv_app_galwayexam.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openAppPromotionDetail("com.glaze.galwayexamsystem");
-//            }
-//        });
-//
-//
-//        btn_galwayexam=findViewById(R.id.btn_galwayexam);
-//        btn_galwayexam.setText(CommonFun.is_Install_Or_Not("com.glaze.galwayexamsystem",this)?"Open":"Install");
-//        btn_galwayexam.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                nav_open_click("com.glaze.galwayexamsystem");
-//            }
-//        });
-//
-//        imageView_app_galwayfoundation=findViewById(R.id.imageView_app_galwayfoundation);
-//        imageView_app_galwayfoundation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openAppPromotionDetail("com.galwayfoundation.galwayfoundation");
-//            }
-//        });
-//        tv_app_galwayfoundation=findViewById(R.id.tv_app_galwayfoundation);
-//        tv_app_galwayfoundation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openAppPromotionDetail("com.galwayfoundation.galwayfoundation");
-//            }
-//        });
-//
-//        btn_galwayfoundation=findViewById(R.id.btn_galwayfoundation);
-//        btn_galwayfoundation.setText(CommonFun.is_Install_Or_Not("com.galwayfoundation.galwayfoundation",this)?"Open":"Install");
-//        btn_galwayfoundation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                nav_open_click("com.galwayfoundation.galwayfoundation");
-//            }
-//        });
 
         cart_progressBar = findViewById(R.id.cart_progressBar);
         pager_view_banner = findViewById(R.id.pager_view_bannerss);
@@ -424,8 +300,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         String lname = pref.getString("login_lname", "");
 
         String value_email = pref.getString("login_email", "");
-
-
 
         FreshchatConfig freshchatConfig = new FreshchatConfig(API_ID, API_KEY);
         freshchatConfig.setCameraCaptureEnabled(false);
@@ -636,16 +510,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         expandableListAdapter = new ExpandableCustomListAdapter(this, headerList, childList);
         expandableListView.setAdapter(expandableListAdapter);
 
-//        DisplayMetrics metrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-//        int width = metrics.widthPixels;
-//        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-//            expandableListView.setIndicatorBounds(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
-//            //searchExpListView.setIndicatorBounds(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
-//        } else {
-//            expandableListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
-//            //searchExpListView.setIndicatorBoundsRelative(width - GetPixelFromDips(50), width - GetPixelFromDips(10));
-//        }
 
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
@@ -670,13 +534,21 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                             startActivity(intent);
                             CommonFun.finishscreen(HomePageActivity.this);
                         }
-                        else if(groupPosition == 5){
+                        else if(groupPosition==4)
+                        {
+                            Intent intent_wishlist=new Intent(HomePageActivity.this, WebViewActivity.class);
+                            intent_wishlist.putExtra("comefrom","customer-help-desk-tutorials.html");
+                            intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent_wishlist);
+                            CommonFun.finishscreen(HomePageActivity.this);
+                        }
+                        else if(groupPosition == 6){
                             Intent intent=new Intent(HomePageActivity.this, TestimonialActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             CommonFun.finishscreen(HomePageActivity.this);
                         }
-                        else if(groupPosition == 6){
+                        else if(groupPosition == 7){
                             Intent intent=new Intent(HomePageActivity.this, NoticeActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -752,23 +624,25 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                     else if(groupPosition==3 && childPosition == 7){
                         alertMsg();
                     }
-                    else if(groupPosition==4 && childPosition == 0){
+                    /*else if(groupPosition==4 && childPosition == 0)
+                    {
                         Intent intent_wishlist=new Intent(HomePageActivity.this, WebViewActivity.class);
                         intent_wishlist.putExtra("comefrom","customer-help-desk-tutorials.html");
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(HomePageActivity.this);
-                    }else if(groupPosition==4 && childPosition == 1){
+                    }*/
+                    else if(groupPosition==5 && childPosition == 0){
                         Intent intent_wishlist=new Intent(HomePageActivity.this, LegalAboutActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(HomePageActivity.this);
-                    }else if(groupPosition==4 && childPosition == 2){
+                    }else if(groupPosition==5 && childPosition == 1){
                         Intent intent_wishlist=new Intent(HomePageActivity.this, AppPromoHome.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(HomePageActivity.this);
-                    }else if(groupPosition==4 && childPosition == 3){
+                    }else if(groupPosition==5 && childPosition == 3){
 //                        Intent intent_wishlist=new Intent(HomePageActivity.this, LogoutActivity.class);
 //                        intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 //                        startActivity(intent_wishlist);
@@ -807,7 +681,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         MenuModel childModel = new MenuModel("Wishlist", false, false);
         childModelsList.add(childModel);
 
-        childModel = new MenuModel("My complaint", false, false);
+        childModel = new MenuModel("My Help", false, false);
         childModelsList.add(childModel);
 
         childModel = new MenuModel("Voucher Report", false, false);
@@ -834,13 +708,16 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             childList.put(menuModel, childModelsList);
         }
 
+        menuModel = new MenuModel("Customer HelpDesk", true, false); //Menu of Android Tutorial. No sub menus
+        headerList.add(menuModel);
+
         childModelsList = new ArrayList<>();
         menuModel = new MenuModel("Settings", true, true);
         headerList.add(menuModel);
         List<MenuModel> childModelsSettingList = new ArrayList<>();
 
-        childModel = new MenuModel("Customer HelpDesk", false, false);
-        childModelsSettingList.add(childModel);
+           /* childModel = new MenuModel("Customer HelpDesk", false, false);
+            childModelsSettingList.add(childModel);*/
 
         childModel = new MenuModel("Legal and About", false, false);
         childModelsSettingList.add(childModel);
@@ -848,16 +725,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         childModel = new MenuModel("Other Galway App", false, false);
         childModelsSettingList.add(childModel);
 
-        String version="";
-        try {
-            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            version = pInfo.versionName;
-
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        childModel = new MenuModel("Version-"+version, false, false);
-        childModelsSettingList.add(childModel);
 
         if (menuModel.hasChildren) {
             childList.put(menuModel, childModelsSettingList);
@@ -867,6 +734,18 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
         menuModel = new MenuModel("News", true, false); //Menu of Android Tutorial. No sub menus
         headerList.add(menuModel);
+
+        String version="";
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            version = pInfo.versionName;
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        menuModel = new MenuModel("Version-"+version, true, false);
+        headerList.add(menuModel);
+
 
 
     }
@@ -1208,9 +1087,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
     }
 
-
-
-
     private void carouselData() {
 
 //        carouselView.setPageCount(banner_image.length);
@@ -1285,7 +1161,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         if (id == R.id.nav_home) {
             //openHomeActivity();
 
-        } else if (id == R.id.nav_order) {
+        } /*else if (id == R.id.nav_order) {
 
             Intent intent=new Intent(this, OrderListActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -1298,7 +1174,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
-        }
+        }*/
         else if(id==R.id.nav_wishlist){
 
             Intent intent_wishlist=new Intent(this, WishListDetails.class);
@@ -1362,7 +1238,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             //CommonFun.finishscreen(this);
         }
         else if(id==R.id.legalabout){
-
             Intent intent=new Intent(this, LegalAboutActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

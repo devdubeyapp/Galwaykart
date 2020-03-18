@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
- >
+<layout>
 
     <data>
         <variable
             name="addressDetails"
             type="com.galwaykart.address_book.AddressDataModel" />
-
     </data>
 
 
@@ -29,14 +27,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
         <RelativeLayout
             android:id="@+id/common_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            >
+            android:layout_alignParentTop="true">
 
             <include
                 layout="@layout/common_header_layout"
@@ -50,8 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/common_header"
-    android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -102,9 +96,7 @@
             android:id="@+id/tv_address_notice"
             android:text="@string/address_note"
             android:layout_margin="10dp"
-            android:layout_below="@+id/rel_no_address"
-
-            />
+            android:layout_below="@+id/rel_no_address" />
 
 
         <Button
@@ -132,11 +124,179 @@
             android:textColor="#fff"
             android:layout_below="@+id/btn_add_new_address"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rl_default_shipping"
+            android:elevation="3dp"
+            android:layout_below="@+id/btn_add_new_address">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_default"
+                android:text="Your Default Address"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:textSize="14dp"
+                android:fontFamily="ARLRDBD"
+                android:textColor="@color/colorPrimaryDark">
+
+            </TextView>
+            <RelativeLayout
+                android:id="@+id/rl_default_shipping11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/border_default_address"
+                android:layout_below="@+id/txt_default"
+                android:elevation="3dp"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <ProgressBar
+                    android:id="@+id/uploadProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/textCustomer_name_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="ARLRDBD"
+                    android:text="@{String.format(addressDetails.st_customer_first_name,' ',addressDetails.st_customer_last_name)}"
+                    android:textColor="@color/cGreen"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/bt_edit_add_icon"
+                    android:background="@drawable/edit_icn"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_alignParentRight="true" />
+
+
+                <TextView
+                    android:id="@+id/textCompany_name_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/textCustomer_name_default"
+                    android:fontFamily="ARLRDBD"
+                    android:text=""
+                    android:textColor="@color/text"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/textStreet_name_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/textCompany_name_default"
+                    android:fontFamily="ARLRDBD"
+                    android:text="@{addressDetails.st_region}"
+                    android:textColor="@color/text"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/textCity_name_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/textStreet_name_default"
+                    android:fontFamily="ARLRDBD"
+                    android:text="@{addressDetails.st_city}"
+                    android:textColor="@color/text"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/textRegion_name_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/textCity_name_default"
+                    android:fontFamily="ARLRDBD"
+                    android:text="region Name"
+                    android:visibility="gone"
+                    android:textColor="@color/text"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/textPincode_name_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/textRegion_name_default"
+                    android:fontFamily="ARLRDBD"
+                    android:text="@{addressDetails.st_pincode}"
+                    android:textColor="@color/text"
+                    android:textSize="16dp" />
+
+
+                <TextView
+                    android:id="@+id/textTelephone_name_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/textPincode_name_default"
+                    android:fontFamily="ARLRDBD"
+                    android:text="@{addressDetails.st_telephone}"
+                    android:textColor="@color/text"
+                    android:textSize="16dp" />
+
+
+                <Button
+                    android:id="@+id/btselect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/btEdit"
+                    android:layout_marginTop="10dp"
+                    android:padding="15dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginRight="100dp"
+                    android:layout_below="@+id/textTelephone_name_default"
+                    android:background="@drawable/border"
+                    android:layout_marginLeft="20dp"
+                    android:text="Select" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+
+
         <ListView
             android:id="@+id/list_address"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/btn_change_address"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/rl_default_shipping"
             android:layout_marginBottom="10dp">
         </ListView>
 
@@ -157,9 +317,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-
         app:headerLayout="@layout/nav_header_home_page"
-        app:menu="@menu/activity_home_page_drawer" >
+        app:menu="@menu/activity_home_page_drawer"
+        android:visibility="gone">
 
     <ExpandableListView
         android:id="@+id/expandableListView"
@@ -169,8 +329,7 @@
         android:background="@android:color/white"
         android:dividerHeight="1dp"
         android:layoutDirection="rtl"
-        android:groupIndicator="@drawable/store_info_expandabellist_indicator"
-        />
+        android:groupIndicator="@drawable/store_info_expandabellist_indicator" />
 
     </com.google.android.material.navigation.NavigationView>
 

@@ -96,6 +96,7 @@ public class AddNewAddress extends BaseActivity {
     String st_come_from_update="";
 
 
+
 //***************************************************************************************************************************
 
     String add_telephone = "",
@@ -110,6 +111,9 @@ public class AddNewAddress extends BaseActivity {
             address_lastname = "",add_street="",
             st_attribute_code="",st_attribute_value_mob="",
             address_default_shipping="";
+
+            String is_default_shipping ="";
+            String is_default_ship_edit = "no";
 
    // TextView tvChkText;
 
@@ -152,11 +156,12 @@ public class AddNewAddress extends BaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
+        chk_shipping= findViewById(R.id.chk_shipping);
+        chk_billing= findViewById(R.id.chk_billing);
 
         bundle = getIntent().getExtras();
 
         if (bundle != null) {
-
             String st_come_from_update1=bundle.getString("st_come_from_update");
             if(st_come_from_update1!=null && !st_come_from_update1.equals(""))
                 st_come_from_update=st_come_from_update1;
@@ -170,20 +175,31 @@ public class AddNewAddress extends BaseActivity {
                 add_new=add_new1;
 
             if(add_new.equalsIgnoreCase("no")){
-                address_id=bundle.getString("address_id");
+               address_id=bundle.getString("address_id");
                address_firstname=bundle.getString("first_name");
-                address_lastname=bundle.getString("last_name");
+               address_lastname=bundle.getString("last_name");
                address_telephone=bundle.getString("phone_no");
 
-                address_postcode=bundle.getString("zip");
+               address_postcode=bundle.getString("zip");
                address_city=bundle.getString("city");
-              add_street=bundle.getString("street_address");
-              new_state=bundle.getString("region");
-              st_default_ship=bundle.getString("default_ship");
-              st_default_bill=bundle.getString("default_bill");
+               add_street=bundle.getString("street_address");
+               new_state=bundle.getString("region");
+               st_default_ship=bundle.getString("default_ship");
+               st_default_bill=bundle.getString("default_bill");
+
+                //is_default_shipping = bundle.getString("is_default_shipping");
+
+
             }
 
+            is_default_ship_edit = bundle.getString("is_default_ship_edit");
+            Log.e("is_default_ship_edit", is_default_ship_edit);
+
+
+
             String total_data = bundle.getString("total_address_data");
+            Log.e("total_address_data",total_address_data + "");
+
             if(total_data!=null && !total_data.equals(""))
                 total_address_data= Integer.parseInt(total_data);
 
@@ -209,17 +225,6 @@ public class AddNewAddress extends BaseActivity {
         else
         {
             coming_from="";
-//            if (savedInstanceState == null) {
-//                Bundle extras = getIntent().getExtras();
-//                if(extras != null) {
-//                    is_new= extras.getString("add_customer");
-//                    st_come_from_update=extras.getString("st_come_from_update");
-//                    Log.d("st_come_from_update",st_come_from_update);
-//                }
-//            }
-            //st_come_from_update = pref.getString("st_come_from_update","");
-            //Log.d("st_come_from_update",st_come_from_update);
-
         }
 
 
@@ -242,12 +247,26 @@ public class AddNewAddress extends BaseActivity {
 
         login_group_id=pref.getString("login_group_id","");
 
+        if(is_default_ship_edit.equalsIgnoreCase("yes"))
+        {
+            chk_shipping.setChecked(true);
+            //chk_billing.setChecked(true);
 
-        chk_shipping= findViewById(R.id.chk_shipping);
-        chk_billing= findViewById(R.id.chk_billing);
+            chk_shipping.setEnabled(false);
+            //chk_billing.setEnabled(false);
+        }
+        else
+        {
+            chk_shipping.setChecked(false);
+            chk_billing.setChecked(false);
+
+            chk_shipping.setEnabled(true);
+            chk_billing.setEnabled(true);
+        }
+
+
 
         if(total_address_data==0){
-
             chk_billing.setChecked(true);
             chk_shipping.setChecked(true);
 
@@ -604,13 +623,6 @@ public class AddNewAddress extends BaseActivity {
 
     }
 
-
-    private void getDataFromIntentExtra()
-    {
-
-    }
-
-
     private void showExistingData() {
 
         first_name.setText(address_firstname);
@@ -643,8 +655,6 @@ public class AddNewAddress extends BaseActivity {
 
 
     private void saveAddressAndContinue(){
-
-
         String comp_name = company.getText().toString();
         if (comp_name.equals(""))
             comp_name = "-";
@@ -681,12 +691,8 @@ public class AddNewAddress extends BaseActivity {
             if (valid_pin == true) {
                 tokenData = pref.getString("tokenData", "");
 
-
-
                 pref = CommonFun.getPreferences(getApplicationContext());
                 String email = pref.getString("user_email", "");
-
-
 
 
                 String save_address_url = Global_Settings.api_url + "rest/V1/customers/me";
@@ -759,7 +765,11 @@ public class AddNewAddress extends BaseActivity {
 
                     chk_billing.setEnabled(false);
                     chk_shipping.setEnabled(false);
+
+                    Log.e("st_default_ship_bill", st_default_ship_bill);
                 }
+
+
 
                 String all_st_address_id="";
                 if(st_add_id.equals(""))
@@ -768,11 +778,14 @@ public class AddNewAddress extends BaseActivity {
                    all_st_address_id=st_add_id+",";
 
 
+
                 String all_ship_default="";
                 if(st_default_ship_bill.equals(""))
                     all_ship_default="";
                 else
                     all_ship_default=st_default_ship_bill+",";
+
+                Log.e("all_ship_default",all_ship_default);
 
 
                 String login_telephone=pref.getString("login_telephone","");
@@ -829,11 +842,8 @@ public class AddNewAddress extends BaseActivity {
                 "\"website_id\":\"1\"," +
                 "\"store_id\":\"1\"," +
                 "\"firstname\":\"" + login_fname + "\"}}";
-
     }
 
-                //Log.d("return_data",return_data);
-                //Log.d("tokenData",tokenData);
 
                 pDialog = new TransparentProgressDialog(AddNewAddress.this);
                 pDialog.setCancelable(false);
@@ -852,14 +862,7 @@ public class AddNewAddress extends BaseActivity {
                                     if (pDialog.isShowing())
                                         pDialog.dismiss();
                                     //Log.d("responsePut", response);
-                                    //CommonFun.alertError(AddNewAddress.this,response.toString());
-
-
-//                                    if(st_come_from_update!=null && (!st_come_from_update.equalsIgnoreCase("")))
-//                                    {
-
-                                    //Log.d("stst_comeFrom",st_come_from_update);
-                                        if(st_come_from_update.equalsIgnoreCase("updateaddress"))
+                                           if(st_come_from_update.equalsIgnoreCase("updateaddress"))
                                         {
                                             Intent intent = new Intent(AddNewAddress.this, CustomerAddressBook.class);
                                             intent.putExtra("st_come_from_update","updateaddress");
@@ -872,61 +875,7 @@ public class AddNewAddress extends BaseActivity {
                                             startActivity(intent);
                                             CommonFun.finishscreen(AddNewAddress.this);
                                         }
-//                                    }
-//                                    else
-//                                    {
-//                                        Intent intent = new Intent(AddNewAddress.this, HomePageActivity.class);
-//                                        startActivity(intent);
-//                                        CommonFun.finishscreen(AddNewAddress.this);
-//                                    }
-
-//                                    onBackPressed();
-
-
-//                            try {
 //
-//                            } catch (JSONException e) {
-                                    //e.printStackTrace();
-                                    //CommonFun.alertError(DeliveryTypeActivity.this,e.toString());
-                                    //Intent intent=new Intent(DeliveryTypeActivity.this, ExceptionError.class);
-                                    //startActivity(intent);
-
-//                                try {
-//                                    JSONArray jsonObject= new JSONArray(response);
-//
-//                                    JSONObject json_status= jsonObject.getJSONObject(0);
-//                                    String st_status=json_status.getString("status");
-//                                    String st_msg=json_status.getString("msg");
-//
-//                                    //CommonFun.alertError(DeliveryTypeActivity.this,st_msg);
-//                                    final AlertDialog.Builder b;
-//                                    try
-//                                    {
-//                                        b = new AlertDialog.Builder(AddNewAddress.this);
-//                                        b.setTitle("Alert");
-//                                        b.setCancelable(false);
-//                                        b.setMessage(st_msg);
-//                                        b.setPositiveButton("OK", new DialogInterface.OnClickListener()
-//                                        {
-//                                            @Override
-//                                            public void onClick(DialogInterface dialog, int whichButton)
-//                                            {
-//                                                b.create().dismiss();
-//                                                onBackPressed();
-//                                            }
-//                                        });
-//                                        b.create().show();
-//                                    }
-//                                    catch(Exception ex)
-//                                    {
-//                                    }
-
-//                                } catch (JSONException e1) {
-//                                    e1.printStackTrace();
-//                                }
-
-
-                                    //      }
 
 
                                 }
