@@ -899,8 +899,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
                                 //rel_layout2.setVisibility(View.GONE);
-                                    sendOtpViaAPI();
-                                //registerUser();
+                                 //   sendOtpViaAPI();
+                                registerUser();
 
                             }
 

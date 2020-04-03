@@ -185,7 +185,7 @@ public class  MainActivity extends AppCompatActivity implements PaytmPaymentTran
         PaytmPGService Service = PaytmPGService.getProductionService();
 
         //creating a hashmap and adding all the values required
-        Map<String, String> paramMap = new HashMap<>();
+        Map<String, String> paramMap = new HashMap<String,String>();
         paramMap.put("MID",   getResources().getString(R.string.paytmmid));
         paramMap.put("ORDER_ID", paytm.getOrderId());
         paramMap.put("CUST_ID", paytm.getCustId());
@@ -198,7 +198,7 @@ public class  MainActivity extends AppCompatActivity implements PaytmPaymentTran
 
 
         //creating a paytm order object using the hashmap
-        PaytmOrder order = new PaytmOrder(paramMap);
+        PaytmOrder order = new PaytmOrder((HashMap<String, String>) paramMap);
 
         //intializing the paytm service
         Service.initialize(order, null);

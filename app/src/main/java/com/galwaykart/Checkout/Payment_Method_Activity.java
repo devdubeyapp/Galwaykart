@@ -368,7 +368,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                     "\"email\": \"" + bill_email + "\", " +
                     "\"telephone\": \"" + bill_telephone + "\" }," +
                     "\"shipping_carrier_code\": \"" + carrier_code + "\", " +
-                    "\"shipping_method code\": \"" + method_code + "\" " +
+                    "\"shipping_method_code\": \"" + method_code + "\" " +
                     "}" +
                     "}";
 
