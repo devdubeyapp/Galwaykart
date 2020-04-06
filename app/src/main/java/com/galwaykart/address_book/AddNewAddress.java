@@ -195,9 +195,10 @@ public class AddNewAddress extends BaseActivity {
 
             }
 
+
             String is_default_ship_edit1= bundle.getString("is_default_ship_edit");
-            if(is_default_ship_edit1!=null && !is_default_ship_edit1.equals(""))
-                is_default_ship_edit=is_default_ship_edit1;
+              if(is_default_ship_edit1!=null && !is_default_ship_edit1.equals(""))
+                  is_default_ship_edit=is_default_ship_edit1;
 
 
 
