@@ -69,6 +69,7 @@ public class AddNewAddress extends BaseActivity {
     final String TAG_region_id= "region_id";
     final String TAG_country_id = "country_id";
     final String TAG_code= "code";
+
     final String TAG_default_name= "default_name";
 
     ArrayList<HashMap<String, String>> arrayList;
