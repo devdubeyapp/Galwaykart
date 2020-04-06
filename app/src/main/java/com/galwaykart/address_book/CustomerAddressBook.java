@@ -338,6 +338,7 @@ public class CustomerAddressBook extends BaseActivity {
                 intent.putExtra("add_new","new");
                 intent.putExtra("st_come_from_update",st_come_from_update);
                 intent.putExtra("total_address_data",String.valueOf(total_address_count));
+                intent.putExtra("is_default_ship_edit","no");
                 //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 startActivity(intent);

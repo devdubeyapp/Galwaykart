@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -161,6 +162,14 @@ public class AddNewAddress extends BaseActivity {
 
         chk_shipping= findViewById(R.id.chk_shipping);
         chk_billing= findViewById(R.id.chk_billing);
+        chk_shipping.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                chk_billing.setChecked(true);
+
+            }
+        });
+
 
         bundle = getIntent().getExtras();
 
@@ -196,9 +205,10 @@ public class AddNewAddress extends BaseActivity {
             }
 
 
-            String is_default_ship_edit1= bundle.getString("is_default_ship_edit");
-              if(is_default_ship_edit1!=null && !is_default_ship_edit1.equals(""))
-                  is_default_ship_edit=is_default_ship_edit1;
+
+             is_default_ship_edit= bundle.getString("is_default_ship_edit");
+              if(is_default_ship_edit!=null && !is_default_ship_edit.equals(""))
+                  is_default_ship_edit=is_default_ship_edit;
 
 
 
@@ -252,37 +262,20 @@ public class AddNewAddress extends BaseActivity {
 
         login_group_id=pref.getString("login_group_id","");
 
-        if(is_default_ship_edit.equalsIgnoreCase("yes"))
+
+
+        if(is_default_ship_edit.equalsIgnoreCase("yes") || total_address_data==0)
         {
             chk_shipping.setChecked(true);
-            //chk_billing.setChecked(true);
-
-            chk_shipping.setEnabled(false);
-            //chk_billing.setEnabled(false);
-        }
-        else
-        {
-            chk_shipping.setChecked(false);
-            chk_billing.setChecked(false);
-
-            chk_shipping.setEnabled(true);
-            chk_billing.setEnabled(true);
-        }
-
-
-
-        if(total_address_data==0){
             chk_billing.setChecked(true);
-            chk_shipping.setChecked(true);
 
             chk_shipping.setEnabled(false);
             chk_billing.setEnabled(false);
-
         }
         else
         {
             if(st_default_ship.equals("1"))
-                    chk_shipping.setChecked(true);
+                chk_shipping.setChecked(true);
             else
                 chk_shipping.setChecked(false);
 
@@ -292,24 +285,6 @@ public class AddNewAddress extends BaseActivity {
                 chk_billing.setChecked(false);
         }
 
-
-
-        if(is_default_ship_edit.equalsIgnoreCase("yes"))
-        {
-            chk_shipping.setChecked(true);
-            chk_billing.setChecked(true);
-
-            chk_shipping.setEnabled(false);
-            chk_billing.setEnabled(false);
-        }
-//        else
-//        {
-//            chk_shipping.setChecked(false);
-//            chk_billing.setChecked(false);
-//
-//            chk_shipping.setEnabled(true);
-//            chk_billing.setEnabled(true);
-//        }
 
         chk_shipping.setVisibility(View.VISIBLE);
         chk_billing.setVisibility(View.GONE);
