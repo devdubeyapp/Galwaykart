@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +59,7 @@ public class RecyclerViewOfferCategoryAdapter extends RecyclerView.Adapter<Recyc
         final DataModelHomeCategory dataModel = mValues.get(position);
 
         final String current_id= dataModel.getId();
+        Log.e("current_id",current_id);
 
         Picasso.get()
                 .load(dataModel.getImage())
@@ -75,18 +78,11 @@ public class RecyclerViewOfferCategoryAdapter extends RecyclerView.Adapter<Recyc
 
                 SharedPreferences pref;
                 pref= CommonFun.getPreferences(mContext);
-//                SharedPreferences.Editor editor=pref.edit();
-//                editor.putString("showitemsku",current_sku.toString());
-//                editor.commit();
-
-//                Intent intent=new Intent(mContext, MainActivity.class);
-//                mContext.startActivity(intent);
 
                 String value_email=pref.getString("login_email","");
 //                if(value_email!=null && !value_email.equals(""))
 //                {
-                    if(!current_id.equals("") && current_id!=null) {
-
+                    if(!current_id.equals("") && current_id!=null && !current_id.equals("0")) {
 
                         pref = mContext.getSharedPreferences("GalwayKart", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
@@ -100,25 +96,9 @@ public class RecyclerViewOfferCategoryAdapter extends RecyclerView.Adapter<Recyc
                         ((Activity) mContext).finish();
                     }
 
-//                }
-//                else
-//                {
-//                    pref = mContext.getSharedPreferences("GalwayKart", mContext.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = pref.edit();
-//                    editor.putString("selected_id", current_id);
-//                    editor.putString("selected_name", "");
-//                    editor.commit();
-//
-//                    Intent intent = new Intent(mContext, GuestProductListActivity.class);
-//                    intent.putExtra("onback", "home");
-//                    mContext.startActivity(intent);
-//                    ((Activity) mContext).finish();
-//                }
             }
         });
 
-
-//        holder.setData(mValues.get(position));
 
 
 
@@ -154,36 +134,6 @@ public class RecyclerViewOfferCategoryAdapter extends RecyclerView.Adapter<Recyc
 
         }
 
-
-
-//        public void setData(DataModel item) {
-//            this.item = item;
-//
-//            textView_name.setText(item.st_tv_product_name);
-//            textView_price.setText(item.st_tv_product_price);
-//
-//
-//            Picasso.get()
-//                    .load(item.st_image)
-//                    .placeholder(R.drawable.imageloading)   // optional
-//                    .error(R.drawable.noimage)      // optional
-//                    .resize(200, 300)
-//
-//                    .into(imageView_product);
-//
-//
-//        }
-
-
-//        @Override
-//        public void onClick(View view) {
-//            if (mListener != null) {
-//                mListener.onItemClick(item);
-//            }
-//        }
     }
 
-//    public interface ItemListener {
-//        void onItemClick(DataModelHomeProduct item);
-//    }
 }

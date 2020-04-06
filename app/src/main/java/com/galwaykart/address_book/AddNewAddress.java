@@ -194,8 +194,9 @@ public class AddNewAddress extends BaseActivity {
 
             }
 
-            is_default_ship_edit = bundle.getString("is_default_ship_edit");
-            Log.e("is_default_ship_edit", is_default_ship_edit);
+            String is_default_ship_edit1= bundle.getString("is_default_ship_edit");
+            if(is_default_ship_edit1!=null && !is_default_ship_edit1.equals(""))
+                is_default_ship_edit=is_default_ship_edit1;
 
 
 
@@ -249,7 +250,22 @@ public class AddNewAddress extends BaseActivity {
 
         login_group_id=pref.getString("login_group_id","");
 
+        if(is_default_ship_edit.equalsIgnoreCase("yes"))
+        {
+            chk_shipping.setChecked(true);
+            //chk_billing.setChecked(true);
 
+            chk_shipping.setEnabled(false);
+            //chk_billing.setEnabled(false);
+        }
+        else
+        {
+            chk_shipping.setChecked(false);
+            chk_billing.setChecked(false);
+
+            chk_shipping.setEnabled(true);
+            chk_billing.setEnabled(true);
+        }
 
 
 

@@ -98,7 +98,7 @@ public class ViewPagerAdapterBanner extends PagerAdapter
                     ((Activity)mContext).finish();
 
                 }
-                else if(!banner_image_sku[position].equalsIgnoreCase(""))
+                else if(!banner_image_sku[position].equalsIgnoreCase("") && !banner_image_sku[position].equalsIgnoreCase("0"))
                 {
                     //////Log.d("clicked", banner_image_sku[position]);
                     SharedPreferences pref;
