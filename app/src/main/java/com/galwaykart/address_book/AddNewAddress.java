@@ -249,22 +249,7 @@ public class AddNewAddress extends BaseActivity {
 
         login_group_id=pref.getString("login_group_id","");
 
-        if(is_default_ship_edit.equalsIgnoreCase("yes"))
-        {
-            chk_shipping.setChecked(true);
-            //chk_billing.setChecked(true);
 
-            chk_shipping.setEnabled(false);
-            //chk_billing.setEnabled(false);
-        }
-        else
-        {
-            chk_shipping.setChecked(false);
-            chk_billing.setChecked(false);
-
-            chk_shipping.setEnabled(true);
-            chk_billing.setEnabled(true);
-        }
 
 
 
@@ -290,6 +275,26 @@ public class AddNewAddress extends BaseActivity {
         }
 
 
+
+        if(is_default_ship_edit.equalsIgnoreCase("yes"))
+        {
+            chk_shipping.setChecked(true);
+            chk_billing.setChecked(true);
+
+            chk_shipping.setEnabled(false);
+            chk_billing.setEnabled(false);
+        }
+//        else
+//        {
+//            chk_shipping.setChecked(false);
+//            chk_billing.setChecked(false);
+//
+//            chk_shipping.setEnabled(true);
+//            chk_billing.setEnabled(true);
+//        }
+
+        chk_shipping.setVisibility(View.VISIBLE);
+        chk_billing.setVisibility(View.GONE);
         tvChkText= findViewById(R.id.tvChkText);
 
 

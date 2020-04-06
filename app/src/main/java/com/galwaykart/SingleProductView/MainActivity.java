@@ -266,19 +266,20 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-            if(!comefrm.equals("")) {
-                Intent intent = new Intent(MainActivity.this, ProductListActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                CommonFun.finishscreen(this);
-            }
-            else
-            {
-                Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                CommonFun.finishscreen(this);
-            }
+//            if(!comefrm.equals("")) {
+//                Intent intent = new Intent(MainActivity.this, ProductListActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+//                CommonFun.finishscreen(this);
+//            }
+//            else
+//            {
+//                Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+//                CommonFun.finishscreen(this);
+//            }
+        CommonFun.finishscreen(this);
 
     }
 

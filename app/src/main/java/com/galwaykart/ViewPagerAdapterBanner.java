@@ -83,9 +83,8 @@ public class ViewPagerAdapterBanner extends PagerAdapter
         ////////Log.d("clicked", String.valueOf(position));
 
 
-                if(!banner_image_catid[position].equalsIgnoreCase(""))
+                if(!banner_image_catid[position].equalsIgnoreCase("") && !banner_image_catid[position].equalsIgnoreCase("0") )
                 {
-                    //////Log.d("clicked", banner_image_catid[position]);
                     SharedPreferences pref;
                     pref= mContext.getSharedPreferences("GalwayKart", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = pref.edit();

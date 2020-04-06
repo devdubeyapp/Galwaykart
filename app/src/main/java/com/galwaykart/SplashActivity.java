@@ -240,7 +240,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                       // //Log.d("app_response", response.toString());
+                        Log.d("responsebanner", response.toString());
 
 
                         setPostOperation(response.toString());

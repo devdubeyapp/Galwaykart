@@ -152,7 +152,6 @@ public static ** test();
 }
 
 
-
 #-dontwarn android.opengl.**
 
 

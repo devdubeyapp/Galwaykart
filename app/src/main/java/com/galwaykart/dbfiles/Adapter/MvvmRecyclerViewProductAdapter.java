@@ -84,14 +84,16 @@ public class MvvmRecyclerViewProductAdapter
 
         if(is_logged_in_user==true) {
             Intent intent = new Intent(mContext, MainActivity.class);
+            //intent.putExtra("comefrm","category");
+            //intent.putExtra("cat_id","category");
             mContext.startActivity(intent);
-            ((Activity) mContext).finish();
+            //((Activity) mContext).finish();
         }
         else
         {
             Intent intent = new Intent(mContext, GuestMainActivity.class);
             mContext.startActivity(intent);
-            ((Activity) mContext).finish();
+            //((Activity) mContext).finish();
         }
 
     }

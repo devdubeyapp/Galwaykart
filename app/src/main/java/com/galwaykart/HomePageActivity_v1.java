@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -386,8 +388,7 @@ public class HomePageActivity_v1 extends AppCompatActivity
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        ////Log.d("response", response.toString());
-
+                        Log.d("responsebanner", response.toString());
 
                         try {
                             JSONObject jsonObj = null;

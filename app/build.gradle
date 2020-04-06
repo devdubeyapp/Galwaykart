@@ -71,9 +71,12 @@ dependencies {
     /**
      * third party integration
      */
-    implementation 'com.paytm:pgplussdk:1.1.2'
-    implementation 'com.github.freshdesk:freshchat-android:2.6.0'
+    //implementation 'com.paytm:pgplussdk:1.1.2'
+    implementation('com.paytm:pgplussdk:1.4.4') {
+        transitive = true;
+    }
 
+    implementation 'com.github.freshdesk:freshchat-android:3.2.1'
 
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"

@@ -273,6 +273,7 @@ public class CustomerAddressBook extends BaseActivity {
                 intent.putExtra("is_default_shipping",is_default_shipping);
 
 
+
                 intent.putExtra("","");
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

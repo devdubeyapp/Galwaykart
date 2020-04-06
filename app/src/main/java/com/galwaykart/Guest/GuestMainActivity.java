@@ -281,17 +281,17 @@ public class GuestMainActivity extends GuestBaseActivity {
 //        pref= CommonFun.getPreferences(getApplicationContext());
 //        String email = pref.getString("user_email","");
 //        if(email!=null && !email.equals("")) {
-        if (!comefrm.equals("")) {
-            Intent intent = new Intent(GuestMainActivity.this, ProductListActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+//        if (!comefrm.equals("")) {
+//            Intent intent = new Intent(GuestMainActivity.this, ProductListActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
+//            CommonFun.finishscreen(this);
+//        } else {
+//            Intent intent = new Intent(GuestMainActivity.this, GuestHomePageActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(intent);
             CommonFun.finishscreen(this);
-        } else {
-            Intent intent = new Intent(GuestMainActivity.this, GuestHomePageActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            CommonFun.finishscreen(this);
-        }
+        //}
 //        }
 //        else {
 //            Intent intent = new Intent(GuestMainActivity.this, GuestHomePageActivity.class);

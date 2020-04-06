@@ -135,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_default"
-                android:text="Your Default Address"
+                android:text="Your Default Address :"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 android:textSize="14dp"
@@ -288,18 +288,42 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_others"
+            android:text="Addition Address :"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:textSize="14dp"
+            android:fontFamily="ARLRDBD"
+            android:layout_below="@+id/rl_default_shipping"
+            android:textColor="@color/colorPrimaryDark">
 
-
+        </TextView>
+    <RelativeLayout
+        android:id="@+id/rl_other_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/border_default_address"
+        android:layout_below="@+id/txt_others"
+        android:elevation="3dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <ListView
             android:id="@+id/list_address"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/rl_default_shipping"
+            android:layout_marginTop="1dp"
+
             android:layout_marginBottom="10dp">
         </ListView>
-
+    </RelativeLayout>
 <!--        <androidx.recyclerview.widget.RecyclerView-->
 <!--            android:id="@+id/list_address"-->
 <!--            android:layout_width="match_parent"-->
