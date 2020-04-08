@@ -122,13 +122,16 @@ public class CustomerAddressBook extends BaseActivity {
 
 
 
-            TextView textStreet_name_default;
+    TextView textStreet_name_default;
     TextView textTelephone_name_default;
     TextView textPincode_name_default;
     TextView textCity_name_default;
     TextView textCustomer_name_default;
     TextView textCompany_name_default;
     Button btselect,bt_edit_add_icon;
+
+    TextView txt_others;
+    RelativeLayout rl_other_address;
 
 
 
@@ -169,6 +172,12 @@ public class CustomerAddressBook extends BaseActivity {
 
         btselect = findViewById(R.id.btselect);
         bt_edit_add_icon = findViewById(R.id.bt_edit_add_icon);
+
+        txt_others = findViewById(R.id.txt_others);
+        rl_other_address = findViewById(R.id.rl_other_address);
+
+        txt_others.setVisibility(View.GONE);
+        rl_other_address.setVisibility(View.GONE);
 
         bundle = getIntent().getExtras();
 
@@ -591,6 +600,8 @@ public class CustomerAddressBook extends BaseActivity {
 
                             rel_no_address.setVisibility(View.VISIBLE);
                             list_address.setVisibility(View.GONE);
+
+
                         }
                     }
                 },
@@ -674,309 +685,22 @@ public class CustomerAddressBook extends BaseActivity {
         );
 
         if (lstadapter.getCount() > 0) {
+            txt_others.setVisibility(View.VISIBLE);
+            rl_other_address.setVisibility(View.VISIBLE);
             list_address.invalidate();
             list_address.setAdapter(lstadapter);
-
             list_address.setVisibility(View.VISIBLE);
             // btn_add_new_address.setVisibility(View.GONE);
         }
         else
         {
+            txt_others.setVisibility(View.GONE);
+            rl_other_address.setVisibility(View.GONE);
             list_address.setVisibility(View.GONE);
             btn_add_new_address.setVisibility(View.VISIBLE);
         }
 
     }
 
-//
-//    private void getUserDetails(){
-//
-//
-//        pDialog = new TransparentProgressDialog(this);
-//        pDialog.setCancelable(false);
-//        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-//        pDialog.show();
-//
-//        RequestQueue requestQueue_1= Volley.newRequestQueue(CustomerAddressBook.this);
-//
-//
-//        JsonObjectRequest jsonObjectRequest_1 = new JsonObjectRequest(Request.Method.GET, user_detail_url, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//
-//                        if(pDialog.isShowing())
-//                            pDialog.dismiss();
-//
-//                        // Log.d("response_galwaykart",response.toString());
-//                        try {
-//                            JSONObject jsonObject=new JSONObject(String.valueOf(response));
-//
-//                            JSONObject jsonObject1=jsonObject.getJSONObject("details");
-//
-//                            String jsonObject_fcode=jsonObject1.getString("fcode");
-//                            String jsonObject_distid=jsonObject1.getString("distributor_id");
-//
-//
-//                            SharedPreferences.Editor editor=pref.edit();
-//                            editor.putString("log_user_id",jsonObject_distid);
-//                            editor.putString("log_user_zone",jsonObject_fcode);
-//                            editor.commit();
-//
-//
-//
-//                            //  Log.d("distid",jsonObject_distid);
-//                            //  Log.d("distzone",jsonObject_fcode);
-//                            //getPaymentMethod(shipping_info_string);
-//
-//                            /**
-//                             * Call distributor details and zone
-//                             */
-////                            getDistributorDetails(jsonObject_distid);
-//
-//
-//                            //CommonFun.alertError(CustomerAddressBook.this,jsonObject_fcode+" "+jsonObject_distid);
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                            Intent intent=new Intent(CustomerAddressBook.this, ExceptionError.class);
-//                            startActivity(intent);
-//
-//
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//                if(pDialog.isShowing())
-//                    pDialog.dismiss();
-//
-//                CommonFun.alertError(CustomerAddressBook.this,error.toString());
-//            }
-//        });
-//
-//
-//        jsonObjectRequest_1.setShouldCache(false);
-////        if(requestQueue.getCache().get(url)!=null) {
-////            requestQueue.getCache().clear();
-//        requestQueue_1.getCache().remove(user_detail_url);
-////            Log.d("response_galwaykart","cache");
-////        }
-//        requestQueue_1.add(jsonObjectRequest_1);
-//    }
-
-//    private void getUserDetails(String url){
-//        st_get_kart_zone=url;
-//        new userdataFromKart().execute();
-//    }
-//
-//    private class userdataFromKart extends AsyncTask<String,String,String>{
-//
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//
-////            pDialog = new TransparentProgressDialog(CustomerAddressBook.this);
-////            pDialog.setCancelable(false);
-////            pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-////            pDialog.show();
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            ServiceHandler sh = new ServiceHandler();
-//
-//            // Making a request to url and getting response
-//            String jsonStr = sh.makeServiceCall(st_get_kart_zone, ServiceHandler.GET);
-//
-//            Log.d("Response: ", "> " + jsonStr);
-//
-//            if (jsonStr != null) {
-//
-//                Log.d("response_galwaykart",jsonStr.toString());
-//                try {
-//                    JSONObject jsonObject=new JSONObject(String.valueOf(jsonStr));
-//
-//                    JSONObject jsonObject1=jsonObject.getJSONObject("details");
-//
-//                    String jsonObject_fcode=jsonObject1.getString("fcode");
-//                    String jsonObject_distid=jsonObject1.getString("distributor_id");
-//
-//
-//                    SharedPreferences.Editor editor=pref.edit();
-//                    editor.putString("log_user_id",jsonObject_distid);
-//                    editor.putString("log_user_zone",jsonObject_fcode);
-//                    editor.commit();
-//
-//
-//
-//                    Log.d("distid",jsonObject_distid);
-//                    Log.d("distzone",jsonObject_fcode);
-//                    //getPaymentMethod(shipping_info_string);
-//                    //getDistributorDetails(jsonObject_distid);
-//
-//
-//                    //CommonFun.alertError(CustomerAddressBook.this,jsonObject_fcode+" "+jsonObject_distid);
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//
-//
-//                }
-//
-//            }
-//            return null;
-//        }
-//
-//
-//    }
-
-
-    /**
-     * Get distributor id and zone from Glaze Sales api
-     * to check rkt zone of the user
-     * @param st_dist_id
-     */
-//    private void getDistributorDetails(String st_dist_id) {
-//
-//
-//        pref = getSharedPreferences("glazekartapp",MODE_PRIVATE);
-//
-//        // String st_dist_id=pref.getString("st_dist_id","");
-//
-//        String st_Get_Dist_details_URL = Global_Settings.galway_api_url+"returnapi/Load_verify_guest?ID="+st_dist_id;
-//        Log.d("st_Get_Dist_details_URL",st_Get_Dist_details_URL);
-//
-//        pDialog = new TransparentProgressDialog(CustomerAddressBook.this);
-//        pDialog.setCancelable(false);
-//        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT)); pDialog.show();
-//
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        StringRequest jsObjRequest = new StringRequest(Request.Method.GET, st_Get_Dist_details_URL,
-//                new Response.Listener<String>() {
-//
-//                    @Override
-//                    public void onResponse(String response) {
-//
-//                        if(pDialog.isShowing())
-//                            pDialog.dismiss();
-//
-//
-//                        if(response!=null){
-//                            try {
-//
-//                                dist_details = new JSONArray(String.valueOf(response));
-//                                JSONObject dist_details_object =dist_details.getJSONObject(0);
-//
-//                                String current_zone = dist_details_object.getString("current_zone");
-//
-//
-//                                pref = getSharedPreferences("glazekartapp",MODE_PRIVATE);
-//
-//                                Log.d("current_zone",current_zone);
-//
-//
-//                                SharedPreferences.Editor editor = pref.edit();
-//                                editor.putString("st_dist_id",current_zone);
-//                                editor.commit();
-//
-//                                /**
-//                                 * check  zone of the user
-//                                 * rkt or not
-//                                 */
-////                                  ValidateToAddAddress();
-//
-//
-//
-//
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                                Log.d("error",e.toString());
-//
-//
-//
-//                                SharedPreferences.Editor editor = pref.edit();
-//                                editor.putString("st_dist_id","");
-//                                editor.commit();
-//
-//                                /**
-//                                 * check  zone of the user
-//                                 * rkt or not
-//                                 */
-////                                ValidateToAddAddress();
-//
-//
-//
-//                            }
-//                        }
-//                    }
-//
-//
-//
-//
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                if(pDialog.isShowing())
-//                    pDialog.dismiss();
-//
-////                CommonFun.alertError(RegistrationActivity.this,error.toString());
-////                error.printStackTrace();
-//
-//                CommonFun.showVolleyException(error,CustomerAddressBook.this);
-//
-//            }
-//        }){
-//            @Override
-//            protected String getParamsEncoding() {
-//                return "utf-8";
-//            }
-//
-//        };
-//
-//
-//        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-//                1000*60,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-//        ));
-//
-//        jsObjRequest.setShouldCache(false);
-//        queue.getCache().clear();
-//        queue.add(jsObjRequest);
-//
-//    }
-
-    /**
-     * check  zone of the user
-     * rkt or not
-     */
-//    private void ValidateToAddAddress(){
-//
-//        String sales_user_zone=pref.getString("st_dist_id","").toLowerCase();
-//        String magento_user_zone=pref.getString("log_user_zone","").toLowerCase();
-//        /**
-//         * if user is of rkt then show
-//         * Add new address button
-//         */
-//
-//        if (sales_user_zone.equalsIgnoreCase("rkt") &&
-//                magento_user_zone.equalsIgnoreCase("rkt")) {
-//
-//
-//            //CommonFun.alertError(CustomerAddressBook.this,"Address same");
-//            btn_add_new_address.setVisibility(View.VISIBLE);
-//
-//        }
-//        else
-//            {
-//                /**
-//                 * if user is of not rkt then show
-//                 * hide new address button
-//                 */
-//            btn_add_new_address.setVisibility(View.GONE);
-//        }
-//        isAddressLoad=true;
-//    }
 
 }

@@ -59,7 +59,7 @@ public class RecyclerViewOfferCategoryAdapter extends RecyclerView.Adapter<Recyc
         final DataModelHomeCategory dataModel = mValues.get(position);
 
         final String current_id= dataModel.getId();
-        Log.e("current_id",current_id);
+
 
         Picasso.get()
                 .load(dataModel.getImage())
@@ -82,11 +82,12 @@ public class RecyclerViewOfferCategoryAdapter extends RecyclerView.Adapter<Recyc
                 String value_email=pref.getString("login_email","");
 //                if(value_email!=null && !value_email.equals(""))
 //                {
-                    if(!current_id.equals("") && current_id!=null && !current_id.equals("0")) {
+                    if(!current_id.equals("") && !current_id.equalsIgnoreCase("0")) {
 
                         pref = mContext.getSharedPreferences("GalwayKart", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("selected_id", current_id);
+                        Log.e("selected_id",current_id);
                         editor.putString("selected_name", "");
                         editor.commit();
 
@@ -95,6 +96,8 @@ public class RecyclerViewOfferCategoryAdapter extends RecyclerView.Adapter<Recyc
                         mContext.startActivity(intent);
                         ((Activity) mContext).finish();
                     }
+
+
 
             }
         });

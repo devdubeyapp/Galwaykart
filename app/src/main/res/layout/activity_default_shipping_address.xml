@@ -299,7 +299,6 @@
             android:fontFamily="ARLRDBD"
             android:layout_below="@+id/rl_default_shipping"
             android:textColor="@color/colorPrimaryDark">
-
         </TextView>
     <RelativeLayout
         android:id="@+id/rl_other_address"
@@ -320,7 +319,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="1dp"
-
             android:layout_marginBottom="10dp">
         </ListView>
     </RelativeLayout>
