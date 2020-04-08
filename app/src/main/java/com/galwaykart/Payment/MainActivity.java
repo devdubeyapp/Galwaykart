@@ -59,7 +59,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 //import com.mixpanel.android.viewcrawler.EditProtocol;
-//import com.payu.payuui.Activity.PayUBaseActivity;
+import com.payu.payuui.Activity.PayUBaseActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * This activity prepares PaymentParams, fetches hashes from server and send it to PayuBaseActivity.java.

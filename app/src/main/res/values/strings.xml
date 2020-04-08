@@ -17,6 +17,8 @@
     <string name="supra"><b>SUPRA WOOD</b></string>
     <string name="price"><b>$ 114</b></string>
     <string name="title_activity_login">Sign in</string>
+    <string name="password_instruction_text">पासवर्ड निर्देश</string>
+    <string name="password_instruction">अपने पासवर्ड मे कोई एक विशेष अक्षर जैसे (@#$%_.),\nएक अक्षर नंबर जैसे 0-9,\nकम से कम 8 अक्षर,\nएक बड़ा अक्षर जैसे A-Z ज़रूर प्रयोग करे</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email/Mobile No.</string>

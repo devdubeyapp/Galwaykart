@@ -68,7 +68,7 @@ public class  MainActivity extends AppCompatActivity implements PaytmPaymentTran
 //
 //
 //        //attaching a click listener to the button buy
-//        findViewById(R.id.buttonBuy).setOnClickListener(new View.OnClickListener() {
+//        findViewById(R.id.buttonBuy).setOnClickLis tener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //

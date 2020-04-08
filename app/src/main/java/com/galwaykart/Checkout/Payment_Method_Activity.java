@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import com.galwaykart.Payment.PayUMainActivity;
 import com.google.android.material.snackbar.Snackbar;
 import android.util.Log;
 import android.view.View;
@@ -1394,7 +1395,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                                 editor_pay.putString("paydiscount", jsonObject_total_discount);
                                 editor_pay.putString("paygrandtotal", jsonObject_grand_total);
                                 editor_pay.commit();
-                                Intent intent = new Intent(Payment_Method_Activity.this, MainActivity.class);
+                                Intent intent = new Intent(Payment_Method_Activity.this, PayUMainActivity.class);
                                 intent.putExtra("grand_total", jsonObject_grand_total);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 

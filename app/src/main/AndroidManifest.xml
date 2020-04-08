@@ -153,6 +153,10 @@
         <activity
             android:name=".Payment.MainActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".Payment.PayUMainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Checkout.Payment_Method_Activity"
             android:screenOrientation="portrait"

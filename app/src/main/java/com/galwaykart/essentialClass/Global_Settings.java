@@ -35,9 +35,8 @@ public class Global_Settings {
 
     //public static final String api_url="https://www.galwaykart.com/";                 // Live
     //public static final String api_url="http://192.168.10.130/galwaykart/";               // Test
-    //public static final String api_url="http://uat.galwaykart.com/";      // new qa server
-    public static final String api_url="http://qa.galwaykart.com/";
-    public static final String st_check_user=api_url+"rest/V1/customer/irid/exits/";
+    public static final String api_url="http://qa.galwaykart.com/";      // new qa server
+
 
     //public static final String online_payment_hash_key_url="https://www.galwaykart.com/";
     // public static final String api_url="https://www.galwaykart.com/";
@@ -62,6 +61,7 @@ public class Global_Settings {
     public static final String home_page_api=api_url+"glaze/galwaykart/homepage_details_v1.php";
     public static final String otp_url=api_custom_url+"galwaykart/api_get_otp.php";
     public static final String st_Tamplate="email_reset";
+    public static final String st_check_user=api_url+"rest/V1/customer/irid/exits/";
     //public static final String user_details_url=api_url+"glaze/fcode.php?id=";
 
     //public static final String wms_checkout="http://192.168.10.34:81/rateit/galwaykart/wmscheckout.php";
