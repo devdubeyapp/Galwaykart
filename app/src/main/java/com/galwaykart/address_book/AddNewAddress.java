@@ -725,6 +725,9 @@ public class AddNewAddress extends BaseActivity {
                 Set<String> all_address_id;
                 all_address_id=new HashSet<String>();
                 all_address_id=pref.getStringSet("all_address_id",null);
+                String default_address_id=pref.getString("default_address_id","");
+
+
                 String st_add_id = "";
                 if(all_address_id!=null) {
 
@@ -736,11 +739,27 @@ public class AddNewAddress extends BaseActivity {
 
                             for (int i = 0; i < address_list.size(); i++) {
                                 if (st_add_id.equals("")) {
-                                    if (!address_list.get(i).equals(address_id))
-                                        st_add_id = "{\"id\":" + address_list.get(i) + "}";
+                                    if (!address_list.get(i).equals(address_id)) {
+
+//                                        if(address_list.get(i).equals(default_address_id))
+//                                            st_add_id = "{\"id\":" + address_list.get(i) +
+//                                                    ",\"Default_shipping\":\"" +  "1" + "\""+
+//                                                    ",\"Default_billing\":\"" +  "1" + "\""+
+//                                                    "}";
+//                                        else
+                                            st_add_id = "{\"id\":" + address_list.get(i) + "}";
+                                    }
                                 } else {
-                                    if (!address_list.get(i).equals(address_id))
-                                        st_add_id = st_add_id + "," + "{\"id\":" + address_list.get(i) + "}";
+                                    if (!address_list.get(i).equals(address_id)) {
+
+//                                        if(address_list.get(i).equals(default_address_id))
+//                                            st_add_id = st_add_id + "," + "{\"id\":" + address_list.get(i) +
+//                                                    ",\"Default_shipping\":\"" +  "1" + "\""+
+//                                                    ",\"Default_billing\":\"" +  "1" + "\""+
+//                                                    "}";
+//                                        else
+                                            st_add_id = st_add_id + "," + "{\"id\":" + address_list.get(i) + "}";
+                                    }
                                 }
 
 
@@ -758,7 +777,7 @@ public class AddNewAddress extends BaseActivity {
                     total_address_data=0;
                 }
 
-                if(total_address_data==0)
+                if(total_address_data==0  || chk_shipping.isChecked())
                 {
                     st_default_ship_bill= "\"Default_shipping\":\"" +  "1" + "\"";
                     st_default_ship_bill= st_default_ship_bill+ ","+ "\"default_billing\":\"" + "1" + "\"";
@@ -768,6 +787,16 @@ public class AddNewAddress extends BaseActivity {
 
                     Log.e("st_default_ship_bill", st_default_ship_bill);
                 }
+//                else
+//                {
+//                    st_default_ship_bill= "\"Default_shipping\":\"" +  "0" + "\"";
+//                    st_default_ship_bill= st_default_ship_bill+ ","+ "\"default_billing\":\"" + "0" + "\"";
+//
+//                    chk_billing.setEnabled(false);
+//                    chk_shipping.setEnabled(false);
+//
+//                    Log.e("st_default_ship_bill", st_default_ship_bill);
+//                }
 
 
 
@@ -843,7 +872,7 @@ public class AddNewAddress extends BaseActivity {
                 "\"store_id\":\"1\"," +
                 "\"firstname\":\"" + login_fname + "\"}}";
     }
-
+Log.d("return_data",return_data);
 
                 pDialog = new TransparentProgressDialog(AddNewAddress.this);
                 pDialog.setCancelable(false);

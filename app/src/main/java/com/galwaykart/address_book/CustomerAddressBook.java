@@ -173,6 +173,12 @@ public class CustomerAddressBook extends BaseActivity {
         btselect = findViewById(R.id.btselect);
         bt_edit_add_icon = findViewById(R.id.bt_edit_add_icon);
 
+        preferences = CommonFun.getPreferences(getApplicationContext());
+        SharedPreferences.Editor editor23= preferences.edit();
+        editor23.putString("default_address_id","");
+        editor23.commit();
+
+
         txt_others = findViewById(R.id.txt_others);
         rl_other_address = findViewById(R.id.rl_other_address);
 
@@ -298,10 +304,10 @@ public class CustomerAddressBook extends BaseActivity {
         itemList=new ArrayList<HashMap<String, String>>();
         arrayList_AddressId=new HashSet<String>();
 
-        SharedPreferences.Editor editor=pref.edit();
-        editor.putString("st_dist_id","");
-        editor.putString("log_user_zone","");
-        editor.commit();
+        SharedPreferences.Editor editor2=pref.edit();
+        editor2.putString("st_dist_id","");
+        editor2.putString("log_user_zone","");
+        editor2.commit();
 
         SharedPreferences.Editor editor_p=preferences.edit();
         editor_p.putString("st_dist_id","");
@@ -485,7 +491,8 @@ public class CustomerAddressBook extends BaseActivity {
 
 
 
-                            for(int i=0;i<addressArray.length();i++) {
+                            for(int i=0;i<addressArray.length();i++)
+                            {
                                 JSONObject jsonObj=addressArray.getJSONObject(i);
                                 address_id = jsonObj.getString(TAG_id);
                                 arr_address_id[i]=address_id;
@@ -529,6 +536,9 @@ public class CustomerAddressBook extends BaseActivity {
 
                                 if(jsonObj.has("default_shipping"))
                                 {
+
+
+
                                     rl_default_shipping.setVisibility(View.VISIBLE);
                                     arr_default_ship[i]="1";
 
@@ -537,6 +547,11 @@ public class CustomerAddressBook extends BaseActivity {
 
                                     if(is_default_shipping.equalsIgnoreCase("true"))
                                     {
+
+                                        SharedPreferences.Editor editor= preferences.edit();
+                                        editor.putString("default_address_id",address_id);
+                                        editor.commit();
+
                                         strFirstName =jsonObj.getString(TAG_firstname);
                                         strLastName = jsonObj.getString(TAG_lastname);
                                         strCustomerName= strFirstName + " "+ strLastName;
