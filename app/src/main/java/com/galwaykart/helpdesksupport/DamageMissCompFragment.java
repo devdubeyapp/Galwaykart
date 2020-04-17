@@ -324,13 +324,13 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                     tv_compaint_submit.setEnabled(false);
                                     iv_complaint_video_capture.setVisibility(View.GONE);
 
+                                    //orVideoFileName=finalVideoFileName;
+                                    orVideoFileName = "https://galwaykart-helpdesk-videos.s3.ap-south-1.amazonaws.com/" + finalVideoFileName;
 
                                     for (int i = 0; i < complaint_list.size(); i++) {
                                         ComplaintOrderDetailModel model = complaint_list.get(i);
                                         if (model.getCheck_for_return_req() == true) {
 
-                                            orVideoFileName=finalVideoFileName;
-                                            finalVideoFileName = "https://galwaykart-helpdesk-videos.s3.ap-south-1.amazonaws.com/" + finalVideoFileName;
 
 
                                             if (all_check.equals("")) {
@@ -339,7 +339,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                                         ",\"order_qty\":" + model.getQty_ordered() +
                                                         ",\"reason\":" + str_complaint_category_id +
                                                         ",\"condition\":" + str_complaint_category_id +
-                                                        ",\"videoUrl\":\"" + finalVideoFileName + "\"" +
+                                                        ",\"videoUrl\":\"" + orVideoFileName + "\"" +
                                                         ",\"product_name\":\"" + model.getProduct_name() + "\"" +
                                                         ",\"product_sku\":\"" + model.getSku() + "\"" +
                                                         ",\"orderItemId\":" + model.getQuote_item_id() +
@@ -349,7 +349,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                                         ",\"resolution\":" + str_complaint_category_id +
                                                         ",\"order_qty\":" + model.getQty_ordered() +
                                                         ",\"reason\":" + str_complaint_category_id +
-                                                        ",\"videoUrl\":\"" + finalVideoFileName + "\"" +
+                                                        ",\"videoUrl\":\"" + orVideoFileName + "\"" +
                                                         ",\"condition\":" + str_complaint_category_id +
                                                         ",\"product_name\":\"" + model.getProduct_name() + "\"" +
                                                         ",\"product_sku\":\"" + model.getSku() + "\"" +
@@ -362,7 +362,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                         }
                                     }
 
-                                   // compressVideoAndUpload(finalVideoFileName);
+
                                     Log.d("File_Path_1",getFileDestinationPath()+"/"+orVideoFileName);
                                     File f_upload=new File(pathToStoredVideo);
 
@@ -1616,14 +1616,14 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
            String str_customer_id = pref1.getString("login_id", "");
 
            String st_submit_complaint_url = Global_Settings.api_url + "rest/V1/m-help-requestsubmit";
-           //Log.d("st_submit_complaint_url", st_submit_complaint_url);
+           Log.d("submitvideo", st_submit_complaint_url);
 
 
            input_data= "{\"storeId\":1," +
                        "\"orderEntityId\":" + entity_id + "," +
                        "\"customerFirstName\":\"" + str_first_name + "\"," +
                        "\"customerlastName\":\"" + str_last_name + "\"," +
-                       "\"videoUrl\":\"" + finalVideoFileName + "\"," +
+                       "\"videoUrl\":\"" + orVideoFileName + "\"," +
                        "\"productData\":[" + all_check + "]," +
                        "\"customerId\":" + str_customer_id + "," +
                        "\"comment\":\"" + str_write_complaint + "\"" +
@@ -1632,7 +1632,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                        ",\"imageData\":[" + stImageData + "]}";
 
 
-           Log.d("input_data",input_data);
+           Log.d("submitvideo",input_data);
            callSubmitAPI(st_submit_complaint_url);
 
 
@@ -1661,7 +1661,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                         public void onResponse(String response) {
                             if (pDialog1.isShowing())
                                 pDialog1.dismiss();
-                            Log.e("responsePutComplaint", response);
+                            Log.e("submitvideo", response);
                             if (response != null) {
                                 try {
                                     JSONArray jsonArray = new JSONArray(response);
