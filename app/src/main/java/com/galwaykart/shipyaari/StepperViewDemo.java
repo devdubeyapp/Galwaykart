@@ -112,8 +112,8 @@ public class StepperViewDemo extends BaseActivity {
         st_selected_shipping_type = pref.getString("st_selected_shipping_type","");
 
 
-        st_selected_Track_id="3587910267960";
-        st_selected_shipping_type="1";
+//        st_selected_Track_id="3587910267960";
+//        st_selected_shipping_type="1";
 
 
         //Log.d("st_selected_Track_id", st_selected_Track_id);
