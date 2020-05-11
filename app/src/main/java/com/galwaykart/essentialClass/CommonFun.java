@@ -42,10 +42,10 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class CommonFun {
 
+
     public static void finishscreen(Activity context){
         context.finish();
     }
-
     public static void alertError(Context ctx,String errmsg){
         final AlertDialog.Builder b;
         try

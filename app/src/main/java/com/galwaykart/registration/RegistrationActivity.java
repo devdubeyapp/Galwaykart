@@ -66,7 +66,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     Spinner spinner_customer_type;
     //String [] spinner_data = {"Please Select","Customer","Distributor","Employee"};
-    String [] spinner_data = {"Please Select","Distributor","Customer","Employee"};
+    String [] spinner_data = {"Please Select","Customer","Employee"};
     //String [] spinner_data = {"Distributor"};
     ArrayAdapter<String> adapter;
     RelativeLayout rel_layout1,rel_layout2,rel_layout3,rel_layout4;
@@ -275,7 +275,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     case 0:
                         break;
 
-                    case 1:
+                    case 4:
 
                         rel_layout1.setVisibility(View.GONE);
                         rel_layout2.setVisibility(View.GONE);
@@ -288,7 +288,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         st_coming_from = "Distributor";
                         break;
 
-                    case 2:
+                    case 1:
                         phone_no.setEnabled(true);
 
                         rel_layout1.setVisibility(View.GONE);
@@ -302,7 +302,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         st_coming_from = "Customer";
                         break;
 
-                    case 3:
+                    case 2:
                         rel_layout1.setVisibility(View.GONE);
                         rel_layout2.setVisibility(View.GONE);
                         rel_layout3.setVisibility(View.VISIBLE);

@@ -117,7 +117,11 @@ public class NoticeActivity extends AppCompatActivity {
 
                                                 JSONObject jsonObjFinal = jsonArray.getJSONObject(j);
                                                 title = jsonObjFinal.getString("text");
-                                                identifier = jsonObjFinal.getString("identifier");
+                                                if(jsonObjFinal.has("identifier"))
+                                                    identifier = jsonObjFinal.getString("identifier");
+                                                else
+                                                    identifier="";
+
                                                 NoticeModel noticeModel = new NoticeModel();
 
                                                 if(identifier.equals("") || identifier==null)
