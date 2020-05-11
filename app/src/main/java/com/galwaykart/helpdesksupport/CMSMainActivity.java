@@ -354,7 +354,7 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
 
 
 
-                                                if(Integer.parseInt(days)>=diff) {
+                                                //if(Integer.parseInt(days)>=diff) {
 
                                                     CompCategModel categorymodel = new CompCategModel();
                                                     categorymodel.setComplaintCategory_id(complaint_cate_id);
@@ -366,7 +366,7 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
                                                     categorymodel.setShow(show);
                                                     compCategModels.add(categorymodel);
 
-                                                }
+                                               // }
 
 
 

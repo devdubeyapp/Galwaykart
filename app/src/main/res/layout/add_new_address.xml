@@ -354,7 +354,7 @@
             android:id="@+id/chk_shipping"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="Make default shipping address"
+            android:text="Make default address"
             android:textSize="16dp"
             android:inputType="textMultiLine"
             android:layout_gravity="bottom"
