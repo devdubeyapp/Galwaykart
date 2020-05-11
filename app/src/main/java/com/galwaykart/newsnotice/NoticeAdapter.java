@@ -39,6 +39,10 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         public LinearLayout main_row_lay;
         public View layout;
 
+        String cate_id="";
+        String sku_code="";
+        String identifier="";
+
         public ViewHolder(View view) {
             super(view);
             layout = view;
@@ -69,20 +73,21 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
 
         holder.news_tv.setText(noticeModels.get(position).getTitle());
 
-        holder.tv_readmore.setVisibility(View.GONE);
-        if(!noticeModels.get(position).getCat_id().equalsIgnoreCase("")
-                || !noticeModels.get(position).getSku().equalsIgnoreCase("")
-                || !noticeModels.get(position).getIdentifier().equalsIgnoreCase(""))
-            {
+        holder.cate_id = noticeModels.get(position).getCat_id();
+        holder.sku_code = noticeModels.get(position).getSku();
+        holder.identifier = noticeModels.get(position).getIdentifier();
 
+        holder.tv_readmore.setVisibility(View.GONE);
+
+        if(holder.cate_id!= null || !holder.cate_id.isEmpty() || !holder.cate_id.equalsIgnoreCase(""))
+            {
                 holder.tv_readmore.setVisibility(View.VISIBLE);
                 holder.tv_readmore.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        if(!noticeModels.get(position).getCat_id().equalsIgnoreCase(""))
+                        if(holder.cate_id!= null)
                         {
-                            //////Log.d("clicked", banner_image_catid[position]);
                             SharedPreferences pref;
                             pref= context.getSharedPreferences("GalwayKart", context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
@@ -96,41 +101,69 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
                             ((Activity)context).finish();
 
                         }
-                        else if(!noticeModels.get(position).getSku().equalsIgnoreCase(""))
-                        {
-                            //////Log.d("clicked", banner_image_sku[position]);
-                            SharedPreferences pref;
-                            pref= CommonFun.getPreferences(context);
-                            SharedPreferences.Editor editor=pref.edit();
-                            editor.putString("showitemsku",noticeModels.get(position).getSku());
-                            editor.commit();
-
-                            Intent intent=new Intent(context, com.galwaykart.SingleProductView.MainActivity.class);
-                            context.startActivity(intent);
-                            ((Activity)context).finish();
-                        }
-
-                        else if(!noticeModels.get(position).getIdentifier().equalsIgnoreCase(""))
-                        {
-                            Intent intent=new Intent(context,WebViewActivity.class);
-                            intent.putExtra("comefrom","noticeModels.get(position).getIdentifier()");
-                            context.startActivity(intent);
-                            ((Activity)context).finish();
-
-                        }
-
                         else
                         {
                             //////Log.d("clicked", "");
                         }
 
-                      /*  Intent sl_detal_intent = new Intent(context, NoticeDetailActivity.class);
-                        sl_detal_intent.putExtra("identifier_link",noticeModels.get(position).getIdentifier());
-                        Log.e("identifier_link", noticeModels.get(position).getIdentifier());
-                        context.startActivity(sl_detal_intent);*/
+
                     }
                 });
             }
+        if(holder.sku_code!= null || !holder.sku_code.isEmpty() || !holder.sku_code.equalsIgnoreCase(""))
+        {
+            holder.tv_readmore.setVisibility(View.VISIBLE);
+            holder.tv_readmore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(holder.sku_code!= null)
+                    {
+                        SharedPreferences pref;
+                        pref= CommonFun.getPreferences(context);
+                        SharedPreferences.Editor editor=pref.edit();
+                        editor.putString("showitemsku",noticeModels.get(position).getSku());
+                        editor.commit();
+
+                        Intent intent=new Intent(context, com.galwaykart.SingleProductView.MainActivity.class);
+                        context.startActivity(intent);
+                        ((Activity)context).finish();
+
+                    }
+                    else
+                    {
+                        //////Log.d("clicked", "");
+                    }
+
+
+                }
+            });
+        }
+
+        if(holder.identifier!= null || !holder.identifier.isEmpty() || !holder.identifier.equalsIgnoreCase(""))
+        {
+            holder.tv_readmore.setVisibility(View.VISIBLE);
+            holder.tv_readmore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(holder.identifier!= null)
+                    {
+                        Intent intent=new Intent(context,WebViewActivity.class);
+                        intent.putExtra("comefrom",noticeModels.get(position).getIdentifier());
+                        context.startActivity(intent);
+                        ((Activity)context).finish();
+
+                    }
+                    else
+                    {
+                        //////Log.d("clicked", "");
+                    }
+
+
+                }
+            });
+        }
 
 
 

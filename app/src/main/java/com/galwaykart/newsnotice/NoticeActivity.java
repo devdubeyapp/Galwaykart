@@ -47,7 +47,7 @@ public class NoticeActivity extends AppCompatActivity {
     TransparentProgressDialog pDialog;
     RecyclerView news_recycler_view;
     public NoticeAdapter newsAdapter;
-    String title="", identifier="0", cate_id="",sku_code="";
+    String title="", identifier="", cate_id="",sku_code="";
 
 
     @Override
@@ -118,42 +118,26 @@ public class NoticeActivity extends AppCompatActivity {
                                                 JSONObject jsonObjFinal = jsonArray.getJSONObject(j);
                                                 title = jsonObjFinal.getString("text");
 
-                                                NoticeModel noticeModel = new NoticeModel();
-
                                                 if(jsonObjFinal.has("cat_id"))
-                                                {
                                                     cate_id = jsonObjFinal.getString("cat_id");
-                                                    noticeModel.setCat_id(cate_id);
-                                                }
-                                                else if(jsonObjFinal.has("cat_id"))
-                                                {
+                                                else
+                                                    cate_id="";
+
+                                                if(jsonObjFinal.has("sku"))
                                                     sku_code = jsonObjFinal.getString("sku");
-                                                    noticeModel.setSku(sku_code);
-                                                }
-                                                else if(jsonObjFinal.has(identifier))
-                                                {
+                                                else
+                                                    sku_code="";
+
+                                                if(jsonObjFinal.has("identifier"))
                                                     identifier = jsonObjFinal.getString("identifier");
-                                                    noticeModel.setIdentifier(identifier);
-                                                }
                                                 else
-                                                {
-                                                    //////Log.d("clicked", "");
-                                                }
+                                                    identifier="";
 
-                                               /* if(identifier.equals("") || identifier==null)
-                                                {
-                                                    identifier ="0";
-                                                    noticeModel.setIdentifier("0");
-                                                    Log.e("identifier if",identifier);
-                                                }
-                                                else
-                                                {
-                                                    noticeModel.setIdentifier(identifier);
-                                                    Log.e("identifier else",identifier);
-                                                }*/
-
-
+                                                NoticeModel noticeModel = new NoticeModel();
                                                 noticeModel.setTitle(title);
+                                                noticeModel.setCat_id(cate_id);
+                                                noticeModel.setSku(sku_code);
+                                                noticeModel.setIdentifier(identifier);
                                                 notice_list1.add(noticeModel);
                                             }
 
