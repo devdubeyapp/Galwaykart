@@ -218,8 +218,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                st_user_email = mEmailView.getText().toString();
-                st_user_pwd = mPasswordView.getText().toString();
+                st_user_email = mEmailView.getText().toString().trim();
+                st_user_pwd = mPasswordView.getText().toString().trim();
 
                 if (!edit_otp.getText().toString().equalsIgnoreCase("") ) {
                     mPasswordView.setText(edit_otp.getText().toString());
@@ -379,8 +379,8 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View view) {
 
                     if(mEmailSignInButton.getText().toString().equalsIgnoreCase("Sign In")) {
-                        st_user_email = mEmailView.getText().toString();
-                        st_user_pwd = mPasswordView.getText().toString();
+                        st_user_email = mEmailView.getText().toString().trim();
+                        st_user_pwd = mPasswordView.getText().toString().trim();
 
                         if (!st_user_email.equalsIgnoreCase("") && !st_user_pwd.equalsIgnoreCase(""))
                             attemptLogin();
@@ -389,8 +389,8 @@ public class LoginActivity extends AppCompatActivity {
                      }
                      else
                     {
-                        st_user_email = mEmailView.getText().toString();
-                        st_user_pwd = mPasswordView.getText().toString();
+                        st_user_email = mEmailView.getText().toString().trim();
+                        st_user_pwd = mPasswordView.getText().toString().trim();
 
                         if(!st_user_email.equalsIgnoreCase(""))
                             sendForgetPwd();
@@ -410,7 +410,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 tv_send_otp.setEnabled(false);
                 tv_send_otp.setTextColor(getResources().getColor(R.color.colorSub));
-                String user_id = mEmailView.getText().toString();
+                String user_id = mEmailView.getText().toString().trim();
 
                 if(!user_id.contains("@") && user_id.matches("[0-9]+") && !user_id.equals("") )
                 {
@@ -467,7 +467,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void sendOtpJSON() {
 
-        String st_user_email = mEmailView.getText().toString();
+        String st_user_email = mEmailView.getText().toString().trim();
         Log.e(st_user_email, st_user_email);
 
         String ss = "{\"mobile_number\":\""+st_user_email+"\"}";
@@ -783,8 +783,8 @@ private void callLogin(){
         String url=api_url+"rest/V1/m-integration/customer/token";
 
         String st_mail,st_pass;
-        st_mail=mEmailView.getText().toString();
-        st_pass=mPasswordView.getText().toString();
+        st_mail=mEmailView.getText().toString().trim();
+        st_pass=mPasswordView.getText().toString().trim();
 
 
 
@@ -831,8 +831,8 @@ private void callLogin(){
             e.printStackTrace();
         }
         final String mRequestBody = "{"+
-                "\"username\":\""+mEmailView.getText().toString()+"\","+
-                "\"password\":\""+mPasswordView.getText().toString()+"\","+
+                "\"username\":\""+mEmailView.getText().toString().trim()+"\","+
+                "\"password\":\""+mPasswordView.getText().toString().trim()+"\","+
                 "\"otherDetails\":{"+
                 "\"deviece\":7,"+
                 "\"version\":\""+device_os_version+","+build_version+"\""+
