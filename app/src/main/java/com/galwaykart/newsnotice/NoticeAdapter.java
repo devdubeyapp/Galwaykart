@@ -83,9 +83,8 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
 
 
         if(noticeModels.get(position).getCat_id()!=null
-                && noticeModels.get(position).getCat_id().equalsIgnoreCase("")
-                && noticeModels.get(position).getCat_id().isEmpty())
-          {
+                && !noticeModels.get(position).getCat_id().equalsIgnoreCase(""))
+        {
             holder.tv_readmore.setVisibility(View.VISIBLE);
             holder.tv_readmore.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,14 +106,9 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
                 }
             });
 
-
-
-
         }
-
         else if(noticeModels.get(position).getSku()!=null
-                && noticeModels.get(position).getSku().equalsIgnoreCase("")
-                && noticeModels.get(position).getSku().isEmpty())
+                && !noticeModels.get(position).getSku().equalsIgnoreCase(""))
         {
             holder.tv_readmore.setVisibility(View.VISIBLE);
             holder.tv_readmore.setOnClickListener(new View.OnClickListener() {
@@ -135,8 +129,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
 
         }
         else if(noticeModels.get(position).getIdentifier()!=null
-                && noticeModels.get(position).getIdentifier().equalsIgnoreCase("")
-                && noticeModels.get(position).getIdentifier().isEmpty())
+                && !noticeModels.get(position).getIdentifier().equalsIgnoreCase(""))
         {
             holder.tv_readmore.setVisibility(View.VISIBLE);
             holder.tv_readmore.setOnClickListener(new View.OnClickListener() {
@@ -149,12 +142,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
                     ((Activity)context).finish();
                 }
             });
-
-        }
-
-
-        else {
-
         }
 
 
