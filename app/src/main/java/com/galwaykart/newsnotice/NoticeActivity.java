@@ -47,7 +47,7 @@ public class NoticeActivity extends AppCompatActivity {
     TransparentProgressDialog pDialog;
     RecyclerView news_recycler_view;
     public NoticeAdapter newsAdapter;
-    String title, identifier="0";
+    String title="", identifier="0", cate_id="",sku_code="";
 
 
     @Override
@@ -117,14 +117,30 @@ public class NoticeActivity extends AppCompatActivity {
 
                                                 JSONObject jsonObjFinal = jsonArray.getJSONObject(j);
                                                 title = jsonObjFinal.getString("text");
-                                                if(jsonObjFinal.has("identifier"))
-                                                    identifier = jsonObjFinal.getString("identifier");
-                                                else
-                                                    identifier="";
 
                                                 NoticeModel noticeModel = new NoticeModel();
 
-                                                if(identifier.equals("") || identifier==null)
+                                                if(jsonObjFinal.has("cat_id"))
+                                                {
+                                                    cate_id = jsonObjFinal.getString("cat_id");
+                                                    noticeModel.setCat_id(cate_id);
+                                                }
+                                                else if(jsonObjFinal.has("cat_id"))
+                                                {
+                                                    sku_code = jsonObjFinal.getString("sku");
+                                                    noticeModel.setSku(sku_code);
+                                                }
+                                                else if(jsonObjFinal.has(identifier))
+                                                {
+                                                    identifier = jsonObjFinal.getString("identifier");
+                                                    noticeModel.setIdentifier(identifier);
+                                                }
+                                                else
+                                                {
+                                                    //////Log.d("clicked", "");
+                                                }
+
+                                               /* if(identifier.equals("") || identifier==null)
                                                 {
                                                     identifier ="0";
                                                     noticeModel.setIdentifier("0");
@@ -134,7 +150,9 @@ public class NoticeActivity extends AppCompatActivity {
                                                 {
                                                     noticeModel.setIdentifier(identifier);
                                                     Log.e("identifier else",identifier);
-                                                }
+                                                }*/
+
+
                                                 noticeModel.setTitle(title);
                                                 notice_list1.add(noticeModel);
                                             }
