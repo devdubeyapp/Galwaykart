@@ -70,6 +70,34 @@ public class CommonFun {
 
     }
 
+
+
+    public static void alertPasswordMessage(Context ctx){
+        final AlertDialog.Builder b;
+        try
+        {
+            b = new AlertDialog.Builder(ctx, R.style.AppTheme_Alert);
+            b.setTitle("Info");
+            b.setCancelable(true);
+
+            b.setMessage(R.string.password_tnc);
+
+            b.setPositiveButton("OK", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialog, int whichButton)
+                {
+                    b.create().dismiss();
+                }
+            });
+            b.create().show();
+        }
+        catch(Exception ex)
+        {
+        }
+
+    }
+
     public static void alertOTPMessage(Context ctx){
         final AlertDialog.Builder b;
         try

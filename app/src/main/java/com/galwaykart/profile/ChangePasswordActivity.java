@@ -34,6 +34,7 @@ import com.galwaykart.SplashActivity;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
+import com.galwaykart.registration.RegistrationActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,7 +61,7 @@ public class ChangePasswordActivity extends BaseActivityWithoutCart {
     String  delivery_data_in="";
     String tokenData="";
     Button button_change_pwd;
-    String PASSWORD_PATTERN ="(.{8,20})";
+    String PASSWORD_PATTERN =  "((?=.*\\d)(?=.*[a-z]).{8,30})";
     Pattern pattern;
     Matcher matcher;
 
@@ -89,6 +90,20 @@ public class ChangePasswordActivity extends BaseActivityWithoutCart {
 
     }
 
+    private boolean isValidPassword(String enter_pass) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(enter_pass);
+
+        boolean isMatched = matcher.matches();
+//		Log.d("isMatched",isMatched+"");
+
+        return isMatched;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -106,6 +121,13 @@ public class ChangePasswordActivity extends BaseActivityWithoutCart {
             @Override
             public void onClick(View view) {
                 callChangePassword();
+            }
+        });
+        ImageView iv_info=findViewById(R.id.iv_info_3);
+        iv_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonFun.alertPasswordMessage(ChangePasswordActivity.this);
             }
         });
 
@@ -126,7 +148,7 @@ public class ChangePasswordActivity extends BaseActivityWithoutCart {
             password_current=true;
 
         if(password_current==true) {
-            if (password_format == true) {
+            if (isValidPassword(st_password)) {
 
                 if (st_comfirm_pwd.equals(st_password))
                     changePassword(current_password,st_comfirm_pwd);
@@ -135,7 +157,7 @@ public class ChangePasswordActivity extends BaseActivityWithoutCart {
 
 
             } else
-                CommonFun.alertError(ChangePasswordActivity.this, "Password must contain atleast 8 character");
+                CommonFun.alertError(ChangePasswordActivity.this,"Password must be of minimum 8 character and contain a alphabet and a number" );
         }
         else {
             CommonFun.alertError(ChangePasswordActivity.this, "Current Password not correct..Try Again..");
