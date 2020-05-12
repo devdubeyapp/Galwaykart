@@ -87,7 +87,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private Pattern pattern;
     private Matcher matcher;
 
-    private static final String PASSWORD_PATTERN ="(.{8,16})";
+    String PASSWORD_PATTERN =  "((?=.*\\d)(?=.*[a-z]).{8,30})";
 
     ImageView iv_close_instruction;
 
@@ -103,7 +103,7 @@ public class RegistrationActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     TextView tverror;
     int count_otp_request=0;
-    ImageView ic_back,image_view_title;
+    ImageView ic_back,image_view_title,iv_info_3;
 
     @Override
     public void onBackPressed() {
@@ -159,6 +159,14 @@ public class RegistrationActivity extends AppCompatActivity {
 
         tverror=findViewById(R.id.tverror);
 
+
+        ImageView iv_info=findViewById(R.id.iv_info);
+        iv_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonFun.alertPasswordMessage(RegistrationActivity.this);
+            }
+        });
 
         button_sign_up.setOnClickListener(button_sign_upOnClickListener);
 
@@ -825,6 +833,20 @@ public class RegistrationActivity extends AppCompatActivity {
      * Register new  user
      */
 
+    private boolean isValidPassword(String enter_pass) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(enter_pass);
+
+        boolean isMatched = matcher.matches();
+//		Log.d("isMatched",isMatched+"");
+
+        return isMatched;
+    }
+
     Button.OnClickListener button_sign_upOnClickListener
             = new Button.OnClickListener(){
 
@@ -850,7 +872,7 @@ public class RegistrationActivity extends AppCompatActivity {
             ////Log.d("password_format",""+password_format);
 
             if(email_id_format == true) {
-                if (password_format == true) {
+                if (isValidPassword(st_password)  && st_password.length() >= 8) {
                     if (!st_email.equalsIgnoreCase("") &&
                             !st_first_name.equalsIgnoreCase("") &&
                             !st_last_name.equalsIgnoreCase("") &&
@@ -915,7 +937,9 @@ public class RegistrationActivity extends AppCompatActivity {
 //                            "एक अक्षर नंबर जैसे 0-9, और \n" +
 //                            "कम से कम 8 अक्षर, और \n"+
 //                            "एक बड़ा अक्षर जैसे A-Z ज़रूर प्रयोग करे ");
-                CommonFun.alertError(RegistrationActivity.this, "Password must contain atleast 8 character");
+            //    CommonFun.alertError(RegistrationActivity.this, "Password must contain atleast 8 character");
+
+                    CommonFun.alertError(RegistrationActivity.this,"Password must be of minimum 8 character and contain a alphabet and a number" );
             }
             else
                 CommonFun.alertError(RegistrationActivity.this, "Incorrect Email ID...");

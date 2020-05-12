@@ -301,12 +301,21 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+      <LinearLayout
+          android:id="@+id/text_input_layout4"
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:weightSum="1"
+          android:layout_below="@+id/text_input_layout3">
+
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/text_input_layout4"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_below="@+id/text_input_layout3"
+            android:layout_weight="0.8"
             >
 
             <EditText
@@ -321,6 +330,16 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+          <ImageView
+              android:id="@+id/iv_info_3"
+              app:srcCompat="@drawable/icon_info"
+              android:layout_width="30dp"
+              android:layout_height="30dp"
+              android:layout_weight="0.2"
+              android:layout_marginTop="10dp"
+              android:clickable="true"
+              />
+      </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout5"

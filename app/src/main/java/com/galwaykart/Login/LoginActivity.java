@@ -76,6 +76,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -154,6 +156,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText edit_otp;
     RelativeLayout email_login_form;
     ImageView iv_info;
+    String PASSWORD_PATTERN =  "((?=.*\\d)(?=.*[a-z]).{8,30})";
 
     @Override
     public void onBackPressed() {
@@ -382,9 +385,15 @@ public class LoginActivity extends AppCompatActivity {
                         st_user_email = mEmailView.getText().toString().trim();
                         st_user_pwd = mPasswordView.getText().toString().trim();
 
-                        if (!st_user_email.equalsIgnoreCase("") && !st_user_pwd.equalsIgnoreCase(""))
+                        if (!st_user_email.equalsIgnoreCase("") && !st_user_pwd.equalsIgnoreCase("")) {
+                         //if(isValidPassword(st_user_pwd) && st_user_pwd.length() >= 8)
                             attemptLogin();
-                        else
+//                         else
+//                         {
+//                             CommonFun.alertError(LoginActivity.this,"Password must be of minimum 8 character and contain a alphabet and a number" );
+//                         }
+                        }
+                            else
                             CommonFun.alertError(LoginActivity.this, "Fill Mandatory field first...");
                      }
                      else
@@ -429,6 +438,21 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    private boolean isValidPassword(String enter_pass) {
+
+        Pattern pattern;
+        Matcher matcher;
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(enter_pass);
+
+        boolean isMatched = matcher.matches();
+//		Log.d("isMatched",isMatched+"");
+
+        return isMatched;
     }
 
     private void goBack() {

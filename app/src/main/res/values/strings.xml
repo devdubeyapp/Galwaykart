@@ -75,6 +75,13 @@
 
     </string-array>
 
+
+    <string name="password_tnc">
+        1. Password length must be 8-30 character long.\n
+        2. Password must be contain atleast 1 alphabet value.\n
+        3. Password must be contain atleast 1 numeric value.
+    </string>
+
     <string name="use_live_key_in_production_environment">Please use your live merchant key in production environment</string>
     <string name="could_not_receive_data">Could not receive data</string>
 
