@@ -54,6 +54,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             main_row_lay = view.findViewById(R.id.main_row_lay);
             tv_readmore= view.findViewById(R.id.tv_readmore);
             tv_readmore.setVisibility(View.GONE);
+
         }
     }
 
