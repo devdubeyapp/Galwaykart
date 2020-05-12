@@ -33,9 +33,9 @@ public class Global_Settings {
     public static final String st_sales_api=galway_api_url+"returnapi/";     // Live
     //public static final String st_sales_api="http://it.galway.in/returnapi/";// Test
 
-    public static final String api_url="https://www.galwaykart.com/";                 // Live
+    //public static final String api_url="https://www.galwaykart.com/";                 // Live
     //public static final String api_url="http://192.168.10.130/galwaykart/";               // Test
-    //public static final String api_url="http://qa.galwaykart.com/";      // new qa server
+    public static final String api_url="http://qa.galwaykart.com/";      // new qa server
 
 
     //public static final String online_payment_hash_key_url="https://www.galwaykart.com/";
