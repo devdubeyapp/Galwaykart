@@ -51,7 +51,19 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="scalingPercent" value="139" />
+                                                <entry key="scalingPercent" value="117" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="foregroundText">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="a53982" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -63,10 +75,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="foregroundImage" value="C:\Users\Sweets-Cutes\Downloads\All Galway App logos (1)\1x\Galway Kart.png" />
-                                      <entry key="legacyIconShape" value="CIRCLE" />
-                                      <entry key="previewDensity" value="MEDIUM" />
+                                      <entry key="backgroundColor" value="963477" />
+                                      <entry key="foregroundImage" value="A:\WFH\galwaykarticon.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
