@@ -48,6 +48,8 @@ import com.galwaykart.BaseActivity;
 import com.galwaykart.Cart.CartItemList;
 import com.galwaykart.R;
 import com.galwaykart.SingleProductView.MainActivity;
+import com.galwaykart.address_book.AddNewAddress;
+import com.galwaykart.address_book.CustomerAddressBook;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.ExceptionError;
 import com.galwaykart.essentialClass.Global_Settings;
@@ -154,6 +156,31 @@ public class OrderDetails extends BaseActivity {
     String order_grand_total="";
     TextView tv_shipping_address;
 
+    //code written on 18 May 2020 for edit shipping address
+    Button bt_shipping_address_edit_icon;
+    String is_edit_address ="";
+    String  address_type = "";
+    String st_ship_cust_fname = "";
+    String st_ship_cust_lname =  "";
+    String st_ship_cust_full_name =  "";
+    String st_ship_cust_telephone =  "";
+    String ship_email_id ="";
+    String st_ship_region= "";
+    String st_ship_postcode= "";
+    String st_ship_city= "";
+    String st_ship_street="";
+    String customer_ship_address_id="";
+    String ship_address_entity_id = "";
+    String ship_parent_id = "" ;
+    String ship_region_code = "";
+    String ship_region_id = "";
+    String ship_country_id ="";
+
+
+
+
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -194,6 +221,7 @@ public class OrderDetails extends BaseActivity {
         });
 
         tv_shipping_address=findViewById(R.id.tv_shipping_address);
+        bt_shipping_address_edit_icon = findViewById(R.id.bt_shipping_address_edit_icon);
 
 
         tv_order_id = findViewById(R.id.tv_order_id);
@@ -245,6 +273,8 @@ public class OrderDetails extends BaseActivity {
             tv_order_id.setVisibility(View.VISIBLE);
         st_order_status = st_order_status.trim();
 
+        Log.e("st_order_status",st_order_status);
+
 //        if(st_order_status.equalsIgnoreCase("canceled")
 //                || st_order_status.equalsIgnoreCase("processing")
 //                || !st_order_rtn.equalsIgnoreCase("0")
@@ -267,12 +297,6 @@ public class OrderDetails extends BaseActivity {
             tv_cancel_order.setVisibility(View.VISIBLE);
             tv_cancel_order.setText("Cancel Order");
         }
-//      else if (st_order_status.equalsIgnoreCase("complete")
-//                && st_order_rtn.equalsIgnoreCase("0")) {
-//            tv_cancel_order.setText("Return Order");
-//            tv_cancel_order.setVisibility(View.VISIBLE);
-//            tv_re_order.setVisibility(View.VISIBLE);
-//      }
         else {
             //tv_cancel_order.setText("Cancel Order");
             tv_cancel_order.setVisibility(View.GONE); // cancel_tv
@@ -415,6 +439,77 @@ public class OrderDetails extends BaseActivity {
         String login_group_id=pref.getString("login_group_id","");
         if(login_group_id.equalsIgnoreCase("5"))
             tv_re_order.setVisibility(View.GONE);
+
+
+
+
+        if (st_order_status.equalsIgnoreCase("pending")) {
+            tv_cancel_order.setVisibility(View.VISIBLE);
+            tv_cancel_order.setText("Cancel Order");
+        }
+        else {
+            //tv_cancel_order.setText("Cancel Order");
+            tv_cancel_order.setVisibility(View.GONE); // cancel_tv
+        }
+
+        if(is_edit_address.equalsIgnoreCase("0"))
+            bt_shipping_address_edit_icon.setVisibility(View.GONE);
+        else
+            bt_shipping_address_edit_icon.setVisibility(View.VISIBLE);
+
+
+        bt_shipping_address_edit_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.e("telephone", st_ship_cust_telephone);
+                Log.e("postcode", st_ship_postcode);
+                Log.e("city", st_ship_city);
+                Log.e("region", st_ship_region);
+                Log.e("firstname", st_ship_cust_fname);
+                Log.e("lastname", st_ship_cust_lname);
+                Log.e("street", st_ship_street);
+                Log.e("region_code", ship_region_code);
+                Log.e("street", st_ship_street);
+                Log.e("region_code", ship_region_code);
+
+                Intent intent = new Intent(OrderDetails.this, EditShippingAddress.class);
+
+                //"ship_address_entity_id" parameter is required for edit shipping address
+                intent.putExtra("ship_address_entity_id", ship_address_entity_id);
+
+                intent.putExtra("st_ship_cust_fname", st_ship_cust_fname);
+                intent.putExtra("st_ship_cust_lname", st_ship_cust_lname);
+                intent.putExtra("st_ship_cust_telephone", st_ship_cust_telephone);
+                intent.putExtra("ship_email_id", ship_email_id);
+                intent.putExtra("st_ship_postcode", st_ship_postcode);
+                intent.putExtra("st_ship_city", st_ship_city);
+                intent.putExtra("st_ship_region", st_ship_region);
+                intent.putExtra("st_ship_street", st_ship_street);
+
+                //below are extra parameter and it is not require for for edit shipping address
+                intent.putExtra("customer_ship_address_id", customer_ship_address_id);
+                intent.putExtra("address_type", address_type);
+                intent.putExtra("ship_parent_id", ship_parent_id);
+                intent.putExtra("ship_region_code", ship_region_code);
+                intent.putExtra("ship_region_id", ship_region_id);
+                intent.putExtra("ship_country_id", ship_country_id);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                CommonFun.finishscreen(OrderDetails.this);
+
+            }
+        });
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -754,8 +849,22 @@ public class OrderDetails extends BaseActivity {
         String st_selected_Track_id = arr_tracking_id[position];
         String st_selected_shipping_type = arr_shipment_type[position];
 
-     //   String st_selected_Track_id = "700004807000";
-     //   String st_selected_shipping_type = "4";
+
+        //Shipiyari
+        //String st_selected_Track_id = "3587910240251";
+        //String st_selected_shipping_type = "1";
+
+        //BlueDart
+        //String st_selected_Track_id = "20135663354";
+        //String st_selected_shipping_type = "2";
+
+        //FedEx
+        //String st_selected_Track_id = "390097425840";
+        //String st_selected_shipping_type = "3";
+
+        //DTDC
+        //String st_selected_Track_id = "700015099901";
+        //String st_selected_shipping_type = "4";
 
 
         pref = CommonFun.getPreferences(getApplicationContext());
@@ -801,7 +910,6 @@ public class OrderDetails extends BaseActivity {
 
         st_selected_order_item_id = arr_order_item_id[position];
         arrList_selected_order_item_id.add(st_selected_order_item_id);
-
 
 
 
@@ -1817,13 +1925,35 @@ public class OrderDetails extends BaseActivity {
 
 
                             JSONArray jsonArray_street=jsonObject_address.getJSONArray("street");
-                            String st_ship_street=jsonArray_street.getString(0);
+                            st_ship_street=jsonArray_street.getString(0);
                             st_ship_address= String.valueOf(jsonArray_street);
 
-                            String st_ship_region=jsonObject_address.getString("region");
-                            String st_ship_postcode=jsonObject_address.getString("postcode");
-                            String st_ship_city=jsonObject_address.getString("city");
 
+                            st_ship_region=jsonObject_address.getString("region");
+                            st_ship_postcode=jsonObject_address.getString("postcode");
+                            st_ship_city=jsonObject_address.getString("city");
+
+
+                            // start code for edit shipping address 20 may 2020
+                            is_edit_address = response.optString("is_edit_address", "");
+                            address_type =  jsonObject_address.optString("address_type", "");
+                            st_ship_cust_fname = jsonObject_address.optString("firstname", "");
+                            st_ship_cust_lname = jsonObject_address.optString("lastname", "");
+                            st_ship_cust_full_name = st_ship_cust_fname + " " + st_ship_cust_lname;
+                            st_ship_cust_telephone = jsonObject_address.optString("telephone", "");
+                            ship_email_id = jsonObject_address.optString("email", "");
+                            customer_ship_address_id =  jsonObject_address.optString("customer_address_id", "");
+                            ship_address_entity_id = jsonObject_address.optString("entity_id", "");
+                            ship_parent_id =  jsonObject_address.optString("parent_id", "");
+                            ship_region_code = jsonObject_address.optString("region_code", "");
+                            ship_region_id = jsonObject_address.optString("region_id", "");
+                            ship_country_id = jsonObject_address.optString("country_id", "");
+
+
+                            Log.e("st_ship_region",st_ship_region);
+                            Log.e("ship_region_id",ship_region_id);
+
+                            // end - for edit shipping address 20 may 2020
 
                             String st_donation_text=(donation_amout.equals("")||donation_amout.equals("0"))?"":(donation_title+" : ₹ "+donation_amout+"\n");
 
@@ -1831,10 +1961,13 @@ public class OrderDetails extends BaseActivity {
                             String shipping_amount=jsonObject.getString("shipping_amount");
                             String disc_amount=jsonObject.getString("discount_amount");
 
+
                             String sst_disc= (disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
 
 
-                            tv_shipping_address.setText("Shipping Address:"+st_ship_street+", "+st_ship_city+"\n"+st_ship_region+" ,"+st_ship_postcode+"\n");
+                            //tv_shipping_address.setText("Shipping Address:"+st_ship_street+", "+st_ship_city+"\n"+st_ship_region+" ,"+st_ship_postcode+"\n");
+
+                            tv_shipping_address.setText(st_ship_cust_full_name +"\n"+ "Ph. "+ st_ship_cust_telephone +"\n"+ st_ship_street+", "+st_ship_city+"\n"+st_ship_region+" ,"+st_ship_postcode+"\n");
 
                             String st_text=
                                     "Cart Subtotal ("+ st_total_qty_ordered + " item) <br/>Inc Tax: ₹ " + base_subtotal +
@@ -2022,7 +2155,7 @@ public class OrderDetails extends BaseActivity {
             String st_boolean = arr_boolean[position];
             String st_edit_rtn = arr_edit_rtn_qty[position];
             String st_track_order_option= arr_track_order[position];
-            //////Log.d("st_track_order_option",st_track_order_option);
+            Log.e("st_track_order_option",st_track_order_option);
 
             if(st_track_order_option.equalsIgnoreCase("true"))
                 holder.bt_track_order.setVisibility(View.GONE);//Visible earlier
