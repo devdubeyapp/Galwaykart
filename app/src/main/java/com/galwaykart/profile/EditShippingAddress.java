@@ -233,7 +233,7 @@ public class EditShippingAddress extends AppCompatActivity {
 
 
     private void goBack(){
-        Intent intent = new Intent(EditShippingAddress.this, HomePageActivity.class);
+        Intent intent = new Intent(EditShippingAddress.this, OrderDetails.class);
         startActivity(intent);
         CommonFun.finishscreen(EditShippingAddress.this);
     }
@@ -258,10 +258,7 @@ public class EditShippingAddress extends AppCompatActivity {
         //Log.d("st_get_state_city_URL",st_get_state_city_URL);
 
         try {
-
-
             final RequestQueue requestQueue = Volley.newRequestQueue(this);
-
 
             pDialog = new TransparentProgressDialog(EditShippingAddress.this);
             pDialog.setCancelable(false);
@@ -427,7 +424,6 @@ public class EditShippingAddress extends AppCompatActivity {
                                         else
                                             arr_region_id[i] = st_region_id;
 
-                                        Log.e("st_region_id_getState", st_region_id);
 
                                     }
 
@@ -568,17 +564,10 @@ public class EditShippingAddress extends AppCompatActivity {
 
                                     if (pDialog.isShowing())
                                         pDialog.dismiss();
-
-
-//                                    Log.e("responsePut", response);
-//                                    if(response.equals("true"))
-//                                    {
-                                        Intent intent = new Intent(EditShippingAddress.this, OrderListActivity.class);
-                                        intent.putExtra("st_come_from_update","updateaddress");
+                                        Log.e("response",response);
+                                        Intent intent = new Intent(EditShippingAddress.this, OrderDetails.class);
                                         startActivity(intent);
                                         CommonFun.finishscreen(EditShippingAddress.this);
-                                    //}
-
 
                                 }
                             }, new Response.ErrorListener() {
@@ -645,3 +634,4 @@ public class EditShippingAddress extends AppCompatActivity {
 
 
 }
+

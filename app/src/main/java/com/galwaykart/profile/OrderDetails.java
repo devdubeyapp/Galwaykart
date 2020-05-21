@@ -196,8 +196,6 @@ public class OrderDetails extends BaseActivity {
         setContentView(R.layout.activity_order_details);
         initNavigationDrawer();
 
-
-
         tv_title = findViewById(R.id.tv_title);
         pref = CommonFun.getPreferences(getApplicationContext());
         SharedPreferences.Editor editor = pref.edit();
@@ -205,6 +203,8 @@ public class OrderDetails extends BaseActivity {
         editor.putString("st_selected_reason", "");
         editor.putString("st_selected_resolution", "");
         editor.putString("st_selected_condition", "");
+        editor.putString("st_increment_id", "");
+        editor.putString("order_grand_total", "");
         editor.commit();
 
 //***********************************************************************************************************************************
@@ -249,8 +249,22 @@ public class OrderDetails extends BaseActivity {
 
         Intent intent = getIntent();
         try {
-            st_increment_id = intent.getStringExtra("increment_id"); // note: previously  Increamnet_ID set in order_id variable
-            order_grand_total= intent.getStringExtra("order_grand_total");
+
+            //this code is comment on 21-05-2020. now we are using sharePreferences for getting the data from adpater
+
+            //st_increment_id = intent.getStringExtra("increment_id"); // note: previously  Increamnet_ID set in order_id variable
+            //order_grand_total= intent.getStringExtra("order_grand_total");
+
+            //Now this code is use on 21-05-2020
+            pref = CommonFun.getPreferences(getApplicationContext());
+            st_increment_id = pref.getString("st_increment_id", ""); // note: previously  Increamnet_ID set in order_id variable
+            order_grand_total = pref.getString("order_grand_total", "");
+
+            Log.e("st_increment_id_pref",st_increment_id);
+            Log.e("order_grand_total_pref",order_grand_total);
+
+
+
 
         }catch (Exception ex){
 
@@ -472,8 +486,9 @@ public class OrderDetails extends BaseActivity {
                 Intent intent = new Intent(OrderDetails.this, EditShippingAddress.class);
 
                 //"ship_address_entity_id" parameter is required for edit shipping address
-                intent.putExtra("ship_address_entity_id", ship_address_entity_id);
 
+
+                intent.putExtra("ship_address_entity_id", ship_address_entity_id);
                 intent.putExtra("st_ship_cust_fname", st_ship_cust_fname);
                 intent.putExtra("st_ship_cust_lname", st_ship_cust_lname);
                 intent.putExtra("st_ship_cust_telephone", st_ship_cust_telephone);
@@ -491,22 +506,12 @@ public class OrderDetails extends BaseActivity {
                 intent.putExtra("ship_region_id", ship_region_id);
                 intent.putExtra("ship_country_id", ship_country_id);
 
-
-
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 CommonFun.finishscreen(OrderDetails.this);
 
             }
         });
-
-
-
-
-
-
-
-
 
     }
 
@@ -1482,6 +1487,12 @@ public class OrderDetails extends BaseActivity {
         if(listAdapter.getCount() >0 ) {
             lv_order_details.invalidate();
             lv_order_details.setAdapter(listAdapter);
+
+            pref = CommonFun.getPreferences(getApplicationContext());
+            String st_id = pref.getString("st_increment_id", "");
+            Log.e("st_increment_id_st",st_id);
+            Log.e("st_increment_id_st_1",st_increment_id);
+
             tv_order_id.setText("Order # " + st_increment_id);
             //tv_cancel_order.setVisibility(View.VISIBLE);
             tv_title.setText("Your Order");

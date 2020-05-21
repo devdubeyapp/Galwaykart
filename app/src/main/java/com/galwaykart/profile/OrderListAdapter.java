@@ -114,7 +114,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
             @Override
             public void onClick(View v) {
 
-
                 String selected_order_id = orderListModels.get(position).getOrderid();
                 String selected_order_status = orderListModels.get(position).getStatus();
                 String selected_order_total =orderListModels.get(position).getSubtotal();
@@ -126,9 +125,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.View
                 editor.putString("Order_ID",selected_order_id);
                 // editor.putString("selected_order_rtn",selected_order_rtn);
                 editor.putString("entity_id",orderListModels.get(position).getEntity_id());
-
                 editor.putString("selected_order_total",selected_order_total);
-
+                editor.putString("st_increment_id",orderListModels.get(position).getIncrement_id());
+                editor.putString("order_grand_total",orderListModels.get(position).getGrand_total());
                 editor.commit();
 
 

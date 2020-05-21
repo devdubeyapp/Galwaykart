@@ -1,1 +1,1 @@
-include ':app', ':sdkui', ':payusdkui'
+include ':app', ':sdkui'
