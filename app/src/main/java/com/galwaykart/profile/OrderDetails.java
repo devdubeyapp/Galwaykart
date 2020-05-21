@@ -220,9 +220,11 @@ public class OrderDetails extends BaseActivity {
             }
         });
 
+
+
         tv_shipping_address=findViewById(R.id.tv_shipping_address);
         bt_shipping_address_edit_icon = findViewById(R.id.bt_shipping_address_edit_icon);
-
+        bt_shipping_address_edit_icon.setVisibility(View.GONE);
 
         tv_order_id = findViewById(R.id.tv_order_id);
         tv_cancel_order = findViewById(R.id.tv_cancel_order);
@@ -452,10 +454,9 @@ public class OrderDetails extends BaseActivity {
             tv_cancel_order.setVisibility(View.GONE); // cancel_tv
         }
 
-        if(is_edit_address.equalsIgnoreCase("0"))
-            bt_shipping_address_edit_icon.setVisibility(View.GONE);
-        else
-            bt_shipping_address_edit_icon.setVisibility(View.VISIBLE);
+
+        //bt_shipping_address_edit_icon
+
 
 
         bt_shipping_address_edit_icon.setOnClickListener(new View.OnClickListener() {
@@ -1936,6 +1937,13 @@ public class OrderDetails extends BaseActivity {
 
                             // start code for edit shipping address 20 may 2020
                             is_edit_address = response.optString("is_edit_address", "");
+                            if(is_edit_address.equalsIgnoreCase("0"))
+                                bt_shipping_address_edit_icon.setVisibility(View.GONE);
+                            else
+                                bt_shipping_address_edit_icon.setVisibility(View.VISIBLE);
+
+
+
                             address_type =  jsonObject_address.optString("address_type", "");
                             st_ship_cust_fname = jsonObject_address.optString("firstname", "");
                             st_ship_cust_lname = jsonObject_address.optString("lastname", "");
@@ -1950,8 +1958,12 @@ public class OrderDetails extends BaseActivity {
                             ship_country_id = jsonObject_address.optString("country_id", "");
 
 
-                            Log.e("st_ship_region",st_ship_region);
-                            Log.e("ship_region_id",ship_region_id);
+
+
+
+                            Log.e("st_ship_region_js",st_ship_region);
+                            Log.e("ship_region_id_js",ship_region_id);
+                            Log.e("is_edit_address_js",is_edit_address);
 
                             // end - for edit shipping address 20 may 2020
 

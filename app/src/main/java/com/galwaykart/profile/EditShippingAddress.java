@@ -2,10 +2,13 @@ package com.galwaykart.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,17 +19,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.galwaykart.HomePageActivity;
 import com.galwaykart.R;
+import com.galwaykart.SingleProductView.MainActivity;
 import com.galwaykart.address_book.AddNewAddress;
 import com.galwaykart.address_book.CustomerAddressBook;
 import com.galwaykart.essentialClass.CommonFun;
@@ -34,8 +41,11 @@ import com.galwaykart.essentialClass.ExceptionError;
 import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.galwaykart.newsnotice.NoticeActivity;
+import com.galwaykart.testimonial.CreateTestimonialActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
@@ -134,7 +144,7 @@ public class EditShippingAddress extends AppCompatActivity {
             customer_ship_address_id = bundle.getString("customer_ship_address_id");
             address_type = bundle.getString("address_type");
             ship_parent_id = bundle.getString("ship_parent_id");
-            region_code = bundle.getString("ship_region_code");
+            //region_code = bundle.getString("ship_region_code");
             region_id = bundle.getString("ship_region_id");
             ship_country_id = bundle.getString("ship_country_id");
 
@@ -183,7 +193,7 @@ public class EditShippingAddress extends AppCompatActivity {
         button_edit_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveAddressAndContinue();
+                editAndSaveAddress();
             }
         });
 
@@ -233,7 +243,7 @@ public class EditShippingAddress extends AppCompatActivity {
 
 
     private void goBack(){
-        Intent intent = new Intent(EditShippingAddress.this, HomePageActivity.class);
+        Intent intent = new Intent(EditShippingAddress.this, OrderDetails.class);
         startActivity(intent);
         CommonFun.finishscreen(EditShippingAddress.this);
     }
@@ -288,8 +298,8 @@ public class EditShippingAddress extends AppCompatActivity {
                                         JSONObject object = array.getJSONObject(i);
                                         st_ship_city = object.getString("City");
                                         ship_country_id = object.getString("Capital");
-                                        //region = object.getString("State");
-                                        st_pin_state = object.getString("State");
+                                        region = object.getString("State");
+                                        //st_pin_state = object.getString("State");
                                         st_pin_state_id = object.getString("statecode");
 
                                         arr_pin_state_id[i] = st_pin_state_id;
@@ -420,6 +430,7 @@ public class EditShippingAddress extends AppCompatActivity {
                                         String default_name = order_list_obj.getString(TAG_default_name);
 
                                         int region_code = Integer.parseInt(st_region_id);
+                                        Log.e("st_region_id_ge",st_region_id);
                                         arr_state_name[i] = default_name;
                                         arr_state_code[i] = code;
                                         if(region_code < 10)
@@ -431,17 +442,11 @@ public class EditShippingAddress extends AppCompatActivity {
 
                                     }
 
-
-
-
                                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditShippingAddress.this,android.R.layout.simple_spinner_dropdown_item,arr_state_name);
                                     spinner_state_profile.setAdapter(adapter);
 
-                                    //Log.d("itemdata",new_state);
-
 
                                     if (st_new_shp_state != null && !st_new_shp_state.equals("")){
-                                        //  Log.d("item_position1312312",""+item_position);
                                         spinner_state_profile.setSelection(adapter.getPosition(st_new_shp_state));
 
                                     }
@@ -465,7 +470,7 @@ public class EditShippingAddress extends AppCompatActivity {
                     CommonFun.showVolleyException(error,EditShippingAddress.this);
                     //CommonFun.alertError(AddNewAddress.this,error.toString());
 
-                    // error.printStackTrace();
+                    //error.printStackTrace();
                 }
 
             });
@@ -485,71 +490,55 @@ public class EditShippingAddress extends AppCompatActivity {
 
     }
 
+    private void editAndSaveAddress() {
 
-
-    private void saveAddressAndContinue(){
-
-        String st_tel = phone_no.getText().toString();
-        String st_postcode = zip.getText().toString();
-        String st_city = city.getText().toString();
-        String st_fname = first_name.getText().toString();
-        String st_lname = last_name.getText().toString();
-        String st_address = street_address.getText().toString();
+        String st_tel = phone_no.getText().toString().trim();
+        String st_postcode = zip.getText().toString().trim();
+        String st_city = city.getText().toString().trim();
+        String st_fname = first_name.getText().toString().trim();
+        String st_lname = last_name.getText().toString().trim();
+        String st_street_address = street_address.getText().toString().trim();
         String st_state = spinner_state_profile.getSelectedItem().toString();
         int item_position = spinner_state_profile.getSelectedItemPosition();
 
-        int pin_code_length = st_postcode.length();
-        int mobile_no_length = st_tel.length();
+        pref = CommonFun.getPreferences(getApplicationContext());
+        tokenData = pref.getString("tokenData", "");
+        String save_address_url = Global_Settings.api_url + "rest/V1/m-orders/address/update";
 
+        boolean isValid = false;
+        boolean valid_pin = false;
 
-        Boolean isValid = false;
-        Boolean valid_pin = false;
         if ((!st_tel.equals("")) && (!st_postcode.equals("")) && (!st_city.equals("")) && (!st_fname.equals("")) &&
-                (!st_lname.equals("")) && (!st_address.equals("")) ) {
-            if ((pin_code_length == 6 && mobile_no_length == 10)) {
+                (!st_lname.equals("")) && (!st_street_address.equals("")) ) {
+            if ((st_postcode.length() == 6 && st_tel.length() == 10)) {
                 valid_pin = true;
                 isValid = true;
             }
         }
 
-
-        ///tokenData = pref.getString("tokenData", "");
-        tokenData = "1y0kfustfzns74r3rtmvl4l86m8v6zsi";
-
-        if(isValid == true) {
-            if (valid_pin == true) {
-
-               // tokenData = pref.getString("tokenData", "");
-
-                pref = CommonFun.getPreferences(getApplicationContext());
-                String email = pref.getString("user_email", "");
-
-                String save_address_url = Global_Settings.api_url + "rest/V1/m-orders/address/update";
-                return_data="";
-
-                if (st_ship_cust_telephone != null && !st_ship_cust_telephone.equals("")){
-
-                }else{
-                    st_ship_cust_telephone = phone_no.getText().toString().trim();
-                }
-
-
+        if(isValid)
+        {
+            if(valid_pin)
+            {
                 String input_data = "{\"shipping_address\":{\"address_type\":\"shipping\"," +
-                        "\"city\":\""+city.getText().toString().trim()+"\"," +
+                        "\"city\":\""+st_city+"\"," +
                         "\"country_id\":\"IN\"," +
                         "\"customer_address_id\":"+customer_ship_address_id+"," +
                         "\"email\":\""+ship_email_id+"\"," +
                         "\"entity_id\":"+ship_address_entity_id+"," +
-                        "\"firstname\":\""+first_name.getText().toString().trim()+"\"," +
-                        "\"lastname\":\""+last_name.getText().toString().trim()+"\"," +
+                        "\"firstname\":\""+st_fname+"\"," +
+                        "\"lastname\":\""+st_lname+"\"," +
                         "\"parent_id\":"+ship_parent_id+"," +
-                        "\"postcode\":\""+zip.getText().toString().trim()+"\"," +
-                        "\"region\":\""+st_new_shp_state+"\"," +
+                        "\"postcode\":\""+st_postcode+"\"," +
+                        "\"region\":\""+region+"\"," +
                         "\"region_code\":\""+region_code+"\"," +
-                        "\"region_id\":"+region_id+"," +
-                        "\"street\":[\""+street_address.getText().toString().trim().replaceAll("\n", " ")+"\"]," +
-                        "\"telephone\":\""+phone_no.getText().toString().trim()+"\"}}";
+                        "\"region_id\":"+"9"+"," +
+                        "\"street\":[\""+st_street_address.replaceAll("\n", " ")+"\"]," +
+                        "\"telephone\":\""+st_tel+"\"}}";
 
+                //here i put static region_id id, need to update it dynemic it
+
+                Log.e("region_id_sb",region_id);
 
                 Log.e("input_data",input_data);
 
@@ -559,38 +548,55 @@ public class EditShippingAddress extends AppCompatActivity {
                 pDialog.show();
 
                 try {
-
                     RequestQueue requestQueue = Volley.newRequestQueue(this);
-
                     StringRequest stringRequest = new StringRequest(Request.Method.PUT, save_address_url,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
-
                                     if (pDialog.isShowing())
                                         pDialog.dismiss();
-                                    Log.e("responsePut", response);
+                                    Log.d("responsePut", response);
                                     if(response.equals("true"))
                                     {
+                                        String msg="Submitted successfully";
+                                        Snackbar.make(findViewById(android.R.id.content), msg, Snackbar.LENGTH_LONG).show();
                                         Intent intent = new Intent(EditShippingAddress.this, OrderDetails.class);
-                                        intent.putExtra("st_come_from_update","updateaddress");
                                         startActivity(intent);
                                         CommonFun.finishscreen(EditShippingAddress.this);
                                     }
-
-
+                                    else
+                                    {
+                                        String err_msg="Something went wrong!! Please try again";
+                                        Snackbar.make(findViewById(android.R.id.content), err_msg, Snackbar.LENGTH_LONG).show();
+                                    }
 
                                 }
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.e("VOLLEY", error.toString());
                             CommonFun.alertError(EditShippingAddress.this,error.toString());
                             if (pDialog.isShowing())
                                 pDialog.dismiss();
-                            //CommonFun.alertError(DeliveryTypeActivity.this,error.toString());
-                            CommonFun.showVolleyException(error, EditShippingAddress.this);
+
+                            if (error instanceof ServerError) {
+                                NetworkResponse response = error.networkResponse;
+                                if (response != null && response.data != null) {
+                                    String errorString = new String(response.data);
+                                    try {
+                                        JSONObject object = new JSONObject(errorString);
+                                        String st_msg = object.getString("message");
+                                        String st_code = object.getString("code");
+                                        CommonFun.alertError(EditShippingAddress.this, st_msg);
+                                    } catch (JSONException e) {
+                                        //e.printStackTrace();
+                                        CommonFun.showVolleyException(error, EditShippingAddress.this);
+                                    }
+                                }
+                            } else
+                                CommonFun.showVolleyException(error, EditShippingAddress.this);
                         }
+
+
                     }) {
 
 
@@ -606,16 +612,15 @@ public class EditShippingAddress extends AppCompatActivity {
 
                         @Override
                         public byte[] getBody() throws AuthFailureError {
-                            return return_data == null ? null : return_data.getBytes(StandardCharsets.UTF_8);
+                            return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                         }
 
                         @Override
                         public Map<String, String> getHeaders() throws AuthFailureError {
                             HashMap<String, String> headers = new HashMap<>();
-
-                            ////Log.d("delievery data in",delivery_data_in.toString());
                             headers.put("Authorization", "Bearer " + tokenData);
-                            //headers.put("Content-Type","application/json");
+                            headers.put("Content-Type","application/json");
+
                             return headers;
                         }
 
@@ -628,7 +633,7 @@ public class EditShippingAddress extends AppCompatActivity {
                     requestQueue.add(stringRequest);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ////Log.d("error...","Error");
+                    Log.d("error...","Error");
                 }
             }
             else {
@@ -638,6 +643,8 @@ public class EditShippingAddress extends AppCompatActivity {
         else {
             CommonFun.alertError(EditShippingAddress.this, "Must enter all required fields");
         }
+
+
 
 
 
