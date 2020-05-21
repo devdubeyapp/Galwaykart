@@ -302,7 +302,7 @@ public class OrderDetails extends BaseActivity {
             tv_cancel_order.setVisibility(View.GONE); // cancel_tv
         }
 
-
+        bt_shipping_address_edit_icon.setVisibility(View.GONE);
         arrayList = new ArrayList<HashMap<String, String>>();
         //arrayList_order=new ArrayList<OrderDetailsItemModel>();
         lv_order_details = findViewById(R.id.lv_order_details);
@@ -452,10 +452,6 @@ public class OrderDetails extends BaseActivity {
             tv_cancel_order.setVisibility(View.GONE); // cancel_tv
         }
 
-        if(is_edit_address.equalsIgnoreCase("0"))
-            bt_shipping_address_edit_icon.setVisibility(View.GONE);
-        else
-            bt_shipping_address_edit_icon.setVisibility(View.VISIBLE);
 
 
         bt_shipping_address_edit_icon.setOnClickListener(new View.OnClickListener() {
@@ -494,6 +490,8 @@ public class OrderDetails extends BaseActivity {
                 intent.putExtra("ship_region_code", ship_region_code);
                 intent.putExtra("ship_region_id", ship_region_id);
                 intent.putExtra("ship_country_id", ship_country_id);
+
+
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -1949,6 +1947,11 @@ public class OrderDetails extends BaseActivity {
                             ship_region_id = jsonObject_address.optString("region_id", "");
                             ship_country_id = jsonObject_address.optString("country_id", "");
 
+
+                            if(is_edit_address.equalsIgnoreCase("0"))
+                                bt_shipping_address_edit_icon.setVisibility(View.GONE);
+                            else
+                                bt_shipping_address_edit_icon.setVisibility(View.VISIBLE);
 
                             Log.e("st_ship_region",st_ship_region);
                             Log.e("ship_region_id",ship_region_id);

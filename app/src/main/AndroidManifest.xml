@@ -357,6 +357,10 @@
         <activity android:name=".helpdesksupport.mycomplaint.MyComplaints"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".profile.EditShippingAddress"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
 
 
         <service

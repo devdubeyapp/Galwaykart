@@ -102,8 +102,6 @@ public class UpdateAddressActivity extends BaseActivity {
         initNavigationDrawer();
 
         pref = CommonFun.getPreferences(getApplicationContext());
-
-
         // get Already saved address details
 
         login_email = pref.getString("login_email","");

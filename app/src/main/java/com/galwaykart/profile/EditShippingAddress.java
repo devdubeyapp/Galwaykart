@@ -512,16 +512,15 @@ public class EditShippingAddress extends AppCompatActivity {
             }
         }
 
+        pref = CommonFun.getPreferences(getApplicationContext());
+        tokenData = pref.getString("tokenData", "");
 
-        ///tokenData = pref.getString("tokenData", "");
-        tokenData = "1y0kfustfzns74r3rtmvl4l86m8v6zsi";
+
+        //tokenData = "1y0kfustfzns74r3rtmvl4l86m8v6zsi";
 
         if(isValid == true) {
             if (valid_pin == true) {
 
-               // tokenData = pref.getString("tokenData", "");
-
-                pref = CommonFun.getPreferences(getApplicationContext());
                 String email = pref.getString("user_email", "");
 
                 String save_address_url = Global_Settings.api_url + "rest/V1/m-orders/address/update";
@@ -544,9 +543,9 @@ public class EditShippingAddress extends AppCompatActivity {
                         "\"lastname\":\""+last_name.getText().toString().trim()+"\"," +
                         "\"parent_id\":"+ship_parent_id+"," +
                         "\"postcode\":\""+zip.getText().toString().trim()+"\"," +
-                        "\"region\":\""+st_new_shp_state+"\"," +
+                        "\"region\":\""+region+"\"," +
                         "\"region_code\":\""+region_code+"\"," +
-                        "\"region_id\":"+region_id+"," +
+                        "\"region_id\":\""+region_id+"\"," +
                         "\"street\":[\""+street_address.getText().toString().trim().replaceAll("\n", " ")+"\"]," +
                         "\"telephone\":\""+phone_no.getText().toString().trim()+"\"}}";
 
@@ -569,15 +568,16 @@ public class EditShippingAddress extends AppCompatActivity {
 
                                     if (pDialog.isShowing())
                                         pDialog.dismiss();
-                                    Log.e("responsePut", response);
-                                    if(response.equals("true"))
-                                    {
-                                        Intent intent = new Intent(EditShippingAddress.this, OrderDetails.class);
+
+
+//                                    Log.e("responsePut", response);
+//                                    if(response.equals("true"))
+//                                    {
+                                        Intent intent = new Intent(EditShippingAddress.this, OrderListActivity.class);
                                         intent.putExtra("st_come_from_update","updateaddress");
                                         startActivity(intent);
                                         CommonFun.finishscreen(EditShippingAddress.this);
-                                    }
-
+                                    //}
 
 
                                 }
@@ -585,7 +585,7 @@ public class EditShippingAddress extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("VOLLEY", error.toString());
-                            CommonFun.alertError(EditShippingAddress.this,error.toString());
+                            //CommonFun.alertError(EditShippingAddress.this,error.toString());
                             if (pDialog.isShowing())
                                 pDialog.dismiss();
                             //CommonFun.alertError(DeliveryTypeActivity.this,error.toString());
@@ -606,7 +606,7 @@ public class EditShippingAddress extends AppCompatActivity {
 
                         @Override
                         public byte[] getBody() throws AuthFailureError {
-                            return return_data == null ? null : return_data.getBytes(StandardCharsets.UTF_8);
+                            return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
                         }
 
                         @Override
