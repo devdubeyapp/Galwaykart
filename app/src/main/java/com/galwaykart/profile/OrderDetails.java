@@ -189,6 +189,7 @@ public class OrderDetails extends BaseActivity {
         startActivity(intent);
         CommonFun.finishscreen(this);
 
+
     }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -203,8 +204,8 @@ public class OrderDetails extends BaseActivity {
         editor.putString("st_selected_reason", "");
         editor.putString("st_selected_resolution", "");
         editor.putString("st_selected_condition", "");
-        editor.putString("st_increment_id", "");
-        editor.putString("order_grand_total", "");
+        //editor.putString("st_increment_id", "");
+        //editor.putString("order_grand_total", "");
         editor.commit();
 
 //***********************************************************************************************************************************
@@ -1488,9 +1489,6 @@ public class OrderDetails extends BaseActivity {
             lv_order_details.invalidate();
             lv_order_details.setAdapter(listAdapter);
 
-            pref = CommonFun.getPreferences(getApplicationContext());
-            String st_id = pref.getString("st_increment_id", "");
-            Log.e("st_increment_id_st",st_id);
             Log.e("st_increment_id_st_1",st_increment_id);
 
             tv_order_id.setText("Order # " + st_increment_id);
