@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -45,6 +46,12 @@ import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.galwaykart.notification.NotificationSplashActivity;
 import com.galwaykart.shipyaari.TrackDetailWebViewActivity;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
 
 
 import org.json.JSONArray;
@@ -59,12 +66,15 @@ import java.util.TimerTask;
 import io.realm.Realm;
 import io.realm.RealmObject;
 
+import static com.crashlytics.android.Crashlytics.log;
+
 /**
  * Created by ankesh on 9/14/2017.
  */
 
 public class SplashActivity extends AppCompatActivity {
 
+    private static final int MY_REQUEST_CODE = 10020;
     TimerTask timerTask;
     SharedPreferences pref =null;
     String tokenData = "",st_dist_id="";
@@ -99,6 +109,8 @@ public class SplashActivity extends AppCompatActivity {
 //            return null;
 //        }
 //    }
+    AppUpdateManager appUpdateManager;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,8 +121,53 @@ public class SplashActivity extends AppCompatActivity {
 //        startActivity(intent);
 //        CommonFun.finishscreen(SplashActivity.this);
 
-        init();
+        //init();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+//        appUpdateManager = AppUpdateManagerFactory.create(SplashActivity.this);
+//
+//// Returns an intent object that you use to check for an update.
+//        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+//
+//// Checks that the platform will allow the specified type of update.
+//        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+//            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+//                    // For a flexible update, use AppUpdateType.FLEXIBLE
+//                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+//                try {
+//                    appUpdateManager.startUpdateFlowForResult(
+//                      appUpdateInfo,
+//                      AppUpdateType.IMMEDIATE,
+//                      this,
+//                      MY_REQUEST_CODE);
+//                } catch (IntentSender.SendIntentException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            else
+//            {
+//                init();
+//            }
+//        });
+        init();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                appUpdateManager.completeUpdate();
+                log("Update flow failed! Result code: " + resultCode);
+                // If the update is cancelled or fails,
+                // you can request to start the update again.
+            }
+        }
     }
 
     private void init() {

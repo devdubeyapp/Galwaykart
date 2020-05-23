@@ -99,9 +99,12 @@ public class EditShippingAddress extends AppCompatActivity {
     String tokenData="";
     String return_data="";
     SharedPreferences pref;
+    String increment_id="";
+    String order_grand_total="";
 
 
     private Button button_edit_address;
+
 
 
 
@@ -138,6 +141,8 @@ public class EditShippingAddress extends AppCompatActivity {
             region_id = bundle.getString("ship_region_id");
             ship_country_id = bundle.getString("ship_country_id");
 
+            increment_id=bundle.getString("increment_id");
+            order_grand_total=bundle.getString("order_grand_total");
             Log.e("region_id_on_create", region_id);
 
         }
@@ -234,6 +239,8 @@ public class EditShippingAddress extends AppCompatActivity {
 
     private void goBack(){
         Intent intent = new Intent(EditShippingAddress.this, OrderDetails.class);
+        intent.putExtra("increment_id",increment_id);
+        intent.putExtra("order_grand_total",order_grand_total);
         startActivity(intent);
         CommonFun.finishscreen(EditShippingAddress.this);
     }
@@ -565,7 +572,9 @@ public class EditShippingAddress extends AppCompatActivity {
                                     if (pDialog.isShowing())
                                         pDialog.dismiss();
                                         Log.e("response",response);
-                                        Intent intent = new Intent(EditShippingAddress.this, OrderDetails.class);
+                                    Intent intent = new Intent(EditShippingAddress.this, OrderDetails.class);
+                                        intent.putExtra("increment_id",increment_id);
+                                        intent.putExtra("order_grand_total",order_grand_total);
                                         startActivity(intent);
                                         CommonFun.finishscreen(EditShippingAddress.this);
 

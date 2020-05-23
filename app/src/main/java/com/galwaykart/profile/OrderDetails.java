@@ -250,15 +250,10 @@ public class OrderDetails extends BaseActivity {
         Intent intent = getIntent();
         try {
 
-            //this code is comment on 21-05-2020. now we are using sharePreferences for getting the data from adpater
+            st_increment_id = intent.getStringExtra("increment_id"); // note: previously  Increamnet_ID set in order_id variable
+            order_grand_total= intent.getStringExtra("order_grand_total");
 
-            //st_increment_id = intent.getStringExtra("increment_id"); // note: previously  Increamnet_ID set in order_id variable
-            //order_grand_total= intent.getStringExtra("order_grand_total");
-
-            //Now this code is use on 21-05-2020
             pref = CommonFun.getPreferences(getApplicationContext());
-            st_increment_id = pref.getString("st_increment_id", ""); // note: previously  Increamnet_ID set in order_id variable
-            order_grand_total = pref.getString("order_grand_total", "");
 
             Log.e("st_increment_id_pref",st_increment_id);
             Log.e("order_grand_total_pref",order_grand_total);
@@ -484,10 +479,7 @@ public class OrderDetails extends BaseActivity {
                 Log.e("region_code", ship_region_code);
 
                 Intent intent = new Intent(OrderDetails.this, EditShippingAddress.class);
-
                 //"ship_address_entity_id" parameter is required for edit shipping address
-
-
                 intent.putExtra("ship_address_entity_id", ship_address_entity_id);
                 intent.putExtra("st_ship_cust_fname", st_ship_cust_fname);
                 intent.putExtra("st_ship_cust_lname", st_ship_cust_lname);
@@ -505,6 +497,10 @@ public class OrderDetails extends BaseActivity {
                 intent.putExtra("ship_region_code", ship_region_code);
                 intent.putExtra("ship_region_id", ship_region_id);
                 intent.putExtra("ship_country_id", ship_country_id);
+
+
+                intent.putExtra("increment_id",st_increment_id);
+                intent.putExtra("order_grand_total",order_grand_total);
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -1487,12 +1483,6 @@ public class OrderDetails extends BaseActivity {
         if(listAdapter.getCount() >0 ) {
             lv_order_details.invalidate();
             lv_order_details.setAdapter(listAdapter);
-
-            pref = CommonFun.getPreferences(getApplicationContext());
-            String st_id = pref.getString("st_increment_id", "");
-            Log.e("st_increment_id_st",st_id);
-            Log.e("st_increment_id_st_1",st_increment_id);
-
             tv_order_id.setText("Order # " + st_increment_id);
             //tv_cancel_order.setVisibility(View.VISIBLE);
             tv_title.setText("Your Order");
@@ -1944,7 +1934,7 @@ public class OrderDetails extends BaseActivity {
 
 
                             // start code for edit shipping address 20 may 2020
-                            is_edit_address = response.optString("is_edit_address", "");
+
                             address_type =  jsonObject_address.optString("address_type", "");
                             st_ship_cust_fname = jsonObject_address.optString("firstname", "");
                             st_ship_cust_lname = jsonObject_address.optString("lastname", "");
@@ -1958,6 +1948,10 @@ public class OrderDetails extends BaseActivity {
                             ship_region_id = jsonObject_address.optString("region_id", "");
                             ship_country_id = jsonObject_address.optString("country_id", "");
 
+                            if(jsonObject_address.has("is_edit_address"))
+                                is_edit_address = response.optString("is_edit_address", "");
+                            else
+                                is_edit_address="0";
 
                             if(is_edit_address.equalsIgnoreCase("0"))
                                 bt_shipping_address_edit_icon.setVisibility(View.GONE);
