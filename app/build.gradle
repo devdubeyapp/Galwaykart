@@ -21,8 +21,8 @@ android {
         applicationId "com.galwaykart"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 86
-        versionName "10.0.1"
+        versionCode 88
+        versionName "10.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
