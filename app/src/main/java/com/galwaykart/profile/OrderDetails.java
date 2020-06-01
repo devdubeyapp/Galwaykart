@@ -1880,15 +1880,18 @@ public class OrderDetails extends BaseActivity {
 
 
 
+                                // || (!arr_shipment_text[i].equals(""))||arr_shipment_text[i]!=null)
 
-                                   if (st_order_status.equalsIgnoreCase("canceled")||
-                                           (!arr_shipment_text[i].equals(""))||arr_shipment_text[i]!=null) {
-                                       arr_track_order[i] = "false";
-                                       bt_track_order.setVisibility(View.GONE);
-                                   } else {
-                                       arr_track_order[i] = "true";
-                                       bt_track_order.setVisibility(View.VISIBLE);
-                                   }
+                                if (st_order_status.equalsIgnoreCase("canceled") ||
+                                        (st_order_status.equalsIgnoreCase("pending"))||
+                                        (st_order_status.toLowerCase().contains("payment")))
+                                {
+                                    arr_track_order[i] = "false";
+                                    bt_track_order.setVisibility(View.GONE);
+                                } else {
+                                    arr_track_order[i] = "true";
+                                    bt_track_order.setVisibility(View.VISIBLE);
+                                }
 
 
                                 hashMap = new HashMap<String, String>();
