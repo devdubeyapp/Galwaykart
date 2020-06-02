@@ -1776,7 +1776,7 @@ public class OrderDetails extends BaseActivity {
 
                     if (response != null) {
                         try {
-
+                            JSONObject jsonObject = new JSONObject(String.valueOf(response));
                             String donation_amout="";
                             String donation_title="";
                             if(response.has("donation_value")){
@@ -1785,8 +1785,18 @@ public class OrderDetails extends BaseActivity {
                             if(response.has("donation_title")){
                                 donation_title=response.getString("donation_title");
                             }
+                            is_edit_address="0";
 
-                            JSONObject jsonObject = new JSONObject(String.valueOf(response));
+                            is_edit_address = response.optString("is_edit_address", "");
+//                            //if(response.has("is_edit_address"))
+//                                is_edit_address = response.optString("is_edit_address", "");
+//                            //else
+
+                            if(is_edit_address.equalsIgnoreCase("0"))
+                                bt_shipping_address_edit_icon.setVisibility(View.GONE);
+                            else
+                                bt_shipping_address_edit_icon.setVisibility(View.VISIBLE);
+
                             array_order_list = jsonObject.getJSONArray("items");
                             int order_list_length = array_order_list.length();
 
@@ -1884,7 +1894,8 @@ public class OrderDetails extends BaseActivity {
 
                                 if (st_order_status.equalsIgnoreCase("canceled") ||
                                         (st_order_status.equalsIgnoreCase("pending"))||
-                                        (st_order_status.toLowerCase().contains("payment")))
+                                        (st_order_status.toLowerCase().contains("payment"))||
+                                        (st_order_status.toLowerCase().contains("hold")))
                                 {
                                     arr_track_order[i] = "false";
                                     bt_track_order.setVisibility(View.GONE);
@@ -1951,15 +1962,7 @@ public class OrderDetails extends BaseActivity {
                             ship_region_id = jsonObject_address.optString("region_id", "");
                             ship_country_id = jsonObject_address.optString("country_id", "");
 
-                            if(jsonObject_address.has("is_edit_address"))
-                                is_edit_address = response.optString("is_edit_address", "");
-                            else
-                                is_edit_address="0";
 
-                            if(is_edit_address.equalsIgnoreCase("0"))
-                                bt_shipping_address_edit_icon.setVisibility(View.GONE);
-                            else
-                                bt_shipping_address_edit_icon.setVisibility(View.VISIBLE);
 
                             Log.e("st_ship_region",st_ship_region);
                             Log.e("ship_region_id",ship_region_id);

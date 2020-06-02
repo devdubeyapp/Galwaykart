@@ -2,10 +2,13 @@ package com.galwaykart.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -536,15 +540,16 @@ public class EditShippingAddress extends AppCompatActivity {
                 }
 
 
-                String input_data = "{\"shipping_address\":{\"address_type\":\"shipping\"," +
+                String input_data =
+                        "{\"shipping_address\":{\"address_type\":\"shipping\"," +
                         "\"city\":\""+city.getText().toString().trim()+"\"," +
                         "\"country_id\":\"IN\"," +
-                        "\"customer_address_id\":"+customer_ship_address_id+"," +
+                        "\"customer_address_id\":\""+customer_ship_address_id+"\"," +
                         "\"email\":\""+ship_email_id+"\"," +
-                        "\"entity_id\":"+ship_address_entity_id+"," +
+                        "\"entity_id\":\""+ship_address_entity_id+"\"," +
                         "\"firstname\":\""+first_name.getText().toString().trim()+"\"," +
                         "\"lastname\":\""+last_name.getText().toString().trim()+"\"," +
-                        "\"parent_id\":"+ship_parent_id+"," +
+                        "\"parent_id\":\""+ship_parent_id+"\"," +
                         "\"postcode\":\""+zip.getText().toString().trim()+"\"," +
                         "\"region\":\""+region+"\"," +
                         "\"region_code\":\""+region_code+"\"," +
@@ -572,11 +577,41 @@ public class EditShippingAddress extends AppCompatActivity {
                                     if (pDialog.isShowing())
                                         pDialog.dismiss();
                                         Log.e("response",response);
-                                    Intent intent = new Intent(EditShippingAddress.this, OrderDetails.class);
-                                        intent.putExtra("increment_id",increment_id);
-                                        intent.putExtra("order_grand_total",order_grand_total);
-                                        startActivity(intent);
-                                        CommonFun.finishscreen(EditShippingAddress.this);
+
+
+                                    Vibrator vibrator = (Vibrator) EditShippingAddress.this.getSystemService(EditShippingAddress.VIBRATOR_SERVICE);
+                                    vibrator.vibrate(100);
+
+                                    Dialog dialog = new Dialog(EditShippingAddress.this);
+                                    dialog.setContentView(R.layout.custom_alert_dialog_design);
+                                    TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
+                                    tv_dialog.setText("Address update successfully");
+                                    ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
+                                    dialog.show();
+
+                                    new CountDownTimer(2000, 2000) {
+
+                                        @Override
+                                        public void onTick(long millisUntilFinished) {
+                                            // TODO Auto-generated method stub
+
+                                        }
+
+                                        @Override
+                                        public void onFinish() {
+                                            // TODO Auto-generated method stub
+
+                                            Intent intent = new Intent(EditShippingAddress.this, OrderDetails.class);
+                                            intent.putExtra("increment_id",increment_id);
+                                            intent.putExtra("order_grand_total",order_grand_total);
+                                            startActivity(intent);
+                                            CommonFun.finishscreen(EditShippingAddress.this);
+                                            if(dialog.isShowing())
+                                                dialog.dismiss();
+                                        }
+                                    }.start();
+
+
 
                                 }
                             }, new Response.ErrorListener() {
