@@ -14,7 +14,7 @@ public class Global_Settings {
     System.loadLibrary("commonfun");
  }
 
-    public static final int current_soft_version=88;
+    public static final int current_soft_version=90;
     // public static final String test_offer_url="http://qa.galwaykart.com/24nov/galway_sus/";
     //public static final String Notification_api_url="http://test.glazegalway.com:81/ios_galwaykart/";
     //public static final String galway_api_url=commonSalesData();
@@ -35,7 +35,7 @@ public class Global_Settings {
 
     public static final String api_url="https://www.galwaykart.com/";                 // Live
     //public static final String api_url="http://192.168.10.130/galwaykart/";               // Test
-    //public static final String api_url="http://qa.galwaykart.com/";      // new qa server
+   // public static final String api_url="http://qa.galwaykart.com/";      // new qa server
 
 
     //public static final String online_payment_hash_key_url="https://www.galwaykart.com/";

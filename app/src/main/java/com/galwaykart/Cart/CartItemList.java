@@ -1123,7 +1123,7 @@ public class CartItemList extends BaseActivity {
                         if (pDialog.isShowing())
                             pDialog.dismiss();
 
-                        //Log.d("responsecartitmelist", String.valueOf(response));
+                        Log.d("responsecartitmelist", String.valueOf(response));
 
 
                         try {
