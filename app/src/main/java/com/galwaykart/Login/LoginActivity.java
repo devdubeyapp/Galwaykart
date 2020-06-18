@@ -1488,23 +1488,30 @@ else
 
         Realm realm = Realm.getDefaultInstance(); // opens "gkart.realm"
         try {
-            realm.beginTransaction();
-
-            RealmResults<DataModelRecentItem> results = realm.where(DataModelRecentItem.class).findAllAsync();
-            results.deleteAllFromRealm();
-            realm.commitTransaction();
-            realm.close();
-
+//            realm.beginTransaction();
+//
+//            RealmResults<DataModelRecentItem> results = realm.where(DataModelRecentItem.class).findAllAsync();
+//            results.deleteAllFromRealm();
+//            realm.commitTransaction();
+//            realm.close();
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.deleteAll();
+                }
+            });
+            Log.d("res_res","deleteData");
         }
         catch (IllegalStateException ex){
-            //Log.d("res_res",ex.getMessage());
+            Log.d("res_res_1",ex.getMessage());
             realm.close();
         }
         catch (Exception ex){
-            //Log.d("res_res",ex.getMessage());
+            Log.d("res_res_2",ex.getMessage());
             realm.close();
         }
         finally {
+            //Log.d("res_res_3",ex.getMessage());
             realm.close();
         }
 
