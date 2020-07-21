@@ -108,10 +108,6 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
     private String deviceNumber = "7";
     private String requestTypeID = "7";
 
-
-
-
-
     LinearLayout ly_write;
     private RecyclerView items_recycler_view;
     private CompOrderDetailsAdapter compOrderDetailsAdapter;
@@ -206,7 +202,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
             @Override
             public void onClick(View v) {
 
-                captureImage();
+                captureVideo();
 
             }
         });
@@ -326,6 +322,8 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
                                     //orVideoFileName=finalVideoFileName;
                                     orVideoFileName = "https://galwaykart-helpdesk-videos.s3.ap-south-1.amazonaws.com/" + finalVideoFileName;
+
+                                    Log.e("Amazon_Vidoes_Path", orVideoFileName);
 
                                     for (int i = 0; i < complaint_list.size(); i++) {
                                         ComplaintOrderDetailModel model = complaint_list.get(i);
@@ -869,7 +867,8 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                     new DamageMissCompFragment.DamageMissQueriestAsync6(bitmap6).execute();
                     storeImageFromTakePhoto(bitmap6,6);
                     break;
-                case CAMERA_CAPTURE_VIDEO_REQUEST_CODE:
+
+              case CAMERA_CAPTURE_VIDEO_REQUEST_CODE:
 
                     if(data!=null) {
 
@@ -891,7 +890,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                     IOUtils.copy(inputStream, out);
 
 
-                                    int video_size = 200;
+                                    int video_size = 450;
 
                                     // Get length of file in bytes
                                     long fileSizeInBytes = tempFile.length();
@@ -908,7 +907,10 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                         iv_complaint_video_capture.setVisibility(View.VISIBLE);
 
                                         tv_compaint_submit.setEnabled(true);
-                                        Toast.makeText(getActivity(), "file max size is " + video_size + " mb", Toast.LENGTH_LONG).show();
+
+                                        CommonFun.alertError(getActivity(),"The size of video uploaded by you is of " + video_size + "+ MB. Please make sure it should not exceed " + video_size+ " MB");
+                                        //Snackbar.make(getActivity().findViewById(android.R.id.content), "file max size is " + video_size + " mb", Snackbar.LENGTH_LONG).show();
+                                        //Toast.makeText(getActivity(), "file max size is " + video_size + " mb", Toast.LENGTH_LONG).show();
                                     } else {
 
 
@@ -919,7 +921,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
                                             //uploadtos3(getActivity(),tempFile);
                                             finalVideoFileName = tempFile.getName();
-                                            Log.d("filename", finalVideoFileName);
+                                            Log.e("filename", finalVideoFileName);
 
 
                                         } catch (Exception e) {
@@ -1467,16 +1469,6 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                                 String order_date_time= jsonObjFinal.getString("updated_at");
                                                 String image = jsonObjFinal.getString("image");
 
-//                                                Log.e("order_id",order_id);
-//                                                Log.e("product_id",product_id);
-//                                                Log.e("sku",sku);
-//                                                Log.e("product_type",product_type);
-//                                                Log.e("product_name",product_name);
-//                                                Log.e("product_price",product_price);
-//                                                Log.e("qty_ordered_res",qty_ordered);
-//                                                Log.e("order_date_time",order_date_time);
-//                                                Log.e("image",image);
-
                                                 ComplaintOrderDetailModel complaintModel= new ComplaintOrderDetailModel();
                                                 complaintModel.setOrder_id(order_id);
                                                 complaintModel.setProduct_id(product_id);
@@ -1632,7 +1624,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                        ",\"imageData\":[" + stImageData + "]}";
 
 
-           Log.d("submitvideo",input_data);
+           Log.e("submitvideo",input_data);
            callSubmitAPI(st_submit_complaint_url);
 
 
@@ -1719,7 +1711,6 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                     tv_compaint_submit.setEnabled(true);
                                     iv_complaint_video_capture.setVisibility(View.VISIBLE);
 
-                                    String err_msg = "currently, there is no help available";
                                 }
                             } else {
                                 String err_msg = "Something went wrong!! Please try again";
@@ -1865,7 +1856,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
 
 
-    private void captureImage() {
+    private void captureVideo() {
 
         final CharSequence[] options = {"Choose from Gallery","Cancel" };
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -1911,9 +1902,9 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
     private void callVideoCaptureAction(){
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 300);
 
         fileUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);
-
 
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
         startActivityForResult(intent, CAMERA_Camera_CAPTURE_VIDEO_REQUEST_CODE);
@@ -1955,126 +1946,6 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
         return mediaFile;
     }
 
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//
-//        outState.putParcelable("file_uri", fileUri);
-//    }
-//
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//
-//        fileUri = savedInstanceState.getParcelable("file_uri");
-//    }
-
-
-//    @Override
-//    public void onActivity(Bundle savedInstanceState) {
-//        super.onViewStateRestored(savedInstanceState);
-//        fileUri = savedInstanceState.getParcelable("file_uri");
-//    }
-
-
-//    @Override
-//    public void onActivityCreated(Bundle savedInstanceState) {
-//        super.onActivityCreated(savedInstanceState);
-//        if(savedInstanceState!=null)
-//        {
-//            fileUri = savedInstanceState.getParcelable("file_uri");
-//        }
-//    }
-//
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putParcelable("file_uri", fileUri);
-//    }
-
-
-
-//    private void compressVideoAndUpload(String videoFileName)
-//    {
-//        try {
-//            // filePath = SiliCompressor.with(getActivity()).compressVideo(fileUri, getFileDestinationPath());
-//
-//            GiraffeCompressor.init(getActivity());
-//
-//            tv_process_name.setText("Please wait....The video is processing!");
-//            tv_process_name.setVisibility(View.VISIBLE);
-//            GiraffeCompressor.create() //two implementations: mediacodec and ffmpeg,default is mediacodec
-//                    .input(pathToStoredVideo) //set video to be compressed
-//                    .output(getFileDestinationPath()+"/"+videoFileName) //set compressed video output
-//                    .bitRate(2573600)
-//                    .resizeFactor(1.0f)
-//                    .ready()
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(new Subscriber<GiraffeCompressor.Result>() {
-//                        @Override
-//                        public void onCompleted() {
-//
-//                        }
-//                        @Override
-//                        public void onError(Throwable e) {
-//
-//                            tv_process_name.setText("");
-//                            tv_process_name.setVisibility(View.GONE);
-//
-//                            e.printStackTrace();
-//
-//                        }
-//
-//                        @Override
-//                        public void onNext(GiraffeCompressor.Result s) {
-//
-//                            tv_process_name.setText("");
-//                            tv_process_name.setVisibility(View.GONE);
-//
-//                            Log.d("File_Path_1",getFileDestinationPath()+"/"+finalVideoFileName);
-//                            File f_upload=new File(getFileDestinationPath()+"/"+finalVideoFileName);
-//
-//
-//                            //File f_upload=new File(pathToStoredVideo);
-//                            int video_size = 50;
-//
-//                            // Get length of file in bytes
-//                            long fileSizeInBytes = f_upload.length();
-//                            // Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
-//                            long fileSizeInKB = fileSizeInBytes / 1024;
-//                            // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
-//                            long fileSizeInMB = fileSizeInKB / 1024;
-//
-//
-//                            progress_bar_video.setMax((int) fileSizeInBytes);
-//
-//                            if (fileSizeInMB > video_size)
-//                            {
-//                                tv_compaint_submit.setText("Upload and Submit");
-//                                iv_complaint_video_capture.setVisibility(View.VISIBLE);
-//
-//                                tv_compaint_submit.setEnabled(true);
-//                                Toast.makeText(getActivity(), "file max size is " + video_size + " mb", Toast.LENGTH_LONG).show();
-//                            }
-//                            else
-//                            {
-//                                tv_compaint_submit.setText("Uploading...");
-//                                tv_compaint_submit.setEnabled(false);
-//                                uploadtos3(getActivity(),f_upload);
-//                            }
-//
-//                        }
-//                    });
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            tv_compaint_submit.setText("Upload and Submit");
-//            tv_compaint_submit.setEnabled(true);
-//            iv_complaint_video_capture.setVisibility(View.VISIBLE);
-//
-//        }
-//
-//    }
-//
 
     String compressFileUpload="";
 
