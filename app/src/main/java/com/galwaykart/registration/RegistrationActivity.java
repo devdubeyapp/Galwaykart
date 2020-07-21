@@ -86,6 +86,7 @@ public class RegistrationActivity extends AppCompatActivity {
     String st_Save_User_URL = "",st_mobile_no="";
     private Pattern pattern;
     private Matcher matcher;
+    TextView tv_text,tv_text_2;
 
     String PASSWORD_PATTERN =  "((?=.*\\d)(?=.*[a-z]).{8,30})";
 
@@ -148,6 +149,11 @@ public class RegistrationActivity extends AppCompatActivity {
         rel_layout1.setVisibility(View.VISIBLE);
         rel_layout2.setVisibility(View.GONE);
 //        rlayout_msg.setVisibility(View.GONE);
+
+        tv_text=findViewById(R.id.tv_text);
+        tv_text.setVisibility(View.GONE);
+        tv_text_2=findViewById(R.id.tv_text_2);
+
 
         ed_dist_id= findViewById(R.id.ed_dist_id);
         ed_dist_id.setVisibility(View.GONE);
@@ -306,6 +312,8 @@ public class RegistrationActivity extends AppCompatActivity {
                         phone_no.setVisibility(View.VISIBLE);
                         text_input_layout8.setVisibility(View.VISIBLE);
 
+                        tv_text_2.setVisibility(View.GONE);
+                        tv_text.setVisibility(View.VISIBLE);
                         st_group_id = "1";
                         st_coming_from = "Customer";
                         break;
@@ -317,7 +325,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                         phone_no.setVisibility(View.VISIBLE);
                         text_input_layout8.setVisibility(View.VISIBLE);
-
+                        tv_text_2.setVisibility(View.GONE);
                         st_group_id = "5";
                         ed_dist_id.setVisibility(View.GONE);
                         text_input_layout6.setHint("Enter Employee Id");

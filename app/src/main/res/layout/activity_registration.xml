@@ -103,9 +103,31 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:id="@+id/underline"
+        android:id="@+id/underline_1"
         android:layout_margin="5dp"
         android:layout_below="@+id/tv_title"
+        android:background="@color/colorPrimaryDark"
+        />
+
+
+
+    <TextView
+        android:id="@+id/tv_text_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/st_reg_text_2"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:visibility="visible"
+        android:layout_below="@+id/underline_1"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/underline"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/tv_text_2"
         android:background="@color/colorPrimaryDark"
         />
 
@@ -215,11 +237,23 @@
         >
 
 
+        <TextView
+            android:id="@+id/tv_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/st_reg_text"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:visibility="visible"
+            />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:layout_below="@+id/tv_text"
            >
 
             <EditText

@@ -121,4 +121,6 @@
     <string name="st_donation_text">* Gaushala donation will not be refundable</string>
     <string name="safety_net_api_key"> Your API Key </string>
     <string name="st_track_order"><u>Track Order</u></string>
+    <string name="st_reg_text">अगर आप डिस्ट्रीब्यूटर है और आई. पी लेना चाहते है| तो इस ऑप्शन से आर्डर न करे\nIf you are a distributor and want IP benefit, Please do not use this option to place your Order.</string>
+    <string name="st_reg_text_2">Note : कस्टमर का ऑप्शन केवल नॉन डिस्ट्रीब्यूटर यानि preferred कस्टमर के लिए है। Glaze डिस्ट्रीब्यूटर्स अपनी ID और पासवर्ड का प्रयोग कर डायरेक्ट लॉगिन कर सकते है।</string>
 </resources>
