@@ -68,6 +68,9 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
     TextView tv_cancel_complaint;
     String customer_id="";
     String setStatus_id="";
+    String request_type="";
+
+    LinearLayout ly_order_no, ly_order_status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,9 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
         //remarks= intent.getStringExtra("remarks");
         customer_id=intent.getStringExtra("customer_id");
         setStatus_id=intent.getStringExtra("setStatus_id");
+        request_type = intent.getStringExtra("request_type");
+
+        Log.e("request_type_deta", request_type);
 
         tv_cancel_complaint=findViewById(R.id.tv_cancel_complaint);
 
@@ -272,6 +278,8 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
         tv_remark = findViewById(R.id.tv_remark);
         tv_admin_remark = findViewById(R.id.tv_admin_remark);
 
+
+
         ly_admin_remark = findViewById(R.id.ly_admin_remark);
         ly_admin_remark.setVisibility(View.GONE);
 
@@ -281,6 +289,16 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 
         /*back_img = (ImageView) findViewById(R.id.back_img);
         back_img.setOnClickListener(this);*/
+
+
+        ly_order_no = findViewById(R.id.ly_order_no);
+        ly_order_status = findViewById(R.id.ly_order_status);
+
+        if(request_type.equalsIgnoreCase("2"))
+        {
+            ly_order_no.setVisibility(View.GONE);
+            ly_order_status.setVisibility(View.GONE);
+        }
 
 
 

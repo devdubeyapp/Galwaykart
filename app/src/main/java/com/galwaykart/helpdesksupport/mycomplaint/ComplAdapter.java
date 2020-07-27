@@ -94,6 +94,8 @@ public class ComplAdapter extends RecyclerView.Adapter<ComplAdapter.ViewHolder> 
                 complaint_detal_intent.putExtra("complaint_type",complModels.get(position).getComplaint_type());
                 complaint_detal_intent.putExtra("is_show",complModels.get(position).getIsShow()); //0 for none,1 for products
                 complaint_detal_intent.putExtra( "remarks",complModels.get(position).getDescription());
+
+                complaint_detal_intent.putExtra("request_type",complModels.get(position).getRequest_type());
                 context.startActivity(complaint_detal_intent);
             }
         });

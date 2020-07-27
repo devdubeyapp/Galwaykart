@@ -165,6 +165,7 @@ public class MyComplaints extends AppCompatActivity implements View.OnClickListe
                                             for(int j = 0; j<jsonArray.length(); j++) {
                                                 JSONObject jsonObj= jsonArray.getJSONObject(j);
                                                 String complaint_id = jsonObj.getString("request_id");
+                                                String request_type = jsonObj.optString("request_type", "");
                                                 String order_id = jsonObj.getString("order_id");
                                                 String created_at = jsonObj.getString("created_at");
                                                 String modified_at = jsonObj.getString("modified_at");
@@ -176,16 +177,6 @@ public class MyComplaints extends AppCompatActivity implements View.OnClickListe
                                                 String complaint_type = jsonObj.getString("complaint_type");
                                                 String isShow = jsonObj.getString("show");
 
-                                                Log.e("complaint_id",complaint_id);
-                                                Log.e("order_id",order_id);
-                                                Log.e("created_at", created_at);
-                                                Log.e("modified_at",modified_at);
-                                                Log.e("status_id",status_id);
-                                                Log.e("status_label",status_label);
-                                                Log.e("customer_id",customer_id);
-                                                Log.e("customer_name",customer_name);
-                                                Log.e("description",description);
-                                                Log.e("complaint_type","complaint_type");
 
                                                 ComplModel complModel = new ComplModel();
                                                 complModel.setComplaint_id(complaint_id);
@@ -199,6 +190,7 @@ public class MyComplaints extends AppCompatActivity implements View.OnClickListe
                                                 complModel.setDescription(description);
                                                 complModel.setComplaint_type(complaint_type);
                                                 complModel.setIsShow(isShow);
+                                                complModel.setRequest_type(request_type);
                                                 complModels11.add(complModel);
                                             }
 
