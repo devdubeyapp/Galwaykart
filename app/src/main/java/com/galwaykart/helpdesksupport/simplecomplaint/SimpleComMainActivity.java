@@ -46,6 +46,7 @@ import java.util.Map;
 
 public class SimpleComMainActivity extends BaseActivityWithoutCart {
 
+    //RBLSH1228946
     private SharedPreferences pref;
     private String st_token_data="";
 
@@ -112,7 +113,7 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        //goBack();
+        goBack();
     }
 
     private void goBack(){
@@ -269,7 +270,8 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
                                             }
                                         };
 
-                                        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                                        //adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                                        adapter.setDropDownViewResource(R.layout.spinner_item_custom_layout);
 
                                         if(compCategModels.size()>0) {
                                             for (int j = 0; j < compCategModels.size(); j++) {
@@ -470,7 +472,7 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
                                                 return super.getCount()- 2 ; // you dont display last item. It is used as hint.
                                             }
                                         };
-                                        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+                                        adapter.setDropDownViewResource(R.layout.spinner_item_custom_layout);
                                         if(orderLabelModels.size()>0) {
                                             for (int j = 0; j < orderLabelModels.size(); j++) {
                                                 adapter.add(orderLabelModels.get(j).getOrder_label_list());
