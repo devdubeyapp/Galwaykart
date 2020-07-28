@@ -13,9 +13,7 @@
         android:id="@+id/common_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-
-        >
+        android:layout_alignParentTop="true">
 
 
         <com.google.android.material.appbar.AppBarLayout
@@ -247,7 +245,8 @@
                 android:layout_height="wrap_content"
                 android:weightSum="2"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:id="@+id/ly_order_no">
 
                 <TextView
                     android:id="@+id/order_no1"
@@ -284,7 +283,8 @@
                 android:layout_height="wrap_content"
                 android:weightSum="2"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:id="@+id/ly_order_status">
 
                 <TextView
                     android:id="@+id/order_status1"

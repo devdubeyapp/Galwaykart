@@ -10,6 +10,10 @@ public class CompCategModel {
     String match_code;
     String show;
 
+    String request_type;
+
+
+
     public String getComplaintCategory_id() {
         return complaint_category_id;
     }
@@ -64,6 +68,15 @@ public class CompCategModel {
 
     public void setShow(String show) {
         this.show = show;
+    }
+
+
+    public String getRequest_type() {
+        return request_type;
+    }
+
+    public void setRequest_type(String request_type) {
+        this.request_type = request_type;
     }
 
 

@@ -1,4 +1,4 @@
-package com.galwaykart.helpdesksupport;
+package com.galwaykart.helpdesksupport.simplecomplaint;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -101,7 +101,7 @@ import java.util.Locale;
 import java.util.Map;
 
 
-public class DamageMissCompFragment extends Fragment implements View.OnClickListener {
+public class ItemsRelatedcomFragment extends Fragment implements View.OnClickListener {
 
     private SharedPreferences pref;
     private String st_token_data="";
@@ -120,6 +120,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
     int j;
 
     private String entity_id="";
+    private String request_type="";
     private String order_id="";
     private String str_complaint_category_id="";
 
@@ -144,7 +145,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
 
 
-//    static String st_pool_id="ap-south-1:89ffc0bb-91c0-485f-be38-ec511fdb2661";
+    //    static String st_pool_id="ap-south-1:89ffc0bb-91c0-485f-be38-ec511fdb2661";
 //    static String bucketName="galwaykart-video-bucket";
     static String st_pool_id="ap-south-1:f791d48b-e8fe-4add-bede-d94e8efd5494";
     static String bucketName="galwaykart-helpdesk-videos";
@@ -162,7 +163,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
     ImageView iv_complaint_video;
     TextView tv_process_name;
 
-   String finalVideoFileName="";
+    String finalVideoFileName="";
 
 
     @Override
@@ -170,12 +171,14 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                              Bundle savedInstanceState) {
 
         entity_id = getArguments().getString("entity_id");
+        request_type = getArguments().getString("request_type");
         order_id = getArguments().getString("order_id");
         str_complaint_category_id = getArguments().getString("str_complaint_category_id");
         Log.e("str_category_id", str_complaint_category_id);
+        Log.e("request_type_item", request_type);
 
 
-        View v =inflater.inflate(R.layout.fragment_damage_missing, container, false);
+        View v =inflater.inflate(R.layout.fragment_items_related_com, container, false);
 
         ly_write = v.findViewById(R.id.ly_write);
         ly_write.setVisibility(View.GONE);
@@ -452,7 +455,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
         protected void onPostExecute(String s) {
             //if only one image, set capture image here
             compaint_image_img2.setImageBitmap(bitmap);
-           // capture_image2.setVisibility(View.GONE);
+            // capture_image2.setVisibility(View.GONE);
             rl_image3.setVisibility(View.VISIBLE);
 
         }
@@ -571,7 +574,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
         protected void onPostExecute(String s) {
             //if only one image, set capture image here
             compaint_image_img6.setImageBitmap(bitmap);
-           // capture_image6.setVisibility(View.GONE);
+            // capture_image6.setVisibility(View.GONE);
             //end set capture image here
 
         }
@@ -839,36 +842,36 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                     break;
                 case 16:
                     Bitmap bitmap1 = (Bitmap) data.getExtras().get("data");
-                    new DamageMissCompFragment.DamageMissQueriestAsync1(bitmap1).execute();
+                    new ItemsRelatedcomFragment.DamageMissQueriestAsync1(bitmap1).execute();
                     storeImageFromTakePhoto(bitmap1, 1);
                     break;
                 case 17:
                     Bitmap bitmap2 = (Bitmap) data.getExtras().get("data");
-                    new DamageMissCompFragment.DamageMissQueriestAsync2(bitmap2).execute();
+                    new ItemsRelatedcomFragment.DamageMissQueriestAsync2(bitmap2).execute();
                     storeImageFromTakePhoto(bitmap2,2);
                     break;
                 case 18:
                     Bitmap bitmap3 = (Bitmap) data.getExtras().get("data");
-                    new DamageMissCompFragment.DamageMissQueriestAsync3(bitmap3).execute();
+                    new ItemsRelatedcomFragment.DamageMissQueriestAsync3(bitmap3).execute();
                     storeImageFromTakePhoto(bitmap3,3);
                     break;
                 case 19:
                     Bitmap bitmap4 = (Bitmap) data.getExtras().get("data");
-                    new DamageMissCompFragment.DamageMissQueriestAsync4(bitmap4).execute();
+                    new ItemsRelatedcomFragment.DamageMissQueriestAsync4(bitmap4).execute();
                     storeImageFromTakePhoto(bitmap4,4);
                     break;
                 case 20:
                     Bitmap bitmap5 = (Bitmap) data.getExtras().get("data");
-                    new DamageMissCompFragment.DamageMissQueriestAsync5(bitmap5).execute();
+                    new ItemsRelatedcomFragment.DamageMissQueriestAsync5(bitmap5).execute();
                     storeImageFromTakePhoto(bitmap5,5);
                     break;
                 case 21:
                     Bitmap bitmap6 = (Bitmap) data.getExtras().get("data");
-                    new DamageMissCompFragment.DamageMissQueriestAsync6(bitmap6).execute();
+                    new ItemsRelatedcomFragment.DamageMissQueriestAsync6(bitmap6).execute();
                     storeImageFromTakePhoto(bitmap6,6);
                     break;
 
-              case CAMERA_CAPTURE_VIDEO_REQUEST_CODE:
+                case CAMERA_CAPTURE_VIDEO_REQUEST_CODE:
 
                     if(data!=null) {
 
@@ -1390,7 +1393,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
             }
         }
         //compaint_image_img1.setVisibility(View.VISIBLE);
-            compaint_image_img6.setImageBitmap(bm);
+        compaint_image_img6.setImageBitmap(bm);
         //capture_image6.setVisibility(View.GONE);
 
     }
@@ -1498,7 +1501,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                                 pDialog.dismiss();
                                             String err_msg="currently, there is no items available";
                                             Snackbar.make(getActivity().findViewById(android.R.id.content), err_msg, Snackbar.LENGTH_LONG).show();
-                                             //tv_notice.setText(err_msg);
+                                            //tv_notice.setText(err_msg);
                                         }
                                     }
 
@@ -1597,42 +1600,43 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
 
     private void submitComplaintJson() {
 
-       if(inputImageData()) {
-           String str_write_complaint = write_complaint_et.getText().toString();
+        if(inputImageData()) {
+            String str_write_complaint = write_complaint_et.getText().toString();
 
-           SharedPreferences pref1 = CommonFun.getPreferences(getActivity());
-           String tokenData = pref1.getString("tokenData", "");
+            SharedPreferences pref1 = CommonFun.getPreferences(getActivity());
+            String tokenData = pref1.getString("tokenData", "");
 
-           String str_first_name = pref.getString("login_fname", "");
-           String str_last_name = pref1.getString("login_lname", "");
-           String str_customer_id = pref1.getString("login_id", "");
+            String str_first_name = pref.getString("login_fname", "");
+            String str_last_name = pref1.getString("login_lname", "");
+            String str_customer_id = pref1.getString("login_id", "");
 
-           String st_submit_complaint_url = Global_Settings.api_url + "rest/V1/m-help-requestsubmit";
-           Log.d("submitvideo", st_submit_complaint_url);
-
-
-           input_data= "{\"storeId\":1," +
-                       "\"orderEntityId\":" + entity_id + "," +
-                       "\"customerFirstName\":\"" + str_first_name + "\"," +
-                       "\"customerlastName\":\"" + str_last_name + "\"," +
-                       "\"videoUrl\":\"" + orVideoFileName + "\"," +
-                       "\"productData\":[" + all_check + "]," +
-                       "\"customerId\":" + str_customer_id + "," +
-                       "\"comment\":\"" + str_write_complaint + "\"" +
-                       ",\"sourceId\":\"" + deviceNumber + "\"" +
-                       ",\"requestTypeId\":\"" + str_complaint_category_id + "\"" +
-                       ",\"imageData\":[" + stImageData + "]}";
+            String st_submit_complaint_url = Global_Settings.api_url + "rest/V1/m-help-requestsubmit";
+            Log.d("submitvideo", st_submit_complaint_url);
 
 
-           Log.e("submitvideo",input_data);
-           callSubmitAPI(st_submit_complaint_url);
+            input_data= "{\"storeId\":1," +
+                    "\"orderEntityId\":\""+entity_id+"\"," +
+                    "\"customerFirstName\":\"" + str_first_name + "\"," +
+                    "\"customerlastName\":\"" + str_last_name + "\"," +
+                    "\"videoUrl\":\"" + orVideoFileName + "\"," +
+                    "\"productData\":[" + all_check + "]," +
+                    "\"customerId\":" + str_customer_id + "," +
+                    "\"comment\":\"" + str_write_complaint + "\"" +
+                    ",\"sourceId\":\"" + deviceNumber + "\"" +
+                    ",\"request_type\":\"" + request_type + "\"" +
+                    ",\"requestTypeId\":\"" + str_complaint_category_id + "\"" +
+                    ",\"imageData\":[" + stImageData + "]}";
 
 
-       }
-       else
-       {
-           CommonFun.alertError(getActivity(),"atleast one image is required");
-       }
+            Log.e("submitvideo",input_data);
+            callSubmitAPI(st_submit_complaint_url);
+
+
+        }
+        else
+        {
+            CommonFun.alertError(getActivity(),"atleast one image is required");
+        }
 
 
     }
@@ -1698,7 +1702,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                             iv_complaint_video_capture.setVisibility(View.VISIBLE);
 
                                             //String err_msg = "Something went wrong!! Please try again";
-                                           // Snackbar.make(getActivity().findViewById(android.R.id.content), message11, Snackbar.LENGTH_LONG).show();
+                                            // Snackbar.make(getActivity().findViewById(android.R.id.content), message11, Snackbar.LENGTH_LONG).show();
                                             CommonFun.alertError(getActivity(),message11);
                                         }
                                     }

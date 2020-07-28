@@ -23,6 +23,18 @@ public class ComplModel {
     private String resolution_title;
     private String condition_title;
     private String item_status;
+    private String request_type;
+
+
+    public String getRequest_type() {
+        return request_type;
+    }
+
+    public void setRequest_type(String request_type) {
+        this.request_type = request_type;
+    }
+
+
 
     public String getItem_sku() {
         return item_sku;

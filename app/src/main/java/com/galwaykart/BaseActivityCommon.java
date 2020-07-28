@@ -39,6 +39,7 @@ import com.galwaykart.Login.LogoutActivity;
 import com.galwaykart.app_promo.AppPromoHome;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.helpdesksupport.mycomplaint.MyComplaints;
+import com.galwaykart.helpdesksupport.simplecomplaint.SimpleComMainActivity;
 import com.galwaykart.navigationDrawer.ExpandableCustomListAdapter;
 import com.galwaykart.navigationDrawer.MenuModel;
 import com.galwaykart.newsnotice.NoticeActivity;
@@ -213,37 +214,45 @@ public class BaseActivityCommon extends AppCompatActivity
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityCommon.this);
                     }
+
                     else if(groupPosition==3 && childPosition == 1){
+                        Intent intent_wishlist=new Intent(BaseActivityCommon.this, SimpleComMainActivity.class);
+                        intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent_wishlist);
+                        CommonFun.finishscreen(BaseActivityCommon.this);
+                    }
+
+                    else if(groupPosition==3 && childPosition == 2){
                         Intent intent_wishlist=new Intent(BaseActivityCommon.this, MyComplaints.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityCommon.this);
                     }
-                    else if(groupPosition==3 && childPosition == 2){
+                    else if(groupPosition==3 && childPosition == 3){
                         Intent intent_wishlist=new Intent(BaseActivityCommon.this, CouponReportActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityCommon.this);
                     }
-                    else if(groupPosition==3 && childPosition == 3){
+                    else if(groupPosition==3 && childPosition == 4){
                         Intent intent_wishlist=new Intent(BaseActivityCommon.this, ChangeMobileActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityCommon.this);
                     }
-                    else if(groupPosition==3 && childPosition == 4){
+                    else if(groupPosition==3 && childPosition == 5){
                         Intent intent_wishlist=new Intent(BaseActivityCommon.this, ChangePasswordActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityCommon.this);
                     }
-                    else if(groupPosition==3 && childPosition == 5){
+                    else if(groupPosition==3 && childPosition == 6){
                         Intent intent_wishlist=new Intent(BaseActivityCommon.this, ChangeEmailActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityCommon.this);
                     }
-                    else if(groupPosition==3 && childPosition == 6){
+                    else if(groupPosition==3 && childPosition == 7){
                         SharedPreferences pref;
                         pref= CommonFun.getPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = pref.edit();
@@ -258,7 +267,7 @@ public class BaseActivityCommon extends AppCompatActivity
                         CommonFun.finishscreen(BaseActivityCommon.this);
 
                     }
-                    else if(groupPosition==3 && childPosition == 7){
+                    else if(groupPosition==3 && childPosition == 8){
                         alertMsg();
                     }
                /*     else if(groupPosition==4 && childPosition == 0){
@@ -315,6 +324,9 @@ public class BaseActivityCommon extends AppCompatActivity
         headerList.add(menuModel);
         List<MenuModel> childModelsList = new ArrayList<>();
         MenuModel childModel = new MenuModel("Wishlist", false, false);
+        childModelsList.add(childModel);
+
+        childModel = new MenuModel("Request Simple Help", false, false);
         childModelsList.add(childModel);
 
         childModel = new MenuModel("My complaint", false, false);
