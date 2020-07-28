@@ -334,14 +334,23 @@ public class SplashActivity extends AppCompatActivity {
         try
         {
 
+
             Realm realm=Realm.getDefaultInstance();
 
+            if(!realm.isClosed())
+                realm.close();
 
 
             JSONObject jsonObj = null;
             jsonObj = new JSONObject(String.valueOf(response));
             JSONArray jsonArray_banner=jsonObj.getJSONArray("banners");
             String  st_cat_head=jsonObj.getString("category_title");
+
+
+
+            if(realm.isClosed())
+                realm=Realm.getDefaultInstance();
+
 
             realm.beginTransaction();
             for(int i=0;i<jsonArray_banner.length();i++){

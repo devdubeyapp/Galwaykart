@@ -147,6 +147,7 @@ public class CommonFun {
     public static void showVolleyException(VolleyError error,Context context){
         if (error instanceof TimeoutError || error instanceof NoConnectionError || error instanceof NetworkError) {
             Intent intent=new Intent(context, InternetConnectivityError.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
 
         }
@@ -155,6 +156,7 @@ public class CommonFun {
             //context.startActivity(intent);
 
             Intent intent=new Intent(context, LogoutActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
 
 
@@ -162,12 +164,14 @@ public class CommonFun {
         } else if (error instanceof ServerError) {
             //TODO
             Intent intent=new Intent(context, ServerErrorActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
 
         }
         else if(error instanceof ParseError)
         {
             Intent intent=new Intent(context, ExceptionError.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
     }

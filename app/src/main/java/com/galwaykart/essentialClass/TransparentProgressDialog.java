@@ -54,7 +54,12 @@ public class TransparentProgressDialog extends Dialog {
 
     @Override
     public void show() {
-        super.show();
+
+        try {
+            super.show();
+        }catch (WindowManager.BadTokenException ex){
+
+        }
 //        RotateAnimation anim = new RotateAnimation(0.0f, 360.0f , Animation.RELATIVE_TO_SELF, .5f, Animation.RELATIVE_TO_SELF, .5f);
 //        anim.setInterpolator(new LinearInterpolator());
 //        anim.setRepeatCount(Animation.INFINITE);
