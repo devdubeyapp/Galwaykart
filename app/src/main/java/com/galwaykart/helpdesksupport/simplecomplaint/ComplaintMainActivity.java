@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.galwaykart.BaseActivityWithoutCart;
+import com.galwaykart.HomePageActivity;
 import com.galwaykart.R;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
@@ -44,7 +45,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SimpleComMainActivity extends BaseActivityWithoutCart {
+public class ComplaintMainActivity extends BaseActivityWithoutCart {
 
     //RBLSH1228946
     private SharedPreferences pref;
@@ -71,6 +72,7 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
 
     String update_at="";
 
+    TextView tv_order_selected;
     LinearLayout ly_order_label_list;
 
 
@@ -96,13 +98,14 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
         complaint_reasons_spinner = findViewById(R.id.complaint_reasons_spinner);
         compCategModels = new ArrayList<>();
 
+        tv_order_selected = findViewById(R.id.tv_order_selected);
         ly_order_label_list = findViewById(R.id.ly_order_label_list);
         ly_order_label_list.setVisibility(View.GONE);
 
         order_label_spinner = findViewById(R.id.order_label_spinner);
         orderLabelModels = new ArrayList<>();
 
-        pref = CommonFun.getPreferences(SimpleComMainActivity.this);
+        pref = CommonFun.getPreferences(ComplaintMainActivity.this);
         st_token_data=pref.getString("tokenData","");
 
         getComplaintCategory();
@@ -117,7 +120,7 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
     }
 
     private void goBack(){
-        Intent intent=new Intent(this, OrderListActivity.class);
+        Intent intent=new Intent(this, HomePageActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
         startActivity(intent);
@@ -173,6 +176,7 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
                     bundle.putString("order_id", order_id);
                     bundle.putString("request_type", str_request_type);
                     bundle.putString("str_complaint_category_id", str_complaint_category_id);
+                    bundle.putString("str_complaint_category", str_complaint_category);
 
                     fragment.setArguments(bundle);
 
@@ -196,13 +200,13 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
         String st_complaint_category_url = Global_Settings.api_url + "rest/V1/m-help-request-list";
 
         //Log.d("st_complaint_url",st_complaint_category_url);
-        pDialog = new TransparentProgressDialog(SimpleComMainActivity.this);
+        pDialog = new TransparentProgressDialog(ComplaintMainActivity.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
 
         try {
-            RequestQueue requestQueue = Volley.newRequestQueue(SimpleComMainActivity.this);
+            RequestQueue requestQueue = Volley.newRequestQueue(ComplaintMainActivity.this);
             StringRequest stringRequest =
                     new StringRequest(Request.Method.GET, st_complaint_category_url,
                             new Response.Listener<String>() {
@@ -221,13 +225,6 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
                                                 String is_items_show = jsonObj.optString("is_items", "");
                                                 String match_code = jsonObj.optString("match_code", "");
                                                 String request_type = jsonObj.optString("request_type", "");
-
-                                                Log.e("value_complaint_id",value_complaint_id);
-                                                Log.e("label_title",label_title);
-                                                Log.e("is_items_show",is_items_show);
-                                                Log.e("match_code", match_code);
-                                                Log.e("request_type",request_type);
-
 
                                                 CompCategModel categorymodel = new CompCategModel();
                                                 categorymodel.setComplaintCategory_id(value_complaint_id);
@@ -251,7 +248,7 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
 
                                         }
 
-                                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(SimpleComMainActivity.this, android.R.layout.simple_spinner_item) {
+                                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(ComplaintMainActivity.this, android.R.layout.simple_spinner_item) {
 
                                             @Override
                                             public View getView(int position, View convertView, ViewGroup parent) {
@@ -283,7 +280,7 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
                                         }
                                         else
                                         {
-                                            CommonFun.alertError(SimpleComMainActivity.this,"No option available right now");
+                                            CommonFun.alertError(ComplaintMainActivity.this,"No option available right now");
                                         }
 
                                     }
@@ -345,6 +342,8 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
                 Log.e("str_entity_id", str_entity_id);
                 Log.e("str_order_label", str_order_label + "");
 
+                tv_order_selected.setText(str_order_label);
+
                if(str_order_label.equalsIgnoreCase(SELECT_ORDER))
                 {
                     String err_msg="Please select #order";
@@ -353,44 +352,56 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
                else if(str_request_type.equalsIgnoreCase("1"))
                {
 
-                   fl.setVisibility(View.VISIBLE);
-                   manager = getSupportFragmentManager();
-                   transaction = manager.beginTransaction();
-                   GeneralComplaintFragment fragment1 = new GeneralComplaintFragment();
+                   if(str_item_show.equalsIgnoreCase("0"))
+                   {
+                       fl.setVisibility(View.VISIBLE);
+                       manager = getSupportFragmentManager();
+                       transaction = manager.beginTransaction();
+                       GeneralComplaintFragment fragment1 = new GeneralComplaintFragment();
 
-                   Bundle bundle = new Bundle();
-                   bundle.putString("entity_id", str_entity_id);
-                   bundle.putString("order_id", order_id);
-                   bundle.putString("request_type", str_request_type);
+                       Bundle bundle = new Bundle();
+                       bundle.putString("entity_id", str_entity_id);
+                       bundle.putString("order_id", order_id);
+                       bundle.putString("request_type", str_request_type);
+                       bundle.putString("str_complaint_category_id", str_complaint_category_id);
+                       bundle.putString("str_complaint_category", str_complaint_category);
 
-                   bundle.putString("str_complaint_category_id", str_complaint_category_id);
-                   Log.e("entity_id_CMSA_Sim", str_entity_id);
-                   fragment1.setArguments(bundle);
-                   transaction.replace(R.id.frame, fragment1);
-                   transaction.commit();
+                       Log.e("entity_id_CMSA_Sim", str_entity_id);
+                       fragment1.setArguments(bundle);
+                       transaction.replace(R.id.frame, fragment1);
+                       transaction.commit();
+                   }
+
+
 
                }
                else if(str_request_type.equalsIgnoreCase("0"))
                {
-                   fl.setVisibility(View.VISIBLE);
-                   manager = getSupportFragmentManager();
-                   transaction = manager.beginTransaction();
-                   ItemsRelatedcomFragment fragment = new ItemsRelatedcomFragment();
 
-                   Bundle bundle = new Bundle();
-                   bundle.putString("entity_id", str_entity_id);
-                   bundle.putString("order_id", order_id);
-                   bundle.putString("request_type", str_request_type);
-                   bundle.putString("str_complaint_category_id", str_complaint_category_id);
+                   if(str_item_show.equalsIgnoreCase("1"))
+                   {
+                       fl.setVisibility(View.VISIBLE);
+                       manager = getSupportFragmentManager();
+                       transaction = manager.beginTransaction();
+                       ItemsRelatedcomFragment fragment = new ItemsRelatedcomFragment();
 
-                   Log.e("entity_id_CMSA", str_entity_id);
-                   Log.e("order_id_CMSA", order_id);
-                   Log.e("str_compl_category_id",  str_complaint_category_id);
-                   Log.e("request_type", str_request_type);
-                   fragment.setArguments(bundle);
+                       Bundle bundle = new Bundle();
+                       bundle.putString("entity_id", str_entity_id);
+                       bundle.putString("order_id", order_id);
+                       bundle.putString("request_type", str_request_type);
+                       bundle.putString("str_complaint_category_id", str_complaint_category_id);
+                       bundle.putString("str_complaint_category", str_complaint_category);
 
-                   transaction.replace(R.id.frame, fragment);
-                   transaction.commit();
+                       Log.e("entity_id_CMSA", str_entity_id);
+                       Log.e("order_id_CMSA", order_id);
+                       Log.e("str_compl_category_id",  str_complaint_category_id);
+                       Log.e("request_type", str_request_type);
+                       fragment.setArguments(bundle);
+
+                       transaction.replace(R.id.frame, fragment);
+                       transaction.commit();
+                   }
+
                }
 
 
@@ -412,13 +423,13 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
         Log.e("input_data_request", input_data);
 
         //Log.d("st_order_list_url",st_complaint_category_url);
-        pDialog = new TransparentProgressDialog(SimpleComMainActivity.this);
+        pDialog = new TransparentProgressDialog(ComplaintMainActivity.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
 
         try {
-            RequestQueue requestQueue = Volley.newRequestQueue(SimpleComMainActivity.this);
+            RequestQueue requestQueue = Volley.newRequestQueue(ComplaintMainActivity.this);
             StringRequest stringRequest =
                     new StringRequest(Request.Method.POST, st_order_list_url,
                             new Response.Listener<String>() {
@@ -454,7 +465,7 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
 
                                         }
 
-                                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(SimpleComMainActivity.this, android.R.layout.simple_spinner_item) {
+                                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(ComplaintMainActivity.this, android.R.layout.simple_spinner_item) {
 
                                             @Override
                                             public View getView(int position, View convertView, ViewGroup parent) {
@@ -483,7 +494,7 @@ public class SimpleComMainActivity extends BaseActivityWithoutCart {
                                         }
                                         else
                                         {
-                                            CommonFun.alertError(SimpleComMainActivity.this,"No option available right now");
+                                            CommonFun.alertError(ComplaintMainActivity.this,"No option available right now");
                                         }
 
                                     }

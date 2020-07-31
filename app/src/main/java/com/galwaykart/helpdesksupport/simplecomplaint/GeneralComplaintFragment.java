@@ -119,6 +119,10 @@ public class GeneralComplaintFragment extends Fragment implements View.OnClickLi
     private String request_type = "";
     private String order_id = "";
     private String str_complaint_category_id = "";
+    private String str_complaint_category = "";
+
+    private TextView label_txt, image_title;
+    private LinearLayout image_ly1, image_ly2;
 
     Handler mHandler;
 
@@ -133,10 +137,30 @@ public class GeneralComplaintFragment extends Fragment implements View.OnClickLi
         request_type = getArguments().getString("request_type");
         order_id = getArguments().getString("order_id");
         str_complaint_category_id = getArguments().getString("str_complaint_category_id");
+        str_complaint_category = getArguments().getString("str_complaint_category");
 
         Log.e("entity_id_sim", entity_id);
         Log.e("order_id_sim", order_id);
         Log.e("request_type_sim", request_type);
+
+        label_txt = v.findViewById(R.id.label_txt);
+        image_title = v.findViewById(R.id.image_title);
+        image_ly1 = v.findViewById(R.id.image_ly1);
+        image_ly2 = v.findViewById(R.id.image_ly2);
+
+        if(str_complaint_category.equalsIgnoreCase("RTO Related Complaint"))
+        {
+            label_txt.setText("Write your address here");
+            image_title.setVisibility(View.GONE);
+            image_ly1.setVisibility(View.GONE);
+            image_ly1.setVisibility(View.GONE);
+        }
+        if(str_complaint_category.equalsIgnoreCase("Courier Related Complaint"))
+        {
+            image_title.setVisibility(View.GONE);
+            image_ly1.setVisibility(View.GONE);
+            image_ly1.setVisibility(View.GONE);
+        }
 
 
         pref =CommonFun.getPreferences(getActivity());

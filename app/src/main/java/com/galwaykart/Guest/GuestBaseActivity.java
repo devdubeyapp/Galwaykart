@@ -533,8 +533,9 @@ public abstract class GuestBaseActivity extends AppCompatActivity
         else if(id==R.id.customerlearningPoint)
         {
             Intent intent=new Intent(GuestBaseActivity.this, FaqActivity.class);
-            intent.putExtra("comefrom","customer-help-desk-tutorials.html");
+            intent.putExtra("comefrom","customer-help-desk-tutorials");
             startActivity(intent);
+
             //CommonFun.finishscreen(this);
         }
         else if(id==R.id.legalabout){
@@ -574,7 +575,6 @@ public abstract class GuestBaseActivity extends AppCompatActivity
                 startActivity(intent);
                 CommonFun.finishscreen(this);
             }
-
         }
 
         else if(id==R.id.return_order){
