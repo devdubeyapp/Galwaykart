@@ -44,7 +44,6 @@ public class FaqActivity extends AppCompatActivity {
     WebView webView;
   //  FirebaseAnalytics mFirebaseAnalytics;
 
-    boolean is_from_chat=false;
 
     @Override
     public void onBackPressed() {
@@ -63,17 +62,6 @@ public class FaqActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview_activity);
 
-        //initNavigationDrawer();
-
-//        Toolbar toolbar;
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-//        CommonFun.setToolBar(toolbar,this);
-//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-//        Bundle params = new Bundle();
-//        params.putString("full_text", "faq");
-//        mFirebaseAnalytics.logEvent("faq", params);
 
 
         ImageView ic_back=findViewById(R.id.ic_back);
@@ -93,47 +81,24 @@ public class FaqActivity extends AppCompatActivity {
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 url_part = extras.getString("comefrom");
+
             }
+            Log.e("faq_url_part", url_part);
+
         }
-
-        if(url.equalsIgnoreCase("galwaychat")){
-
-            url=Global_Settings.chat_url;
-            webView.setWebViewClient(new MyBrowser());
-            webView.getSettings().setLoadsImagesAutomatically(true);
-            webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-            webView.getSettings().setJavaScriptEnabled(true);
-            //wb.getSettings().setPluginState(WebSettings.PluginState.ON);
-            webView.getSettings().setAllowFileAccess(true);
-            webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-
-            WebChromeClient myWebChromeClient = new MyWebChromeClient();
-            webView.setWebChromeClient(myWebChromeClient);
-
-            webView.loadUrl(url);
-
-            pDialog = new TransparentProgressDialog(FaqActivity.this);
-            //pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(true);
-            pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-            pDialog.show();
-        }
-        else if (!url_part.equals("") && !url_part.equals("customer-help-desk-tutorials.html")) {
-
-
-//            Bundle bundle = new Bundle();
-//            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "faq");
-//            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "faq_name");
-//            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        if (!url_part.equals("")) {
 
             url = Global_Settings.terms_url_api + url_part;
 
-            //Log.d("weburl",url);
+            Log.e("faq_url",url);
             callAPI(url);
         }
         else
         {
+
+            Log.e("else", "else");
             url=Global_Settings.webview_api+url_part;
+            Log.e("else_url", url);
             webView.setWebViewClient(new MyBrowser());
             webView.getSettings().setLoadsImagesAutomatically(true);
             webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -235,10 +200,9 @@ public class FaqActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-            if(url.contains("galwaykart.com")|| url.contains("glazegalway.net")) {
+            if(url.contains("galwaykart.com")) {
                 view.loadUrl(url);
-            }
-            else {
+            } else {
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(i);
             }
@@ -291,7 +255,6 @@ public class FaqActivity extends AppCompatActivity {
         // To handle "Back" key press event for WebView to go back to previous screen.
 
     }
-
 
     public class MyWebChromeClient extends WebChromeClient {
 

@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     tools:context=".helpdesksupport.CMSMainActivity">
 
 
@@ -14,9 +13,7 @@
         android:id="@+id/common_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-
-        >
+        android:layout_alignParentTop="true">
 
 
         <com.google.android.material.appbar.AppBarLayout

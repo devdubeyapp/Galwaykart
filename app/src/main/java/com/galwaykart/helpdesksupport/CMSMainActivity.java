@@ -91,7 +91,7 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
 
     private FrameLayout fl;
     private Spinner complaint_reasons_spinner;
-    private String str_complaint_category="Select Compaint Queries", str_complaint_category_id, str_item_show;
+    private String str_complaint_category="Select Compaint Queries", str_complaint_category_id="", str_item_show;
     private ArrayList<CompCategModel> compCategModels;
     int chk = 0;
 
@@ -185,27 +185,6 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
         imgfilename = new SimpleDateFormat("yyyyMMddHHmmss",
                 Locale.getDefault()).format(new Date());
 
-        //Log.d("awsdata",imgfilename);
-
-//        progress_bar_video=findViewById(R.id.progress_bar_video);
-//        progress_bar_video.setVisibility(View.GONE);
-
-//        tv_process_name=findViewById(R.id.tv_process_name);
-//        tv_process_name.setText("");
-//        tv_process_name.setVisibility(View.GONE);
-
-
-//        iv_complaint_video_capture=findViewById(R.id.iv_complaint_video_capture);
-//        iv_complaint_video_capture.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                captureImage();
-//
-//            }
-//        });
-
-
 
         getComplaintCategory();
 
@@ -227,12 +206,12 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
                 {
                     str_complaint_category_id = compCategModels.get(position).getComplaintCategory_id();
                     str_item_show = compCategModels.get(position).getShow();
+                    str_complaint_category = compCategModels.get(position).getTitle();
                 }
 
                 Log.e("str_complaint_category", str_complaint_category);
                 Log.e("str_complaint_cat_id", str_complaint_category_id + "");
                 Log.e("str_item_show", str_item_show + "");
-
 
                 if(str_complaint_category.equals(SELECT_COMPLAINT_TYPE))
                 {
@@ -251,6 +230,8 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
                     bundle.putString("entity_id", entity_id);
                     bundle.putString("order_id", order_id);
                     bundle.putString("str_complaint_category_id", str_complaint_category_id);
+                    bundle.putString("str_complaint_category", str_complaint_category);
+
                     Log.e("entity_id_CMSA", entity_id);
                     Log.e("order_id_CMSA", order_id);
                     Log.e("str_compl_category_id",  str_complaint_category_id);
@@ -270,6 +251,9 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
                     bundle.putString("entity_id", entity_id);
                     bundle.putString("order_id", order_id);
                     bundle.putString("str_complaint_category_id", str_complaint_category_id);
+                    bundle.putString("str_complaint_category", str_complaint_category);
+
+
                     Log.e("entity_id_CMSA", entity_id);
                     Log.e("order_id_CMSA", order_id);
                     Log.e("str_compl_category_id",  str_complaint_category_id);
@@ -277,11 +261,6 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
                     transaction.replace(R.id.frame, fragment1);
                     transaction.commit();
                 }
-
-
-
-
-
 
             }
 
@@ -295,9 +274,11 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
 
     public void complaintCategoryJson() {
 
-        String st_complaint_category_url = Global_Settings.api_url + "rest/V1/m-help-detail";
+        String st_complaint_category_url = Global_Settings.api_url + "rest/V1/m-help-detail" +
+                "?order_id=" + entity_id;
 
-        //Log.d("st_complaint_url",st_complaint_category_url);
+        Log.d("st_complaint_url",st_complaint_category_url);
+
         pDialog = new TransparentProgressDialog(CMSMainActivity.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

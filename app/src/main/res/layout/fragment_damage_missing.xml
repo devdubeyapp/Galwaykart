@@ -394,7 +394,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Please make sure the video duration time does not exceed more than 1.5 minutes as it may hamper while processing."
+                android:text="Please make sure the video duration time does not exceed more than 3 minutes or 400 MB as it may hamper while processing."
                 android:layout_marginTop="5dp"
                 android:textSize="11dp"
                 android:textColor="@color/colorGrayDark">

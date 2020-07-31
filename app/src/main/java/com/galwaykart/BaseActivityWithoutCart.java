@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 import com.galwaykart.address_book.CustomerAddressBook;
 import com.galwaykart.app_promo.AppPromoHome;
 import com.galwaykart.helpdesksupport.mycomplaint.MyComplaints;
-import com.galwaykart.helpdesksupport.simplecomplaint.SimpleComMainActivity;
+import com.galwaykart.helpdesksupport.simplecomplaint.ComplaintMainActivity;
 import com.galwaykart.navigationDrawer.ExpandableCustomListAdapter;
 import com.galwaykart.navigationDrawer.MenuModel;
 import com.galwaykart.newsnotice.NoticeActivity;
@@ -188,7 +188,7 @@ public class BaseActivityWithoutCart extends AppCompatActivity
 
                         else if(groupPosition==4){
                             Intent intent=new Intent(BaseActivityWithoutCart.this,WebViewActivity.class);
-                            intent.putExtra("comefrom","customer-help-desk-tutorials.html");
+                            intent.putExtra("comefrom","customer-help-desk-tutorials");
                             startActivity(intent);
                             CommonFun.finishscreen(BaseActivityWithoutCart.this);
                         }
@@ -230,7 +230,7 @@ public class BaseActivityWithoutCart extends AppCompatActivity
                     }
 
                     else if(groupPosition==3 && childPosition == 1){
-                        Intent intent_wishlist=new Intent(BaseActivityWithoutCart.this, SimpleComMainActivity.class);
+                        Intent intent_wishlist=new Intent(BaseActivityWithoutCart.this, ComplaintMainActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivityWithoutCart.this);
@@ -375,10 +375,10 @@ public class BaseActivityWithoutCart extends AppCompatActivity
         MenuModel childModel = new MenuModel("Wishlist", false, false);
         childModelsList.add(childModel);
 
-        childModel = new MenuModel("Request Simple Help", false, false);
+        childModel = new MenuModel("Complaint Generation", false, false);
         childModelsList.add(childModel);
 
-        childModel = new MenuModel("My complaint", false, false);
+        childModel = new MenuModel("Complaint Status", false, false);
         childModelsList.add(childModel);
 
         childModel = new MenuModel("Voucher Report", false, false);
@@ -721,7 +721,7 @@ public class BaseActivityWithoutCart extends AppCompatActivity
         else if(id==R.id.customerlearningPoint)
         {
             Intent intent=new Intent(this,WebViewActivity.class);
-            intent.putExtra("comefrom","customer-help-desk-tutorials.html");
+            intent.putExtra("comefrom","customer-help-desk-tutorials");
             startActivity(intent);
             //CommonFun.finishscreen(this);
         }

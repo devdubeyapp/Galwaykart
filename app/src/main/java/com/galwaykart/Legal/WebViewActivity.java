@@ -59,7 +59,6 @@ public class WebViewActivity extends AppCompatActivity {
     TransparentProgressDialog pDialog;
     WebView webView;
     FirebaseAnalytics mFirebaseAnalytics;
-    boolean is_from_chat=false;
 
     private void goBack(){
         Intent intent = new Intent(WebViewActivity.this, LegalAboutActivity.class);
@@ -109,50 +108,22 @@ public class WebViewActivity extends AppCompatActivity {
             if (extras != null) {
                 url_part = extras.getString("comefrom");
             }
+
+            Log.e("url_part", url_part);
         }
 
-        if(url_part.equalsIgnoreCase("galwaychat"))
-        {
-            is_from_chat=true;
-
-        }
-        else if (!url_part.equals("") && !url_part.equals("customer-help-desk-tutorials.html")) {
-
-
-//            Bundle bundle = new Bundle();
-//            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "faq");
-//            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "faq_name");
-//            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+        if (!url_part.equals("") && !url_part.equals("customer-help-desk-tutorials")) {
 
             url = Global_Settings.terms_url_api + url_part;
+
+            Log.e("url",url);
 
             callAPI(url);
         }
         else
         {
-//            url=Global_Settings.webview_api+url_part;
-//            webView.setWebViewClient(new MyBrowser());
-//            webView.getSettings().setLoadsImagesAutomatically(true);
-//            webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//            webView.getSettings().setJavaScriptEnabled(true);
-//            //wb.getSettings().setPluginState(WebSettings.PluginState.ON);
-//            webView.getSettings().setAllowFileAccess(true);
-//            webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-//
-//            WebChromeClient myWebChromeClient = new MyWebChromeClient();
-//            webView.setWebChromeClient(myWebChromeClient);
-//
-//            webView.loadUrl(url);
-//
-//            pDialog = new TransparentProgressDialog(WebViewActivity.this);
-//            //pDialog.setMessage("Please wait...");
-//            pDialog.setCancelable(true);
-//            pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-//            pDialog.show();
-
-
             Intent intent = new Intent(WebViewActivity.this, FaqActivity.class);
-            intent.putExtra("comefrom","customer-help-desk-tutorials.html");
+            intent.putExtra("comefrom","customer-help-desk-tutorials");
             startActivity(intent);
             CommonFun.finishscreen(WebViewActivity.this);
 
