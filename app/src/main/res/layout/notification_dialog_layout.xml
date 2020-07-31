@@ -17,7 +17,7 @@
             android:background="@color/colorGolden"
             android:text="Notification"
             android:textSize="14dp"
-            android:textColor="@color/freshchat_white"
+            android:textColor="@color/colorWhite"
             android:gravity="center"/>
 
         <LinearLayout

@@ -9,8 +9,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import com.freshchat.consumer.sdk.exception.MethodNotAllowedException;
+import com.galwaykart.HomePageActivity;
 import com.galwaykart.HomePageTab.DataModelHomeAPI;
+import com.galwaykart.Legal.CallWebUrlActivity;
+import com.galwaykart.Legal.FaqActivity;
+import com.galwaykart.Legal.WebViewActivity;
 import com.galwaykart.app_promo.AppPromotion;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
@@ -45,9 +48,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.freshchat.consumer.sdk.Freshchat;
-import com.freshchat.consumer.sdk.FreshchatConfig;
-import com.freshchat.consumer.sdk.FreshchatUser;
 
 import com.galwaykart.R;
 import com.galwaykart.SearchProductActivity;
@@ -276,28 +276,32 @@ Boolean is_rel_cross_app_visible=false;
         }
 
 
-        FreshchatConfig freshchatConfig = new FreshchatConfig(API_ID, API_KEY);
-        freshchatConfig.setCameraCaptureEnabled(false);
-        freshchatConfig.setGallerySelectionEnabled(false);
-        Freshchat.getInstance(getApplicationContext()).init(freshchatConfig);
-        FreshchatUser freshUser = Freshchat.getInstance(getApplicationContext()).getUser();
-
-        freshUser.setFirstName(fname);
-        freshUser.setLastName(lname);
-        freshUser.setEmail(value_email);
-//        freshUser.setPhone("+91", "9790987495");
-
-        try {
-            Freshchat.getInstance(getApplicationContext()).setUser(freshUser);
-        } catch (MethodNotAllowedException e) {
-            e.printStackTrace();
-        }
+//        FreshchatConfig freshchatConfig = new FreshchatConfig(API_ID, API_KEY);
+//        freshchatConfig.setCameraCaptureEnabled(false);
+//        freshchatConfig.setGallerySelectionEnabled(false);
+//        Freshchat.getInstance(getApplicationContext()).init(freshchatConfig);
+//        FreshchatUser freshUser = Freshchat.getInstance(getApplicationContext()).getUser();
+//
+//        freshUser.setFirstName(fname);
+//        freshUser.setLastName(lname);
+//        freshUser.setEmail(value_email);
+////        freshUser.setPhone("+91", "9790987495");
+//
+//        try {
+//            Freshchat.getInstance(getApplicationContext()).setUser(freshUser);
+//        } catch (MethodNotAllowedException e) {
+//            e.printStackTrace();
+//        }
 
         float_chat_button= findViewById(R.id.float_hchat_button);
         float_chat_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Freshchat.showConversations(getApplicationContext());
+
+                Intent intent=new Intent(GuestHomePageActivity.this, CallWebUrlActivity.class);
+                intent.putExtra("comefrom","galwaychat");
+                startActivity(intent);
+
             }
         });
 

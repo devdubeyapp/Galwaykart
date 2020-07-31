@@ -44,6 +44,7 @@ public class FaqActivity extends AppCompatActivity {
     WebView webView;
   //  FirebaseAnalytics mFirebaseAnalytics;
 
+    boolean is_from_chat=false;
 
     @Override
     public void onBackPressed() {
@@ -95,7 +96,29 @@ public class FaqActivity extends AppCompatActivity {
             }
         }
 
-        if (!url_part.equals("") && !url_part.equals("customer-help-desk-tutorials.html")) {
+        if(url.equalsIgnoreCase("galwaychat")){
+
+            url=Global_Settings.chat_url;
+            webView.setWebViewClient(new MyBrowser());
+            webView.getSettings().setLoadsImagesAutomatically(true);
+            webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+            webView.getSettings().setJavaScriptEnabled(true);
+            //wb.getSettings().setPluginState(WebSettings.PluginState.ON);
+            webView.getSettings().setAllowFileAccess(true);
+            webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+
+            WebChromeClient myWebChromeClient = new MyWebChromeClient();
+            webView.setWebChromeClient(myWebChromeClient);
+
+            webView.loadUrl(url);
+
+            pDialog = new TransparentProgressDialog(FaqActivity.this);
+            //pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(true);
+            pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+            pDialog.show();
+        }
+        else if (!url_part.equals("") && !url_part.equals("customer-help-desk-tutorials.html")) {
 
 
 //            Bundle bundle = new Bundle();
@@ -212,9 +235,10 @@ public class FaqActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-            if(url.contains("galwaykart.com")) {
+            if(url.contains("galwaykart.com")|| url.contains("glazegalway.net")) {
                 view.loadUrl(url);
-            } else {
+            }
+            else {
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(i);
             }

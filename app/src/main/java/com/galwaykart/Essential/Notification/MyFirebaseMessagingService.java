@@ -25,7 +25,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.freshchat.consumer.sdk.Freshchat;
 import com.galwaykart.HomePageActivity;
 import com.galwaykart.R;
 import com.galwaykart.SplashActivity;
@@ -75,10 +74,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         sendNotificationOnNewActivity(title1, message1);
-
-        if (Freshchat.isFreshchatNotification(remoteMessage)) {
-            Freshchat.getInstance(this).handleFcmMessage(this,remoteMessage);
-        }
+//
+//        if (Freshchat.isFreshchatNotification(remoteMessage)) {
+//            Freshchat.getInstance(this).handleFcmMessage(this,remoteMessage);
+//        }
 
     }
 

@@ -21,7 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.freshchat.consumer.sdk.Freshchat;
+//import com.freshchat.consumer.sdk.Freshchat;
 import com.galwaykart.HomePageActivity;
 import com.galwaykart.R;
 import com.galwaykart.essentialClass.CommonFun;
@@ -62,7 +62,7 @@ public class LogoutActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.logout_activity);
 
-        Freshchat.resetUser(getApplicationContext());
+        //Freshchat.resetUser(getApplicationContext());
 
         pref= CommonFun.getPreferences(getApplicationContext());
 

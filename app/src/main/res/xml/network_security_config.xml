@@ -8,6 +8,7 @@
     <domain includeSubdomains="true">galwaykart.com</domain>
     <domain includeSubdomains="true">galway.co.in</domain>
     <domain includeSubdomains="true">amazonaws.com</domain>
+    <domain includeSubdomains="true">glazegalway.net</domain>
 
 <!--    <trust-anchors>-->
 <!--&lt;!&ndash;        <certificates src="system" />&ndash;&gt;-->

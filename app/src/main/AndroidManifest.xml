@@ -310,6 +310,10 @@
         <activity
             android:name=".app_promo.AppPromotion"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".helpdesksupport.simplecomplaint.SimpleComMainActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".app_promo.AppPromoHome"
             android:screenOrientation="portrait"
@@ -338,6 +342,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity android:name=".Legal.FaqActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity android:name=".Legal.CallWebUrlActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             />

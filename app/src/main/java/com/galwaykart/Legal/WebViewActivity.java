@@ -59,6 +59,7 @@ public class WebViewActivity extends AppCompatActivity {
     TransparentProgressDialog pDialog;
     WebView webView;
     FirebaseAnalytics mFirebaseAnalytics;
+    boolean is_from_chat=false;
 
     private void goBack(){
         Intent intent = new Intent(WebViewActivity.this, LegalAboutActivity.class);
@@ -110,7 +111,12 @@ public class WebViewActivity extends AppCompatActivity {
             }
         }
 
-        if (!url_part.equals("") && !url_part.equals("customer-help-desk-tutorials.html")) {
+        if(url_part.equalsIgnoreCase("galwaychat"))
+        {
+            is_from_chat=true;
+
+        }
+        else if (!url_part.equals("") && !url_part.equals("customer-help-desk-tutorials.html")) {
 
 
 //            Bundle bundle = new Bundle();
