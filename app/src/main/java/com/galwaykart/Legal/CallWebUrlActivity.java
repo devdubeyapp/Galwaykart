@@ -52,9 +52,15 @@ public class CallWebUrlActivity extends AppCompatActivity {
     }
 
     private void goBack(){
-        Intent intent = new Intent(CallWebUrlActivity.this, HomePageActivity.class);
-        startActivity(intent);
-        CommonFun.finishscreen(CallWebUrlActivity.this);
+        if(is_from_chat==true) {
+            Intent intent = new Intent(CallWebUrlActivity.this, HomePageActivity.class);
+            startActivity(intent);
+            CommonFun.finishscreen(CallWebUrlActivity.this);
+        }
+        else
+        {
+            CommonFun.finishscreen(CallWebUrlActivity.this);
+        }
     }
 
     @Override
@@ -84,9 +90,12 @@ public class CallWebUrlActivity extends AppCompatActivity {
             }
         }
 
-        if(url_part.equalsIgnoreCase("galwaychat")) {
-
+        if(url_part.equalsIgnoreCase("galwaychat"))
             url = Global_Settings.chat_url;
+        else
+            url=url_part;
+
+
             webView.setWebViewClient(new MyBrowser());
             webView.getSettings().setLoadsImagesAutomatically(true);
             webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -105,7 +114,6 @@ public class CallWebUrlActivity extends AppCompatActivity {
             pDialog.setCancelable(true);
             pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             pDialog.show();
-        }
 
     }
 

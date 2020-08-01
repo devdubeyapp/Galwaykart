@@ -33,6 +33,8 @@ import com.galwaykart.R;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -282,4 +284,20 @@ public class CommonFun {
 
     }
 
+
+    public static String extractUrls(String text)
+    {
+        String containedUrls="";
+        String urlRegex = "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)";
+        Pattern pattern = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE);
+        Matcher urlMatcher = pattern.matcher(text);
+
+        while (urlMatcher.find())
+        {
+            containedUrls=text.substring(urlMatcher.start(0),
+                    urlMatcher.end(0));
+        }
+
+        return containedUrls;
+    }
 }

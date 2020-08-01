@@ -117,6 +117,7 @@
     <string name="customer_id">0</string>
     <string name="employee_id">5</string>
     <string name="general_id">1</string>
+    <string name="st_click_here"><u>click here</u></string>
 
     <string name="st_donation_text">* Gaushala donation will not be refundable</string>
     <string name="safety_net_api_key"> Your API Key </string>
