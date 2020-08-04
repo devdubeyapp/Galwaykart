@@ -418,7 +418,12 @@ public class ComplaintMainActivity extends BaseActivityWithoutCart {
 
         String st_order_list_url = Global_Settings.api_url + "rest/V1/m-help-request-order-list";
 
-        final String input_data="{\"request_type\":\""+str_request_type+"\"}";
+        //final String input_dataa="{\"request_type\":\""+str_request_type+"\"}";
+
+        final String input_data ="{\"request_type\":\""+str_request_type+"\"," +
+                "\"resolution_id\":\""+str_complaint_category_id+"\"}";
+
+
 
         Log.e("input_data_request", input_data);
 

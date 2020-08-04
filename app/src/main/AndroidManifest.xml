@@ -311,8 +311,9 @@
             android:name=".app_promo.AppPromotion"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".helpdesksupport.simplecomplaint.SimpleComMainActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".helpdesksupport.simplecomplaint.ComplaintMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
             android:name=".app_promo.AppPromoHome"
@@ -351,7 +352,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             />
 
-
         <activity android:name=".shipyaari.TrackDetailWebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -362,7 +362,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".helpdesksupport.mycomplaint.ComplaintDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".helpdesksupport.mycomplaint.MyComplaints"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
