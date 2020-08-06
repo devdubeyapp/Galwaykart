@@ -366,6 +366,7 @@ public class ComplaintMainActivity extends BaseActivityWithoutCart {
                        bundle.putString("str_complaint_category", str_complaint_category);
 
                        Log.e("entity_id_CMSA_Sim", str_entity_id);
+
                        fragment1.setArguments(bundle);
                        transaction.replace(R.id.frame, fragment1);
                        transaction.commit();
