@@ -351,7 +351,6 @@ public class ComplaintMainActivity extends BaseActivityWithoutCart {
                 }
                else if(str_request_type.equalsIgnoreCase("1"))
                {
-
                    if(str_item_show.equalsIgnoreCase("0"))
                    {
                        fl.setVisibility(View.VISIBLE);
@@ -371,6 +370,11 @@ public class ComplaintMainActivity extends BaseActivityWithoutCart {
                        transaction.replace(R.id.frame, fragment1);
                        transaction.commit();
                    }
+                   else
+                   {
+
+                   }
+
 
 
 
