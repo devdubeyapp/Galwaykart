@@ -153,7 +153,7 @@ public class ComplaintMainActivity extends BaseActivityWithoutCart {
                 if(str_complaint_category.equals(SELECT_COMPLAINT_TYPE))
                 {
                     String err_msg="Please select complaint type";
-                   // Snackbar.make(findViewById(android.R.id.content), err_msg, Snackbar.LENGTH_LONG).show();
+                    //Snackbar.make(findViewById(android.R.id.content), err_msg, Snackbar.LENGTH_LONG).show();
                 }
 
                 else if(str_request_type.equalsIgnoreCase("0") || str_request_type.equalsIgnoreCase("1"))
@@ -370,18 +370,32 @@ public class ComplaintMainActivity extends BaseActivityWithoutCart {
                        transaction.replace(R.id.frame, fragment1);
                        transaction.commit();
                    }
-                   else
+                   else if(str_item_show.equalsIgnoreCase("1"))
                    {
+                       fl.setVisibility(View.VISIBLE);
+                       manager = getSupportFragmentManager();
+                       transaction = manager.beginTransaction();
+                       ItemsRelatedcomFragment fragment = new ItemsRelatedcomFragment();
 
+                       Bundle bundle = new Bundle();
+                       bundle.putString("entity_id", str_entity_id);
+                       bundle.putString("order_id", order_id);
+                       bundle.putString("request_type", str_request_type);
+                       bundle.putString("str_complaint_category_id", str_complaint_category_id);
+                       bundle.putString("str_complaint_category", str_complaint_category);
+
+                       Log.e("entity_id_CMSA", str_entity_id);
+                       Log.e("order_id_CMSA", order_id);
+                       Log.e("str_compl_category_id",  str_complaint_category_id);
+                       Log.e("request_type", str_request_type);
+                       fragment.setArguments(bundle);
+
+                       transaction.replace(R.id.frame, fragment);
+                       transaction.commit();
                    }
-
-
-
-
                }
                else if(str_request_type.equalsIgnoreCase("0"))
                {
-
                    if(str_item_show.equalsIgnoreCase("1"))
                    {
                        fl.setVisibility(View.VISIBLE);
@@ -405,9 +419,27 @@ public class ComplaintMainActivity extends BaseActivityWithoutCart {
                        transaction.replace(R.id.frame, fragment);
                        transaction.commit();
                    }
+                   else if(str_item_show.equalsIgnoreCase("0"))
+                   {
+                       fl.setVisibility(View.VISIBLE);
+                       manager = getSupportFragmentManager();
+                       transaction = manager.beginTransaction();
+                       GeneralComplaintFragment fragment1 = new GeneralComplaintFragment();
+
+                       Bundle bundle = new Bundle();
+                       bundle.putString("entity_id", str_entity_id);
+                       bundle.putString("order_id", order_id);
+                       bundle.putString("request_type", str_request_type);
+                       bundle.putString("str_complaint_category_id", str_complaint_category_id);
+                       bundle.putString("str_complaint_category", str_complaint_category);
+
+                       Log.e("entity_id_CMSA_Sim", str_entity_id);
+                       fragment1.setArguments(bundle);
+                       transaction.replace(R.id.frame, fragment1);
+                       transaction.commit();
+                   }
 
                }
-
 
             }
 
