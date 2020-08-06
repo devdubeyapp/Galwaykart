@@ -95,6 +95,7 @@ public class CallWebUrlActivity extends AppCompatActivity {
         else
             url=url_part;
 
+            Log.d("galwaychaturl",url);
 
             webView.setWebViewClient(new MyBrowser());
             webView.getSettings().setLoadsImagesAutomatically(true);
@@ -106,7 +107,6 @@ public class CallWebUrlActivity extends AppCompatActivity {
 
             WebChromeClient myWebChromeClient = new MyWebChromeClient();
             webView.setWebChromeClient(myWebChromeClient);
-
             webView.loadUrl(url);
 
             pDialog = new TransparentProgressDialog(CallWebUrlActivity.this);

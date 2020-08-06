@@ -4,6 +4,7 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         this.nfModelList = nfModelList;
     }
 
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -69,6 +77,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         String notice_text=(nfModelList.get(i).getMessage());
 
         is_url_contain=false;
+        st_url="";
         String msg_description=nfModelList.get(i).getMessage();
 //        final String URL_REGEX = "^((http|https?|ftp)://|(www|ftp)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$";
 //
@@ -88,34 +97,44 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
      */
         if(is_url_contain==true){
 
-            st_url= CommonFun.extractUrls(msg_description);
+            String sts_url= CommonFun.extractUrls(msg_description);
             viewHolder.tv_click_more.setVisibility(View.VISIBLE);
             msg_description=msg_description.replace(st_url,"");
+
+            viewHolder.tv_click_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(is_url_contain==true)
+                        openWebViewActivity(sts_url);
+                    else {
+
+                    }
+                }
+            });
 
         }
 
          viewHolder.description_tv.setText(Html.fromHtml(msg_description));
 
-         viewHolder.tv_click_more.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                openWebViewActivity();
-             }
-         });
 
-         viewHolder.description_tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(is_url_contain==true)
-                    openWebViewActivity();
-
-            }
-        });
+//         viewHolder.description_tv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(is_url_contain==true)
+//                    openWebViewActivity();
+//                else {
+//
+//                }
+//            }
+//        });
     }
 
-    private void openWebViewActivity() {
+    private void openWebViewActivity(String st_pass_url) {
+        Log.d("st_url",st_pass_url);
+
         Intent intent=new Intent(context, CallWebUrlActivity.class);
-        intent.putExtra("comefrom",st_url);
+        intent.putExtra("comefrom",st_pass_url);
         context.startActivity(intent);
     }
 
@@ -123,4 +142,5 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public int getItemCount() {
         return nfModelList.size();
     }
-}
+
+ }

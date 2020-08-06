@@ -236,6 +236,9 @@ public class SplashActivity extends AppCompatActivity {
                     realm.close();
                 }
 
+                if(realm.isClosed())
+                    realm = Realm.getDefaultInstance();
+
                 long total_data_top_product = realm.where(ProductDataModel.class).count();
                 if (total_data_top_product > 0) {
                     realm.beginTransaction();

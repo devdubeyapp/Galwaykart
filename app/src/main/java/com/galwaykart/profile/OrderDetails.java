@@ -1788,6 +1788,7 @@ public class OrderDetails extends BaseActivity {
                             is_edit_address="0";
 
                             is_edit_address = response.optString("is_edit_address", "");
+
 //                            //if(response.has("is_edit_address"))
 //                                is_edit_address = response.optString("is_edit_address", "");
 //                            //else
