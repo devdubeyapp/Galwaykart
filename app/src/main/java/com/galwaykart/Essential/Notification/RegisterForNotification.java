@@ -18,7 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
+import com.freshchat.consumer.sdk.Freshchat;
 import com.galwaykart.R;
 import com.galwaykart.SplashActivity;
 import com.galwaykart.essentialClass.CommonFun;
@@ -107,7 +107,7 @@ public class RegisterForNotification extends AppCompatActivity {
 
 
     private void registerNotification(String token,String login_group_id){
-        //Freshchat.getInstance(this).setPushRegistrationToken(token);
+        Freshchat.getInstance(this).setPushRegistrationToken(token);
 
         Log.e("firebase_token", token);
         String user_id=pref.getString("login_customer_id","");
