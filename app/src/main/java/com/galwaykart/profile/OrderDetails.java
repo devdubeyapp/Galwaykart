@@ -1483,7 +1483,7 @@ public class OrderDetails extends BaseActivity {
         if(listAdapter.getCount() >0 ) {
             lv_order_details.invalidate();
             lv_order_details.setAdapter(listAdapter);
-            tv_order_id.setText("Order # " + st_increment_id);
+            tv_order_id.setText("Order # " + st_increment_id + "\n"+ "(" +st_order_status+ ")" );
             //tv_cancel_order.setVisibility(View.VISIBLE);
             tv_title.setText("Your Order");
 
@@ -1785,6 +1785,7 @@ public class OrderDetails extends BaseActivity {
                             if(response.has("donation_title")){
                                 donation_title=response.getString("donation_title");
                             }
+
                             is_edit_address="0";
 
                             is_edit_address = response.optString("is_edit_address", "");
