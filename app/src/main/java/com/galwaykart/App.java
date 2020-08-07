@@ -8,6 +8,8 @@ import android.app.Application;
 
 //import androidx.security.crypto.EncryptedSharedPreferences;
 
+import com.freshchat.consumer.sdk.Freshchat;
+import com.galwaykart.essentialClass.CustomImageLoaderFreshChat;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import io.realm.Realm;
@@ -24,7 +26,7 @@ public class App extends Application {
 
 
 
-            //Freshchat.setImageLoader(new CustomImageLoaderFreshChat());
+            Freshchat.setImageLoader(new CustomImageLoaderFreshChat());
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
             Realm.init(this);
