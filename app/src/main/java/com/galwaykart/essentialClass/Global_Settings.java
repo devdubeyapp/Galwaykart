@@ -22,7 +22,7 @@ public class Global_Settings {
    public static final String Cross_App_Promote="http://app.galway.in:81//SSL_PHP_API/galway_app_promotion.php?app_id=";
    public static final String TAG_LOG="glazekartapp";
 
-   public static final String chat_url="http://gkchatbot.glazegalway.net/mobile.html";
+   public static final String chat_url="https://chatbot.glazegalway.com/mobile.html";
 
      public static final String galway_wcf_api_url="https://wcf.galway.in/"; //live
     //public static final String galway_wcf_api_url="http://devecom.galway.co.in/";

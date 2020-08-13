@@ -75,7 +75,7 @@ dependencies {
         transitive = true;
     }
 
-    implementation 'com.github.freshdesk:freshchat-android:3.2.1'
+//    implementation 'com.github.freshdesk:freshchat-android:3.2.1'
 
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
