@@ -1067,7 +1067,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                     st_total_cart_ip="";
                                 String sst_disc= (disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
 
-                                 String ip_text=st_total_cart_ip.equals("")?"":"Total IP: " + st_total_cart_ip;
+                                 String ip_text=st_total_cart_ip.equals("")?"":"Total PV / BV: " + st_total_cart_ip;
                                  String st_text = "<b>"+ip_text+"<br/>" +
                                             "-------------------------------</b><br/>" +
                                             "Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +

@@ -72,6 +72,9 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 
     LinearLayout ly_order_no, ly_order_status;
 
+    RecyclerView chat_recycler_view;
+    MessageChatAdapter messageChatAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -307,6 +310,12 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         complaint_details_recycler_view.setLayoutManager(mLayoutManager);
 
+        chat_recycler_view= findViewById(R.id.chat_recycler_view);
+        chat_recycler_view.setVisibility(View.GONE);
+        chat_recycler_view.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager1 = new LinearLayoutManager(this);
+        chat_recycler_view.setLayoutManager(mLayoutManager1);
+
         jsonComplaintItem();
     }
 
@@ -322,6 +331,7 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
     private void jsonComplaintItem() {
 
         final ArrayList<ComplModel> complModels12 = new ArrayList<>();
+        final ArrayList<ComplModel> complModelsChatFinal = new ArrayList<>();
         String st_mycomplaint_details_url = Global_Settings.api_url + "rest/V1/m-help-detail";
 
         input_data = "{\"requestId\":\""+complaint_id+"\"}";
@@ -406,7 +416,15 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
                                                             JSONObject jsonObject_msg=jsonArrayItem.getJSONObject(i);
                                                             cht_msg[i] = jsonObject_msg.getString("message");
                                                             cht_name[i] = jsonObject_msg.getString("name");
+
+                                                            ComplModel complModelChat = new ComplModel();
+                                                            complModelChat.setName(jsonObject_msg.optString("name", ""));
+                                                            complModelChat.setMessage_chat(jsonObject_msg.optString("message", ""));
+                                                            complModelsChatFinal.add(complModelChat);
                                                         }
+
+                                                        messageChatAdapter = new MessageChatAdapter(ComplaintDetailActivity.this, complModelsChatFinal);
+                                                        chat_recycler_view.setAdapter(messageChatAdapter);
 
                                                     }
                                                 }
@@ -422,9 +440,12 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 
                                                     if(total_msg_data>1)
                                                     {
-                                                        admin_remarks=cht_msg[1];
+
+                                                        chat_recycler_view.setVisibility(View.VISIBLE);
+
+                                                       /* admin_remarks=cht_msg[1];
                                                         ly_admin_remark.setVisibility(View.VISIBLE);
-                                                        tv_admin_remark.setText(admin_remarks);
+                                                        tv_admin_remark.setText(admin_remarks);*/
                                                     }
                                                     else
                                                     {
@@ -437,18 +458,18 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
                                                     if (Build.VERSION.SDK_INT >= 24) {
                                                         //remarks = String.valueOf(Html.fromHtml(remarks , 0));
                                                         customer_remarks = String.valueOf(Html.fromHtml(customer_remarks , 0));
-                                                        admin_remarks = String.valueOf(Html.fromHtml(admin_remarks , 0));
+                                                        //admin_remarks = String.valueOf(Html.fromHtml(admin_remarks , 0));
 
                                                         tv_remark.setText(customer_remarks);
-                                                        tv_admin_remark.setText(admin_remarks);
+                                                        //tv_admin_remark.setText(admin_remarks);
                                                     }
                                                     else {
                                                         //remarks = String.valueOf(Html.fromHtml(remarks));
                                                         customer_remarks = String.valueOf(Html.fromHtml(customer_remarks));
-                                                        admin_remarks = String.valueOf(Html.fromHtml(admin_remarks));
+                                                       // admin_remarks = String.valueOf(Html.fromHtml(admin_remarks));
 
                                                         tv_remark.setText(customer_remarks);
-                                                        tv_admin_remark.setText(admin_remarks);
+                                                        //tv_admin_remark.setText(admin_remarks);
 
                                                     }
 
