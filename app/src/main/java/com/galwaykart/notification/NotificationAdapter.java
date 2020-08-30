@@ -87,7 +87,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 //            is_url_contain=true;
 //        }
 
-        if(msg_description.contains("http:"))
+        if(msg_description.contains("http:")||msg_description.contains("https:"))
             is_url_contain=true;
 
     /**

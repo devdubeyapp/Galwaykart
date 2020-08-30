@@ -986,7 +986,7 @@ public class CartItemList extends BaseActivity {
                             editor.commit();
 
                             //Log.d("tv_total_ip",""+total_ip);
-                            tv_total_ip.setText("Total IP : "+ total_ip);
+                            tv_total_ip.setText("Total PV / BV : "+ total_ip);
 
 
                             String base_total="";

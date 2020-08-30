@@ -2017,7 +2017,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
                 String login_group_id = pref.getString("login_group_id", "");
                 if (login_group_id.equals("4")) {
-                    short_desc = "IP: " + ip_of_product + "\n\n" + short_desc + "\n\n";
+                    short_desc = "PV / BV : " + ip_of_product + "\n\n" + short_desc + "\n\n";
 
                 } else {
                     short_desc = "\n" + short_desc;

@@ -155,7 +155,7 @@ public class MVVM_HomePage_TopProductRepo {
                 String pprice="₹ "+jsonObject_product.getString("price");
                 String psku=jsonObject_product.getString("sku");
                 String pimage=jsonObject_product.getString("imageUrl");
-                String pip="IP: "+jsonObject_product.getString("ip");
+                String pip="PV / BV: "+jsonObject_product.getString("ip");
 
                 SharedPreferences pref =  CommonFun.getPreferences(context);
                 String login_group_id=pref.getString("login_user_id","");
@@ -529,7 +529,7 @@ public class MVVM_HomePage_TopProductRepo {
 
                             ////Log.d("mvvmlog",login_group_id+" "+st_selected_name);
 
-                            dataset.add(new ProductDataModel(p_name, "IP " + p_ip, "₹ " + p_price, p_sku, p_image,
+                            dataset.add(new ProductDataModel(p_name, "PV / BV " + p_ip, "₹ " + p_price, p_sku, p_image,
                                     "", st_selected_name, login_group_id));
 
                         }
