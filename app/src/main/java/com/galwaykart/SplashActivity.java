@@ -384,7 +384,8 @@ public class SplashActivity extends AppCompatActivity {
             Realm realm_1=Realm.getDefaultInstance();
             realm_1.beginTransaction();
 
-            try {
+            try{
+
 
                 JSONObject jsonObj_p = jsonObj.getJSONObject("product_details");
                 JSONArray jsonArray_product = jsonObj_p.getJSONArray("product_items");
@@ -395,7 +396,7 @@ public class SplashActivity extends AppCompatActivity {
                     String pprice = "₹ " + jsonObject_product.getString("price");
                     String psku = jsonObject_product.getString("sku");
                     String pimage = jsonObject_product.getString("image");
-                    String pip = "IP: " + jsonObject_product.getString("ip");
+                    String pip =  jsonObject_product.getString("ip");
 
 
                     String login_group_id = pref.getString("login_group_id", "");

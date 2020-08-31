@@ -1288,7 +1288,7 @@ public class CartItemList extends BaseActivity {
                            tv_txt_view.setVisibility(View.VISIBLE);
 
                            if(jsonObj.has("ip")) {
-                               tv_total_ip.setText("Total IP : " + jsonObj.getString("ip") );
+                               tv_total_ip.setText("Total PV/BV : " + jsonObj.getString("ip") );
                                //Log.d("totalipSegment",total_ip);
                            }
 

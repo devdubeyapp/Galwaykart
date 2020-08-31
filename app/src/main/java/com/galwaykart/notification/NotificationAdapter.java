@@ -97,7 +97,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
      */
         if(is_url_contain==true){
 
-            String sts_url= CommonFun.extractUrls(msg_description);
+            st_url= CommonFun.extractUrls(msg_description);
             viewHolder.tv_click_more.setVisibility(View.VISIBLE);
             msg_description=msg_description.replace(st_url,"");
 
@@ -106,7 +106,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 public void onClick(View v) {
 
                     if(is_url_contain==true)
-                        openWebViewActivity(sts_url);
+                        openWebViewActivity(st_url);
                     else {
 
                     }

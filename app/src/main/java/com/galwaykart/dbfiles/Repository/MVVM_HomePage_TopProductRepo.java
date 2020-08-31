@@ -146,6 +146,8 @@ public class MVVM_HomePage_TopProductRepo {
             response=results.asJSON();
 
 
+            Log.d("topProduct",response.toString());
+
             JSONArray jsonArray_product = new JSONArray(response);
 
             for(int i=0;i<jsonArray_product.length();i++){
@@ -158,7 +160,7 @@ public class MVVM_HomePage_TopProductRepo {
                 String pip="PV / BV: "+jsonObject_product.getString("ip");
 
                 SharedPreferences pref =  CommonFun.getPreferences(context);
-                String login_group_id=pref.getString("login_user_id","");
+                String login_group_id=pref.getString("login_group_id","");
                 if(login_group_id!=null && !login_group_id.equals(""))
                 {
 
@@ -167,18 +169,20 @@ public class MVVM_HomePage_TopProductRepo {
                 {
                     login_group_id="-";
                 }
+
                 //login_group_id="4";
+                Log.d("topProduct","GroupID"+login_group_id);
 
-                //Log.d("mvvmlog",login_group_id);
-
-                ProductDataModel productDataModel=new ProductDataModel(pname,pip,"",psku,pimage,
+                ProductDataModel productDataModel= new ProductDataModel(pname,pip,"",psku,pimage,
                         "","",login_group_id);
 
                 dataset.add(productDataModel);
+
 //                new insertProductAsyncTask(productDataModelDao)
 //                        .execute(productDataModel);
                 //  itemdProductList.add(new DataModelHomeProduct(pname,pprice,psku,pimage,"IP "+pip));
                 // setProductAdapter();
+
             }
 
             data.postValue(dataset);
