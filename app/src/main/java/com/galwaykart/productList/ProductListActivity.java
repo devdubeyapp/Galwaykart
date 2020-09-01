@@ -158,7 +158,8 @@ public class ProductListActivity extends AppCompatActivity {
         String login_group_id=pref.getString("login_group_id","");
         if(login_group_id.equals("4"))
         {
-                item_sort_by = new String[]{"Sort", "Sort By Name", "Sort By Price", "Sort By PV / BV"};
+                //item_sort_by = new String[]{"Sort", "Sort By Name", "Sort By Price", "Sort By IP"};
+            item_sort_by = new String[]{"Sort", "Sort By Name", "Sort By Price"};
         }
         else
         {

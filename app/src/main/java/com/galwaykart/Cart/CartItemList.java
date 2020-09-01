@@ -607,7 +607,7 @@ public class CartItemList extends BaseActivity {
                                 editor.commit();
 
                                 //Log.d("tv_total_ip",""+total_ip_f);
-                               // tv_total_ip.setText("Total PV / BV : "+ total_ip_f);
+                               // tv_total_ip.setText("Total IP : "+ total_ip_f);
 
 
                             }
@@ -1288,7 +1288,7 @@ public class CartItemList extends BaseActivity {
                            tv_txt_view.setVisibility(View.VISIBLE);
 
                            if(jsonObj.has("ip")) {
-                               tv_total_ip.setText("Total PV / BV : " + jsonObj.getString("ip") );
+                               tv_total_ip.setText("Total PV/BV : " + jsonObj.getString("ip") );
                                //Log.d("totalipSegment",total_ip);
                            }
 
