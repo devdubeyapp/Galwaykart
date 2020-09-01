@@ -26,6 +26,9 @@ public class ComplModel {
     private String request_type;
 
 
+
+
+
     public String getRequest_type() {
         return request_type;
     }
@@ -228,6 +231,24 @@ public class ComplModel {
 
 
 
+    private String  name;
+    private String message_chat;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMessage_chat() {
+        return message_chat;
+    }
+
+    public void setMessage_chat(String message_chat) {
+        this.message_chat = message_chat;
+    }
 
 
 
