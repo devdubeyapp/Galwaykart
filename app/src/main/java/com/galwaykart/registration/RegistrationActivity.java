@@ -929,8 +929,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
                                 //rel_layout2.setVisibility(View.GONE);
-                                 //   sendOtpViaAPI();
-                                registerUser();
+                                    sendOtpViaAPI();
+                                //registerUser();
 
                             }
 
@@ -1758,6 +1758,8 @@ private void registerUser()
         //Log.d("otp",st_text_msg);
 
         st_get_otp_URL= Global_Settings.otp_url+"?mobile="+st_phone_no+"&otp="+otp_random_no;
+
+        Log.d("st_get_otp_URL",st_get_otp_URL);
         pDialog = new TransparentProgressDialog(RegistrationActivity.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));

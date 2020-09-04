@@ -594,7 +594,8 @@ public class HomePage_ShopByCategoryTab extends Fragment {
 
                 progress_bar_shopCategory.setVisibility(View.GONE);
 
-                CommonFun.showVolleyException(error,getContext());
+                if(getContext()!=null)
+                    CommonFun.showVolleyException(error,getContext());
 
 
             }

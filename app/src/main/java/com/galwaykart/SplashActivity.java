@@ -323,11 +323,16 @@ public class SplashActivity extends AppCompatActivity {
 
         };
         jsObjRequest.setShouldCache(false);
+        RetryPolicy retryPolicy=new DefaultRetryPolicy(1000*60,
+                1,
+                1);
+        jsObjRequest.setRetryPolicy(retryPolicy);
         queue.add(jsObjRequest);
 
 
     }
 
+    Realm realm;
     private void setPostOperation(String response) {
 
         //    progress_bar.setVisibility(View.GONE);
@@ -337,11 +342,16 @@ public class SplashActivity extends AppCompatActivity {
         try
         {
 
-
-            Realm realm=Realm.getDefaultInstance();
-
-            if(!realm.isClosed())
-                realm.close();
+if(realm!=null) {
+    if (!realm.isClosed())
+        realm = Realm.getDefaultInstance();
+}
+else
+{
+    realm=Realm.getDefaultInstance();
+}
+//            if(!realm.isClosed())
+//                realm.close();
 
 
             JSONObject jsonObj = null;

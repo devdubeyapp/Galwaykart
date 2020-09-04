@@ -1079,7 +1079,10 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                     SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
                     String login_group_id=pref.getString("login_group_id","");
                     if(login_group_id.equals("4")) {
-                        b.create().show();
+                        //b.create().show();
+                        String cust_id = pref.getString("login_customer_id","");
+                        //Log.d("payment_selection",cust_id+"-"+finalSelItemCode);
+                        getPaymentMethod(shipping_info_string,false, finalSelItemCode,true);
                     }
                     else
                     {
