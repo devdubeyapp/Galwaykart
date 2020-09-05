@@ -14,7 +14,7 @@ public class Global_Settings {
     System.loadLibrary("commonfun");
  }
 
-    public static final int current_soft_version=96;
+    public static final int current_soft_version=97;
     // public static final String test_offer_url="http://qa.galwaykart.com/24nov/galway_sus/";
     //public static final String Notification_api_url="http://test.glazegalway.com:81/ios_galwaykart/";
     //public static final String galway_api_url=commonSalesData();

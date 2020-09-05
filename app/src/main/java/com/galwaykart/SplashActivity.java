@@ -343,15 +343,13 @@ public class SplashActivity extends AppCompatActivity {
         {
 
 if(realm!=null) {
-    if (!realm.isClosed())
+    if (realm.isClosed())
         realm = Realm.getDefaultInstance();
 }
 else
 {
     realm=Realm.getDefaultInstance();
 }
-//            if(!realm.isClosed())
-//                realm.close();
 
 
             JSONObject jsonObj = null;
