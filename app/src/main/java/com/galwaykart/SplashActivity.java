@@ -170,6 +170,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
+    Realm realm_init;
     private void init() {
         pref = CommonFun.getPreferences(this);
 //        Bundle bundle = getIntent().getExtras();
@@ -226,7 +227,15 @@ public class SplashActivity extends AppCompatActivity {
             CommonFun.finishscreen(SplashActivity.this);
 
         } else {
-            Realm realm = Realm.getDefaultInstance();
+
+            if(realm_init!=null){
+                if(realm_init.isClosed())
+                    realm_init= Realm.getDefaultInstance();
+            }
+            else
+                realm_init= Realm.getDefaultInstance();
+
+
             try {
                 long total_data = realm.where(DataModelHomeAPI.class).count();
                 if (total_data > 0) {

@@ -253,11 +253,19 @@ public class ComplaintMainActivity extends BaseActivityWithoutCart {
                                             @Override
                                             public View getView(int position, View convertView, ViewGroup parent) {
 
-                                                View v = super.getView(position, convertView, parent);
-                                                if (position == getCount()) {
-                                                  ((TextView) v.findViewById(android.R.id.text1)).setText("---Please Choose--- ");
-                                                   ((TextView) v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
+                                                View v=null;
+
+                                                try {
+                                                    v = super.getView(position, convertView, parent);
+                                                    if (position == getCount()) {
+                                                        ((TextView) v.findViewById(android.R.id.text1)).setText("---Please Choose--- ");
+                                                        ((TextView) v.findViewById(android.R.id.text1)).setHint(getItem(getCount())); //"Hint to be displayed"
+                                                    }
                                                 }
+                                                catch (ArrayIndexOutOfBoundsException ex){
+
+                                                }
+
 
                                                 return v;
                                             }

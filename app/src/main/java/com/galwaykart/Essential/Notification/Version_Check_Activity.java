@@ -1,5 +1,7 @@
 package com.galwaykart.Essential.Notification;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -40,9 +42,14 @@ public class Version_Check_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.galwaykart"));
+            startActivity(intent);
+        }
+        catch (ActivityNotFoundException ex){
+            viewInBrowser(Version_Check_Activity.this, "https://play.google.com/store/apps/details?id=com.galwaykart");
+        }
 
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.galwaykart"));
-                startActivity(intent);
 
             }
         });
@@ -53,7 +60,12 @@ public class Version_Check_Activity extends AppCompatActivity {
 
 
 
-
+    public static void viewInBrowser(Context context, String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        if (null != intent.resolveActivity(context.getPackageManager())) {
+            context.startActivity(intent);
+        }
+    }
 
 }
 

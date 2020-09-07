@@ -2622,6 +2622,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                             @Override
                             public void onResponse(JSONObject response) {
+
                                 if (pDialog.isShowing())
                                     pDialog.dismiss();
 

@@ -380,9 +380,13 @@ public class ShowCategoryList extends BaseActivity {
 
                 data_loop++;
 
-                arr_category_name[data_loop] = category_name;
-                arr_category_id[data_loop] = category_id;
+                try {
+                    arr_category_name[data_loop] = category_name;
+                    arr_category_id[data_loop] = category_id;
+                }
+                catch (ArrayIndexOutOfBoundsException ex){
 
+                }
 
 
                 ////Log.d("category", arr_category_name[data_loop] + " " + arr_category_id[data_loop]);
@@ -459,8 +463,8 @@ public class ShowCategoryList extends BaseActivity {
         fromurl=com.galwaykart.essentialClass.Global_Settings.api_url+"index.php/rest/V1/categories";
 
        // pDialog = new TransparentProgressDialog(ShowCategoryList.this);
-        pDialog.setCancelable(false);
-        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT)); pDialog.show();
+//        pDialog.setCancelable(false);
+//        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT)); pDialog.show();
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest jsObjRequest = new StringRequest(Request.Method.GET, fromurl,

@@ -2731,11 +2731,13 @@ public class GuestMainActivity extends GuestBaseActivity {
         }
 
 
-        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        ));
+        if(jsObjRequest!=null) {
+            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
 
-        jsObjRequest.setShouldCache(false);
+            jsObjRequest.setShouldCache(false);
+        }
         queue.add(jsObjRequest);
 
     }
