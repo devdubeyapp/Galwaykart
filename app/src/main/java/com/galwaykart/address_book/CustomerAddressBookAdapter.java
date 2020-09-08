@@ -61,7 +61,7 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
     final String  TAG_edit = "Edit_Add";
     final String TAG_selected_address = "Address";
     final String TAG_show_select="select";
-
+    final String TAG_telephone_new= "newtelephone";
     final String TAG_id= "id";
     int cur_position;
     String company_name = "";
@@ -141,6 +141,8 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
 
         SharedPreferences pref = CommonFun.getPreferences(ctx);
         String login_group_id=pref.getString("login_group_id","");
+        String phone_no_new=itemList.get(position).get("newtelephone");
+        Log.d("phone_no_new",phone_no_new);
 
 
 
@@ -250,6 +252,10 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                     intent.putExtra("first_name", itemList.get(position).get(TAG_firstname));
                     intent.putExtra("last_name", itemList.get(position).get(TAG_lastname));
                     intent.putExtra("phone_no", itemList.get(position).get(TAG_telephone));
+
+                    Log.d("phone_no_new",itemList.get(position).get("newtelephone"));
+
+                    intent.putExtra("phone_no_new", itemList.get(position).get("newtelephone"));
                     intent.putExtra("zip", itemList.get(position).get(TAG_postcode));
                    // intent.putExtra("state_",itemList.get(position).get(TAG_region).toString());
                     intent.putExtra("city", itemList.get(position).get(TAG_city));
@@ -259,8 +265,6 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                     intent.putExtra("default_ship", itemList.get(position).get("default_ship"));
                     intent.putExtra("default_bill", itemList.get(position).get("default_bill"));
 
-
-                    intent.putExtra("","");
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     ctx.startActivity(intent);
                     CommonFun.finishscreen((Activity) ctx);

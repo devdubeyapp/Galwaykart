@@ -61,6 +61,7 @@ public class AddNewAddress extends BaseActivity {
                 firstname="",st_input_data="",lastname="",company_name="",coming_from="",region_code="",region_id="",add_line1="";
 
     EditText first_name,last_name,company,phone_no,street_address,city,state,zip,country;
+    EditText phone_no_new;
     Button button_save_address;
     TextView tv_title_address;
     CheckBox chk_shipping,chk_billing;
@@ -107,6 +108,7 @@ public class AddNewAddress extends BaseActivity {
             address_region_id = "",
             address_country_id = "",
             address_telephone = "",
+            address_telephone_new = "",
             address_postcode = "",onLoad="false",
             address_city ="",login_email="",
             address_firstname = "",login_lname="",login_fname="",
@@ -186,11 +188,14 @@ public class AddNewAddress extends BaseActivity {
             if(add_new1!=null && !add_new1.equals(""))
                 add_new=add_new1;
 
-            if(add_new.equalsIgnoreCase("no")){
+            if(add_new.equalsIgnoreCase("no"))
+            {
                address_id=bundle.getString("address_id");
                address_firstname=bundle.getString("first_name");
                address_lastname=bundle.getString("last_name");
                address_telephone=bundle.getString("phone_no");
+
+               address_telephone_new=bundle.getString("phone_no_new");
 
                address_postcode=bundle.getString("zip");
                address_city=bundle.getString("city");
@@ -198,9 +203,6 @@ public class AddNewAddress extends BaseActivity {
                new_state=bundle.getString("region");
                st_default_ship=bundle.getString("default_ship");
                st_default_bill=bundle.getString("default_bill");
-
-                //is_default_shipping = bundle.getString("is_default_shipping");
-
 
             }
 
@@ -305,6 +307,8 @@ public class AddNewAddress extends BaseActivity {
         last_name = findViewById(R.id.last_name);
         company = findViewById(R.id.company);
         phone_no = findViewById(R.id.phone_no);
+        phone_no_new=findViewById(R.id.phone_no_new);
+
         //phone_no.setVisibility(View.VISIBLE);
 
 
@@ -628,6 +632,7 @@ public class AddNewAddress extends BaseActivity {
         first_name.setText(address_firstname);
         last_name.setText(address_lastname);
         phone_no.setText(address_telephone);
+        phone_no_new.setText(address_telephone_new);
         //zip.setHint(address_postcode);
         zip.setText(address_postcode);
         city.setText(address_city);
@@ -662,6 +667,8 @@ public class AddNewAddress extends BaseActivity {
 
 
         String st_tel = phone_no.getText().toString();
+
+        String st_tel_new = phone_no_new.getText().toString();
         String st_postcode = zip.getText().toString();
         String st_city = city.getText().toString();
         String st_fname = first_name.getText().toString();
@@ -822,6 +829,13 @@ public class AddNewAddress extends BaseActivity {
                 String login_fname=pref.getString("login_fname","");
                 String login_lname=pref.getString("login_lname","");
 
+
+                String alternate_address="";
+                if(st_tel_new!=null&& !st_tel_new.isEmpty()){
+                    alternate_address= ",\"custom_attributes\":[{\"value\":\"" + st_tel_new + "\",\"attribute_code\":\"number_new\"}]" ;
+
+                }
+
     if (!address_id.equalsIgnoreCase("")) {
         return_data = "{\"customer\":" +
                 "{\"email\":\"" + login_email + "\"," +
@@ -843,6 +857,7 @@ public class AddNewAddress extends BaseActivity {
                 all_ship_default+
                 "\"country_id\":\"IN\"," +
                 "\"telephone\":\"" + phone_no.getText().toString().trim() + "\"" +
+               alternate_address+
                 "}]," +
                 "\"website_id\":\"1\"," +
                 "\"store_id\":\"1\"," +
@@ -867,6 +882,7 @@ public class AddNewAddress extends BaseActivity {
                 all_ship_default+
                 "\"country_id\":\"IN\"," +
                 "\"telephone\":\"" + phone_no.getText().toString().trim() + "\"" +
+                alternate_address+
                 "}]," +
                 "\"website_id\":\"1\"," +
                 "\"store_id\":\"1\"," +

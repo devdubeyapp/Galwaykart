@@ -257,12 +257,15 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
             } catch (IllegalStateException ex) {
+                if(realm!=null)
                 realm.close();
                 // //Log.d("res_res",ex.getMessage());
             } catch (Exception ex) {
+                if(realm!=null)
                 realm.close();
                 // //Log.d("res_res",ex.getMessage());
             } finally {
+                if(realm!=null)
                 realm.close();
             }
             callHomePageAPI();

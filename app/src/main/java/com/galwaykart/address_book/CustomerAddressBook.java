@@ -66,6 +66,7 @@ public class CustomerAddressBook extends BaseActivity {
     final String TAG_street = "street";
     final String TAG_company= "company";
     final String TAG_telephone= "telephone";
+    final String TAG_telephone_new= "newtelephone";
     final String TAG_postcode = "postcode";
     final String TAG_city = "city";
     final String TAG_firstname= "firstname";
@@ -101,6 +102,12 @@ public class CustomerAddressBook extends BaseActivity {
             arr_firstname,arr_lastname,arr_state,arr_customer_id,arr_company,arr_address_id,arr_region_id,arr_region_code,
             arr_default_ship,arr_default_bill;
 
+    /**
+     * Addded on Sep 8, 2020
+     * Ankesh kumar
+     */
+    String[] arr_telephone2;
+
 
     String login_group_id="";
     HashSet<String> arrayList_AddressId;
@@ -117,6 +124,7 @@ public class CustomerAddressBook extends BaseActivity {
     String strCityName= "";
     String strPincode="";
     String strTelephone="";
+    String strTelephone2="";
 
     String is_default_shipping ="";
 
@@ -231,6 +239,8 @@ public class CustomerAddressBook extends BaseActivity {
                 SharedPreferences.Editor editor= pref.edit();
                 editor.putString("st_selected_address","Franchisee");
                 editor.putString("telephone", strTelephone);
+                editor.putString("newtelephone", strTelephone2);
+
                 editor.putString("postcode", strPincode);
                 editor.putString("city", strCityName);
 
@@ -278,6 +288,8 @@ public class CustomerAddressBook extends BaseActivity {
                 intent.putExtra("first_name", strFirstName);
                 intent.putExtra("last_name", strLastName);
                 intent.putExtra("phone_no", strTelephone);
+                intent.putExtra("newtelephone",strTelephone2);
+
                 intent.putExtra("zip", strPincode);
                 intent.putExtra("city", strCityName);
                 intent.putExtra("street_address", strStreetName);
@@ -477,6 +489,7 @@ public class CustomerAddressBook extends BaseActivity {
                             arr_region = new String[addressArray.length()];
                             arr_state = new String[addressArray.length()];
                             arr_telephone = new String[addressArray.length()];
+                            arr_telephone2= new String[addressArray.length()];
                             arr_customer_id = new String[addressArray.length()];
                             arr_company = new String[addressArray.length()];
                             arr_edit_boolean = new String[addressArray.length()];
@@ -534,6 +547,22 @@ public class CustomerAddressBook extends BaseActivity {
                                 arr_selected_address[i] = "";
                                 arr_city[i] = city;
 
+                                arr_telephone2[i]="";
+                                if(jsonObj.has("custom_attributes")){
+
+                                    JSONArray jsonArray_custom=jsonObj.getJSONArray("custom_attributes");
+
+                                    for(int custom_at=0;custom_at<jsonArray_custom.length();custom_at++){
+                                        JSONObject jsonObject1=jsonArray_custom.getJSONObject(custom_at);
+
+                                        Log.d("phone_no_new","phone_no_new");
+                                        if(jsonObject1.getString("attribute_code").equalsIgnoreCase("number_new"))
+                                        arr_telephone2[i]=jsonObject1.getString("value");
+                                        Log.d("phone_no_new", arr_telephone2[i]);
+                                    }
+
+                                }
+
                                 if(jsonObj.has("default_shipping"))
                                 {
 
@@ -559,6 +588,7 @@ public class CustomerAddressBook extends BaseActivity {
                                         strCityName= jsonObj.getString(TAG_city);
                                         strPincode= jsonObj.getString(TAG_postcode);
                                         strTelephone= jsonObj.getString(TAG_telephone);
+                                        strTelephone2=arr_telephone2[i];
                                         textCompany_name_default.setVisibility(View.GONE);
 
                                         textCustomer_name_default.setText(strCustomerName);
@@ -578,6 +608,8 @@ public class CustomerAddressBook extends BaseActivity {
                                        hashMap.put(TAG_customer_id, arr_customer_id[i]);
                                        hashMap.put(TAG_street, arr_add_line[i]);
                                        hashMap.put(TAG_telephone,  arr_telephone[i]);
+                                       hashMap.put("newtelephone",arr_telephone2[i]);
+
                                        hashMap.put(TAG_postcode, arr_postcode[i]);
                                        hashMap.put(TAG_city, arr_city[i]);
                                        hashMap.put(TAG_firstname, arr_firstname[i]);
@@ -689,12 +721,13 @@ public class CustomerAddressBook extends BaseActivity {
                         TAG_lastname},
                 new int[]{R.id.textStreet_name,
                         R.id.textTelephone_name,
+
                         R.id.textPincode_name,
                         R.id.textCity_name,
                         R.id.textCustomer_name,
                         R.id.textCompany_name,
                         R.id.bt_edit_add_icon,
-                        R.id.textCustomer_name
+                        R.id.textCustomer_name,
 
                 }
         );
