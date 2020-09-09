@@ -255,7 +255,7 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
 
                     Log.d("phone_no_new",itemList.get(position).get("newtelephone"));
 
-                    intent.putExtra("phone_no_new", itemList.get(position).get("newtelephone"));
+                    intent.putExtra("newtelephone", itemList.get(position).get("newtelephone"));
                     intent.putExtra("zip", itemList.get(position).get(TAG_postcode));
                    // intent.putExtra("state_",itemList.get(position).get(TAG_region).toString());
                     intent.putExtra("city", itemList.get(position).get(TAG_city));

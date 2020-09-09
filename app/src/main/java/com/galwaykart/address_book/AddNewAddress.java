@@ -195,7 +195,7 @@ public class AddNewAddress extends BaseActivity {
                address_lastname=bundle.getString("last_name");
                address_telephone=bundle.getString("phone_no");
 
-               address_telephone_new=bundle.getString("phone_no_new");
+               address_telephone_new=bundle.getString("newtelephone");
 
                address_postcode=bundle.getString("zip");
                address_city=bundle.getString("city");
