@@ -39,6 +39,7 @@ import com.galwaykart.HomePageTab.DataModelHomeAPI;
 import com.galwaykart.Login.LogoutActivity;
 //import com.galwaykart.RoomDb.GalwaykartRoomDatabase;
 
+import com.galwaykart.MultiStoreSelection.StateSelectionDialog;
 import com.galwaykart.dbfiles.DatabaseHandler;
 import com.galwaykart.dbfiles.ProductDataModel;
 import com.galwaykart.essentialClass.CommonFun;
@@ -81,34 +82,11 @@ public class SplashActivity extends AppCompatActivity {
     TransparentProgressDialog pDialog;
     int retry_merge=0;
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//
-//
-//    }
 
 
     String notice_title="",notice_message="";
 
 
-
-//    private static class deleteAllWordsAsyncTask extends AsyncTask<Void, Void, Void> {
-//        private ProductDataModelDao mAsyncTaskDao;
-//
-//        deleteAllWordsAsyncTask(ProductDataModelDao dao) {
-//            mAsyncTaskDao = dao;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//            mAsyncTaskDao.deleteAll();
-//            //Log.d("mvvmDao","deletedata");
-//
-//            return null;
-//        }
-//    }
     AppUpdateManager appUpdateManager;
 
 
@@ -117,11 +95,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-//        Intent intent=new Intent(SplashActivity.this, .class);
-//        startActivity(intent);
-//        CommonFun.finishscreen(SplashActivity.this);
 
-        //init();
 
     }
 
@@ -129,31 +103,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-//        appUpdateManager = AppUpdateManagerFactory.create(SplashActivity.this);
-//
-//// Returns an intent object that you use to check for an update.
-//        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
-//
-//// Checks that the platform will allow the specified type of update.
-//        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
-//            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-//                    // For a flexible update, use AppUpdateType.FLEXIBLE
-//                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-//                try {
-//                    appUpdateManager.startUpdateFlowForResult(
-//                      appUpdateInfo,
-//                      AppUpdateType.IMMEDIATE,
-//                      this,
-//                      MY_REQUEST_CODE);
-//                } catch (IntentSender.SendIntentException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            else
-//            {
-//                init();
-//            }
-//        });
         init();
     }
 
@@ -173,17 +122,6 @@ public class SplashActivity extends AppCompatActivity {
     Realm realm_init;
     private void init() {
         pref = CommonFun.getPreferences(this);
-//        Bundle bundle = getIntent().getExtras();
-//        if (bundle != null) {
-//            //bundle must contain all info sent in "data" field of the notification
-//            if (getIntent().hasExtra("data")) {
-//                //Log.d("New_Notification_Sp","notification");
-//            }
-//            //Log.d("New_Notification_Sp",getIntent().getStringExtra("notification").toString());
-//        }
-
-
-
 
 
         try {
@@ -213,9 +151,8 @@ public class SplashActivity extends AppCompatActivity {
 //        ProductDataModelDao productDataModelDao=db.productDataModelDao();
 //          new deleteAllWordsAsyncTask(productDataModelDao).execute();
 
-        if (!notice_title.equals("") && !notice_message.equals("")) {
-            ////Log.d("New_Notification_Sp2",notice_title);
-            ////Log.d("New_Notification_Sp2",notice_message);
+        if (!notice_title.equals("") && !notice_message.equals(""))
+        {
 
             Intent intent = null;
             intent = new Intent(getApplicationContext(), NotificationSplashActivity.class);
@@ -226,243 +163,58 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(intent);
             CommonFun.finishscreen(SplashActivity.this);
 
-        } else {
-
-            if(realm_init!=null){
-                if(realm_init.isClosed())
-                    realm_init= Realm.getDefaultInstance();
-            }
-            else
-                realm_init= Realm.getDefaultInstance();
-
-
-            try {
-                long total_data = realm.where(DataModelHomeAPI.class).count();
-                if (total_data > 0) {
-                    realm.beginTransaction();
-                    realm.delete(DataModelHomeAPI.class);
-                    realm.commitTransaction();
-                    realm.close();
-                }
-
-                if(realm.isClosed())
-                    realm = Realm.getDefaultInstance();
-
-                long total_data_top_product = realm.where(ProductDataModel.class).count();
-                if (total_data_top_product > 0) {
-                    realm.beginTransaction();
-                    realm.delete(ProductDataModel.class);
-                    realm.commitTransaction();
-                    realm.close();
-                }
-
-            } catch (IllegalStateException ex) {
-                if(realm!=null)
-                realm.close();
-                // //Log.d("res_res",ex.getMessage());
-            } catch (Exception ex) {
-                if(realm!=null)
-                realm.close();
-                // //Log.d("res_res",ex.getMessage());
-            } finally {
-                if(realm!=null)
-                realm.close();
-            }
-            callHomePageAPI();
-
-
-            //callNotificationData();
-        }
-    }
-
-
-    private void callHomePageAPI()
-    {
-
-        String email = pref.getString("user_email", "");
-        String login_group_id=pref.getString("login_group_id","");
-        String home_page_api="";
-
-        if (!email.equalsIgnoreCase("") && email != null) {
-
-            home_page_api=Global_Settings.home_page_api+"?cid="+login_group_id;
-            home_page_api= Global_Settings.api_url+"/rest/V1/mobile/home/"+login_group_id;
-
         }
         else
         {
-            home_page_api=Global_Settings.home_page_api+"?cid=0";
-            home_page_api= Global_Settings.api_url+"/rest/V1/mobile/home/0";
-        }
 
-
-        callHomeItemList(home_page_api);
-
-    }
-
-
-    private void callHomeItemList(String url_cart_item_list) {
-
-       // progress_bar.setVisibility(View.VISIBLE);
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
-                url_cart_item_list, null,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("responsebanner", response.toString());
-
-
-                        setPostOperation(response.toString());
-
-                    }
-                },
-
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-
-                        //progress_bar.setVisibility(View.GONE);
-                        //refreshItemCount();
-                        CommonFun.showVolleyException(error,SplashActivity.this);
-
-                    }
-                }
-        ) {
-
-        };
-        jsObjRequest.setShouldCache(false);
-        RetryPolicy retryPolicy=new DefaultRetryPolicy(1000*60,
-                1,
-                1);
-        jsObjRequest.setRetryPolicy(retryPolicy);
-        queue.add(jsObjRequest);
-
-
-    }
-
-    Realm realm;
-    private void setPostOperation(String response) {
-
-        //    progress_bar.setVisibility(View.GONE);
-           // dataLoad=true;
-
-
-        try
-        {
-
-if(realm!=null) {
-    if (realm.isClosed())
-        realm = Realm.getDefaultInstance();
-}
-else
-{
-    realm=Realm.getDefaultInstance();
-}
-
-
-            JSONObject jsonObj = null;
-            jsonObj = new JSONObject(String.valueOf(response));
-            JSONArray jsonArray_banner=jsonObj.getJSONArray("banners");
-            String  st_cat_head=jsonObj.getString("category_title");
-
-
-
-            if(realm.isClosed())
-                realm=Realm.getDefaultInstance();
-
-
-            realm.beginTransaction();
-            for(int i=0;i<jsonArray_banner.length();i++){
-                JSONObject jsonObject_category=jsonArray_banner.getJSONObject(i);
-
-                String is_banner_category_offer=jsonObject_category.getString("banner_category");
-                    String catid = jsonObject_category.getString("cat_id");
-                    String catimage = jsonObject_category.getString("banner_name");
-                    String banner_image_sku= jsonObject_category.getString("sku");
-
-
-                DataModelHomeAPI dataModelHomeAPI=realm.createObject(DataModelHomeAPI.class);
-
-                dataModelHomeAPI.setCat_title(st_cat_head);
-                    dataModelHomeAPI.setP_catid(catid);
-                    dataModelHomeAPI.setP_image(catimage);
-                    dataModelHomeAPI.setP_banner_category(is_banner_category_offer);
-                    dataModelHomeAPI.setP_sku(banner_image_sku);
-                    dataModelHomeAPI.setP_name("");
-                    dataModelHomeAPI.setP_price("");
-
-
-            }
-            realm.commitTransaction();
-            realm.close();
-
-
-            Realm realm_1=Realm.getDefaultInstance();
-            realm_1.beginTransaction();
-
-            try{
-
-
-                JSONObject jsonObj_p = jsonObj.getJSONObject("product_details");
-                JSONArray jsonArray_product = jsonObj_p.getJSONArray("product_items");
-                for (int i = 0; i < jsonArray_product.length(); i++) {
-
-                    JSONObject jsonObject_product = jsonArray_product.getJSONObject(i);
-                    String pname = jsonObject_product.getString("pname");
-                    String pprice = "₹ " + jsonObject_product.getString("price");
-                    String psku = jsonObject_product.getString("sku");
-                    String pimage = jsonObject_product.getString("image");
-                    String pip =  jsonObject_product.getString("ip");
-
-
-                    String login_group_id = pref.getString("login_group_id", "");
-                    if (login_group_id != null && !login_group_id.equals("")) {
-
-                    } else {
-                        login_group_id = "-";
-                    }
-                    //login_group_id="4";
-
-//                    //Log.d("mvvmlog", login_group_id);
+//            if(realm_init!=null){
+//                if(realm_init.isClosed())
+//                    realm_init= Realm.getDefaultInstance();
+//            }
+//            else
+//                realm_init= Realm.getDefaultInstance();
 //
-//                    ProductDataModel productDataModel = new ProductDataModel(pname, pip, "", psku, pimage,
-//                            "", "", login_group_id);
-
-
-                          ProductDataModel productDataModel=realm_1.createObject(ProductDataModel.class);
-                          productDataModel.setPname(pname);
-                          productDataModel.setIp(pip);
-                          productDataModel.setPrice("");
-                          productDataModel.setSku(psku);
-                          productDataModel.setImage(pimage);
-                          productDataModel.setP_category_id("");
-                          productDataModel.setP_category_name("");
-                          productDataModel.setLogin_user_id(login_group_id);
-
-
-
-                  //  //Log.d("res_res", "commit_trans");
-                }
-                realm_1.commitTransaction();
-            }
-            catch (JSONException ex){
-
-                realm_1.close();
-            }
+//
+//            try {
+//                long total_data = realm.where(DataModelHomeAPI.class).count();
+//                if (total_data > 0) {
+//                    realm.beginTransaction();
+//                    realm.delete(DataModelHomeAPI.class);
+//                    realm.commitTransaction();
+//                    realm.close();
+//                }
+//
+//                if(realm.isClosed())
+//                    realm = Realm.getDefaultInstance();
+//
+//                long total_data_top_product = realm.where(ProductDataModel.class).count();
+//                if (total_data_top_product > 0) {
+//                    realm.beginTransaction();
+//                    realm.delete(ProductDataModel.class);
+//                    realm.commitTransaction();
+//                    realm.close();
+//                }
+//
+//            } catch (IllegalStateException ex) {
+//                if(realm!=null)
+//                realm.close();
+//                // //Log.d("res_res",ex.getMessage());
+//            } catch (Exception ex) {
+//                if(realm!=null)
+//                realm.close();
+//                // //Log.d("res_res",ex.getMessage());
+//            } finally {
+//                if(realm!=null)
+//                realm.close();
+//            }
+//            //callHomePageAPI();
 
             callNotificationData();
 
 
-        } catch (JSONException e) {
-
-
-            e.printStackTrace();
         }
     }
+
 
 
 
@@ -544,124 +296,6 @@ else
 
 
 
-    private void getTokenFromVolley(String fromurl, String email, String pass) {
-
-        JSONObject jsonBody = new JSONObject();
-        try {
-            jsonBody.put("username", email);
-            jsonBody.put("password", pass);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final String mRequestBody = jsonBody.toString();
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, fromurl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.i("LOG_VOLLEY_token", response);
-
-                //CommonFun.alertError(MainActivityProductListing.this,response);
-
-                try {
-
-                    tokenData = response;
-                    tokenData = tokenData.replaceAll("\"", "");
-
-
-                    SharedPreferences.Editor editor = pref.edit();
-                    editor.putString("tokenData", tokenData);
-
-                    /**
-                     * for distributor only
-                     */
-                    //editor.putString("user_zone","");
-                    editor.putString("categorydata", "");
-                    editor.putString("log_user_zone", "");
-                    editor.putString("st_dist_id", "");
-                    editor.putString("homepage_data", "");
-                    editor.commit();
-                }
-                catch (Exception ex)
-                {
-
-                }
-
-                try {
-                    SharedPreferences pref_banner = getSharedPreferences("pref_banner", MODE_PRIVATE);
-                    pref_banner.edit().clear().commit();
-                }
-                catch (Exception ex){
-                    //////Log.d("cat_banner","error");
-                }
-
-                //Intent intent = new Intent(SplashActivity.this, HomePageActivity.class);
-
-
-                String guest_cart_id=pref.getString("guest_cart_id_process","");
-                if(guest_cart_id!=null && !guest_cart_id.equals(""))
-                {
-                    getCartId_v1(guest_cart_id,tokenData);
-
-                }
-                else
-                {
-                    goToHomePage();
-                }
-                //getUserStatus(st_dist_id);
-
-
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                //Intent intent = new Intent(SplashActivity.this, com.galwaykart.essentialClass.InternetConnectivityError.class);
-                //startActivity(intent);
-                 CommonFun.showVolleyException(error,SplashActivity.this);
-
-
-
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                //                    login_progress.setVisibility(View.INVISIBLE);
-                return mRequestBody == null ? null : mRequestBody.getBytes(StandardCharsets.UTF_8);
-            }
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<>();
-
-
-                //////Log.d("delievery data in",delivery_data_in.toString());
-                headers.put("Authorization", "Bearer " + tokenData);
-                //headers.put("Content-Type","application/json");
-                return headers;
-            }
-
-        };
-
-        RetryPolicy retryPolicy=new DefaultRetryPolicy(1000*60,
-                0, 0);
-        stringRequest.setRetryPolicy(retryPolicy);
-
-        stringRequest.setShouldCache(false);
-
-        queue.add(stringRequest);
-
-
-    }
 
     private void checkVersionAPI(final String fromurl, final String email, final String pass) {
 
@@ -762,15 +396,6 @@ else
     private void sync_Cart(String guest_cart_id,String token_data)
     {
        String cart_merge_url=Global_Settings.api_url+"rest/V1/mobile/cart/merge";
-
-//        JSONObject jsonBody = new JSONObject();
-//        try {
-//            jsonBody.put("guestCartId", guest_cart_id);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//a@
-//        final String mRequestBody = jsonBody.toString();
 
 
         String mRequestBody="{" +
@@ -881,8 +506,9 @@ else
         RequestQueue queue = Volley.newRequestQueue(this);
 
         pDialog = new TransparentProgressDialog(this);
-        pDialog.setCancelable(false);
+
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        pDialog.setCancelable(false);
         pDialog.show();
 
 
@@ -1001,10 +627,20 @@ else
 
     private void goToHomePage() {
 
-        Intent intent = new Intent(SplashActivity.this, HomePageActivity.class);
+        SharedPreferences pref;
+        pref = CommonFun.getPreferences(SplashActivity.this);
+        SharedPreferences.Editor editor=pref.edit();
+        editor.putString("call_user_currentzone","");
+        editor.commit();
+
+
+
+        Intent intent = new Intent(SplashActivity.this, StateSelectionDialog.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         CommonFun.finishscreen(SplashActivity.this);
+
+
     }
 
 
@@ -1024,104 +660,6 @@ else
      * Check Distributor id is valid or not
      */
 
-    private void getUserStatus(String disributorId){
-
-        final String input_data_sales="{\"User_id\":\""+disributorId+"\",\"spmode\":\"0\"}";
-        //////Log.d("input_data_sales",input_data_sales);
-
-        String st_User_Status_URL = Global_Settings.st_sales_api+"CheckUserAuth";
-        //////Log.d("st_User_Status_URL",st_User_Status_URL);
-
-        pDialog = new TransparentProgressDialog(SplashActivity.this);
-        pDialog.setCancelable(false);
-        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        if(!isFinishing())
-            pDialog.show();
-
-
-        try {
-            final RequestQueue requestQueue = Volley.newRequestQueue(this);
-            StringRequest req = new StringRequest(Request.Method.POST,
-                    st_User_Status_URL,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String  response) {
-                            if(pDialog.isShowing())
-                                pDialog.dismiss();
-                          //  //Log.d("VOLLEYgetUserStatus", response.toString());
-                            try {
-                                //CommonFun.alertError(Payment_Method_Activity.this,response);
-                                JSONObject jsonObject=new JSONObject(String.valueOf(response));
-                                String st_msg=jsonObject.getString("msg");
-                                String st_status=jsonObject.getString("Status");
-
-                                if(st_status.equalsIgnoreCase("0")) {  // status = 0 (Successful in sales)
-                                    DatabaseHandler dbh=new DatabaseHandler(SplashActivity.this);
-                                    dbh.deleteAllData();
-
-                                    //Intent intent = new Intent(SplashActivity.this, HomePageActivity.class);
-                                    goToHomePage();
-                                }
-                                else{
-
-                                    alertError(st_msg);
-
-
-                                }
-                            } catch (Exception e) {
-                                //e.printStackTrace();
-//                                CommonFun.alertError(OrderDetails.this,e.toString());
-                              //  Intent intent=new Intent(SplashActivity.this, ExceptionError.class);
-                               // startActivity(intent);
-
-                                Intent intent=new Intent(SplashActivity.this, SplashErrorActivity.class);
-                                startActivity(intent);
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    //////Log.d("VOLLEY", error.toString());
-                    //   CommonFun.alertError(DeliveryTypeActivity.this,error.toString());
-                    if(pDialog.isShowing())
-                        pDialog.dismiss();
-
-                    CommonFun.alertError(SplashActivity.this,"Something went wrong!!! Try Again");
-                    //CommonFun.showVolleyException(error,SplashActivity.this);
-                }
-            }) {
-                @Override
-                public String getBodyContentType() {
-                    return "application/json; charset=utf-8";
-                }
-                @Override
-                protected String getParamsEncoding() {
-                    return "utf-8";
-                }
-                @Override
-                public byte[] getBody() {
-                    return input_data_sales == null ? null : input_data_sales.getBytes(StandardCharsets.UTF_8);
-                }
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json; charset=utf-8");
-                    return headers;
-                }
-            };
-
-            RetryPolicy retryPolicy=new DefaultRetryPolicy(1000*60,
-                    1,
-                    1);
-            req.setRetryPolicy(retryPolicy);
-            requestQueue.add(req);
-        } catch (Exception e) {
-            e.printStackTrace();
-            //////Log.d("error...","Error");
-        }
-
-
-    }
 
     public void alertError(String errmsg){
         final AlertDialog.Builder b;
@@ -1157,30 +695,6 @@ else
 
 
 
-    private  void alertErrorOnExit(Context ctx, String errmsg){
-    final AlertDialog.Builder b;
-    try
-    {
-        b = new AlertDialog.Builder(ctx);
-        b.setTitle("Alert");
-        b.setCancelable(false);
-        b.setMessage(errmsg);
-        b.setPositiveButton("OK", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int whichButton)
-            {
-                b.create().dismiss();
-                CommonFun.finishscreen(SplashActivity.this);
-            }
-        });
-        b.create().show();
-    }
-    catch(Exception ex)
-    {
-    }
-
-}
 
     private void goToHome()
     {

@@ -798,10 +798,15 @@ private void callLogin(){
      * call api to login
      * first get the token
      * and then call loginurl to get details
+     *
      */
     private void attemptLogin(){
 
-        loginUrl=api_url+"index.php/rest/V1/customers/me";
+        String st_currentz_zone=Global_Settings.current_zone;
+        if(st_currentz_zone!=null && !st_currentz_zone.equals(""))
+            loginUrl=api_url+"rest/V1/customers/me";
+        else
+            loginUrl=api_url+"index.php/rest/V1/customers/me";
         //loginUrl=api_url+getData();
 //        String url=api_url+"rest/V1/integration/customer/token";
         String url=api_url+"rest/V1/m-integration/customer/token";

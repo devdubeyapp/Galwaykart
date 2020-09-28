@@ -450,7 +450,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
     private void callJSONAPIVolley()
     {
 
-        fromurl=com.galwaykart.essentialClass.Global_Settings.api_url+"index.php/rest/V1/categories";
+        fromurl=com.galwaykart.essentialClass.Global_Settings.api_url+"rest/V1/categories";
 
         // pDialog = new TransparentProgressDialog(HomePage_ShopByCategoryTab.this);
 //        pDialog.setCancelable(false);

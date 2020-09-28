@@ -13,9 +13,9 @@ public class Global_Settings {
 //public native static String commonSalesData();
 //public native static String otpUrlData();
 
- static {
-    System.loadLibrary("commonfun");
- }
+// static {
+//    System.loadLibrary("commonfun");
+// }
 
 
     public static final int current_soft_version=97;
@@ -41,7 +41,8 @@ public class Global_Settings {
 
     //public static final String api_url="https://www.galwaykart.com/";                 // Live
     //public static final String api_url="http://192.168.10.130/galwaykart/";               // Test
-    public static final String api_url="http://qa.galwaykart.com/";      // new qa server
+    public static String api_url="http://qa.galwaykart.com/";      // new qa server
+    public static String current_zone="";
 
 
     //public static final String online_payment_hash_key_url="https://www.galwaykart.com/";
@@ -68,6 +69,8 @@ public class Global_Settings {
     public static final String otp_url=api_custom_url+"galwaykart/api_get_otp.php";
     public static final String st_Tamplate="email_reset";
     public static final String st_check_user=api_url+"rest/V1/customer/irid/exits/";
+
+
     //public static final String user_details_url=api_url+"glaze/fcode.php?id=";
 
     //public static final String wms_checkout="http://192.168.10.34:81/rateit/galwaykart/wmscheckout.php";
@@ -96,5 +99,10 @@ public class Global_Settings {
     public static final String payu_merchant_key="MAZyiB"; //live
     //public static final String payu_merchant_key="fB7m8s"; //sandbox
 
+
+    /**
+     * Address Change
+     */
+    public static final String st_address=api_url+"rest/V1/website/list";
 
 }

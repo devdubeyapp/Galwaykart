@@ -19,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_home_page"
         app:menu="@menu/activity_home_page_drawer"
@@ -32,6 +33,7 @@
         android:background="@android:color/white"
         android:dividerHeight="1dp"
         android:layoutDirection="rtl"
+
         android:groupIndicator="@drawable/store_info_expandabellist_indicator"
         />
 

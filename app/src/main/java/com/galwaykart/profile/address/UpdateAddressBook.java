@@ -118,7 +118,7 @@ public class UpdateAddressBook extends BaseActivity {
 
         list_address= findViewById(R.id.list_address);
 
-        url_address=api_url+"index.php/rest/V1/customers/me";
+        url_address=api_url+"rest/V1/customers/me";
 
         tv_title_address= findViewById(R.id.tv_title_address);
         tv_title_address.setText("Billing Address");

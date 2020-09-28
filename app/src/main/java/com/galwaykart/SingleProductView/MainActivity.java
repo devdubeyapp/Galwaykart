@@ -1676,7 +1676,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         pref= CommonFun.getPreferences(getApplicationContext());
         product_sku=pref.getString("showitemsku","");
 //        product_sku = "configurable product";
-        String fromurl= Global_Settings.api_url+"index.php/rest/V1/m-products/"+product_sku;
+        String fromurl= Global_Settings.api_url+"rest/V1/m-products/"+product_sku;
         //Log.d("fromurl",fromurl);
 
         pDialog = new TransparentProgressDialog(MainActivity.this);

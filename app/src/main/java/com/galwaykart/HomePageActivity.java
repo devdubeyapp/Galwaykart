@@ -15,8 +15,10 @@ import android.os.Bundle;
 //import com.freshchat.consumer.sdk.FreshchatConfig;
 //import com.freshchat.consumer.sdk.FreshchatUser;
 //import com.freshchat.consumer.sdk.exception.MethodNotAllowedException;
+import com.android.volley.RetryPolicy;
 import com.galwaykart.Legal.CallWebUrlActivity;
 import com.galwaykart.Legal.FaqActivity;
+import com.galwaykart.MultiStoreSelection.StateSelectionDialog;
 import com.galwaykart.address_book.CustomerAddressBook;
 import com.galwaykart.HomePageTab.DataModelHomeAPI;
 import com.galwaykart.app_promo.AppPromoHome;
@@ -43,6 +45,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -115,12 +118,13 @@ import io.realm.RealmResults;
 //No static method with(Landroid/content/Context;)Lcom/squareup/picasso/Picasso;
 // in class Lcom/squareup/picasso/Picasso; or its super classes (declaration of 'com.squareup.picasso.Picasso' appears in /data/app/com.galwaykart-2/base.apk:classes2.dex)
 
-public class HomePageActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener , SearchView.OnQueryTextListener, SearchView.OnCloseListener
-{
+public class HomePageActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener , SearchView.OnQueryTextListener, SearchView.OnCloseListener {
     HomePageTabPageAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     Context context;
+
+
 
     private int[] tabIcons = {
             R.drawable.product_icon,
@@ -198,6 +202,8 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
     HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
 
     String dist_id="";
+    TextView tv_current_zone,tv_change_zone;
+
     private void openAppPromotionDetail(String app_id){
         Intent intent=new Intent(this, AppPromotion.class);
         intent.putExtra("app_id",app_id);
@@ -258,7 +264,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         tabShopByCategory = findViewById(R.id.tabShopByCategory);
         tabOffer = findViewById(R.id.tabOffer);
 
-
         cart_progressBar = findViewById(R.id.cart_progressBar);
         pager_view_banner = findViewById(R.id.pager_view_bannerss);
 
@@ -302,8 +307,8 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
         String fname = pref.getString("login_fname", "");
         String lname = pref.getString("login_lname", "");
-
         String value_email = pref.getString("login_email", "");
+
 
 //        FreshchatConfig freshchatConfig = new FreshchatConfig(API_ID, API_KEY);
 //        freshchatConfig.setCameraCaptureEnabled(false);
@@ -323,6 +328,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 //            e.printStackTrace();
 //        }
 
+
         float_chat_button = findViewById(R.id.float_hchat_button);
         float_chat_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -331,7 +337,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                 Intent intent=new Intent(HomePageActivity.this, CallWebUrlActivity.class);
                 intent.putExtra("comefrom","galwaychat");
                 startActivity(intent);
-            //   Freshchat.showConversations(getApplicationContext());
+
             }
         });
 
@@ -436,7 +442,8 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             String login_group_id=pref.getString("login_group_id","");
             String home_page_api="";
 
-            if (!email.equalsIgnoreCase("") && email != null) {
+            if (!email.equalsIgnoreCase("") && email != null)
+            {
 
                 home_page_api=Global_Settings.home_page_api+"?cid="+login_group_id;
                 home_page_api= Global_Settings.api_url+"rest/V1/mobile/home/"+login_group_id;
@@ -445,9 +452,11 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             else
             {
                 home_page_api=Global_Settings.home_page_api+"?cid=0";
-                home_page_api= Global_Settings.api_url+"/rest/V1/mobile/home/0";
+                home_page_api= Global_Settings.api_url+"rest/V1/mobile/home/0";
             }
-            callHomeItemList(home_page_api);
+
+            getCurrentZone(home_page_api);
+
         }
         else
         {
@@ -456,7 +465,21 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             CommonFun.finishscreen(HomePageActivity.this);
         }
 
-        //checkForUpdate();
+        tv_current_zone=findViewById(R.id.tv_current_zone);
+        tv_current_zone.setText(Global_Settings.current_zone);
+
+        tv_change_zone=findViewById(R.id.tv_change_zone);
+        tv_change_zone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(HomePageActivity.this,StateSelectionDialog.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                CommonFun.finishscreen(HomePageActivity.this);
+
+            }
+        });
 
     }
 
@@ -1359,21 +1382,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                         try {
 
 
-                            //Log.d("onCartResponse", response.toString());
-                            //     CommonFun.alertError(MainActivity.this,response.toString());
-//                            JSONObject jsonObj = null;
-//                            jsonObj = new JSONObject(String.valueOf(response));
-//
-//                            String cart_id=jsonObj.getString("id");
-//
-//                            ////Log.d("cart_id",cart_id);
-////
-////                            SharedPreferences.Editor editor= preferences.edit();
-////                            editor.putString("cart_id",cart_id);
-////                            editor.commit();
-
-                            // addItemToCart(cart_id);
-
 
                             String cart_id = response;
                             cart_id = cart_id.replaceAll("\"", "");
@@ -1602,6 +1610,69 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         //openSearchProduct(newText);
         return false;
     }
+
+
+
+    private void getCurrentZone(String home_page_api)
+    {
+
+        pref= CommonFun.getPreferences(getApplicationContext());
+        tokenData=pref.getString("tokenData","");
+        String st_current_zone=Global_Settings.api_url+"rest/V1/website/code";
+        tokenData = tokenData.replaceAll("\"", "");
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
+                st_current_zone, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("responseCurrentZone", response.toString());
+
+                        Global_Settings.current_zone=response.toString();
+                        callHomeItemList(home_page_api);
+
+
+
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+
+                        //progress_bar.setVisibility(View.GONE);
+                        //refreshItemCount();
+                        CommonFun.showVolleyException(error,HomePageActivity.this);
+
+                    }
+                }
+        ) {
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + tokenData);
+                params.put("Content-Type", "application/json");
+
+                return params;
+            }
+
+
+        };
+        jsObjRequest.setShouldCache(false);
+        RetryPolicy retryPolicy=new DefaultRetryPolicy(1000*60,
+                1,
+                1);
+        jsObjRequest.setRetryPolicy(retryPolicy);
+        queue.add(jsObjRequest);
+
+
+    }
+
+
 
 
 }

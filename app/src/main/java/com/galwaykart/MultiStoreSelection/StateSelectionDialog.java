@@ -1,0 +1,427 @@
+package com.galwaykart.MultiStoreSelection;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.galwaykart.HomePageActivity;
+import com.galwaykart.HomePageTab.DataModelHomeAPI;
+import com.galwaykart.R;
+import com.galwaykart.dbfiles.ProductDataModel;
+import com.galwaykart.essentialClass.CommonFun;
+import com.galwaykart.essentialClass.Global_Settings;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import io.realm.Realm;
+
+public class StateSelectionDialog extends AppCompatActivity {
+    Spinner spinner_state_profile;
+    String region_code;
+    String arr_state_code[];
+    String arr_state_name[];
+    final String TAG_region_code= "code";
+    final String TAG_region_name= "name";
+    Button button_save_address;
+    SharedPreferences pref;
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.dialog_state_selection);
+
+        pref = CommonFun.getPreferences(getApplicationContext());
+
+
+
+        spinner_state_profile = findViewById(R.id.spinner_state_profile);
+        spinner_state_profile.setEnabled(false);
+
+        spinner_state_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                region_code = arr_state_code[i];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(StateSelectionDialog.this, android.R.layout.simple_spinner_dropdown_item, arr_state_name);
+//        spinner_state_profile.setAdapter(adapter);
+
+        //spinner_state_profile.setSelection(state_pos);
+        spinner_state_profile.setEnabled(false);
+
+
+        button_save_address=findViewById(R.id.button_save_address);
+        button_save_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                
+//                SharedPreferences.Editor editor=pref.edit();
+//                editor.putString("user_currentzone",region_code);
+//                editor.commit();
+//                CommonFun.finishscreen(StateSelectionDialog.this);
+//
+//
+//                Log.d("responseState",region_code);
+
+
+                Global_Settings.api_url=Global_Settings.api_url+region_code+"/";
+
+                Global_Settings.current_zone=region_code;
+
+
+                callHomePageAPI();
+
+//
+//                Intent intent = new Intent(StateSelectionDialog.this, HomePageActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+//                CommonFun.finishscreen(StateSelectionDialog.this);
+
+
+
+            }
+        });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String st_get_State_URL = Global_Settings.api_url + "rest/V1/website/list";
+
+
+
+        getState(st_get_State_URL);
+    }
+
+
+    private void getState(String st_get_State_URL) {
+
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest jsObjRequest=null;
+        try {
+            jsObjRequest = new StringRequest(Request.Method.GET, st_get_State_URL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            Log.d("responseState",response);
+
+                            if (response != null) {
+                                try {
+
+                                    JSONArray jsonArray=new JSONArray(response);
+
+                                    //JSONObject jsonObject=jsonArray.getJSONObject(0);
+                                    //JSONArray jsonStateList=jsonObject.getJSONArray("statelist");
+
+                                    arr_state_code=new String[jsonArray.length()];
+                                    arr_state_name=new String[jsonArray.length()];
+
+                                    Log.d("responseState",jsonArray.toString());
+
+                                    for(int i=0; i<jsonArray.length(); i++)
+                                    {
+
+                                        JSONObject  order_list_obj = jsonArray.getJSONObject(i);
+
+                                        String st_region_id = order_list_obj.getString(TAG_region_code);
+                                        String st_region_name = order_list_obj.getString(TAG_region_name);
+
+                                        arr_state_code[i] = st_region_id;
+                                        arr_state_name[i] = st_region_name;
+
+                                    }
+
+
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(StateSelectionDialog.this,android.R.layout.simple_spinner_dropdown_item,arr_state_name);
+                                    spinner_state_profile.setAdapter(adapter);
+                                    spinner_state_profile.setEnabled(true);
+
+                                  
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    // Intent intent=new Intent(StateSelectionDialog.this, ExceptionError.class);
+                                    //  startActivity(intent);
+                                }
+                            }
+
+
+                        }
+
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+//                    if (pDialog.isShowing())
+//                        pDialog.dismiss();
+
+                    CommonFun.showVolleyException(error,StateSelectionDialog.this);
+                    //CommonFun.alertError(StateSelectionDialog.this,error.toString());
+
+                    // error.printStackTrace();
+                }
+
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        jsObjRequest.setShouldCache(false);
+        queue.add(jsObjRequest);
+
+
+
+
+    }
+
+
+    private void callHomePageAPI()
+    {
+
+        String email = pref.getString("user_email", "");
+        String login_group_id=pref.getString("login_group_id","");
+        String home_page_api="";
+
+        if (!email.equalsIgnoreCase("") && email != null) {
+
+            home_page_api=Global_Settings.home_page_api+"?cid="+login_group_id;
+            home_page_api= Global_Settings.api_url+"/rest/V1/mobile/home/"+login_group_id;
+
+        }
+        else
+        {
+            home_page_api=Global_Settings.home_page_api+"?cid=0";
+            home_page_api= Global_Settings.api_url+"/rest/V1/mobile/home/0";
+        }
+
+
+        /**
+         * Commenting for Selection of Zone
+         * Ankesh Kumar
+         * Sep 28, 2020
+         */
+        callHomeItemList(home_page_api);
+
+    }
+
+
+    private void callHomeItemList(String url_cart_item_list) {
+
+        // progress_bar.setVisibility(View.VISIBLE);
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
+                url_cart_item_list, null,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("responsebanner", response.toString());
+
+
+                        setPostOperation(response.toString());
+
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+
+                        //progress_bar.setVisibility(View.GONE);
+                        //refreshItemCount();
+                        CommonFun.showVolleyException(error,StateSelectionDialog.this);
+
+                    }
+                }
+        ) {
+
+        };
+        jsObjRequest.setShouldCache(false);
+        RetryPolicy retryPolicy=new DefaultRetryPolicy(1000*60,
+                1,
+                1);
+        jsObjRequest.setRetryPolicy(retryPolicy);
+        queue.add(jsObjRequest);
+
+
+    }
+
+    Realm realm;
+    private void setPostOperation(String response) {
+
+        //    progress_bar.setVisibility(View.GONE);
+        // dataLoad=true;
+
+
+
+
+        try
+        {
+
+            if(realm!=null) {
+                if (realm.isClosed())
+                    realm = Realm.getDefaultInstance();
+            }
+            else
+            {
+                realm=Realm.getDefaultInstance();
+            }
+
+
+            JSONObject jsonObj = null;
+            jsonObj = new JSONObject(String.valueOf(response));
+            JSONArray jsonArray_banner=jsonObj.getJSONArray("banners");
+            String  st_cat_head=jsonObj.getString("category_title");
+
+
+
+            if(realm.isClosed())
+                realm=Realm.getDefaultInstance();
+
+
+            realm.beginTransaction();
+            for(int i=0;i<jsonArray_banner.length();i++){
+                JSONObject jsonObject_category=jsonArray_banner.getJSONObject(i);
+
+                String is_banner_category_offer=jsonObject_category.getString("banner_category");
+                String catid = jsonObject_category.getString("cat_id");
+                String catimage = jsonObject_category.getString("banner_name");
+                String banner_image_sku= jsonObject_category.getString("sku");
+
+
+                DataModelHomeAPI dataModelHomeAPI=realm.createObject(DataModelHomeAPI.class);
+
+                dataModelHomeAPI.setCat_title(st_cat_head);
+                dataModelHomeAPI.setP_catid(catid);
+                dataModelHomeAPI.setP_image(catimage);
+                dataModelHomeAPI.setP_banner_category(is_banner_category_offer);
+                dataModelHomeAPI.setP_sku(banner_image_sku);
+                dataModelHomeAPI.setP_name("");
+                dataModelHomeAPI.setP_price("");
+
+
+            }
+            realm.commitTransaction();
+            realm.close();
+
+
+            Realm realm_1=Realm.getDefaultInstance();
+            realm_1.beginTransaction();
+
+            try{
+
+
+                JSONObject jsonObj_p = jsonObj.getJSONObject("product_details");
+                JSONArray jsonArray_product = jsonObj_p.getJSONArray("product_items");
+                for (int i = 0; i < jsonArray_product.length(); i++) {
+
+                    JSONObject jsonObject_product = jsonArray_product.getJSONObject(i);
+                    String pname = jsonObject_product.getString("pname");
+                    String pprice = "₹ " + jsonObject_product.getString("price");
+                    String psku = jsonObject_product.getString("sku");
+                    String pimage = jsonObject_product.getString("image");
+                    String pip =  jsonObject_product.getString("ip");
+
+
+                    String login_group_id = pref.getString("login_group_id", "");
+                    if (login_group_id != null && !login_group_id.equals("")) {
+
+                    } else {
+                        login_group_id = "-";
+                    }
+                    //login_group_id="4";
+
+//                    //Log.d("mvvmlog", login_group_id);
+//
+//                    ProductDataModel productDataModel = new ProductDataModel(pname, pip, "", psku, pimage,
+//                            "", "", login_group_id);
+
+
+                    ProductDataModel productDataModel=realm_1.createObject(ProductDataModel.class);
+                    productDataModel.setPname(pname);
+                    productDataModel.setIp(pip);
+                    productDataModel.setPrice("");
+                    productDataModel.setSku(psku);
+                    productDataModel.setImage(pimage);
+                    productDataModel.setP_category_id("");
+                    productDataModel.setP_category_name("");
+                    productDataModel.setLogin_user_id(login_group_id);
+
+
+
+                    //  //Log.d("res_res", "commit_trans");
+                }
+                realm_1.commitTransaction();
+            }
+            catch (JSONException ex){
+
+                realm_1.close();
+            }
+
+            //callNotificationData();
+            goToHomePage();
+
+
+        } catch (JSONException e) {
+
+
+            e.printStackTrace();
+        }
+    }
+
+
+    private void goToHomePage()
+    {
+
+        Intent intent = new Intent(StateSelectionDialog.this, HomePageActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        CommonFun.finishscreen(StateSelectionDialog.this);
+
+    }
+
+
+
+}
