@@ -21,6 +21,7 @@ import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.viewpager.widget.ViewPager;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -68,9 +69,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.galwaykart.BaseActivity;
 import com.galwaykart.CAdapter.GridSpacingItemDecoration;
+import com.galwaykart.Cart.CartItemList;
 import com.galwaykart.Cart.DataModelCart;
 import com.galwaykart.Cart.DataModelRecentItem;
 import com.galwaykart.HomePageActivity;
+import com.galwaykart.MultiStoreSelection.GetCurrentZone;
 import com.galwaykart.R;
 import com.galwaykart.ViewPagerAdapterSingleProduct;
 import com.galwaykart.dbfiles.DatabaseHandler;
@@ -109,7 +112,8 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
  * See review and give rating
  */
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener {
-   Spinner spinner1, spinner2, spinner_qty;
+    private static final int REQUEST_CODE_EXAMPLE = 1;
+    Spinner spinner1, spinner2, spinner_qty;
 
     TextView tvItemName,tv_add_to_cart;
     TextView tvItemPrice,tvItemShort,tvItemLong,tv_associate_products,tv_associate_products_details;
@@ -262,6 +266,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     RecyclerView recycle_view_color;
     String sel_p_sku="",sel_p_color="",sel_p_size="",sel_p_json="",sel_p_price="";
     Boolean is_color_availble=false,is_size_availble=false;
+    Boolean is_zone_called=false;
+    String current_user_zone="";
+
+
 
     @Override
     public void onBackPressed() {
@@ -1319,9 +1327,16 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         String stConfigProductDetailsURL = Global_Settings.api_url+"rest/V1/m-products/configurable product";
 
-        if(dataload==false) {
-//            callConfigurableProductDetails(stConfigProductDetailsURL);
-            callJSONAPIVolley();
+        if(is_zone_called==false) {
+            final Intent intent = new Intent(MainActivity.this, GetCurrentZone.class);
+            startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
+        }
+        else
+        {
+            if (dataload == false) {
+                //callConfigurableProductDetails(stConfigProductDetailsURL);
+                callJSONAPIVolley();
+            }
         }
 
     }
@@ -1393,6 +1408,41 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 //        jsObjRequest.setShouldCache(false);
 //        queue.add(jsObjRequest);
 //    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==REQUEST_CODE_EXAMPLE){
+
+            if(resultCode==RESULT_OK)
+            {
+                is_zone_called=true;
+                current_user_zone = data.getStringExtra(GetCurrentZone.EXTRA_DATA);
+
+                if(current_user_zone.trim().equalsIgnoreCase(Global_Settings.current_zone.trim()))
+                {
+//                    if (dataload == false) {
+//                        //callConfigurableProductDetails(stConfigProductDetailsURL);
+//                        callJSONAPIVolley();
+//                    }
+                }
+                else
+                {
+                    Global_Settings.api_url=Global_Settings.web_url+current_user_zone.trim().toString()+"/";
+                    Global_Settings.current_zone=current_user_zone.trim().toString();
+
+                    Intent intent=new Intent(MainActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    CommonFun.finishscreen(MainActivity.this);
+                }
+
+            }
+        }
+    }
+
 
     private void setDataOnListSize(int i) {
 
@@ -1739,6 +1789,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                     /**
                                      * Configurable product data
                                      */
+
                                     ConfigurableProductAPI();
 
                                 }
@@ -2431,6 +2482,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                            }
 
                         } catch (Exception e) {
+                            if (pDialog.isShowing())
+                                pDialog.dismiss();
+
                             e.printStackTrace();
                             CommonFun.alertError(MainActivity.this, e.toString());
                         }

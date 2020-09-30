@@ -2,6 +2,7 @@ package com.galwaykart.Cart;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +12,13 @@ import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import com.android.volley.RetryPolicy;
+import com.galwaykart.MultiStoreSelection.GetCurrentZone;
+import com.galwaykart.MultiStoreSelection.StateSelectionDialog;
+import com.galwaykart.dbfiles.DbBeanClass.CartItem;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -81,6 +88,7 @@ import io.realm.RealmResults;
 
 public class CartItemList extends BaseActivity {
 
+    private static final int REQUEST_CODE_EXAMPLE = 1;
     SharedPreferences pref;
     String url_cart_item_list = "";
     String tokenData;
@@ -185,6 +193,8 @@ public class CartItemList extends BaseActivity {
     CartItemAdapter_v1 adapter;
     String is_error="";
     Boolean is_voucher_applied=false;
+    Boolean is_zone_called=false;
+    String current_user_zone="";
 
     @Override
     public void onBackPressed() {
@@ -373,8 +383,9 @@ public class CartItemList extends BaseActivity {
                     if(!is_error.equalsIgnoreCase("false"))
                             can_process=false;
 
-                    if(can_process==true)
-                            checkout_fun();
+                    if(can_process==true) {
+                        checkout_fun();
+                    }
                     else
                     {
                         CommonFun.alertError(CartItemList.this, "Must delete all out of stock items");
@@ -454,11 +465,55 @@ public class CartItemList extends BaseActivity {
         }
 
 
-        if(is_data_load==false)
-            getCartId_v1();
+        if(is_zone_called==false) {
+            final Intent intent = new Intent(CartItemList.this, GetCurrentZone.class);
+            startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
+        }
         else
-            btCheckout.setVisibility(View.VISIBLE);
+        {
+            if (is_data_load == false)
+                getCartId_v1();
+            else
+                btCheckout.setVisibility(View.VISIBLE);
+        }
+
+
+        //getCurrentZone();
+
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==REQUEST_CODE_EXAMPLE){
+
+            if(resultCode==RESULT_OK)
+            {
+                is_zone_called=true;
+                current_user_zone = data.getStringExtra(GetCurrentZone.EXTRA_DATA);
+
+                if(current_user_zone.trim().equalsIgnoreCase(Global_Settings.current_zone.trim()))
+                {
+//                    if (is_data_load == false)
+//                        getCartId_v1();
+//                    else
+//                        btCheckout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    Global_Settings.api_url=Global_Settings.web_url+current_user_zone.trim().toString()+"/";
+                    Global_Settings.current_zone=current_user_zone.trim().toString();
+
+                    Intent intent=new Intent(CartItemList.this,CartItemList.class);
+                    startActivity(intent);
+                    CommonFun.finishscreen(CartItemList.this);
+                }
+            }
+        }
+    }
+
+
 
     private void checkout_fun() {
 

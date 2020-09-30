@@ -455,7 +455,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                 home_page_api= Global_Settings.api_url+"rest/V1/mobile/home/0";
             }
 
-            getCurrentZone(home_page_api);
+            callHomeItemList(home_page_api);
 
         }
         else
@@ -517,16 +517,16 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MY_REQUEST_CODE) {
-            if (resultCode != RESULT_OK) {
-                //log("Update flow failed! Result code: " + resultCode);
-                // If the update is cancelled or fails,
-                // you can request to start the update again.
-            }
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == MY_REQUEST_CODE) {
+//            if (resultCode != RESULT_OK) {
+//                //log("Update flow failed! Result code: " + resultCode);
+//                // If the update is cancelled or fails,
+//                // you can request to start the update again.
+//            }
+//        }
+//    }
 
     public int GetPixelFromDips(float pixels) {
         // Get the screen's density scale
@@ -1544,11 +1544,11 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                 return params;
             }
         };
-        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        ));
-
-        jsObjRequest.setShouldCache(false);
+//        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+//                1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+//        ));
+//
+//        jsObjRequest.setShouldCache(false);
 
         queue.add(jsObjRequest);
 
@@ -1613,64 +1613,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
 
 
-    private void getCurrentZone(String home_page_api)
-    {
-
-        pref= CommonFun.getPreferences(getApplicationContext());
-        tokenData=pref.getString("tokenData","");
-        String st_current_zone=Global_Settings.api_url+"rest/V1/website/code";
-        tokenData = tokenData.replaceAll("\"", "");
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
-                st_current_zone, null,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("responseCurrentZone", response.toString());
-
-                        Global_Settings.current_zone=response.toString();
-                        callHomeItemList(home_page_api);
-
-
-
-                    }
-                },
-
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-
-                        //progress_bar.setVisibility(View.GONE);
-                        //refreshItemCount();
-                        CommonFun.showVolleyException(error,HomePageActivity.this);
-
-                    }
-                }
-        ) {
-
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + tokenData);
-                params.put("Content-Type", "application/json");
-
-                return params;
-            }
-
-
-        };
-        jsObjRequest.setShouldCache(false);
-        RetryPolicy retryPolicy=new DefaultRetryPolicy(1000*60,
-                1,
-                1);
-        jsObjRequest.setRetryPolicy(retryPolicy);
-        queue.add(jsObjRequest);
-
-
-    }
 
 
 

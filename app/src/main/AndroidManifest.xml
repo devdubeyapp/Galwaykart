@@ -378,6 +378,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
+        <activity android:name=".MultiStoreSelection.GetCurrentZone"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
 
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"

@@ -41,6 +41,7 @@ public class Global_Settings {
 
     //public static final String api_url="https://www.galwaykart.com/";                 // Live
     //public static final String api_url="http://192.168.10.130/galwaykart/";               // Test
+    public static String web_url="http://qa.galwaykart.com/";
     public static String api_url="http://qa.galwaykart.com/";      // new qa server
     public static String current_zone="";
 

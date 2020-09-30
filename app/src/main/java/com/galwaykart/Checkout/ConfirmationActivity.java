@@ -157,6 +157,9 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
     CheckBox cb_donation_msg;
     TextView tv_donation_text;
 
+    Boolean is_zone_called=false;
+    String current_user_zone="";
+
 
 
     @Override
