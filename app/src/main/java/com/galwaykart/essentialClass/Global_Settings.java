@@ -40,6 +40,8 @@ public class Global_Settings {
     //public static final String st_sales_api="http://it.galway.in/returnapi/";// Test
 
     //public static final String api_url="https://www.galwaykart.com/";                 // Live
+    //public static String web_url="https://www.galwaykart.com/";
+
     //public static final String api_url="http://192.168.10.130/galwaykart/";               // Test
     public static String web_url="http://qa.galwaykart.com/";
     public static String api_url="http://qa.galwaykart.com/";      // new qa server
@@ -93,10 +95,10 @@ public class Global_Settings {
  /**
   * Payment Gateway
   */
-    public static final String online_payment_hash_key_url=api_url ;
+    public static final String online_payment_hash_key_url=web_url ;
     public static final String st_paytm_checksum_api="https://www.galwaykart.com/"+"glaze/paytm_checksum/generateChecksum.php/";
-    public static final String payment_success=api_url+"glaze/galwaykart/success_checkout_android.php";
-    public static final String payment_failed=api_url+"glaze/galwaykart/failed_checkout.php";
+    public static final String payment_failed=web_url+"glaze/galwaykart/failed_checkout.php";
+    public static final String payment_success=web_url+"glaze/galwaykart/success_checkout_android.php";
     public static final String payu_merchant_key="MAZyiB"; //live
     //public static final String payu_merchant_key="fB7m8s"; //sandbox
 

@@ -40,6 +40,12 @@ public class GetCurrentZone extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_loading);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getCurrentZone(GetCurrentZone.this);
     }
 

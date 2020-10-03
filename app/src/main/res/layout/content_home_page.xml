@@ -211,18 +211,20 @@
         <!--/>-->
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:padding="5dp"
         android:id="@+id/linear_zone_layout"
         android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/st_change_zone"
-            android:textColor="@color/colorPrimaryDark"
+            android:text="Current Zone : "
+            android:textColor="@color/colorWhite"
             android:layout_marginRight="5dp"
             android:textSize="12dp"
             />
@@ -232,7 +234,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:layout_marginRight="10dp"
             android:textSize="12dp"
             />
@@ -241,8 +243,8 @@
             android:id="@+id/tv_change_zone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change"
-            android:textColor="@color/cb_blue_button"
+            android:text="@string/st_change_zone"
+            android:textColor="@color/colorYellow"
             android:layout_marginRight="10dp"
             android:textSize="12dp"
             android:clickable="true"

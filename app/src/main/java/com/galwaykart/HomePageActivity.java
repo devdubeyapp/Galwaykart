@@ -54,6 +54,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -203,7 +204,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
     String dist_id="";
     TextView tv_current_zone,tv_change_zone;
-
+    LinearLayout linear_zone_layout;
     private void openAppPromotionDetail(String app_id){
         Intent intent=new Intent(this, AppPromotion.class);
         intent.putExtra("app_id",app_id);
@@ -263,6 +264,9 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         tabTopCategory = findViewById(R.id.tabTopCategory);
         tabShopByCategory = findViewById(R.id.tabShopByCategory);
         tabOffer = findViewById(R.id.tabOffer);
+        linear_zone_layout=findViewById(R.id.linear_zone_layout);
+        linear_zone_layout.setVisibility(View.VISIBLE);
+
 
         cart_progressBar = findViewById(R.id.cart_progressBar);
         pager_view_banner = findViewById(R.id.pager_view_bannerss);

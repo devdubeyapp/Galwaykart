@@ -32,6 +32,7 @@ import com.galwaykart.Cart.CartItemList;
 import com.galwaykart.HomePageActivity;
 import com.galwaykart.HomePageTab.DataModelHomeAPI;
 import com.galwaykart.R;
+import com.galwaykart.SplashActivity;
 import com.galwaykart.dbfiles.ProductDataModel;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
@@ -103,16 +104,16 @@ public class StateSelectionDialog extends AppCompatActivity {
 
                 
 
-                if(region_code.equalsIgnoreCase(current_user_zone))
-                {
-
-                    Global_Settings.api_url=Global_Settings.web_url+region_code+"/";
-                    Global_Settings.current_zone=region_code;
-                    callHomePageAPI();
-
-                }
-                else
-                {
+//                if(region_code.equalsIgnoreCase(current_user_zone))
+//                {
+//
+//                    Global_Settings.api_url=Global_Settings.web_url+region_code+"/";
+//                    Global_Settings.current_zone=region_code;
+//                    callHomePageAPI();
+//
+//                }
+//                else
+//                {
 
                     /**
                      * Update Current Zone on Server
@@ -121,7 +122,7 @@ public class StateSelectionDialog extends AppCompatActivity {
 
 
 
-                }
+//                }
 
 
 
@@ -192,19 +193,22 @@ public class StateSelectionDialog extends AppCompatActivity {
                             pDialog.dismiss();
                         }
                         Boolean res=Boolean.parseBoolean(response);
-                        if(res==true){
-                            Log.d("ontrue","true");
+                        if(res==true) {
+                            //     Log.d("ontrue","true");
+                            SharedPreferences pref;
+                            pref = CommonFun.getPreferences(StateSelectionDialog.this);
+                            SharedPreferences.Editor editor=pref.edit();
+                            editor.putString("call_user_currentzone","done");
+                            editor.commit();
+
+                        }
                             Global_Settings.api_url=Global_Settings.web_url+region_code+"/";
                             Global_Settings.current_zone=region_code;
-                            callHomePageAPI();
-                        }
-                        else
-                        {
-                            Log.d("ontrue","else");
-//                            Global_Settings.api_url=Global_Settings.web_url+region_code+"/";
-//                            Global_Settings.current_zone=region_code;
-                            callHomePageAPI();
-                        }
+
+                        Intent intent = new Intent(StateSelectionDialog.this, SplashActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        CommonFun.finishscreen(StateSelectionDialog.this);
 
 
                     }
