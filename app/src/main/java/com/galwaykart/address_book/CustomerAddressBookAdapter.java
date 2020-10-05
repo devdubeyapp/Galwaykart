@@ -199,11 +199,12 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                                 }
                             }
 
-
+                            String extn_address="";
                             return_data = "{\"customer\":" +
                                     "{\"email\":\"" + email + "\"," +
                                     "\"lastname\":\"" + itemList.get(position).get(TAG_lastname) + "\",\"group_id\":"+login_group_id+","+
                                     "\"custom_attributes\":[{\"value\":\""+st_attribute_value_mob+"\",\"attribute_code\":\"mobile_number\"}]," +
+                                    ",\"extension_attributes\":{\"number_new\":\"" + st_attribute_value_mob + "\"}" +
                                     "\"addresses\":" +
                                     "[" +
                                     st_add_id +"]," +
@@ -330,6 +331,8 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                 SharedPreferences.Editor editor= pref.edit();
                 editor.putString("st_selected_address","Franchisee");
                 editor.putString("telephone", itemList.get(position).get(TAG_telephone));
+                editor.putString("new_telephone",itemList.get(position).get(TAG_telephone_new));
+
                 editor.putString("postcode", itemList.get(position).get(TAG_postcode));
                 editor.putString("city", itemList.get(position).get(TAG_city));
 

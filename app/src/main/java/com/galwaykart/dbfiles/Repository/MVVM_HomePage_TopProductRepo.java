@@ -133,17 +133,17 @@ public class MVVM_HomePage_TopProductRepo {
      */
     private void setPostOperation(Context context,
                                   MutableLiveData<List<ProductDataModel>> data) {
-        try {
+        try(Realm realm=Realm.getDefaultInstance()) {
 
             String response="";
 
-            Realm realm=Realm.getDefaultInstance();
             RealmResults<ProductDataModel> results=
                     realm.where(ProductDataModel.class)
                     .findAllAsync();
 
             results.load();
             response=results.asJSON();
+            realm.close();
 
 
             Log.d("topProduct",response.toString());

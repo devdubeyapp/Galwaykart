@@ -84,6 +84,7 @@ import io.realm.RealmResults;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 import static com.galwaykart.essentialClass.Global_Settings.api_url;
+import static com.galwaykart.essentialClass.Global_Settings.web_url;
 //import static com.google.android.gms.internal.zzdmy.checkNotNull;
 
 /**
@@ -804,12 +805,12 @@ private void callLogin(){
 
         String st_currentz_zone=Global_Settings.current_zone;
         if(st_currentz_zone!=null && !st_currentz_zone.equals(""))
-            loginUrl=api_url+"rest/V1/customers/me";
+            loginUrl=web_url+"rest/V1/customers/me";
         else
-            loginUrl=api_url+"index.php/rest/V1/customers/me";
+            loginUrl=web_url+"index.php/rest/V1/customers/me";
         //loginUrl=api_url+getData();
 //        String url=api_url+"rest/V1/integration/customer/token";
-        String url=api_url+"rest/V1/m-integration/customer/token";
+        String url=web_url+"rest/V1/m-integration/customer/token";
 
         String st_mail,st_pass;
         st_mail=mEmailView.getText().toString().trim();
@@ -1491,8 +1492,8 @@ else
 
     private void callRegisterForNotification(){
 
-        Realm realm = Realm.getDefaultInstance(); // opens "gkart.realm"
-        try {
+        //Realm realm = Realm.getDefaultInstance(); // opens "gkart.realm"
+        try(Realm realm=Realm.getDefaultInstance()) {
 //            realm.beginTransaction();
 //
 //            RealmResults<DataModelRecentItem> results = realm.where(DataModelRecentItem.class).findAllAsync();
@@ -1509,15 +1510,15 @@ else
         }
         catch (IllegalStateException ex){
             Log.d("res_res_1",ex.getMessage());
-            realm.close();
+
         }
         catch (Exception ex){
             Log.d("res_res_2",ex.getMessage());
-            realm.close();
+
         }
         finally {
             //Log.d("res_res_3",ex.getMessage());
-            realm.close();
+
         }
 
         Intent intent=new Intent(this, RegisterForNotification.class);

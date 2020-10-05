@@ -211,7 +211,7 @@ public class GuestMainActivity extends GuestBaseActivity {
     ArrayList<String> str_name_bundal = new ArrayList<String>();
     ArrayList<String> str_sku_bundal = new ArrayList<String>();
     String st_hamper_desc="";
-    Realm realm;
+    //Realm realm;
     ListView list_color,list_size;
     RelativeLayout rel_color;
     RelativeLayout rel_size;
@@ -260,18 +260,7 @@ public class GuestMainActivity extends GuestBaseActivity {
      */
     // Boolean user_details_already_fetch=false;
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(realm.isClosed()){
 
-        }
-        else
-        {
-            realm.close();
-        }
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -309,7 +298,7 @@ public class GuestMainActivity extends GuestBaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initNavigationDrawer();
 
-        realm = Realm.getDefaultInstance();
+        //realm = Realm.getDefaultInstance();
         pref = CommonFun.getPreferences(getApplicationContext());
 
 //        String st_data=pref.getString("st_dist_id","");
@@ -1276,7 +1265,16 @@ public class GuestMainActivity extends GuestBaseActivity {
         pref= CommonFun.getPreferences(getApplicationContext());
         product_sku=pref.getString("showitemsku","");
 //        product_sku = "configurable product";
-        String fromurl= Global_Settings.api_url+"index.php/rest/V1/m-products/"+product_sku;
+
+        String fromurl = "";
+
+        if(Global_Settings.current_zone.equals("")) {
+            fromurl = Global_Settings.api_url + "index.php/rest/V1/m-products/" + product_sku;
+        }
+        else
+        {
+            fromurl = Global_Settings.web_url + "rest/V1/m-products/" + product_sku;
+        }
         //Log.d("fromurl",fromurl);
 
         pDialog = new TransparentProgressDialog(GuestMainActivity.this);
@@ -2315,7 +2313,7 @@ public class GuestMainActivity extends GuestBaseActivity {
          * for recent view item
          */
         // opens "gkart.realm"
-        try {
+        try(Realm realm=Realm.getDefaultInstance()) {
 
             long count = realm.where(DataModelRecentItem.class).count();
 
@@ -2364,8 +2362,6 @@ public class GuestMainActivity extends GuestBaseActivity {
             }
 
 
-            if(realm.isClosed())
-                realm=Realm.getDefaultInstance();
 
             realm.beginTransaction();
 
@@ -2386,18 +2382,18 @@ public class GuestMainActivity extends GuestBaseActivity {
         }
         catch (RealmPrimaryKeyConstraintException ex){
             //Log.d("res_res",ex.getMessage().toString());
-            realm.close();
+
         }
         catch (IllegalStateException ex){
             //Log.d("res_res",ex.getMessage());
-            realm.close();
+
         }
         catch (Exception ex){
             //Log.d("res_res",ex.getMessage());
-            realm.close();
+
         }
         finally {
-            realm.close();
+
         }
 
 

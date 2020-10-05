@@ -1801,7 +1801,14 @@ public class GuestCartItemList extends GuestBaseActivity {
         SharedPreferences preferences = CommonFun.getPreferences(getApplicationContext());
 
         tokenData = preferences.getString("tokenData", "");
-        String fromurl = Global_Settings.api_url + "index.php/rest/V1/products/" + psku;
+
+
+        String fromurl = "";
+
+        if(Global_Settings.current_zone.equals(""))
+            fromurl=Global_Settings.api_url + "index.php/rest/V1/products/" + psku;
+        else
+            fromurl=Global_Settings.web_url + "rest/V1/products/" + psku;
 
         RequestQueue queue = Volley.newRequestQueue(this);
         final StringRequest jsObjRequest = new StringRequest(Request.Method.GET, fromurl,
@@ -2864,8 +2871,8 @@ public class GuestCartItemList extends GuestBaseActivity {
     private void recently_view_item() {
 
 
-        Realm realm = Realm.getDefaultInstance(); // opens "gkart.realm"
-        try {
+
+        try(Realm realm=Realm.getDefaultInstance()) {
             RealmResults<DataModelRecentItem> results =
                     realm.where(DataModelRecentItem.class).findAllAsync().sort("p_id");
 
@@ -2905,11 +2912,11 @@ public class GuestCartItemList extends GuestBaseActivity {
 
         }
         catch (JSONException ex){
-            realm.close();
+            //realm.close();
             //Log.d("res_res",ex.toString());
         }
         finally {
-            realm.close();
+            //realm.close();
             //Log.d("res_res","complete");
         }
 

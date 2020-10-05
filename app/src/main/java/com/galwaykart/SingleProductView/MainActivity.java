@@ -1327,17 +1327,17 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         String stConfigProductDetailsURL = Global_Settings.api_url+"rest/V1/m-products/configurable product";
 
-        if(is_zone_called==false) {
-            final Intent intent = new Intent(MainActivity.this, GetCurrentZone.class);
-            startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
-        }
-        else
-        {
-            if (dataload == false) {
+//        if(is_zone_called==false) {
+//            final Intent intent = new Intent(MainActivity.this, GetCurrentZone.class);
+//            startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
+//        }
+//        else
+//        {
+          //  if (dataload == false) {
                 //callConfigurableProductDetails(stConfigProductDetailsURL);
                 callJSONAPIVolley();
-            }
-        }
+           // }
+        //}
 
     }
 //

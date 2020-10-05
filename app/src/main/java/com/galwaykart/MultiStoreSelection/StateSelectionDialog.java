@@ -29,9 +29,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.galwaykart.Cart.CartItemList;
+import com.galwaykart.Guest.GuestHomePageActivity;
 import com.galwaykart.HomePageActivity;
 import com.galwaykart.HomePageTab.DataModelHomeAPI;
 import com.galwaykart.R;
+import com.galwaykart.SplashActivity;
 import com.galwaykart.dbfiles.ProductDataModel;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
@@ -103,25 +105,45 @@ public class StateSelectionDialog extends AppCompatActivity {
 
                 
 
-                if(region_code.equalsIgnoreCase(current_user_zone))
-                {
-
-                    Global_Settings.api_url=Global_Settings.web_url+region_code+"/";
-                    Global_Settings.current_zone=region_code;
-                    callHomePageAPI();
-
-                }
-                else
-                {
+//                if(region_code.equalsIgnoreCase(current_user_zone))
+//                {
+//
+//                    Global_Settings.api_url=Global_Settings.web_url+region_code+"/";
+//                    Global_Settings.current_zone=region_code;
+//                    callHomePageAPI();
+//
+//                }
+//                else
+//                {
 
                     /**
                      * Update Current Zone on Server
                      */
-                     updateUserZone(StateSelectionDialog.this);
 
+                pref = CommonFun.getPreferences(StateSelectionDialog.this);
 
+                String email = pref.getString("user_email", "");
+                if (!email.equalsIgnoreCase("") && email != null) {
 
+                    updateUserZone(StateSelectionDialog.this);
                 }
+                else
+                {
+                    Global_Settings.current_zone=region_code;
+                    Global_Settings.api_url=Global_Settings.web_url+region_code+'/';
+
+                    SharedPreferences pref = CommonFun.getPreferences(StateSelectionDialog.this);
+                    SharedPreferences.Editor editor=pref.edit();
+                    editor.putString("guest_current_zone",region_code);
+                    editor.commit();
+                    Intent intent=new Intent(StateSelectionDialog.this,SplashActivity.class);
+                    startActivity(intent);
+                    CommonFun.finishscreen(StateSelectionDialog.this);
+                }
+
+
+
+               // }
 
 
 
@@ -131,7 +153,7 @@ public class StateSelectionDialog extends AppCompatActivity {
         });
 
 
-        st_get_State_URL= Global_Settings.api_url + "rest/V1/website/list";
+        st_get_State_URL= Global_Settings.web_url + "rest/V1/website/list";
 
 
 
@@ -144,14 +166,14 @@ public class StateSelectionDialog extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(is_zone_called==false) {
-            final Intent intent = new Intent(StateSelectionDialog.this, GetCurrentZone.class);
-            startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
-        }
-        else
-        {
+//        if(is_zone_called==false) {
+//            final Intent intent = new Intent(StateSelectionDialog.this, GetCurrentZone.class);
+//            startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
+//        }
+//        else
+//        {
             getState();
-        }
+        //}
 
 
     }
@@ -196,7 +218,17 @@ public class StateSelectionDialog extends AppCompatActivity {
                             Log.d("ontrue","true");
                             Global_Settings.api_url=Global_Settings.web_url+region_code+"/";
                             Global_Settings.current_zone=region_code;
-                            callHomePageAPI();
+
+                            SharedPreferences.Editor editor=pref.edit();
+                            editor.putString("call_user_current_zone","done");
+                            editor.commit();
+
+                            Intent intent=new Intent(StateSelectionDialog.this, SplashActivity.class);
+                            startActivity(intent);
+                            CommonFun.finishscreen(StateSelectionDialog.this);
+
+                            //callHomePageAPI();
+
                         }
                         else
                         {
@@ -322,6 +354,13 @@ public class StateSelectionDialog extends AppCompatActivity {
                                     spinner_state_profile.setAdapter(adapter);
                                     spinner_state_profile.setEnabled(true);
 
+                                    String current_user_zone_name="";
+                                    for(int i=0;i<arr_state_name.length;i++){
+                                        if(arr_state_code[i].equalsIgnoreCase(current_user_zone))
+                                            current_user_zone_name=arr_state_name[i];
+                                    }
+
+                                    spinner_state_profile.setSelection(adapter.getPosition(current_user_zone_name));
 
 
 

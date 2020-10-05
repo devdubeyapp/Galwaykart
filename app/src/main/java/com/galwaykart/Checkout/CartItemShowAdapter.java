@@ -21,7 +21,7 @@ import java.util.List;
  * Created by ankesh on 10/3/2017.
  */
 
-public class CartItemShowAdapter extends BaseAdapter {
+public class CartItemShowAdapter   extends BaseAdapter {
 
     Context mContext;
     String[] arr_cart_qty,arr_item_name,arr_item_price,arr_boolean,arr_updated_cart_qty,arr_sku;

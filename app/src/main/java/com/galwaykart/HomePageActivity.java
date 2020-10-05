@@ -54,6 +54,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -203,6 +204,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
     String dist_id="";
     TextView tv_current_zone,tv_change_zone;
+    LinearLayout linear_zone_layout;
 
     private void openAppPromotionDetail(String app_id){
         Intent intent=new Intent(this, AppPromotion.class);
@@ -303,7 +305,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         SharedPreferences pref;
-        pref = CommonFun.getPreferences(getApplicationContext());
+        pref = CommonFun.getPreferences(HomePageActivity.this);
 
         String fname = pref.getString("login_fname", "");
         String lname = pref.getString("login_lname", "");
@@ -465,6 +467,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             CommonFun.finishscreen(HomePageActivity.this);
         }
 
+
         tv_current_zone=findViewById(R.id.tv_current_zone);
         tv_current_zone.setText(Global_Settings.current_zone);
 
@@ -485,6 +488,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
 
     private int MY_REQUEST_CODE=459865;
+
     private void checkForUpdate()
     {
 
@@ -922,6 +926,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             results.load();
             total_banner_item=results.size();
             response = results.asJSON();
+            realm.close();
             //Log.d("res_res", response);
         }
         finally {
@@ -1355,8 +1360,9 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
     public void refreshItemCount(){
 
         SharedPreferences pref;
-        pref= CommonFun.getPreferences(getApplicationContext());
+        pref= CommonFun.getPreferences(HomePageActivity.this);
         tokenData=pref.getString("tokenData","");
+        tokenData = tokenData.replaceAll("\"", "");
         //  tokenData = "jqb3cv661kcx69qc300icrxaco8573h0";
 
        getCartId_v1();
@@ -1488,7 +1494,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                         try {
                             JSONObject jsonObj = null;
                             jsonObj = new JSONObject(String.valueOf(response));
-
                             int total_cart_count = Integer.parseInt(jsonObj.getString(TAG_total_item_count));
 
                             //initNavigationDrawer();

@@ -831,8 +831,11 @@ public class AddNewAddress extends BaseActivity {
 
 
                 String alternate_address="";
+                String extn_address="";
                 if(st_tel_new!=null&& !st_tel_new.isEmpty()){
                     alternate_address= ",\"custom_attributes\":[{\"value\":\"" + st_tel_new + "\",\"attribute_code\":\"number_new\"}]" ;
+                    extn_address= ",\"extension_attributes\":{\"number_new\":\"" + st_tel_new + "\"}" ;
+                    alternate_address=alternate_address+extn_address;
 
                 }
 

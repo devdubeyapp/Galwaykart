@@ -44,6 +44,7 @@ public class Global_Settings {
     public static String web_url="http://qa.galwaykart.com/";
     public static String api_url="http://qa.galwaykart.com/";      // new qa server
     public static String current_zone="";
+    public static String current_zone_name="";
 
 
     //public static final String online_payment_hash_key_url="https://www.galwaykart.com/";
@@ -57,16 +58,16 @@ public class Global_Settings {
     //public static final String shipyaari_api_url="https://seller.shipyaari.com/logistic/webservice/shipyaaritrackNew.php?";
     public static final String shipyaari_api_url="https://seller.shipyaari.com/avn_ci/siteadmin/track/track_api/";
 
-    public static final String api_custom_url=api_url+"glaze/";
-    public static final String Notification_api_url=api_url+"glaze/notify/";
+    public static final String api_custom_url=web_url+"glaze/";
+    public static final String Notification_api_url=web_url+"glaze/notify/";
     public static final String cart_amount_api=api_url+"rest/V1/m-carts/mine/totals";
 
   //  public static final String cart_amount_api_v1=api_url+"rest/V1/carts/mine/totals";
 
-    public static final String webview_api=api_url+"glaze/galwaykart/";
-    public static final String image_url= api_url+"pub/media/catalog/product/";
+    public static final String webview_api=web_url+"glaze/galwaykart/";
+    public static final String image_url= web_url+"pub/media/catalog/product/";
     public static final String terms_url_api=api_url+"rest/V1/m-static-page/";
-    public static final String home_page_api=api_url+"glaze/galwaykart/homepage_details_v1.php";
+    public static final String home_page_api=web_url+"glaze/galwaykart/homepage_details_v1.php";
     public static final String otp_url=api_custom_url+"galwaykart/api_get_otp.php";
     public static final String st_Tamplate="email_reset";
     public static final String st_check_user=api_url+"rest/V1/customer/irid/exits/";
@@ -93,10 +94,10 @@ public class Global_Settings {
  /**
   * Payment Gateway
   */
-    public static final String online_payment_hash_key_url=api_url ;
+    public static final String online_payment_hash_key_url=web_url;
     public static final String st_paytm_checksum_api="https://www.galwaykart.com/"+"glaze/paytm_checksum/generateChecksum.php/";
-    public static final String payment_success=api_url+"glaze/galwaykart/success_checkout_android.php";
-    public static final String payment_failed=api_url+"glaze/galwaykart/failed_checkout.php";
+    public static final String payment_success=web_url+"glaze/galwaykart/success_checkout_android.php";
+    public static final String payment_failed=web_url+"glaze/galwaykart/failed_checkout.php";
     public static final String payu_merchant_key="MAZyiB"; //live
     //public static final String payu_merchant_key="fB7m8s"; //sandbox
 
