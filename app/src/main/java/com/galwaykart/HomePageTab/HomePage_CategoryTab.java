@@ -194,28 +194,34 @@ public class HomePage_CategoryTab extends Fragment {
     private void callHomeItemList(String url_cart)
     {
         String response="";
-        Realm realm=Realm.getDefaultInstance();
-        RealmResults<DataModelHomeAPI> results=
-                realm.where(DataModelHomeAPI.class)
-                        .equalTo("p_banner_category","category")
-                        .findAllAsync();
-        results.load();
-        response=results.asJSON();
+        SharedPreferences pref=CommonFun.getPreferences(getActivity());
+        response=pref.getString("homePageData","");
+
 
         try {
-            JSONArray jsonArray_category = new JSONArray(response);
-            for (int i = 0; i < jsonArray_category.length(); i++) {
 
-                JSONObject jsonObject_category=jsonArray_category.getJSONObject(i);
+            JSONObject jsonObj = null;
+            jsonObj = new JSONObject(String.valueOf(response));
+            JSONArray jsonArray_banner=jsonObj.getJSONArray("banners");
+            String  st_cat_head=jsonObj.getString("category_title");
+
+
+            for (int i = 0; i < jsonArray_banner.length(); i++) {
+
+                JSONObject jsonObject_category=jsonArray_banner.getJSONObject(i);
                 String catid = "";
                 String catimage = "";
 
-                catid = jsonObject_category.getString("p_catid");
-                catimage = jsonObject_category.getString("p_image");
+                String is_banner_category_offer=jsonObject_category.getString("banner_category");
 
-                itemdCatList.add(new DataModelHomeCategory(catid, catimage));
+                if(is_banner_category_offer.equalsIgnoreCase("category")) {
 
-                String  st_cat_head=jsonObject_category.getString("cat_title");
+                    catid = jsonObject_category.getString("cat_id");
+                    catimage = jsonObject_category.getString("banner_name");
+
+                }                itemdCatList.add(new DataModelHomeCategory(catid, catimage));
+
+
                 if(!st_cat_head.equals(""))
                     tvCategoryHead.setText(st_cat_head);
 

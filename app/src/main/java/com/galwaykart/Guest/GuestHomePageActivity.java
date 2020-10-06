@@ -434,11 +434,16 @@ Boolean is_rel_cross_app_visible=false;
                     int k=0;
                     for (int i = 0; i < jsonArray_banner.length(); i++) {
                         JSONObject jsonObject = jsonArray_banner.getJSONObject(i);
-                        banner_image[k] = jsonObject.getString("banner_name");
-                        banner_image_catid[k] = jsonObject.getString("cat_id");
-                        banner_image_sku[k] = jsonObject.getString("sku");
-                        //Log.d("total_banner_item", String.valueOf(banner_image[k]+" "));
-                        k++;
+
+                        String is_banner_category_offer=jsonObject.getString("banner_category");
+
+                        if(is_banner_category_offer.equalsIgnoreCase("banner")) {
+                            banner_image[k] = jsonObject.getString("banner_name");
+                            banner_image_catid[k] = jsonObject.getString("cat_id");
+                            banner_image_sku[k] = jsonObject.getString("sku");
+                            //Log.d("total_banner_item", String.valueOf(banner_image[k]+" "));
+                            k++;
+                        }
                     }
 
                     loadData=true;

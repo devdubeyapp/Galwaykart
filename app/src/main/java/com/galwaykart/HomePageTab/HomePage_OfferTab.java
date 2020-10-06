@@ -109,29 +109,28 @@ public class HomePage_OfferTab extends Fragment {
     private void callHomeItemList(String url_cart){
 
         String response="";
+        SharedPreferences pref=CommonFun.getPreferences(getActivity());
+        response=pref.getString("homePageData","");
 
-        Realm realm=Realm.getDefaultInstance();
-        RealmResults<DataModelHomeAPI> results=
-                realm.where(DataModelHomeAPI.class)
-                        .equalTo("p_banner_category","offer")
-                        .findAllAsync();
 
-        results.load();
-        response=results.asJSON();
 
         try {
-            JSONArray jsonArray_category = new JSONArray(response);
-            for (int i = 0; i < jsonArray_category.length(); i++) {
+            JSONObject jsonObj = null;
+            jsonObj = new JSONObject(String.valueOf(response));
+            JSONArray jsonArray_banner=jsonObj.getJSONArray("banners");
+            for (int i = 0; i < jsonArray_banner.length(); i++) {
 
-                JSONObject jsonObject_category=jsonArray_category.getJSONObject(i);
+                JSONObject jsonObject_category=jsonArray_banner.getJSONObject(i);
                 String catid = "";
                 String catimage = "";
+                String is_banner_category_offer=jsonObject_category.getString("banner_category");
+                if(is_banner_category_offer.equalsIgnoreCase("offer")) {
 
-                catid = jsonObject_category.getString("p_catid");
-                catimage = jsonObject_category.getString("p_image");
+                    catid = jsonObject_category.getString("cat_id");
+                    catimage = jsonObject_category.getString("banner_name");
 
-                itemdCatList.add(new DataModelHomeCategory(catid, catimage));
-
+                    itemdCatList.add(new DataModelHomeCategory(catid, catimage));
+                }
             }
         }
         catch (JSONException ex){
