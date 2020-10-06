@@ -465,17 +465,17 @@ public class CartItemList extends BaseActivity {
         }
 
 
-        if(is_zone_called==false) {
-            final Intent intent = new Intent(CartItemList.this, GetCurrentZone.class);
-            startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
-        }
-        else
-        {
+//        if(is_zone_called==false) {
+//            final Intent intent = new Intent(CartItemList.this, GetCurrentZone.class);
+//            startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
+//        }
+//        else
+//        {
             if (is_data_load == false)
                 getCartId_v1();
             else
                 btCheckout.setVisibility(View.VISIBLE);
-        }
+        //}
 
 
         //getCurrentZone();

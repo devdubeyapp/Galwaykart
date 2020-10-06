@@ -409,79 +409,66 @@ Boolean is_rel_cross_app_visible=false;
 
     }
 
-    private void callHomeItemList(String url_cart_item_list) {
+        private void callHomeItemList(String url_cart_item_list) {
 
-        String response="";
-
-
-        Realm realm = Realm.getDefaultInstance(); // opens "gkart.realm"
-        try {
-            RealmResults<DataModelHomeAPI> results =
-                    realm.where(DataModelHomeAPI.class)
-                            .equalTo("p_banner_category","banner")
-                            .findAllAsync();
-
-            //fetching the data
-            results.load();
-            total_banner_item=results.size();
-            response = results.asJSON();
-            //Log.d("res_res", response);
-        }
-        finally {
-            realm.close();
-        }
+            String response="";
 
 
-        JSONArray jsonArray_banner= null;
-        try {
-            jsonArray_banner = new JSONArray(response);
+            SharedPreferences pref;
+            pref=CommonFun.getPreferences(GuestHomePageActivity.this);
+            response=pref.getString("homePageData","");
 
-            Log.d("res_res", String.valueOf(total_banner_item)+ jsonArray_banner.length());
+            JSONArray jsonArray_banner= null;
+            try {
+                JSONObject jsonObj = null;
+                jsonObj = new JSONObject(String.valueOf(response));
+                jsonArray_banner=jsonObj.getJSONArray("banners");
 
-            if(total_banner_item>0) {
-                banner_image = new String[total_banner_item];
-                banner_image_catid= new String[total_banner_item];
-                banner_image_sku= new String[total_banner_item];
+                //Log.d("res_res", String.valueOf(total_banner_item)+ jsonArray_banner.length());
 
-                int k=0;
-                for (int i = 0; i < jsonArray_banner.length(); i++) {
-                    JSONObject jsonObject = jsonArray_banner.getJSONObject(i);
-                    banner_image[k] = jsonObject.getString("p_image");
-                    banner_image_catid[k] = jsonObject.getString("p_catid");
-                    banner_image_sku[k] = jsonObject.getString("p_sku");
-                    //Log.d("total_banner_item", String.valueOf(banner_image[k]+" "));
-                    k++;
+                if(total_banner_item>0) {
+                    banner_image = new String[total_banner_item];
+                    banner_image_catid= new String[total_banner_item];
+                    banner_image_sku= new String[total_banner_item];
+
+                    int k=0;
+                    for (int i = 0; i < jsonArray_banner.length(); i++) {
+                        JSONObject jsonObject = jsonArray_banner.getJSONObject(i);
+                        banner_image[k] = jsonObject.getString("banner_name");
+                        banner_image_catid[k] = jsonObject.getString("cat_id");
+                        banner_image_sku[k] = jsonObject.getString("sku");
+                        //Log.d("total_banner_item", String.valueOf(banner_image[k]+" "));
+                        k++;
+                    }
+
+                    loadData=true;
+
+                    if(banner_image.length>0)
+                        carouselData();
+                    else
+                        viewPager.setVisibility(View.GONE);
+
+
+
                 }
+                viewPager.setAdapter(adapter);
 
-                loadData=true;
 
-                if(banner_image.length>0)
-                    carouselData();
-                else
-                    viewPager.setVisibility(View.GONE);
-
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            viewPager.setAdapter(adapter);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 
 
-////        progress_bar.setVisibility(View.VISIBLE);
-//
-//        final String TAG_total_item_count = "items_qty";
-//        //    cart_progressBar.setVisibility(View.VISIBLE);
-//
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url_cart_item_list, null,
+
+//            RequestQueue queue = Volley.newRequestQueue(this);
+//        final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url_cart_item_list,
+//                null,
 //                new Response.Listener<JSONObject>() {
 //
 //                    @Override
 //                    public void onResponse(JSONObject response) {
-//                        //Log.d("response", response.toString());
+//                        ////Log.d("response", response.toString());
 //
 //
 //                        try {
@@ -489,23 +476,21 @@ Boolean is_rel_cross_app_visible=false;
 //                            jsonObj = new JSONObject(String.valueOf(response));
 //
 //
-//                            SharedPreferences pref;
-//                            pref= CommonFun.getPreferences(getApplicationContext());
-//                            if(String.valueOf(response)!=null)
-//                            {
-//                                SharedPreferences.Editor editor=pref.edit();
-//                                editor.putString("homepage_data", String.valueOf(response));
-//                                editor.commit();
-//                            }
+////                            SharedPreferences pref;
+////                            pref= CommonFun.getPreferences(getApplicationContext());
+////                            if(String.valueOf(response)!=null)
+////                            {
+////                                SharedPreferences.Editor editor=pref.edit();
+////                                editor.putString("homepage_data", String.valueOf(response));
+////                                editor.commit();
+////                            }
 //
 //                            /**Set Adapter viewpager tab
 //                             *
 //                             */
 //
-//                            viewPager.setAdapter(adapter);
-//                            //  tabLayout.setupWithViewPager(viewPager);
 //
-//                            // highLightCurrentTab(0);
+//                          // highLightCurrentTab(0);
 //
 //
 //                            JSONArray jsonArray_banner=jsonObj.getJSONArray("banners");
@@ -550,6 +535,9 @@ Boolean is_rel_cross_app_visible=false;
 //                                    viewPager.setVisibility(View.GONE);
 //
 //                            }
+//                            viewPager.setAdapter(adapter);
+//                           // tabLayout.setupWithViewPager(viewPager);
+//
 ////
 ////                            String  st_prod_head=jsonObj.getString("product_head");
 ////                            String  st_cat_head=jsonObj.getString("category_head");
@@ -587,13 +575,14 @@ Boolean is_rel_cross_app_visible=false;
 ////                            progress_bar.setVisibility(View.GONE);
 ////
 ////                            dataLoad=true;
-//                           // refreshItemCount();
+//                            refreshItemCount();
 //
 //
 //                        } catch (JSONException e) {
 //
 //                            e.printStackTrace();
 //                        }
+//
 //                    }
 //                },
 //
@@ -604,14 +593,14 @@ Boolean is_rel_cross_app_visible=false;
 //
 ////                        ////Log.d("ERROR", "error => " + error.toString());
 ////                        Snackbar.make(findViewById(android.R.id.content),"Internet Connectity Not Found",Snackbar.LENGTH_LONG).show();
-////                        Intent intent=new Intent(GuestHomePageActivity.this, InternetConnectivityError.class);
+////                        Intent intent=new Intent(HomePageActivity.this, InternetConnectivityError.class);
 ////                        startActivity(intent);
-////                        CommonFun.finishscreen(GuestHomePageActivity.this);
+////                        CommonFun.finishscreen(HomePageActivity.this);
 //                        //refreshItemCount();
 //
 //                       // progress_bar.setVisibility(View.GONE);
 //                        //refreshItemCount();
-//                        CommonFun.showVolleyException(error,GuestHomePageActivity.this);
+//                        CommonFun.showVolleyException(error,HomePageActivity.this);
 //
 //                    }
 //                }
@@ -629,12 +618,11 @@ Boolean is_rel_cross_app_visible=false;
 //        queue.add(jsObjRequest);
 
 
-    }
+        }
 
 
 
-
-    private void carouselData() {
+        private void carouselData() {
 
 //        carouselView.setPageCount(banner_image.length);
 //        carouselView.setImageListener(imageListener);

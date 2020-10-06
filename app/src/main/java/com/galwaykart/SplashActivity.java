@@ -65,8 +65,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimerTask;
 
-import io.realm.Realm;
-import io.realm.RealmObject;
 
 import static com.crashlytics.android.Crashlytics.log;
 
@@ -196,7 +194,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    Realm realm_init;
+    //Realm realm_init;
     private void init() {
         pref = CommonFun.getPreferences(this);
 //        Bundle bundle = getIntent().getExtras();
@@ -254,46 +252,11 @@ public class SplashActivity extends AppCompatActivity {
 
         } else {
 
-            if(realm_init!=null){
-                if(realm_init.isClosed())
-                    realm_init= Realm.getDefaultInstance();
-            }
-            else
-                realm_init= Realm.getDefaultInstance();
+            pref=CommonFun.getPreferences(SplashActivity.this);
+            SharedPreferences.Editor editor=pref.edit();
+            editor.putString("homePageData","");
+            editor.commit();
 
-
-            try {
-                long total_data = realm.where(DataModelHomeAPI.class).count();
-                if (total_data > 0) {
-                    realm.beginTransaction();
-                    realm.delete(DataModelHomeAPI.class);
-                    realm.commitTransaction();
-                    realm.close();
-                }
-
-                if(realm.isClosed())
-                    realm = Realm.getDefaultInstance();
-
-                long total_data_top_product = realm.where(ProductDataModel.class).count();
-                if (total_data_top_product > 0) {
-                    realm.beginTransaction();
-                    realm.delete(ProductDataModel.class);
-                    realm.commitTransaction();
-                    realm.close();
-                }
-
-            } catch (IllegalStateException ex) {
-                if(realm!=null)
-                    realm.close();
-                // //Log.d("res_res",ex.getMessage());
-            } catch (Exception ex) {
-                if(realm!=null)
-                    realm.close();
-                // //Log.d("res_res",ex.getMessage());
-            } finally {
-                if(realm!=null)
-                    realm.close();
-            }
             callHomePageAPI();
 
 
@@ -341,7 +304,13 @@ public class SplashActivity extends AppCompatActivity {
                         Log.d("responsebanner", response.toString());
 
 
-                        setPostOperation(response.toString());
+                        pref=CommonFun.getPreferences(SplashActivity.this);
+                        SharedPreferences.Editor editor=pref.edit();
+                        editor.putString("homePageData",response.toString());
+                        editor.commit();
+
+                        callNotificationData();
+
 
                     }
                 },
@@ -370,125 +339,7 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    Realm realm;
-    private void setPostOperation(String response) {
 
-        //    progress_bar.setVisibility(View.GONE);
-        // dataLoad=true;
-
-
-        try
-        {
-
-            if(realm!=null) {
-                if (realm.isClosed())
-                    realm = Realm.getDefaultInstance();
-            }
-            else
-            {
-                realm=Realm.getDefaultInstance();
-            }
-
-
-            JSONObject jsonObj = null;
-            jsonObj = new JSONObject(String.valueOf(response));
-            JSONArray jsonArray_banner=jsonObj.getJSONArray("banners");
-            String  st_cat_head=jsonObj.getString("category_title");
-
-
-
-            if(realm.isClosed())
-                realm=Realm.getDefaultInstance();
-
-
-            realm.beginTransaction();
-            for(int i=0;i<jsonArray_banner.length();i++){
-                JSONObject jsonObject_category=jsonArray_banner.getJSONObject(i);
-
-                String is_banner_category_offer=jsonObject_category.getString("banner_category");
-                String catid = jsonObject_category.getString("cat_id");
-                String catimage = jsonObject_category.getString("banner_name");
-                String banner_image_sku= jsonObject_category.getString("sku");
-
-
-                DataModelHomeAPI dataModelHomeAPI=realm.createObject(DataModelHomeAPI.class);
-
-                dataModelHomeAPI.setCat_title(st_cat_head);
-                dataModelHomeAPI.setP_catid(catid);
-                dataModelHomeAPI.setP_image(catimage);
-                dataModelHomeAPI.setP_banner_category(is_banner_category_offer);
-                dataModelHomeAPI.setP_sku(banner_image_sku);
-                dataModelHomeAPI.setP_name("");
-                dataModelHomeAPI.setP_price("");
-
-
-            }
-            realm.commitTransaction();
-            realm.close();
-
-
-            Realm realm_1=Realm.getDefaultInstance();
-            realm_1.beginTransaction();
-
-            try{
-
-
-                JSONObject jsonObj_p = jsonObj.getJSONObject("product_details");
-                JSONArray jsonArray_product = jsonObj_p.getJSONArray("product_items");
-                for (int i = 0; i < jsonArray_product.length(); i++) {
-
-                    JSONObject jsonObject_product = jsonArray_product.getJSONObject(i);
-                    String pname = jsonObject_product.getString("pname");
-                    String pprice = "₹ " + jsonObject_product.getString("price");
-                    String psku = jsonObject_product.getString("sku");
-                    String pimage = jsonObject_product.getString("image");
-                    String pip =  jsonObject_product.getString("ip");
-
-
-                    String login_group_id = pref.getString("login_group_id", "");
-                    if (login_group_id != null && !login_group_id.equals("")) {
-
-                    } else {
-                        login_group_id = "-";
-                    }
-                    //login_group_id="4";
-
-//                    //Log.d("mvvmlog", login_group_id);
-//
-//                    ProductDataModel productDataModel = new ProductDataModel(pname, pip, "", psku, pimage,
-//                            "", "", login_group_id);
-
-
-                    ProductDataModel productDataModel=realm_1.createObject(ProductDataModel.class);
-                    productDataModel.setPname(pname);
-                    productDataModel.setIp(pip);
-                    productDataModel.setPrice("");
-                    productDataModel.setSku(psku);
-                    productDataModel.setImage(pimage);
-                    productDataModel.setP_category_id("");
-                    productDataModel.setP_category_name("");
-                    productDataModel.setLogin_user_id(login_group_id);
-
-
-
-                    //  //Log.d("res_res", "commit_trans");
-                }
-                realm_1.commitTransaction();
-            }
-            catch (JSONException ex){
-
-                realm_1.close();
-            }
-
-            callNotificationData();
-
-
-        } catch (JSONException e) {
-
-
-            e.printStackTrace();
-        }
-    }
 
 
 

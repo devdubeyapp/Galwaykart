@@ -330,6 +330,8 @@ public class CustomerAddressBookAdapter extends SimpleAdapter {
                 SharedPreferences.Editor editor= pref.edit();
                 editor.putString("st_selected_address","Franchisee");
                 editor.putString("telephone", itemList.get(position).get(TAG_telephone));
+                editor.putString("alt_telephone", itemList.get(position).get(TAG_telephone_new));
+
                 editor.putString("postcode", itemList.get(position).get(TAG_postcode));
                 editor.putString("city", itemList.get(position).get(TAG_city));
 

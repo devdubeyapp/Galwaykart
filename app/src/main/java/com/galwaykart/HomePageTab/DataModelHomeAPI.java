@@ -3,7 +3,7 @@ package com.galwaykart.HomePageTab;
 import io.realm.Realm;
 import io.realm.RealmObject;
 
-public class DataModelHomeAPI extends RealmObject{
+public class DataModelHomeAPI{
 
     String p_catid;
     String p_name;
