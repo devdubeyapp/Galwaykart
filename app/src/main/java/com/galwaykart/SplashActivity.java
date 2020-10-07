@@ -65,9 +65,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimerTask;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmObject;
 
 import static com.crashlytics.android.Crashlytics.log;
 
@@ -78,34 +75,55 @@ import static com.crashlytics.android.Crashlytics.log;
 public class SplashActivity extends AppCompatActivity {
 
     private static final int MY_REQUEST_CODE = 10020;
-    private static final int REQUEST_CODE_EXAMPLE =1 ;
     TimerTask timerTask;
     SharedPreferences pref =null;
     String tokenData = "",st_dist_id="";
     TransparentProgressDialog pDialog;
     int retry_merge=0;
 
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//
+//
+//    }
+
+
     String notice_title="",notice_message="";
 
 
 
+    //    private static class deleteAllWordsAsyncTask extends AsyncTask<Void, Void, Void> {
+//        private ProductDataModelDao mAsyncTaskDao;
+//
+//        deleteAllWordsAsyncTask(ProductDataModelDao dao) {
+//            mAsyncTaskDao = dao;
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Void... voids) {
+//            mAsyncTaskDao.deleteAll();
+//            //Log.d("mvvmDao","deletedata");
+//
+//            return null;
+//        }
+//    }
     AppUpdateManager appUpdateManager;
-    Boolean is_zone_called=false;
+    String current_user_zone="";
+    boolean is_zone_called=false;
+    private static final int REQUEST_CODE_EXAMPLE = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder()
-                .name("gkart.realm")
-                .schemaVersion(3)
-                .deleteRealmIfMigrationNeeded()
-                .build();
+//        Intent intent=new Intent(SplashActivity.this, .class);
+//        startActivity(intent);
+//        CommonFun.finishscreen(SplashActivity.this);
 
-        Realm.setDefaultConfiguration(config);
-
+        //init();
 
     }
 
@@ -113,38 +131,40 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        pref = CommonFun.getPreferences(this);
+//        appUpdateManager = AppUpdateManagerFactory.create(SplashActivity.this);
+//
+//// Returns an intent object that you use to check for an update.
+//        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+//
+//// Checks that the platform will allow the specified type of update.
+//        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+//            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+//                    // For a flexible update, use AppUpdateType.FLEXIBLE
+//                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+//                try {
+//                    appUpdateManager.startUpdateFlowForResult(
+//                      appUpdateInfo,
+//                      AppUpdateType.IMMEDIATE,
+//                      this,
+//                      MY_REQUEST_CODE);
+//                } catch (IntentSender.SendIntentException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            else
+//            {
+//                init();
+//            }
+//        });
 
-        String email = pref.getString("user_email", "");
-        String login_group_id=pref.getString("login_group_id","");
-        String home_page_api="";
-
-        if (!email.equalsIgnoreCase("") && email != null) {
-
-
-            String call_user_current_zone = pref.getString("call_user_current_zone", "");
-            if (call_user_current_zone != null && !call_user_current_zone.equals("")) {
-
-                if (is_zone_called == false) {
-                    final Intent intent = new Intent(SplashActivity.this, GetCurrentZone.class);
-                    startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
-                } else {
-                    init();
-                }
-            } else {
-                Intent intent = new Intent(SplashActivity.this, StateSelectionDialog.class);
-                startActivity(intent);
-                CommonFun.finishscreen(SplashActivity.this);
-            }
+        if(is_zone_called==false) {
+            final Intent intent = new Intent(SplashActivity.this, GetCurrentZone.class);
+            startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
         }
-        else
-        {
+        else {
             init();
         }
     }
-
-
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -154,14 +174,13 @@ public class SplashActivity extends AppCompatActivity {
             if(resultCode==RESULT_OK)
             {
                 is_zone_called=true;
-                String current_user_zone = data.getStringExtra(GetCurrentZone.EXTRA_DATA);
+                current_user_zone = data.getStringExtra(GetCurrentZone.EXTRA_DATA);
 
                 Log.d("result_zoneActivity",current_user_zone);
 
                 Global_Settings.api_url=Global_Settings.web_url+current_user_zone.trim().toString()+"/";
                 Global_Settings.current_zone=current_user_zone.trim().toString();
 
-                // getState();
             }
         }
         else if (requestCode == MY_REQUEST_CODE) {
@@ -175,9 +194,19 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-
+    //Realm realm_init;
     private void init() {
         pref = CommonFun.getPreferences(this);
+//        Bundle bundle = getIntent().getExtras();
+//        if (bundle != null) {
+//            //bundle must contain all info sent in "data" field of the notification
+//            if (getIntent().hasExtra("data")) {
+//                //Log.d("New_Notification_Sp","notification");
+//            }
+//            //Log.d("New_Notification_Sp",getIntent().getStringExtra("notification").toString());
+//        }
+
+
 
 
 
@@ -188,7 +217,10 @@ public class SplashActivity extends AppCompatActivity {
                 for (String key : bundle.keySet()) {
 
                     Object value = bundle.get(key);
-
+                    // //Log.d("New_Notification_Sp", String.format("%s %s (%s)", key,
+                    // value.toString(), value.getClass().getName()));
+                    //notice_title = getIntent().getStringExtra("title");
+                    //notice_message = getIntent().getStringExtra("message");
                     if (key.equalsIgnoreCase("title")) notice_title = value.toString();
                     if (key.equalsIgnoreCase("message")) notice_message = value.toString();
 
@@ -201,6 +233,9 @@ public class SplashActivity extends AppCompatActivity {
         }
 
 
+//        GalwaykartRoomDatabase db= GalwaykartRoomDatabase.getDatabase(getApplication());
+//        ProductDataModelDao productDataModelDao=db.productDataModelDao();
+//          new deleteAllWordsAsyncTask(productDataModelDao).execute();
 
         if (!notice_title.equals("") && !notice_message.equals("")) {
             ////Log.d("New_Notification_Sp2",notice_title);
@@ -215,74 +250,18 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(intent);
             CommonFun.finishscreen(SplashActivity.this);
 
+        } else {
+
+            pref=CommonFun.getPreferences(SplashActivity.this);
+            SharedPreferences.Editor editor=pref.edit();
+            editor.putString("homePageData","");
+            editor.commit();
+
+            callHomePageAPI();
+
+
+            //callNotificationData();
         }
-        else {
-
-            try(Realm realm=Realm.getDefaultInstance()){
-                    realm.close();
-                    Realm.deleteRealm(realm.getConfiguration());
-                    Log.d("homepagedata","all data deleted");
-                    callHomePageAPI();
-                } catch (Exception e) {
-                    Log.d("homepagedata","error");
-
-                    Log.e("homepagedata", "removeAllData:" + e.getMessage());
-                    callHomePageAPI();
-                }
-
-        }
-
-
-
-
-
-//        else {
-//
-//            if(realm_init!=null){
-//                if(realm_init.isClosed())
-//                    realm_init= Realm.getDefaultInstance();
-//            }
-//            else
-//                realm_init= Realm.getDefaultInstance();
-//
-//
-//            try {
-//                long total_data = realm.where(DataModelHomeAPI.class).count();
-//                if (total_data > 0) {
-//                    realm.beginTransaction();
-//                    realm.delete(DataModelHomeAPI.class);
-//                    realm.commitTransaction();
-//                    realm.close();
-//                }
-//
-//                if(realm.isClosed())
-//                    realm = Realm.getDefaultInstance();
-//
-//                long total_data_top_product = realm.where(ProductDataModel.class).count();
-//                if (total_data_top_product > 0) {
-//                    realm.beginTransaction();
-//                    realm.delete(ProductDataModel.class);
-//                    realm.commitTransaction();
-//                    realm.close();
-//                }
-//
-//            } catch (IllegalStateException ex) {
-//                if(realm!=null)
-//                    realm.close();
-//                // //Log.d("res_res",ex.getMessage());
-//            } catch (Exception ex) {
-//                if(realm!=null)
-//                    realm.close();
-//                // //Log.d("res_res",ex.getMessage());
-//            } finally {
-//                if(realm!=null)
-//                    realm.close();
-//            }
-//            callHomePageAPI();
-//
-//
-//            //callNotificationData();
-//        }
     }
 
 
@@ -301,17 +280,11 @@ public class SplashActivity extends AppCompatActivity {
         }
         else
         {
-            if(!Global_Settings.current_zone.equals("")) {
-                Global_Settings.api_url=Global_Settings.web_url+Global_Settings.current_zone+"/";
-
-            }
-
-            home_page_api = Global_Settings.home_page_api + "?cid=0";
-            home_page_api = Global_Settings.api_url + "/rest/V1/mobile/home/0";
+            home_page_api=Global_Settings.home_page_api+"?cid=0";
+            home_page_api= Global_Settings.api_url+"/rest/V1/mobile/home/0";
         }
 
 
-        Log.d("homepagedata",home_page_api);
         callHomeItemList(home_page_api);
 
     }
@@ -331,11 +304,13 @@ public class SplashActivity extends AppCompatActivity {
                         Log.d("responsebanner", response.toString());
 
 
-
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("homeapilist",response.toString());
+                        pref=CommonFun.getPreferences(SplashActivity.this);
+                        SharedPreferences.Editor editor=pref.edit();
+                        editor.putString("homePageData",response.toString());
                         editor.commit();
-                        setPostOperation(response.toString());
+
+                        callNotificationData();
+
 
                     }
                 },
@@ -364,117 +339,7 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    //Realm realm;
-    private void setPostOperation(String response) {
 
-        //    progress_bar.setVisibility(View.GONE);
-        // dataLoad=true;
-
-        JSONObject jsonObj = null;
-        try(Realm realm=Realm.getDefaultInstance())
-        {
-
-
-
-            jsonObj = new JSONObject(String.valueOf(response));
-            JSONArray jsonArray_banner = jsonObj.getJSONArray("banners");
-            String st_cat_head = jsonObj.getString("category_title");
-
-
-            realm.beginTransaction();
-            for (int i = 0; i < jsonArray_banner.length(); i++)
-            {
-                JSONObject jsonObject_category = jsonArray_banner.getJSONObject(i);
-
-                String is_banner_category_offer = jsonObject_category.getString("banner_category");
-                String catid = jsonObject_category.getString("cat_id");
-                String catimage = jsonObject_category.getString("banner_name");
-                String banner_image_sku = jsonObject_category.getString("sku");
-
-
-                DataModelHomeAPI dataModelHomeAPI = realm.createObject(DataModelHomeAPI.class);
-
-                dataModelHomeAPI.setCat_title(st_cat_head);
-                dataModelHomeAPI.setP_catid(catid);
-                dataModelHomeAPI.setP_image(catimage);
-                dataModelHomeAPI.setP_banner_category(is_banner_category_offer);
-                dataModelHomeAPI.setP_sku(banner_image_sku);
-                dataModelHomeAPI.setP_name("");
-                dataModelHomeAPI.setP_price("");
-
-
-            }
-            realm.commitTransaction();
-            //realm.close();
-        }
-        catch (JSONException ex) {
-        }
-        finally {
-
-        }
-
-
-            try(Realm realm=Realm.getDefaultInstance())
-            {
-
-                realm.beginTransaction();
-
-                JSONObject jsonObj_p = jsonObj.getJSONObject("product_details");
-                JSONArray jsonArray_product = jsonObj_p.getJSONArray("product_items");
-                for (int i = 0; i < jsonArray_product.length(); i++) {
-
-                    JSONObject jsonObject_product = jsonArray_product.getJSONObject(i);
-                    String pname = jsonObject_product.getString("pname");
-                    String pprice = "₹ " + jsonObject_product.getString("price");
-                    String psku = jsonObject_product.getString("sku");
-                    String pimage = jsonObject_product.getString("image");
-                    String pip =  jsonObject_product.getString("ip");
-
-
-                    String login_group_id = pref.getString("login_group_id", "");
-                    if (login_group_id != null && !login_group_id.equals("")) {
-
-                    } else {
-                        login_group_id = "-";
-                    }
-                    //login_group_id="4";
-
-//                    //Log.d("mvvmlog", login_group_id);
-//
-//                    ProductDataModel productDataModel = new ProductDataModel(pname, pip, "", psku, pimage,
-//                            "", "", login_group_id);
-
-
-                    ProductDataModel productDataModel=realm.createObject(ProductDataModel.class);
-                    productDataModel.setPname(pname);
-                    productDataModel.setIp(pip);
-                    productDataModel.setPrice("");
-                    productDataModel.setSku(psku);
-                    productDataModel.setImage(pimage);
-                    productDataModel.setP_category_id("");
-                    productDataModel.setP_category_name("");
-                    productDataModel.setLogin_user_id(login_group_id);
-
-
-
-                    //  //Log.d("res_res", "commit_trans");
-                }
-                realm.commitTransaction();
-
-            }
-            catch (JSONException ex){
-
-
-            }
-            finally {
-
-            }
-
-            callNotificationData();
-
-
-
-    }
 
 
 
@@ -936,8 +801,6 @@ public class SplashActivity extends AppCompatActivity {
 
                             String guest_cart_id=pref.getString("guest_cart_id_process","");
                             if(guest_cart_id!=null && !guest_cart_id.equals("")) {
-
-
                                 sync_Cart(guest_cart_id, tokenData);
                             }
                         } catch (Exception e) {
@@ -1015,10 +878,28 @@ public class SplashActivity extends AppCompatActivity {
 
     private void goToHomePage() {
 
-        Intent intent = new Intent(SplashActivity.this, HomePageActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        CommonFun.finishscreen(SplashActivity.this);
+        SharedPreferences pref;
+        pref = CommonFun.getPreferences(SplashActivity.this);
+//        SharedPreferences.Editor editor=pref.edit();
+//        editor.putString("call_user_currentzone","");
+//        editor.commit();
+
+
+        String call_user_currentzone=pref.getString("call_user_currentzone","");
+        if(call_user_currentzone!=null && !call_user_currentzone.equals(""))
+        {
+            Intent intent = new Intent(SplashActivity.this, HomePageActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            CommonFun.finishscreen(SplashActivity.this);
+        }
+        else {
+            Intent intent = new Intent(SplashActivity.this, StateSelectionDialog.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            CommonFun.finishscreen(SplashActivity.this);
+        }
+
     }
 
 

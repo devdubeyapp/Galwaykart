@@ -16,6 +16,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 //import com.galwaykart.RoomDb.GalwaykartRoomDatabase;
+import com.galwaykart.HomePageActivity;
 import com.galwaykart.HomePageTab.DataModelHomeAPI;
 import com.galwaykart.dbfiles.ProductDataModel;
 import com.galwaykart.essentialClass.CommonFun;
@@ -133,22 +134,20 @@ public class MVVM_HomePage_TopProductRepo {
      */
     private void setPostOperation(Context context,
                                   MutableLiveData<List<ProductDataModel>> data) {
-        try(Realm realm=Realm.getDefaultInstance()) {
+        try {
 
             String response="";
-
-            RealmResults<ProductDataModel> results=
-                    realm.where(ProductDataModel.class)
-                    .findAllAsync();
-
-            results.load();
-            response=results.asJSON();
-            realm.close();
-
+            SharedPreferences pref=CommonFun.getPreferences(context);
+            response=pref.getString("homePageData","");
 
             Log.d("topProduct",response.toString());
 
-            JSONArray jsonArray_product = new JSONArray(response);
+            JSONObject jsonObj = null;
+            jsonObj = new JSONObject(String.valueOf(response));
+
+            JSONObject jsonObj_p = jsonObj.getJSONObject("product_details");
+
+            JSONArray jsonArray_product = jsonObj_p.getJSONArray("product_items");
 
             for(int i=0;i<jsonArray_product.length();i++){
 
@@ -156,10 +155,10 @@ public class MVVM_HomePage_TopProductRepo {
                 String pname=jsonObject_product.getString("pname");
                 String pprice="₹ "+jsonObject_product.getString("price");
                 String psku=jsonObject_product.getString("sku");
-                String pimage=jsonObject_product.getString("imageUrl");
+                String pimage=jsonObject_product.getString("image");
                 String pip="PV / BV: "+jsonObject_product.getString("ip");
 
-                SharedPreferences pref =  CommonFun.getPreferences(context);
+
                 String login_group_id=pref.getString("login_group_id","");
                 if(login_group_id!=null && !login_group_id.equals(""))
                 {

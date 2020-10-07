@@ -205,7 +205,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
     String dist_id="";
     TextView tv_current_zone,tv_change_zone;
     LinearLayout linear_zone_layout;
-
     private void openAppPromotionDetail(String app_id){
         Intent intent=new Intent(this, AppPromotion.class);
         intent.putExtra("app_id",app_id);
@@ -265,6 +264,9 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         tabTopCategory = findViewById(R.id.tabTopCategory);
         tabShopByCategory = findViewById(R.id.tabShopByCategory);
         tabOffer = findViewById(R.id.tabOffer);
+        linear_zone_layout=findViewById(R.id.linear_zone_layout);
+        linear_zone_layout.setVisibility(View.VISIBLE);
+
 
         cart_progressBar = findViewById(R.id.cart_progressBar);
         pager_view_banner = findViewById(R.id.pager_view_bannerss);
@@ -305,7 +307,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         SharedPreferences pref;
-        pref = CommonFun.getPreferences(HomePageActivity.this);
+        pref = CommonFun.getPreferences(getApplicationContext());
 
         String fname = pref.getString("login_fname", "");
         String lname = pref.getString("login_lname", "");
@@ -467,7 +469,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             CommonFun.finishscreen(HomePageActivity.this);
         }
 
-
         tv_current_zone=findViewById(R.id.tv_current_zone);
         tv_current_zone.setText(Global_Settings.current_zone);
 
@@ -488,7 +489,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
 
     private int MY_REQUEST_CODE=459865;
-
     private void checkForUpdate()
     {
 
@@ -915,28 +915,14 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         String response="";
 
 
-        Realm realm = Realm.getDefaultInstance(); // opens "gkart.realm"
-        try {
-            RealmResults<DataModelHomeAPI> results =
-                    realm.where(DataModelHomeAPI.class)
-                            .equalTo("p_banner_category","banner")
-                            .findAllAsync();
-
-            //fetching the data
-            results.load();
-            total_banner_item=results.size();
-            response = results.asJSON();
-            realm.close();
-            //Log.d("res_res", response);
-        }
-        finally {
-            realm.close();
-        }
-
+        pref=CommonFun.getPreferences(HomePageActivity.this);
+        response=pref.getString("homePageData","");
 
         JSONArray jsonArray_banner= null;
         try {
-            jsonArray_banner = new JSONArray(response);
+            JSONObject jsonObj = null;
+            jsonObj = new JSONObject(String.valueOf(response));
+             jsonArray_banner=jsonObj.getJSONArray("banners");
 
             //Log.d("res_res", String.valueOf(total_banner_item)+ jsonArray_banner.length());
 
@@ -948,11 +934,16 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                 int k=0;
                 for (int i = 0; i < jsonArray_banner.length(); i++) {
                     JSONObject jsonObject = jsonArray_banner.getJSONObject(i);
-                        banner_image[k] = jsonObject.getString("p_image");
-                        banner_image_catid[k] = jsonObject.getString("p_catid");
-                        banner_image_sku[k] = jsonObject.getString("p_sku");
+
+                    String is_banner_category_offer=jsonObject.getString("banner_category");
+
+                    if(is_banner_category_offer.equalsIgnoreCase("banner")) {
+                        banner_image[k] = jsonObject.getString("banner_name");
+                        banner_image_catid[k] = jsonObject.getString("cat_id");
+                        banner_image_sku[k] = jsonObject.getString("sku");
                         //Log.d("total_banner_item", String.valueOf(banner_image[k]+" "));
                         k++;
+                    }
                 }
 
                 loadData=true;
@@ -1360,9 +1351,8 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
     public void refreshItemCount(){
 
         SharedPreferences pref;
-        pref= CommonFun.getPreferences(HomePageActivity.this);
+        pref= CommonFun.getPreferences(getApplicationContext());
         tokenData=pref.getString("tokenData","");
-        tokenData = tokenData.replaceAll("\"", "");
         //  tokenData = "jqb3cv661kcx69qc300icrxaco8573h0";
 
        getCartId_v1();
@@ -1494,6 +1484,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                         try {
                             JSONObject jsonObj = null;
                             jsonObj = new JSONObject(String.valueOf(response));
+
                             int total_cart_count = Integer.parseInt(jsonObj.getString(TAG_total_item_count));
 
                             //initNavigationDrawer();

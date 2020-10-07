@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -14,17 +13,12 @@ import androidx.annotation.Nullable;
 //import com.freshchat.consumer.sdk.FreshchatConfig;
 //import com.freshchat.consumer.sdk.FreshchatUser;
 //import com.freshchat.consumer.sdk.exception.MethodNotAllowedException;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.RetryPolicy;
-import com.android.volley.toolbox.StringRequest;
 import com.galwaykart.HomePageActivity;
 import com.galwaykart.HomePageTab.DataModelHomeAPI;
 import com.galwaykart.Legal.CallWebUrlActivity;
 import com.galwaykart.Legal.FaqActivity;
 import com.galwaykart.Legal.WebViewActivity;
-import com.galwaykart.MultiStoreSelection.StateSelectionDialog;
 import com.galwaykart.app_promo.AppPromotion;
-import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -44,11 +38,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -72,7 +64,6 @@ import com.galwaykart.productList.ShowCategoryList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,8 +151,6 @@ Boolean is_rel_cross_app_visible=false;
         Button btn_galwayexam,btn_galwayfoundation;
 
 
-        TextView tv_current_zone,tv_change_zone;
-
         private void openAppPromotionDetail(String app_id){
             Intent intent=new Intent(this, AppPromotion.class);
             intent.putExtra("app_id",app_id);
@@ -216,8 +205,6 @@ Boolean is_rel_cross_app_visible=false;
         setSupportActionBar(toolbar);
 
 
-        //LinearLayout linear_zone_layout=findViewById(R.id.linear_zone_layout);
-        //linear_zone_layout.setVisibility(View.GONE);
 
 
         viewPager = findViewById(R.id.viewPager_tabs);
@@ -226,16 +213,6 @@ Boolean is_rel_cross_app_visible=false;
         tabTopCategory = findViewById(R.id.tabTopCategory);
         tabShopByCategory = findViewById(R.id.tabShopByCategory);
         tabOffer = findViewById(R.id.tabOffer);
-
-
-//        TextView tv_current_zone_label=findViewById(R.id.tv_current_zone_label);
-//        tv_current_zone_label.setVisibility(View.GONE);
-//
-//        TextView tv_current_zone=findViewById(R.id.tv_current_zone);
-//        tv_current_zone.setVisibility(View.GONE);
-//
-//        TextView tv_change_zone=findViewById(R.id.tv_change_zone);
-//        tv_change_zone.setVisibility(View.GONE);
 
 
 //        rel_cross_app_promo=(RelativeLayout)findViewById(R.id.rel_cross_app_promo);
@@ -303,7 +280,6 @@ Boolean is_rel_cross_app_visible=false;
         }
 
 
-//        FreshchatConfig freshchatConfig = new FreshchatConfig(API_ID, API_KEY);
 //        FreshchatConfig freshchatConfig = new FreshchatConfig(API_ID, API_KEY);
 //        freshchatConfig.setCameraCaptureEnabled(false);
 //        freshchatConfig.setGallerySelectionEnabled(false);
@@ -408,148 +384,11 @@ Boolean is_rel_cross_app_visible=false;
             home_page_api=Global_Settings.home_page_api+"?cid=0";
             home_page_api= Global_Settings.api_url+"rest/V1/mobile/home/0";
         }
-
-
-        tv_current_zone=findViewById(R.id.tv_current_zone);
-
-
-        tv_change_zone=findViewById(R.id.tv_change_zone);
-        tv_change_zone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent=new Intent(GuestHomePageActivity.this,StateSelectionDialog.class);
-                intent.putExtra("fromcome","guest");
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                CommonFun.finishscreen(GuestHomePageActivity.this);
-
-            }
-        });
-
-        String guest_current_zone=pref.getString("guest_current_zone","");
-        if(guest_current_zone!=null && !guest_current_zone.equals("")){
-
-            Global_Settings.current_zone=guest_current_zone;
-            Global_Settings.api_url=Global_Settings.web_url+guest_current_zone+'/';
-            tv_current_zone.setText(Global_Settings.current_zone);
-
-            callHomeItemList(home_page_api);
-        }
-        else
-        {
-            getState(home_page_api);
-        }
-
-
-
+        callHomeItemList(home_page_api);
         //refreshItemCount();
     }
 
-
-    TransparentProgressDialog pDialog;
-    final String TAG_region_code= "code";
-        String st_region_code="";
-
-        private void getState(String home_page_api) {
-
-            String st_get_State_URL=Global_Settings.web_url + "rest/V1/website/list";
-
-            pDialog = new TransparentProgressDialog(GuestHomePageActivity.this);
-            pDialog.setCancelable(true);
-            pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-            pDialog.show();
-            RequestQueue queue = Volley.newRequestQueue(this);
-
-            StringRequest jsObjRequest=null;
-            try {
-                jsObjRequest = new StringRequest(Request.Method.GET, st_get_State_URL,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                                if(pDialog.isShowing())
-                                    pDialog.dismiss();
-                                Log.d("responseState",response);
-
-                                if (response != null) {
-                                    try {
-
-                                        JSONArray jsonArray=new JSONArray(response);
-
-                                        Log.d("responseState",jsonArray.toString());
-
-
-
-                                            JSONObject  order_list_obj = jsonArray.getJSONObject(0);
-
-                                            st_region_code = order_list_obj.getString(TAG_region_code);
-
-                                            Global_Settings.current_zone=st_region_code;
-                                            Global_Settings.api_url=Global_Settings.web_url+st_region_code+'/';
-                                                tv_current_zone.setText(Global_Settings.current_zone);
-
-                                        SharedPreferences pref = CommonFun.getPreferences(GuestHomePageActivity.this);
-                                        SharedPreferences.Editor editor=pref.edit();
-                                        editor.putString("guest_zone",st_region_code);
-                                        editor.commit();
-
-
-
-                                    } catch (Exception e) {
-                                        if(pDialog.isShowing())
-                                            pDialog.dismiss();
-                                        e.printStackTrace();
-                                        // Intent intent=new Intent(StateSelectionDialog.this, ExceptionError.class);
-                                        //  startActivity(intent);
-                                    }
-                                    callHomeItemList(home_page_api);
-
-                                }
-
-
-                            }
-
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-//                    if (pDialog.isShowing())
-//                        pDialog.dismiss();
-                        if(pDialog.isShowing())
-                            pDialog.dismiss();
-                        callHomeItemList(home_page_api);
-                        CommonFun.showVolleyException(error,GuestHomePageActivity.this);
-                        //CommonFun.alertError(StateSelectionDialog.this,error.toString());
-
-                        // error.printStackTrace();
-                    }
-
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-            ));
-
-            jsObjRequest.setShouldCache(false);
-            RetryPolicy retryPolicy=new DefaultRetryPolicy(1000*60,
-                    1,
-                    1);
-            jsObjRequest.setRetryPolicy(retryPolicy);
-            queue.add(jsObjRequest);
-
-
-
-
-        }
-
-
-
-
-
-        private void openSearchProduct(String query) {
+    private void openSearchProduct(String query) {
         //searchView.clearFocus();
         Intent intent=new Intent(this,SearchProductActivity.class);
         intent.putExtra("searchtext",query);
@@ -570,80 +409,71 @@ Boolean is_rel_cross_app_visible=false;
 
     }
 
-    private void callHomeItemList(String url_cart_item_list) {
+        private void callHomeItemList(String url_cart_item_list) {
 
-        String response="";
-
-
-        //Realm realm = Realm.getDefaultInstance(); // opens "gkart.realm"
-        try(Realm realm=Realm.getDefaultInstance()) {
-            RealmResults<DataModelHomeAPI> results =
-                    realm.where(DataModelHomeAPI.class)
-                            .equalTo("p_banner_category","banner")
-                            .findAllAsync();
-
-            //fetching the data
-            results.load();
-            total_banner_item=results.size();
-            response = results.asJSON();
-            realm.close();
-            //Log.d("res_res", response);
-        }
-        finally {
-
-        }
+            String response="";
 
 
-        JSONArray jsonArray_banner= null;
-        try {
-            jsonArray_banner = new JSONArray(response);
+            SharedPreferences pref;
+            pref=CommonFun.getPreferences(GuestHomePageActivity.this);
+            response=pref.getString("homePageData","");
 
-            Log.d("res_res", String.valueOf(total_banner_item)+ jsonArray_banner.length());
+            JSONArray jsonArray_banner= null;
+            try {
+                JSONObject jsonObj = null;
+                jsonObj = new JSONObject(String.valueOf(response));
+                jsonArray_banner=jsonObj.getJSONArray("banners");
 
-            if(total_banner_item>0) {
-                banner_image = new String[total_banner_item];
-                banner_image_catid= new String[total_banner_item];
-                banner_image_sku= new String[total_banner_item];
+                //Log.d("res_res", String.valueOf(total_banner_item)+ jsonArray_banner.length());
 
-                int k=0;
-                for (int i = 0; i < jsonArray_banner.length(); i++) {
-                    JSONObject jsonObject = jsonArray_banner.getJSONObject(i);
-                    banner_image[k] = jsonObject.getString("p_image");
-                    banner_image_catid[k] = jsonObject.getString("p_catid");
-                    banner_image_sku[k] = jsonObject.getString("p_sku");
-                    //Log.d("total_banner_item", String.valueOf(banner_image[k]+" "));
-                    k++;
+                if(total_banner_item>0) {
+                    banner_image = new String[total_banner_item];
+                    banner_image_catid= new String[total_banner_item];
+                    banner_image_sku= new String[total_banner_item];
+
+                    int k=0;
+                    for (int i = 0; i < jsonArray_banner.length(); i++) {
+                        JSONObject jsonObject = jsonArray_banner.getJSONObject(i);
+
+                        String is_banner_category_offer=jsonObject.getString("banner_category");
+
+                        if(is_banner_category_offer.equalsIgnoreCase("banner")) {
+                            banner_image[k] = jsonObject.getString("banner_name");
+                            banner_image_catid[k] = jsonObject.getString("cat_id");
+                            banner_image_sku[k] = jsonObject.getString("sku");
+                            //Log.d("total_banner_item", String.valueOf(banner_image[k]+" "));
+                            k++;
+                        }
+                    }
+
+                    loadData=true;
+
+                    if(banner_image.length>0)
+                        carouselData();
+                    else
+                        viewPager.setVisibility(View.GONE);
+
+
+
                 }
+                viewPager.setAdapter(adapter);
 
-                loadData=true;
 
-                if(banner_image.length>0)
-                    carouselData();
-                else
-                    viewPager.setVisibility(View.GONE);
-
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            viewPager.setAdapter(adapter);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 
 
-////        progress_bar.setVisibility(View.VISIBLE);
-//
-//        final String TAG_total_item_count = "items_qty";
-//        //    cart_progressBar.setVisibility(View.VISIBLE);
-//
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url_cart_item_list, null,
+
+//            RequestQueue queue = Volley.newRequestQueue(this);
+//        final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, url_cart_item_list,
+//                null,
 //                new Response.Listener<JSONObject>() {
 //
 //                    @Override
 //                    public void onResponse(JSONObject response) {
-//                        //Log.d("response", response.toString());
+//                        ////Log.d("response", response.toString());
 //
 //
 //                        try {
@@ -651,23 +481,21 @@ Boolean is_rel_cross_app_visible=false;
 //                            jsonObj = new JSONObject(String.valueOf(response));
 //
 //
-//                            SharedPreferences pref;
-//                            pref= CommonFun.getPreferences(getApplicationContext());
-//                            if(String.valueOf(response)!=null)
-//                            {
-//                                SharedPreferences.Editor editor=pref.edit();
-//                                editor.putString("homepage_data", String.valueOf(response));
-//                                editor.commit();
-//                            }
+////                            SharedPreferences pref;
+////                            pref= CommonFun.getPreferences(getApplicationContext());
+////                            if(String.valueOf(response)!=null)
+////                            {
+////                                SharedPreferences.Editor editor=pref.edit();
+////                                editor.putString("homepage_data", String.valueOf(response));
+////                                editor.commit();
+////                            }
 //
 //                            /**Set Adapter viewpager tab
 //                             *
 //                             */
 //
-//                            viewPager.setAdapter(adapter);
-//                            //  tabLayout.setupWithViewPager(viewPager);
 //
-//                            // highLightCurrentTab(0);
+//                          // highLightCurrentTab(0);
 //
 //
 //                            JSONArray jsonArray_banner=jsonObj.getJSONArray("banners");
@@ -712,6 +540,9 @@ Boolean is_rel_cross_app_visible=false;
 //                                    viewPager.setVisibility(View.GONE);
 //
 //                            }
+//                            viewPager.setAdapter(adapter);
+//                           // tabLayout.setupWithViewPager(viewPager);
+//
 ////
 ////                            String  st_prod_head=jsonObj.getString("product_head");
 ////                            String  st_cat_head=jsonObj.getString("category_head");
@@ -749,13 +580,14 @@ Boolean is_rel_cross_app_visible=false;
 ////                            progress_bar.setVisibility(View.GONE);
 ////
 ////                            dataLoad=true;
-//                           // refreshItemCount();
+//                            refreshItemCount();
 //
 //
 //                        } catch (JSONException e) {
 //
 //                            e.printStackTrace();
 //                        }
+//
 //                    }
 //                },
 //
@@ -766,14 +598,14 @@ Boolean is_rel_cross_app_visible=false;
 //
 ////                        ////Log.d("ERROR", "error => " + error.toString());
 ////                        Snackbar.make(findViewById(android.R.id.content),"Internet Connectity Not Found",Snackbar.LENGTH_LONG).show();
-////                        Intent intent=new Intent(GuestHomePageActivity.this, InternetConnectivityError.class);
+////                        Intent intent=new Intent(HomePageActivity.this, InternetConnectivityError.class);
 ////                        startActivity(intent);
-////                        CommonFun.finishscreen(GuestHomePageActivity.this);
+////                        CommonFun.finishscreen(HomePageActivity.this);
 //                        //refreshItemCount();
 //
 //                       // progress_bar.setVisibility(View.GONE);
 //                        //refreshItemCount();
-//                        CommonFun.showVolleyException(error,GuestHomePageActivity.this);
+//                        CommonFun.showVolleyException(error,HomePageActivity.this);
 //
 //                    }
 //                }
@@ -791,12 +623,11 @@ Boolean is_rel_cross_app_visible=false;
 //        queue.add(jsObjRequest);
 
 
-    }
+        }
 
 
 
-
-    private void carouselData() {
+        private void carouselData() {
 
 //        carouselView.setPageCount(banner_image.length);
 //        carouselView.setImageListener(imageListener);

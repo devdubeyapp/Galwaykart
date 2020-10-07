@@ -20,6 +20,10 @@ android {
     defaultConfig {
         applicationId "com.galwaykart"
         minSdkVersion 23
+
+
+
+
         targetSdkVersion 28
         versionCode 97
         versionName "10.1.2"

@@ -228,11 +228,21 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
         String bill_lname = "";
         String bill_email = "";
         String bill_telephone = "";
-        String bill_alt_telephone="";
 
        // st_selected_address="Home";
 
         String st_selected_address=pref.getString("st_selected_address","");
+        String alt_telephone=pref.getString("alt_telephone","");
+
+
+        String alternate_address="";
+        String extn_alternate_address="";
+        if(alt_telephone!=null&& !alt_telephone.isEmpty()){
+
+            extn_alternate_address= "\"extension_attributes\":{\"number_new\":\"" + alt_telephone + "\"}," ;
+            alternate_address=  "\"custom_attributes\":[{\"value\":\"" + alt_telephone + "\",\"attribute_code\":\"number_new\"}],"+extn_alternate_address ;
+
+        }
 
         if(st_selected_address.equalsIgnoreCase("Franchisee")) {
 
@@ -259,8 +269,6 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
             bill_email = pref.getString("login_email", "");
             st_cust_name = ship_fname + " " + ship_lname;
             bill_telephone = pref.getString("telephone", "");
-            bill_alt_telephone=pref.getString("new_telephone","");
-
             bill_region_id = pref.getString("region_id", "");
             bill_region_code = pref.getString("region_code", "");
             ship_fname=bill_fname;
@@ -320,7 +328,6 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
             bill_email = pref.getString("login_email", "");
             st_cust_name = ship_fname + " " + ship_lname;
             bill_telephone = pref.getString("telephone", "");
-            bill_alt_telephone=pref.getString("bill_alt_telephone","");
             bill_region_id = pref.getString("region_id", "");
             bill_region_code = pref.getString("region_code", "");
             ship_fname=bill_fname;
@@ -346,15 +353,6 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
          * create json string to pass it into api
          */
 
-        String alternate_address="";
-        String extn_address="";
-
-        if(bill_alt_telephone!=null&& !bill_alt_telephone.isEmpty()){
-            alternate_address= "\"custom_attributes\":[{\"value\":\"" + bill_alt_telephone + "\",\"attribute_code\":\"number_new\"}]" ;
-            extn_address= ",\"extension_attributes\":{\"number_new\":\"" + bill_alt_telephone + "\"}" ;
-            alternate_address=alternate_address+extn_address;
-
-        }
             shipping_info_string = "{" +
                     "\"addressInformation\":{" +
                     "\"shipping_address\":{" +
@@ -368,10 +366,12 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                     "\"firstname\": \"" + ship_fname + "\", " +
                     "\"lastname\": \"" + ship_lname + "\", " +
                     "\"email\": \"" + ship_email + "\", " +
-                       bill_alt_telephone+
+
+                    alternate_address+
+
+
+
                     "\"telephone\": \"" + ship_telephone + "\" }," +
-
-
                     "\"billing_address\":{ " +
                     "\"region\": \" " + bill_region + "\"," +
                     "\"region_id\": " + bill_region_id + ", " +
@@ -383,7 +383,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                     "\"firstname\": \"" + bill_fname + "\", " +
                     "\"lastname\": \"" + bill_lname + "\", " +
                     "\"email\": \"" + bill_email + "\", " +
-                         bill_alt_telephone+","+
+                    alternate_address+
                     "\"telephone\": \"" + bill_telephone + "\" }," +
                     "\"shipping_carrier_code\": \"" + carrier_code + "\", " +
                     "\"shipping_method_code\": \"" + method_code + "\" " +
@@ -1268,6 +1268,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
         String login_zone =pref.getString("log_user_zone", "");
         String st_selected_address=pref.getString("st_selected_address","");
 
+        String alt_telephone=pref.getString("alt_telephone","");
         if(st_selected_address.equalsIgnoreCase("Franchisee")) {
 
             bill_region = pref.getString("region", "");
@@ -1323,6 +1324,15 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
         if (bill_region_id.equals(""))
             bill_region_id = "0";
 
+        String alternate_address="";
+        String extn_alternate_address="";
+        if(alt_telephone!=null&& !alt_telephone.isEmpty()){
+
+            extn_alternate_address= "\"extension_attributes\":{\"number_new\":\"" + alt_telephone + "\"}," ;
+            alternate_address=  "\"custom_attributes\":[{\"value\":\"" + alt_telephone + "\",\"attribute_code\":\"number_new\"}],"+extn_alternate_address ;
+
+        }
+
 
         order_id_method_data = "{" +
                 "\"paymentMethod\":{" +
@@ -1339,6 +1349,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                 "\"postcode\": \"" + bill_postcode + "\", " +
                 "\"city\": \"" + bill_city + "\", " +
                 "\"telephone\": \"" + bill_telephone + "\", " +
+                alternate_address+
                 "\"company\": \"" + "" + "\", " +
                 "\"firstname\": \"" + ship_fname + "\"," +
                 "\"lastname\": \"" + ship_lname + "\" " +
@@ -1347,7 +1358,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                 "}";
 
 
-        //Log.d("insert_value",order_id_method_data);
+        Log.d("insert_value",order_id_method_data);
 
         order_id_method_url = Global_Settings.api_url + "rest/V1/carts/mine/payment-information";
 

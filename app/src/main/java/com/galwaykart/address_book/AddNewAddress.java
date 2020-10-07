@@ -831,13 +831,14 @@ public class AddNewAddress extends BaseActivity {
 
 
                 String alternate_address="";
-                String extn_address="";
+                String extn_alternate_address="";
                 if(st_tel_new!=null&& !st_tel_new.isEmpty()){
-                    alternate_address= ",\"custom_attributes\":[{\"value\":\"" + st_tel_new + "\",\"attribute_code\":\"number_new\"}]" ;
-                    extn_address= ",\"extension_attributes\":{\"number_new\":\"" + st_tel_new + "\"}" ;
-                    alternate_address=alternate_address+extn_address;
+
+                    extn_alternate_address= "\"extension_attributes\":{\"number_new\":\"" + st_tel_new + "\"}" ;
+                    alternate_address=",\"custom_attributes\":[{\"value\":\"" + st_tel_new + "\",\"attribute_code\":\"number_new\"}],"+ extn_alternate_address ;
 
                 }
+
 
     if (!address_id.equalsIgnoreCase("")) {
         return_data = "{\"customer\":" +
@@ -891,7 +892,7 @@ public class AddNewAddress extends BaseActivity {
                 "\"store_id\":\"1\"," +
                 "\"firstname\":\"" + login_fname + "\"}}";
     }
-Log.d("return_data",return_data);
+Log.d("insert_value",return_data);
 
                 pDialog = new TransparentProgressDialog(AddNewAddress.this);
                 pDialog.setCancelable(false);

@@ -471,11 +471,11 @@ public class CartItemList extends BaseActivity {
 //        }
 //        else
 //        {
-//            if (is_data_load == false)
+            if (is_data_load == false)
                 getCartId_v1();
-//            else
-//                btCheckout.setVisibility(View.VISIBLE);
-//        }
+            else
+                btCheckout.setVisibility(View.VISIBLE);
+        //}
 
 
         //getCurrentZone();
@@ -2138,7 +2138,6 @@ public class CartItemList extends BaseActivity {
 
             String string=results.asJSON();
             //Log.d("res_res", string);
-
 
             JSONArray jsonArray_result = new JSONArray(string);
 

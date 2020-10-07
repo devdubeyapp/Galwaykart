@@ -1333,10 +1333,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 //        }
 //        else
 //        {
-          //  if (dataload == false) {
+            if (dataload == false) {
                 //callConfigurableProductDetails(stConfigProductDetailsURL);
                 callJSONAPIVolley();
-           // }
+            }
         //}
 
     }

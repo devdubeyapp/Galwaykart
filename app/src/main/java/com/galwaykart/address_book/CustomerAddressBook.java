@@ -239,6 +239,7 @@ public class CustomerAddressBook extends BaseActivity {
                 SharedPreferences.Editor editor= pref.edit();
                 editor.putString("st_selected_address","Franchisee");
                 editor.putString("telephone", strTelephone);
+                editor.putString("alt_telephone",strTelephone2);
                 editor.putString("newtelephone", strTelephone2);
 
                 editor.putString("postcode", strPincode);
