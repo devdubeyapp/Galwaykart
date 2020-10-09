@@ -220,9 +220,6 @@ public class ProductListActivity extends AppCompatActivity {
     }
 
 
-
-
-
     private void changeUI(List<ProductDataModel> productDataModels){
 
 

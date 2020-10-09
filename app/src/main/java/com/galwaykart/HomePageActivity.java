@@ -459,6 +459,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                 home_page_api= Global_Settings.api_url+"rest/V1/mobile/home/0";
             }
 
+            refreshItemCount();
             callHomeItemList(home_page_api);
 
         }
@@ -953,7 +954,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                 else
                     viewPager.setVisibility(View.GONE);
 
-                refreshItemCount();
+
 
             }
             viewPager.setAdapter(adapter);
@@ -1355,7 +1356,11 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         tokenData=pref.getString("tokenData","");
         //  tokenData = "jqb3cv661kcx69qc300icrxaco8573h0";
 
+
+       Log.d("data_home","data_home");
+
        getCartId_v1();
+
     }
 
     SharedPreferences pref;
@@ -1540,11 +1545,11 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                 return params;
             }
         };
-//        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-//                1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-//        ));
-//
-//        jsObjRequest.setShouldCache(false);
+        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        jsObjRequest.setShouldCache(false);
 
         queue.add(jsObjRequest);
 

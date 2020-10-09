@@ -29,6 +29,13 @@ public class App extends Application {
         //    Freshchat.setImageLoader(new CustomImageLoaderFreshChat());
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .name("gkart.realm")
+                .schemaVersion(3)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
 
 
 
