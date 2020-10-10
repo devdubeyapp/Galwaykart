@@ -217,7 +217,7 @@
         android:id="@+id/linear_zone_layout"
         android:orientation="horizontal"
         android:background="@color/colorPrimary"
-        android:visibility="gone"
+
         >
 
         <TextView

@@ -102,7 +102,7 @@ public class StateSelectionDialog extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                
+
 
 //                if(region_code.equalsIgnoreCase(current_user_zone))
 //                {
@@ -118,7 +118,26 @@ public class StateSelectionDialog extends AppCompatActivity {
                     /**
                      * Update Current Zone on Server
                      */
-                     updateUserZone(StateSelectionDialog.this);
+                pref = CommonFun.getPreferences(StateSelectionDialog.this);
+
+                String email = pref.getString("user_email", "");
+                if (!email.equalsIgnoreCase("") && email != null) {
+
+                    updateUserZone(StateSelectionDialog.this);
+                }
+                else
+                {
+                    Global_Settings.current_zone=region_code;
+                    Global_Settings.api_url=Global_Settings.web_url+region_code+'/';
+
+                    SharedPreferences pref = CommonFun.getPreferences(StateSelectionDialog.this);
+                    SharedPreferences.Editor editor=pref.edit();
+                    editor.putString("guest_current_zone",region_code);
+                    editor.commit();
+                    Intent intent=new Intent(StateSelectionDialog.this,SplashActivity.class);
+                    startActivity(intent);
+                    CommonFun.finishscreen(StateSelectionDialog.this);
+                }
 
 
 
@@ -132,7 +151,7 @@ public class StateSelectionDialog extends AppCompatActivity {
         });
 
 
-        st_get_State_URL= Global_Settings.api_url + "rest/V1/website/list";
+        st_get_State_URL= Global_Settings.web_url + "rest/V1/website/list";
 
 
 

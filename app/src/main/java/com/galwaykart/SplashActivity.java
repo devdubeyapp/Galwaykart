@@ -156,12 +156,22 @@ public class SplashActivity extends AppCompatActivity {
 //                init();
 //            }
 //        });
+        pref=CommonFun.getPreferences(SplashActivity.this);
+        String email = pref.getString("user_email", "");
+        String login_group_id=pref.getString("login_group_id","");
+        String home_page_api="";
 
-        if(is_zone_called==false) {
-            final Intent intent = new Intent(SplashActivity.this, GetCurrentZone.class);
-            startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
+        if (!email.equalsIgnoreCase("") && email != null) {
+
+            if (is_zone_called == false) {
+                final Intent intent = new Intent(SplashActivity.this, GetCurrentZone.class);
+                startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
+            } else {
+                init();
+            }
         }
-        else {
+        else
+        {
             init();
         }
     }

@@ -18,7 +18,7 @@ public class Global_Settings {
 // }
 
 
-    public static final int current_soft_version=97;
+    public static final int current_soft_version=98;
     // public static final String test_offer_url="http://qa.galwaykart.com/24nov/galway_sus/";
     //public static final String Notification_api_url="http://test.glazegalway.com:81/ios_galwaykart/";
     //public static final String galway_api_url=commonSalesData();
@@ -43,14 +43,13 @@ public class Global_Settings {
     //public static String web_url="https://www.galwaykart.com/";
 
     //public static final String api_url="http://192.168.10.130/galwaykart/";               // Test
-    public static String web_url="http://qa.galwaykart.com/";
-    public static String api_url="http://qa.galwaykart.com/";      // new qa server
+    //public static String web_url="http://qa.galwaykart.com/";
+    //public static String api_url="http://qa.galwaykart.com/";      // new qa server
     public static String current_zone="";
 
 
-    //public static final String online_payment_hash_key_url="https://www.galwaykart.com/";
-    // public static final String api_url="https://www.galwaykart.com/";
-    //public static final String api_url=commonsuGalwayKartData();
+    public static String api_url="https://www.galwaykart.com/";
+    public static final String web_url="https://www.galwaykart.com/";
 
     //public static final String api_glaze_url="http://wcf.glazegalway.net/Distributor.svc/";
     public static final String api_glaze_url=galway_wcf_api_url+"Distributor.svc/";
