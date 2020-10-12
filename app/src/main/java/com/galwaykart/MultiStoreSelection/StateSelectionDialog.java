@@ -679,14 +679,7 @@ private void mergeCart(String fromQuoteId,String toQuoteId) {
                 Log.d("st_url_MVVM_search",input_data);
                 return input_data == null ? null : input_data.getBytes(StandardCharsets.UTF_8);
             }
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + st_token_data);
-                //   params.put("Content-Type","application/json");
 
-                return params;
-            }
         };
         jsObjRequest.setShouldCache(false);
         queue.add(jsObjRequest);
