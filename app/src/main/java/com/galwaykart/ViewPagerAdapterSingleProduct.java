@@ -93,7 +93,7 @@ public class ViewPagerAdapterSingleProduct extends PagerAdapter {
 
 
         Picasso.get()
-                .load(Global_Settings.api_url+"pub/media/catalog/product"+arr_product_images[position])
+                .load(Global_Settings.web_url+"pub/media/catalog/product"+arr_product_images[position])
                 .placeholder(R.drawable.imageloading)   // optional
                 .error(R.drawable.noimage)
                 .into(img_banner);

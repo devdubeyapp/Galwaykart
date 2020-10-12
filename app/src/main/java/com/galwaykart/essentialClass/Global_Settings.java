@@ -39,17 +39,17 @@ public class Global_Settings {
     public static final String st_sales_api=galway_api_url+"returnapi/";     // Live
     //public static final String st_sales_api="http://it.galway.in/returnapi/";// Test
 
-    //public static final String api_url="https://www.galwaykart.com/";                 // Live
-    //public static String web_url="https://www.galwaykart.com/";
+  //  public static  String api_url="https://www.galwaykart.com/";                 // Live
+   // public static String web_url="https://www.galwaykart.com/";
 
     //public static final String api_url="http://192.168.10.130/galwaykart/";               // Test
-    //public static String web_url="http://qa.galwaykart.com/";
-    //public static String api_url="http://qa.galwaykart.com/";      // new qa server
+    public static String web_url="http://qa.galwaykart.com/";
+    public static String api_url="http://qa.galwaykart.com/";      // new qa server
     public static String current_zone="";
 
 
-    public static String api_url="https://www.galwaykart.com/";
-    public static final String web_url="https://www.galwaykart.com/";
+    //public static String api_url="https://www.galwaykart.com/";
+    //public static final String web_url="https://www.galwaykart.com/";
 
     //public static final String api_glaze_url="http://wcf.glazegalway.net/Distributor.svc/";
     public static final String api_glaze_url=galway_wcf_api_url+"Distributor.svc/";

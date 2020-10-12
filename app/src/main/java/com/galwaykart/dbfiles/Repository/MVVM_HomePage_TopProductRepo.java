@@ -291,6 +291,7 @@ public class MVVM_HomePage_TopProductRepo {
         pref = CommonFun.getPreferences(context);
         String st_selected_id = preferences.getString("selected_id","");
         String st_selected_name = preferences.getString("selected_name","");
+        String selId=preferences.getString("arr_id","");
         if(st_selected_name!=null && !st_selected_name.equals("")){
 
         }
@@ -344,7 +345,9 @@ public class MVVM_HomePage_TopProductRepo {
                     "%25&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
                     "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
                     "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset" +
-                    "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
+                    "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id+
+                    "&searchCriteria[filter_groups][2][filters][2][field]=store_id"+
+                    "&searchCriteria[filter_groups][2][filters][2][value]="+selId;
         }
         else
         {
@@ -359,12 +362,15 @@ public class MVVM_HomePage_TopProductRepo {
                     "&searchCriteria[sortOrders][0][direction]=asc"+
                     "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
                     "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset"+
-                    "&searchCriteria[filter_groups][2][filters][1][value]="+api_login_id;
+                    "&searchCriteria[filter_groups][2][filters][1][value]="+api_login_id+
+                    "&searchCriteria[filter_groups][2][filters][2][field]=store_id"+
+                    "&searchCriteria[filter_groups][2][filters][2][value]="+selId;
+
 
 
         }
 
-        //Log.d("st_url_MVVM",st_URL);
+        Log.d("st_url_MVVM_search",st_URL);
 
         isDataLoad.postValue(true);
 

@@ -289,7 +289,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(LoginActivity.this, GuestHomePageActivity.class);
+                Intent intent = new Intent(LoginActivity.this, SplashActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 startActivity(intent);
