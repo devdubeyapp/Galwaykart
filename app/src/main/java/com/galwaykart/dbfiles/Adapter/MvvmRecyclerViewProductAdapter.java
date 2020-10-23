@@ -1,17 +1,13 @@
 package com.galwaykart.dbfiles.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.galwaykart.Guest.GuestMainActivity;
 import com.galwaykart.R;
@@ -32,14 +28,14 @@ public class MvvmRecyclerViewProductAdapter
     private List<ProductDataModel> dataModelList;
     private Context mContext;
 
-    public MvvmRecyclerViewProductAdapter(Context context,List<ProductDataModel> dataModelList) {
+    public MvvmRecyclerViewProductAdapter(Context context, List<ProductDataModel> dataModelList) {
         this.dataModelList = dataModelList;
         mContext=context;
     }
 
     @Override
-    public MvvmRecyclerViewProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                             int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                        int viewType) {
         MRecyclerViewItemHometopBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.m_recycler_view_item_hometop, parent, false);

@@ -1268,12 +1268,16 @@ public class GuestMainActivity extends GuestBaseActivity {
 
         String fromurl = "";
 
-        if(Global_Settings.current_zone.equals("")) {
-            fromurl = Global_Settings.api_url + "index.php/rest/V1/m-products/" + product_sku;
+        if(Global_Settings.multi_store==true) {
+            if (Global_Settings.current_zone.equals("")) {
+                fromurl = Global_Settings.api_url + "index.php/rest/V1/m-products/" + product_sku;
+            } else {
+                fromurl = Global_Settings.web_url + "rest/V1/m-products/" + product_sku;
+            }
         }
         else
         {
-            fromurl = Global_Settings.web_url + "rest/V1/m-products/" + product_sku;
+             fromurl= Global_Settings.api_url+"index.php/rest/V1/m-products/"+product_sku;
         }
         //Log.d("fromurl",fromurl);
 

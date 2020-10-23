@@ -24,6 +24,7 @@ import com.galwaykart.BaseActivity;
 import com.galwaykart.HomePageActivity;
 import com.galwaykart.R;
 import com.galwaykart.essentialClass.CommonFun;
+import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 
 import org.json.JSONArray;
@@ -118,7 +119,10 @@ public class UpdateAddressBook extends BaseActivity {
 
         list_address= findViewById(R.id.list_address);
 
-        url_address=api_url+"rest/V1/customers/me";
+        if(Global_Settings.multi_store==true)
+            url_address=api_url+"rest/V1/customers/me";
+        else
+            url_address=api_url+"index.php/rest/V1/customers/me";
 
         tv_title_address= findViewById(R.id.tv_title_address);
         tv_title_address.setText("Billing Address");

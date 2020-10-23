@@ -2,34 +2,6 @@ package com.galwaykart.HomePageTab;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.galwaykart.CAdapter.DataModelHomeCategory;
-import com.galwaykart.CAdapter.DataModelHomeProduct;
-import com.galwaykart.CAdapter.GridSpacingItemDecoration;
-import com.galwaykart.CAdapter.RecyclerViewHomeCategoryAdapter;
-import com.galwaykart.CAdapter.RecyclerViewHomeProductAdapter;
-import com.galwaykart.R;
-import com.galwaykart.essentialClass.CommonFun;
-import com.galwaykart.essentialClass.Global_Settings;
-
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +10,23 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
+import com.galwaykart.CAdapter.DataModelHomeCategory;
+import com.galwaykart.CAdapter.DataModelHomeProduct;
+import com.galwaykart.CAdapter.GridSpacingItemDecoration;
+import com.galwaykart.CAdapter.RecyclerViewHomeCategoryAdapter;
+import com.galwaykart.CAdapter.RecyclerViewHomeProductAdapter;
+import com.galwaykart.R;
+import com.galwaykart.essentialClass.CommonFun;
+import com.galwaykart.essentialClass.Global_Settings;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -175,13 +164,13 @@ public class HomePage_CategoryTab extends Fragment {
 
         if (!email.equalsIgnoreCase("") && email != null) {
 
-            home_page_api=Global_Settings.home_page_api+"?cid="+login_group_id;
+            home_page_api= Global_Settings.home_page_api+"?cid="+login_group_id;
             home_page_api= Global_Settings.api_url+"/rest/V1/mobile/home/"+login_group_id;
 
         }
         else
         {
-            home_page_api=Global_Settings.home_page_api+"?cid=0";
+            home_page_api= Global_Settings.home_page_api+"?cid=0";
             home_page_api= Global_Settings.api_url+"/rest/V1/mobile/home/0";
         }
 
@@ -194,34 +183,28 @@ public class HomePage_CategoryTab extends Fragment {
     private void callHomeItemList(String url_cart)
     {
         String response="";
-        SharedPreferences pref=CommonFun.getPreferences(getActivity());
-        response=pref.getString("homePageData","");
-
+        Realm realm= Realm.getDefaultInstance();
+        RealmResults<DataModelHomeAPI> results=
+                realm.where(DataModelHomeAPI.class)
+                        .equalTo("p_banner_category","category")
+                        .findAllAsync();
+        results.load();
+        response=results.asJSON();
 
         try {
+            JSONArray jsonArray_category = new JSONArray(response);
+            for (int i = 0; i < jsonArray_category.length(); i++) {
 
-            JSONObject jsonObj = null;
-            jsonObj = new JSONObject(String.valueOf(response));
-            JSONArray jsonArray_banner=jsonObj.getJSONArray("banners");
-            String  st_cat_head=jsonObj.getString("category_title");
-
-
-            for (int i = 0; i < jsonArray_banner.length(); i++) {
-
-                JSONObject jsonObject_category=jsonArray_banner.getJSONObject(i);
+                JSONObject jsonObject_category=jsonArray_category.getJSONObject(i);
                 String catid = "";
                 String catimage = "";
 
-                String is_banner_category_offer=jsonObject_category.getString("banner_category");
+                catid = jsonObject_category.getString("p_catid");
+                catimage = jsonObject_category.getString("p_image");
 
-                if(is_banner_category_offer.equalsIgnoreCase("category")) {
+                itemdCatList.add(new DataModelHomeCategory(catid, catimage));
 
-                    catid = jsonObject_category.getString("cat_id");
-                    catimage = jsonObject_category.getString("banner_name");
-
-                }                itemdCatList.add(new DataModelHomeCategory(catid, catimage));
-
-
+                String  st_cat_head=jsonObject_category.getString("cat_title");
                 if(!st_cat_head.equals(""))
                     tvCategoryHead.setText(st_cat_head);
 

@@ -47,6 +47,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -230,9 +231,9 @@ Boolean is_rel_cross_app_visible=false;
 //
           pager_view_banner = findViewById(R.id.pager_view_bannerss);
 
-        adapter = new GuestHomePageTabAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
+          adapter = new GuestHomePageTabAdapter(getSupportFragmentManager(),tabLayout.getTabCount());
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+          tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -393,36 +394,47 @@ Boolean is_rel_cross_app_visible=false;
             home_page_api= Global_Settings.api_url+"rest/V1/mobile/home/0";
         }
 
-        tv_current_zone=findViewById(R.id.tv_current_zone);
+        LinearLayout linear_zone_layout=findViewById(R.id.linear_zone_layout);
+        if(Global_Settings.multi_store==true) {
 
+            tv_current_zone = findViewById(R.id.tv_current_zone);
+            tv_change_zone = findViewById(R.id.tv_change_zone);
+            tv_change_zone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        tv_change_zone=findViewById(R.id.tv_change_zone);
-        tv_change_zone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    Intent intent = new Intent(GuestHomePageActivity.this, StateSelectionDialog.class);
+                    intent.putExtra("fromcome", "guest");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    CommonFun.finishscreen(GuestHomePageActivity.this);
 
-                Intent intent=new Intent(GuestHomePageActivity.this, StateSelectionDialog.class);
-                intent.putExtra("fromcome","guest");
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                CommonFun.finishscreen(GuestHomePageActivity.this);
+                }
+            });
 
+            if(Global_Settings.multi_store==true) {
+                String guest_current_zone = pref.getString("guest_current_zone", "");
+                if (guest_current_zone != null && !guest_current_zone.equals("")) {
+
+                    Global_Settings.current_zone = guest_current_zone;
+                    Global_Settings.api_url = Global_Settings.web_url + guest_current_zone + '/';
+                    tv_current_zone.setText(Global_Settings.current_zone);
+
+                    callHomeItemList(home_page_api);
+                } else {
+                    getState(home_page_api);
+                }
             }
-        });
-
-        String guest_current_zone=pref.getString("guest_current_zone","");
-        if(guest_current_zone!=null && !guest_current_zone.equals("")){
-
-            Global_Settings.current_zone=guest_current_zone;
-            Global_Settings.api_url=Global_Settings.web_url+guest_current_zone+'/';
-            tv_current_zone.setText(Global_Settings.current_zone);
-
+            else
+            {
+                callHomeItemList(home_page_api);
+            }
+        }
+        else {
+            linear_zone_layout.setVisibility(View.GONE);
             callHomeItemList(home_page_api);
         }
-        else
-        {
-            getState(home_page_api);
-        }
+
         //callHomeItemList(home_page_api);
         //refreshItemCount();
     }
@@ -564,6 +576,7 @@ Boolean is_rel_cross_app_visible=false;
                 jsonArray_banner=jsonObj.getJSONArray("banners");
 
                 //Log.d("res_res", String.valueOf(total_banner_item)+ jsonArray_banner.length());
+                total_banner_item=jsonArray_banner.length();
 
                 if(total_banner_item>0) {
                     banner_image = new String[total_banner_item];

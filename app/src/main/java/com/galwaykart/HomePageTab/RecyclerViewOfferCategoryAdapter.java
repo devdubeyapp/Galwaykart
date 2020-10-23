@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +11,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.galwaykart.CAdapter.DataModelHomeCategory;
 import com.galwaykart.CAdapter.DataModelHomeProduct;
-//import com.galwaykart.Guest.GuestProductListActivity;
 import com.galwaykart.R;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.productList.ProductListActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+//import com.galwaykart.Guest.GuestProductListActivity;
 
 /**
  * Created by ankesh on 9/20/2017.

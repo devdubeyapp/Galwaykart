@@ -216,6 +216,7 @@
         android:padding="5dp"
         android:id="@+id/linear_zone_layout"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:background="@color/colorPrimary"
 
         >

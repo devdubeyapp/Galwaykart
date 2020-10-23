@@ -803,11 +803,18 @@ private void callLogin(){
      */
     private void attemptLogin(){
 
-        String st_currentz_zone=Global_Settings.current_zone;
-        if(st_currentz_zone!=null && !st_currentz_zone.equals(""))
-            loginUrl=web_url+"rest/V1/customers/me";
+        if(Global_Settings.multi_store==true) {
+            String st_currentz_zone = Global_Settings.current_zone;
+            if (st_currentz_zone != null && !st_currentz_zone.equals(""))
+                loginUrl = web_url + "rest/V1/customers/me";
+            else
+                loginUrl = web_url + "index.php/rest/V1/customers/me";
+        }
         else
-            loginUrl=web_url+"index.php/rest/V1/customers/me";
+        {
+            loginUrl = web_url + "index.php/rest/V1/customers/me";
+        }
+
         //loginUrl=api_url+getData();
 //        String url=api_url+"rest/V1/integration/customer/token";
         String url=web_url+"rest/V1/m-integration/customer/token";

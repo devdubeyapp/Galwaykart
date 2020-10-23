@@ -1,34 +1,25 @@
 package com.galwaykart.dbfiles.Activity;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.galwaykart.CAdapter.GridSpacingItemDecoration;
 import com.galwaykart.R;
-import com.galwaykart.SearchProductActivity;
 import com.galwaykart.databinding.MHomepagTopproducttablV1Binding;
 import com.galwaykart.dbfiles.Adapter.MvvmRecyclerViewProductAdapter;
 import com.galwaykart.dbfiles.ProductDataModel;
 import com.galwaykart.dbfiles.ViewModel.Mvvm_ProductViewModel;
-import com.galwaykart.essentialClass.TransparentProgressDialog;
 
 import java.util.List;
 

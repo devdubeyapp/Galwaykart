@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.galwaykart.Cart.CartItemList;
 import com.galwaykart.dbfiles.DbBeanClass.CartItem;
 import com.galwaykart.dbfiles.DbBeanClass.CartProductImage;
 import com.galwaykart.dbfiles.DbBeanClass.CategoryList;
@@ -280,7 +279,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }while(cursor.moveToNext());
         }
 
-        cursor.close();
         return contactList;
     }
 
@@ -317,7 +315,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }while(cursor.moveToNext());
         }
 
-        cursor.close();
         return contactList;
     }
 
@@ -350,7 +347,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }while(cursor.moveToNext());
         }
 
-        cursor.close();
         return contactList;
     }
 
@@ -391,8 +387,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 contactList.add(contact);
             } while (cursor.moveToNext());
         }
-
-        cursor.close();
 
         /**
          *  return product list
@@ -617,7 +611,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         loginBeanClass.setPassword(cursor.getString(4));
         loginBeanClass.setPhone_no(cursor.getString(5));
 
-        cursor.close();
 
     }
 
@@ -642,7 +635,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(4),
                 cursor.getString(5));
 
-        cursor.close();
         return productBeanClass;
     }
 
@@ -663,7 +655,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(1),
                 cursor.getString(2));
 
-        cursor.close();
         return categoryProductBeanClass;
     }
 
@@ -695,8 +686,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 users_list.add(loginBeanClass);
             } while (cursor.moveToNext());
         }
-
-        cursor.close();
         return users_list;
     }
 
@@ -729,8 +718,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 product_list.add(productBeanClass);
             } while (cursor.moveToNext());
         }
-        cursor.close();
-
         return product_list;
     }
 
@@ -762,8 +749,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 product_list.add(productBeanClass);
             } while (cursor.moveToNext());
         }
-        cursor.close();
-
         return product_list;
     }
 
@@ -792,8 +777,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 category_list.add(categoryProductBeanClass);
             } while (cursor.moveToNext());
         }
-        cursor.close();
-
         return category_list;
     }
 

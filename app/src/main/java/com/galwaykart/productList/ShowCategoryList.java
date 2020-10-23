@@ -21,6 +21,7 @@ import com.galwaykart.HomePageActivity;
 import com.galwaykart.R;
 import com.galwaykart.dbfiles.DatabaseHandler;
 import com.galwaykart.essentialClass.CommonFun;
+import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.galwaykart.listAdapters.ExpandableListViewAdapter;
 
@@ -460,7 +461,10 @@ public class ShowCategoryList extends BaseActivity {
     private void callJSONAPIVolley()
     {
 
-        fromurl=com.galwaykart.essentialClass.Global_Settings.api_url+"rest/V1/categories";
+        if(Global_Settings.multi_store==true)
+            fromurl=com.galwaykart.essentialClass.Global_Settings.api_url+"rest/V1/categories";
+        else
+            fromurl=com.galwaykart.essentialClass.Global_Settings.api_url+"index.php/rest/V1/categories";
 
        // pDialog = new TransparentProgressDialog(ShowCategoryList.this);
 //        pDialog.setCancelable(false);

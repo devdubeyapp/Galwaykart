@@ -1415,7 +1415,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         // super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==REQUEST_CODE_EXAMPLE){
+        if(requestCode==REQUEST_CODE_EXAMPLE && Global_Settings.multi_store==true){
 
             if(resultCode==RESULT_OK)
             {
@@ -1726,7 +1726,13 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         pref= CommonFun.getPreferences(getApplicationContext());
         product_sku=pref.getString("showitemsku","");
 //        product_sku = "configurable product";
-        String fromurl= Global_Settings.api_url+"rest/V1/m-products/"+product_sku;
+
+
+        String fromurl="";
+        if(Global_Settings.multi_store==true)
+            fromurl=Global_Settings.api_url+"rest/V1/m-products/"+product_sku;
+        else
+             fromurl= Global_Settings.api_url+"index.php/rest/V1/m-products/"+product_sku;
         //Log.d("fromurl",fromurl);
 
         pDialog = new TransparentProgressDialog(MainActivity.this);

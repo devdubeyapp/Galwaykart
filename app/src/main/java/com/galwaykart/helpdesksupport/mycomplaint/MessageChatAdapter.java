@@ -21,6 +21,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
     private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         public TextView tv_admin_remark_label, tv_admin_remark_label1, tv_remark, tv_admin_remark;
         public LinearLayout main_row_lay;
         public View layout;
@@ -33,7 +34,6 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
             tv_admin_remark_label1 = view.findViewById(R.id.tv_admin_remark_label1);
             tv_admin_remark = view.findViewById(R.id.tv_admin_remark);
             main_row_lay = view.findViewById(R.id.main_row_lay);
-
 
         }
     }
@@ -56,10 +56,18 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
 
+
         if(complModels.get(position).getName().equalsIgnoreCase("admin"))
         {
-            holder.tv_admin_remark.setText(complModels.get(position).getMessage_chat());
 
+            if(!complModels.get(position).getMessage_chat().toString().trim().equals(""))
+                holder.tv_admin_remark.setText(complModels.get(position).getMessage_chat());
+            else
+            {
+                holder.tv_admin_remark_label.setVisibility(View.GONE);
+                holder.tv_admin_remark_label1.setVisibility(View.GONE);
+                holder.tv_admin_remark.setVisibility(View.GONE);
+            }
             /*if(position>=0)
             {
                 holder.tv_admin_remark.setText(complModels.get(position).getMessage_chat());
@@ -70,6 +78,11 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
                 holder.tv_admin_remark_label1.setVisibility(View.GONE);
             }*/
 
+        }
+        else {
+            holder.tv_admin_remark_label.setVisibility(View.GONE);
+            holder.tv_admin_remark_label1.setVisibility(View.GONE);
+            holder.tv_admin_remark.setVisibility(View.GONE);
         }
 
 

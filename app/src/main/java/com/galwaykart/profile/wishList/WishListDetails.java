@@ -1026,7 +1026,6 @@ public class WishListDetails extends BaseActivity {
         pref= CommonFun.getPreferences(getApplicationContext());
         //final String product_sku=pref.getString("showitemsku","");
         String fromurl= Global_Settings.api_url+"index.php/rest/V1/m-products/"+product_sku;
-
         Log.e("fromurl", fromurl);
 
         pDialog = new TransparentProgressDialog(WishListDetails.this);

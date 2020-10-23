@@ -1,15 +1,8 @@
 package com.galwaykart.dbfiles;
 
-import android.util.Log;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
-//import androidx.room.ColumnInfo;
-//import androidx.room.Entity;
-//import androidx.room.Ignore;
-//import androidx.room.PrimaryKey;
-
 
 import com.galwaykart.R;
 import com.squareup.picasso.MemoryPolicy;
@@ -18,8 +11,13 @@ import com.squareup.picasso.Picasso;
 
 import io.realm.RealmObject;
 
+//import androidx.room.ColumnInfo;
+//import androidx.room.Entity;
+//import androidx.room.Ignore;
+//import androidx.room.PrimaryKey;
+
 //@Entity(tableName = "table_product_detail")
-public class ProductDataModel extends RealmObject{
+public class ProductDataModel extends RealmObject {
 
 
 //    @PrimaryKey

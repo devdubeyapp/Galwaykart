@@ -1805,10 +1805,16 @@ public class GuestCartItemList extends GuestBaseActivity {
 
         String fromurl = "";
 
-        if(Global_Settings.current_zone.equals(""))
-            fromurl=Global_Settings.api_url + "index.php/rest/V1/products/" + psku;
+        if(Global_Settings.multi_store==true) {
+            if (Global_Settings.current_zone.equals(""))
+                fromurl = Global_Settings.api_url + "index.php/rest/V1/products/" + psku;
+            else
+                fromurl = Global_Settings.web_url + "rest/V1/products/" + psku;
+        }
         else
-            fromurl=Global_Settings.web_url + "rest/V1/products/" + psku;
+        {
+             fromurl = Global_Settings.api_url + "index.php/rest/V1/products/" + psku;
+        }
 
         RequestQueue queue = Volley.newRequestQueue(this);
         final StringRequest jsObjRequest = new StringRequest(Request.Method.GET, fromurl,

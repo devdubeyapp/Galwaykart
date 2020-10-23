@@ -1,9 +1,8 @@
 package com.galwaykart.HomePageTab;
 
-import io.realm.Realm;
 import io.realm.RealmObject;
 
-public class DataModelHomeAPI{
+public class DataModelHomeAPI extends RealmObject {
 
     String p_catid;
     String p_name;

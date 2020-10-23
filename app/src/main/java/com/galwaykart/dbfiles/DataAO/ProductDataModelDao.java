@@ -1,16 +1,11 @@
 package com.galwaykart.dbfiles.DataAO;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 //import androidx.room.Dao;
 //import androidx.room.Delete;
 //import androidx.room.Insert;
 //import androidx.room.OnConflictStrategy;
 //import androidx.room.Query;
 
-import com.galwaykart.dbfiles.ProductDataModel;
-
-import java.util.List;
 
 //@Dao
 //public interface ProductDataModelDao  {

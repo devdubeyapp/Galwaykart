@@ -486,7 +486,7 @@ public class CartItemList extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==REQUEST_CODE_EXAMPLE){
+        if(requestCode==REQUEST_CODE_EXAMPLE && Global_Settings.multi_store==true){
 
             if(resultCode==RESULT_OK)
             {

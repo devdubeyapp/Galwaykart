@@ -10,42 +10,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-
-//import com.freshchat.consumer.sdk.Freshchat;
-//import com.freshchat.consumer.sdk.FreshchatConfig;
-//import com.freshchat.consumer.sdk.FreshchatUser;
-//import com.freshchat.consumer.sdk.exception.MethodNotAllowedException;
-import com.android.volley.RetryPolicy;
-import com.galwaykart.Legal.CallWebUrlActivity;
-import com.galwaykart.Legal.FaqActivity;
-import com.galwaykart.MultiStoreSelection.StateSelectionDialog;
-import com.galwaykart.address_book.CustomerAddressBook;
-import com.galwaykart.HomePageTab.DataModelHomeAPI;
-import com.galwaykart.app_promo.AppPromoHome;
-import com.galwaykart.app_promo.AppPromotion;
-import com.galwaykart.helpdesksupport.mycomplaint.MyComplaints;
-import com.galwaykart.helpdesksupport.simplecomplaint.ComplaintMainActivity;
-import com.galwaykart.navigationDrawer.ExpandableCustomListAdapter;
-import com.galwaykart.navigationDrawer.MenuModel;
-import com.galwaykart.newsnotice.NoticeActivity;
-import com.galwaykart.report.CouponReportActivity;
-import com.galwaykart.testimonial.TestimonialActivity;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.viewpager.widget.ViewPager;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,11 +18,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -72,20 +45,26 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import com.galwaykart.address_book.AddNewAddress;
 import com.galwaykart.Cart.CartItemList;
 import com.galwaykart.Guest.GuestHomePageActivity;
 import com.galwaykart.Guest.GuestMainActivity;
-//import com.galwaykart.Guest.GuestProductListActivity;
-
+import com.galwaykart.HomePageTab.DataModelHomeAPI;
+import com.galwaykart.Legal.CallWebUrlActivity;
 import com.galwaykart.Legal.LegalAboutActivity;
 import com.galwaykart.Legal.WebViewActivity;
 import com.galwaykart.Login.LogoutActivity;
 import com.galwaykart.SingleProductView.MainActivity;
+import com.galwaykart.address_book.AddNewAddress;
+import com.galwaykart.address_book.CustomerAddressBook;
+import com.galwaykart.app_promo.AppPromoHome;
+import com.galwaykart.app_promo.AppPromotion;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
-
+import com.galwaykart.helpdesksupport.mycomplaint.MyComplaints;
+import com.galwaykart.helpdesksupport.simplecomplaint.ComplaintMainActivity;
+import com.galwaykart.navigationDrawer.ExpandableCustomListAdapter;
+import com.galwaykart.navigationDrawer.MenuModel;
+import com.galwaykart.newsnotice.NoticeActivity;
 import com.galwaykart.notification.NotificationListActivity;
 import com.galwaykart.partialReturn.ReturnedOrderList;
 import com.galwaykart.productList.ProductListActivity;
@@ -95,6 +74,12 @@ import com.galwaykart.profile.ChangeMobileActivity;
 import com.galwaykart.profile.ChangePasswordActivity;
 import com.galwaykart.profile.OrderListActivity;
 import com.galwaykart.profile.wishList.WishListDetails;
+import com.galwaykart.report.CouponReportActivity;
+import com.galwaykart.testimonial.TestimonialActivity;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -116,16 +101,21 @@ import java.util.TimerTask;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
+//import com.freshchat.consumer.sdk.Freshchat;
+//import com.freshchat.consumer.sdk.FreshchatConfig;
+//import com.freshchat.consumer.sdk.FreshchatUser;
+//import com.freshchat.consumer.sdk.exception.MethodNotAllowedException;
+//import com.galwaykart.Guest.GuestProductListActivity;
+
 //No static method with(Landroid/content/Context;)Lcom/squareup/picasso/Picasso;
 // in class Lcom/squareup/picasso/Picasso; or its super classes (declaration of 'com.squareup.picasso.Picasso' appears in /data/app/com.galwaykart-2/base.apk:classes2.dex)
 
-public class HomePageActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener , SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public class HomePageActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener , SearchView.OnQueryTextListener, SearchView.OnCloseListener
+{
     HomePageTabPageAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     Context context;
-
-
 
     private int[] tabIcons = {
             R.drawable.product_icon,
@@ -203,8 +193,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
     HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
 
     String dist_id="";
-    TextView tv_current_zone,tv_change_zone;
-    LinearLayout linear_zone_layout;
     private void openAppPromotionDetail(String app_id){
         Intent intent=new Intent(this, AppPromotion.class);
         intent.putExtra("app_id",app_id);
@@ -264,8 +252,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         tabTopCategory = findViewById(R.id.tabTopCategory);
         tabShopByCategory = findViewById(R.id.tabShopByCategory);
         tabOffer = findViewById(R.id.tabOffer);
-        linear_zone_layout=findViewById(R.id.linear_zone_layout);
-        linear_zone_layout.setVisibility(View.VISIBLE);
 
 
         cart_progressBar = findViewById(R.id.cart_progressBar);
@@ -311,8 +297,8 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
         String fname = pref.getString("login_fname", "");
         String lname = pref.getString("login_lname", "");
-        String value_email = pref.getString("login_email", "");
 
+        String value_email = pref.getString("login_email", "");
 
 //        FreshchatConfig freshchatConfig = new FreshchatConfig(API_ID, API_KEY);
 //        freshchatConfig.setCameraCaptureEnabled(false);
@@ -332,7 +318,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 //            e.printStackTrace();
 //        }
 
-
         float_chat_button = findViewById(R.id.float_hchat_button);
         float_chat_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -341,7 +326,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                 Intent intent=new Intent(HomePageActivity.this, CallWebUrlActivity.class);
                 intent.putExtra("comefrom","galwaychat");
                 startActivity(intent);
-
+            //   Freshchat.showConversations(getApplicationContext());
             }
         });
 
@@ -446,22 +431,18 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             String login_group_id=pref.getString("login_group_id","");
             String home_page_api="";
 
-            if (!email.equalsIgnoreCase("") && email != null)
-            {
+            if (!email.equalsIgnoreCase("") && email != null) {
 
-                home_page_api=Global_Settings.home_page_api+"?cid="+login_group_id;
+                home_page_api= Global_Settings.home_page_api+"?cid="+login_group_id;
                 home_page_api= Global_Settings.api_url+"rest/V1/mobile/home/"+login_group_id;
 
             }
             else
             {
-                home_page_api=Global_Settings.home_page_api+"?cid=0";
-                home_page_api= Global_Settings.api_url+"rest/V1/mobile/home/0";
+                home_page_api= Global_Settings.home_page_api+"?cid=0";
+                home_page_api= Global_Settings.api_url+"/rest/V1/mobile/home/0";
             }
-
-            refreshItemCount();
             callHomeItemList(home_page_api);
-
         }
         else
         {
@@ -470,21 +451,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             CommonFun.finishscreen(HomePageActivity.this);
         }
 
-        tv_current_zone=findViewById(R.id.tv_current_zone);
-        tv_current_zone.setText(Global_Settings.current_zone);
-
-        tv_change_zone=findViewById(R.id.tv_change_zone);
-        tv_change_zone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent=new Intent(HomePageActivity.this,StateSelectionDialog.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                CommonFun.finishscreen(HomePageActivity.this);
-
-            }
-        });
+        //checkForUpdate();
 
     }
 
@@ -522,16 +489,16 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
     }
 
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == MY_REQUEST_CODE) {
-//            if (resultCode != RESULT_OK) {
-//                //log("Update flow failed! Result code: " + resultCode);
-//                // If the update is cancelled or fails,
-//                // you can request to start the update again.
-//            }
-//        }
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MY_REQUEST_CODE) {
+            if (resultCode != RESULT_OK) {
+                //log("Update flow failed! Result code: " + resultCode);
+                // If the update is cancelled or fails,
+                // you can request to start the update again.
+            }
+        }
+    }
 
     public int GetPixelFromDips(float pixels) {
         // Get the screen's density scale
@@ -892,7 +859,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
     private void openSearchProduct(String query) {
         //searchView.clearFocus();
-        Intent intent=new Intent(this,SearchProductActivity.class);
+        Intent intent=new Intent(this, SearchProductActivity.class);
         intent.putExtra("searchtext",query);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -916,14 +883,27 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         String response="";
 
 
-        pref=CommonFun.getPreferences(HomePageActivity.this);
-        response=pref.getString("homePageData","");
+        Realm realm = Realm.getDefaultInstance(); // opens "gkart.realm"
+        try {
+            RealmResults<DataModelHomeAPI> results =
+                    realm.where(DataModelHomeAPI.class)
+                            .equalTo("p_banner_category","banner")
+                            .findAllAsync();
+
+            //fetching the data
+            results.load();
+            total_banner_item=results.size();
+            response = results.asJSON();
+            //Log.d("res_res", response);
+        }
+        finally {
+            realm.close();
+        }
+
 
         JSONArray jsonArray_banner= null;
         try {
-            JSONObject jsonObj = null;
-            jsonObj = new JSONObject(String.valueOf(response));
-             jsonArray_banner=jsonObj.getJSONArray("banners");
+            jsonArray_banner = new JSONArray(response);
 
             //Log.d("res_res", String.valueOf(total_banner_item)+ jsonArray_banner.length());
 
@@ -935,16 +915,11 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                 int k=0;
                 for (int i = 0; i < jsonArray_banner.length(); i++) {
                     JSONObject jsonObject = jsonArray_banner.getJSONObject(i);
-
-                    String is_banner_category_offer=jsonObject.getString("banner_category");
-
-                    if(is_banner_category_offer.equalsIgnoreCase("banner")) {
-                        banner_image[k] = jsonObject.getString("banner_name");
-                        banner_image_catid[k] = jsonObject.getString("cat_id");
-                        banner_image_sku[k] = jsonObject.getString("sku");
+                        banner_image[k] = jsonObject.getString("p_image");
+                        banner_image_catid[k] = jsonObject.getString("p_catid");
+                        banner_image_sku[k] = jsonObject.getString("p_sku");
                         //Log.d("total_banner_item", String.valueOf(banner_image[k]+" "));
                         k++;
-                    }
                 }
 
                 loadData=true;
@@ -954,7 +929,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                 else
                     viewPager.setVisibility(View.GONE);
 
-
+                refreshItemCount();
 
             }
             viewPager.setAdapter(adapter);
@@ -1214,34 +1189,34 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             startActivity(intent);
 
         }*/
-        else if(id==R.id.nav_wishlist){
+        else if(id== R.id.nav_wishlist){
 
             Intent intent_wishlist=new Intent(this, WishListDetails.class);
             intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent_wishlist);
             CommonFun.finishscreen(this);
         }
-        else if(id==R.id.nav_ewallet){
+        else if(id== R.id.nav_ewallet){
             Intent intent_ewallet=new Intent(this, EwalletActivity.class);
             intent_ewallet.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent_ewallet);
             CommonFun.finishscreen(this);
         }
-        else if(id==R.id.nav_change_email){
+        else if(id== R.id.nav_change_email){
             Intent intent=new Intent(this, ChangeEmailActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             CommonFun.finishscreen(this);
         }
 
-        else if(id==R.id.nav_change_mobile){
+        else if(id== R.id.nav_change_mobile){
             Intent intent=new Intent(this, ChangeMobileActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             CommonFun.finishscreen(this);
         }
 
-        else if(id==R.id.change_pwd){
+        else if(id== R.id.change_pwd){
             Intent intent=new Intent(this, ChangePasswordActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -1269,21 +1244,21 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         }
 
 
-        else if(id==R.id.customerlearningPoint)
+        else if(id== R.id.customerlearningPoint)
         {
-            Intent intent=new Intent(this,WebViewActivity.class);
+            Intent intent=new Intent(this, WebViewActivity.class);
             intent.putExtra("comefrom","customer-help-desk-tutorials");
             startActivity(intent);
             //CommonFun.finishscreen(this);
         }
-        else if(id==R.id.legalabout){
+        else if(id== R.id.legalabout){
             Intent intent=new Intent(this, LegalAboutActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             CommonFun.finishscreen(this);
 
         }
-        else if(id==R.id.nav_coupon_report){
+        else if(id== R.id.nav_coupon_report){
 
             Intent intent=new Intent(this, CouponReportActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -1291,14 +1266,14 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
             CommonFun.finishscreen(this);
 
         }
-        else if(id==R.id.version){
+        else if(id== R.id.version){
 
 
 
 
         }
 
-        else if(id==R.id.address_book) {
+        else if(id== R.id.address_book) {
 
 //            Intent intent = new Intent(this, AddNewAddress.class);
 //            intent.putExtra("st_come_from_update","updateaddress");
@@ -1322,7 +1297,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
         }
 
-        else if(id==R.id.return_order){
+        else if(id== R.id.return_order){
 
             Intent intent=new Intent(this, ReturnedOrderList.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -1339,7 +1314,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
     }
     private void openHomeActivity()
     {
-        Intent intent=new Intent(this,HomePageActivity.class);
+        Intent intent=new Intent(this, HomePageActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         CommonFun.finishscreen(this);
@@ -1356,11 +1331,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         tokenData=pref.getString("tokenData","");
         //  tokenData = "jqb3cv661kcx69qc300icrxaco8573h0";
 
-
-       Log.d("data_home","data_home");
-
        getCartId_v1();
-
     }
 
     SharedPreferences pref;
@@ -1383,6 +1354,21 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                         try {
 
 
+                            //Log.d("onCartResponse", response.toString());
+                            //     CommonFun.alertError(MainActivity.this,response.toString());
+//                            JSONObject jsonObj = null;
+//                            jsonObj = new JSONObject(String.valueOf(response));
+//
+//                            String cart_id=jsonObj.getString("id");
+//
+//                            ////Log.d("cart_id",cart_id);
+////
+////                            SharedPreferences.Editor editor= preferences.edit();
+////                            editor.putString("cart_id",cart_id);
+////                            editor.commit();
+
+                            // addItemToCart(cart_id);
+
 
                             String cart_id = response;
                             cart_id = cart_id.replaceAll("\"", "");
@@ -1393,7 +1379,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
 
                             String url_cart_item_list = Global_Settings.api_url+"rest/V1/m-carts/mine";
-                            callCartItemList(url_cart_item_list,HomePageActivity.this);
+                            callCartItemList(url_cart_item_list, HomePageActivity.this);
 
 
                         } catch (Exception e) {
@@ -1530,7 +1516,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
                         }
                         else {
                             updateMenuTitles(toolbar, String.valueOf(0));
-                            Snackbar.make(findViewById(android.R.id.content),"Unable to Fetch Cart\nCheck Your Internet Connectivity",Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(android.R.id.content),"Unable to Fetch Cart\nCheck Your Internet Connectivity", Snackbar.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -1555,7 +1541,7 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
 
     }
 
-    private void updateMenuTitles(Toolbar toolbar,String count) {
+    private void updateMenuTitles(Toolbar toolbar, String count) {
 
         //MenuItem cartMenuItem = menu.findItem(R.id.action_add_to_cart);
         TextView tv_cartqty;
@@ -1611,11 +1597,6 @@ public class HomePageActivity extends AppCompatActivity  implements NavigationVi
         //openSearchProduct(newText);
         return false;
     }
-
-
-
-
-
 
 
 }

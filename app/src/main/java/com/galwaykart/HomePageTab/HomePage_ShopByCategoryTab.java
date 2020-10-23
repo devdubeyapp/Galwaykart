@@ -3,32 +3,29 @@ package com.galwaykart.HomePageTab;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.crashlytics.android.Crashlytics;
 import com.galwaykart.R;
 import com.galwaykart.dbfiles.DatabaseHandler;
 import com.galwaykart.essentialClass.CommonFun;
-
 import com.galwaykart.essentialClass.VolleySingleton;
 import com.galwaykart.listAdapters.ExpandableListViewAdapter;
 import com.galwaykart.productList.ProductListActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +35,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
-
 
 
 public class HomePage_ShopByCategoryTab extends Fragment {
@@ -450,7 +446,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
     private void callJSONAPIVolley()
     {
 
-        fromurl=com.galwaykart.essentialClass.Global_Settings.api_url+"rest/V1/categories";
+        fromurl=com.galwaykart.essentialClass.Global_Settings.api_url+"index.php/rest/V1/categories";
 
         // pDialog = new TransparentProgressDialog(HomePage_ShopByCategoryTab.this);
 //        pDialog.setCancelable(false);
@@ -609,7 +605,7 @@ public class HomePage_ShopByCategoryTab extends Fragment {
 
 
         jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                1000*60,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                1000*60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         ));
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(jsObjRequest);

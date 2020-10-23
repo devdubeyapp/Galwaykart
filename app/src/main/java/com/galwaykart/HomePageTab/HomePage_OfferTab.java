@@ -1,23 +1,17 @@
 package com.galwaykart.HomePageTab;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.galwaykart.CAdapter.DataModelHomeCategory;
 import com.galwaykart.CAdapter.GridSpacingItemDecoration;
 import com.galwaykart.R;
@@ -30,7 +24,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import androidx.fragment.app.Fragment;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -109,28 +102,29 @@ public class HomePage_OfferTab extends Fragment {
     private void callHomeItemList(String url_cart){
 
         String response="";
-        SharedPreferences pref=CommonFun.getPreferences(getActivity());
-        response=pref.getString("homePageData","");
 
+        Realm realm= Realm.getDefaultInstance();
+        RealmResults<DataModelHomeAPI> results=
+                realm.where(DataModelHomeAPI.class)
+                        .equalTo("p_banner_category","offer")
+                        .findAllAsync();
 
+        results.load();
+        response=results.asJSON();
 
         try {
-            JSONObject jsonObj = null;
-            jsonObj = new JSONObject(String.valueOf(response));
-            JSONArray jsonArray_banner=jsonObj.getJSONArray("banners");
-            for (int i = 0; i < jsonArray_banner.length(); i++) {
+            JSONArray jsonArray_category = new JSONArray(response);
+            for (int i = 0; i < jsonArray_category.length(); i++) {
 
-                JSONObject jsonObject_category=jsonArray_banner.getJSONObject(i);
+                JSONObject jsonObject_category=jsonArray_category.getJSONObject(i);
                 String catid = "";
                 String catimage = "";
-                String is_banner_category_offer=jsonObject_category.getString("banner_category");
-                if(is_banner_category_offer.equalsIgnoreCase("offer")) {
 
-                    catid = jsonObject_category.getString("cat_id");
-                    catimage = jsonObject_category.getString("banner_name");
+                catid = jsonObject_category.getString("p_catid");
+                catimage = jsonObject_category.getString("p_image");
 
-                    itemdCatList.add(new DataModelHomeCategory(catid, catimage));
-                }
+                itemdCatList.add(new DataModelHomeCategory(catid, catimage));
+
             }
         }
         catch (JSONException ex){

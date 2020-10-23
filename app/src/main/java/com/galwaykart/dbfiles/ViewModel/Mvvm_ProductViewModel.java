@@ -1,22 +1,19 @@
 package com.galwaykart.dbfiles.ViewModel;
 
 import android.app.Application;
-import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-
-//import com.galwaykart.RoomDb.GalwaykartRoomDatabase;
-//import com.galwaykart.dbfiles.DataAO.ProductDataModelDao;
 import com.galwaykart.dbfiles.ProductDataModel;
 import com.galwaykart.dbfiles.Repository.MVVM_HomePage_TopProductRepo;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+
+//import com.galwaykart.RoomDb.GalwaykartRoomDatabase;
+//import com.galwaykart.dbfiles.DataAO.ProductDataModelDao;
 
 
 public class Mvvm_ProductViewModel extends AndroidViewModel {
@@ -137,7 +134,7 @@ public class Mvvm_ProductViewModel extends AndroidViewModel {
      * Get Products for Category
      * @return
      */
-    public MutableLiveData<List<ProductDataModel>> getProductOfCategory(String s_query,Boolean is_search){
+    public MutableLiveData<List<ProductDataModel>> getProductOfCategory(String s_query, Boolean is_search){
         if(products==null){
             products=new MutableLiveData<List<ProductDataModel>>();
 

@@ -2,7 +2,6 @@ package com.galwaykart.dbfiles.Repository;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
@@ -12,12 +11,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-//import com.galwaykart.RoomDb.GalwaykartRoomDatabase;
-import com.galwaykart.HomePageActivity;
-import com.galwaykart.HomePageTab.DataModelHomeAPI;
 import com.galwaykart.dbfiles.ProductDataModel;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
@@ -34,6 +29,8 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 import static android.content.Context.MODE_PRIVATE;
+
+//import com.galwaykart.RoomDb.GalwaykartRoomDatabase;
 
 public class MVVM_HomePage_TopProductRepo {
 
@@ -137,17 +134,19 @@ public class MVVM_HomePage_TopProductRepo {
         try {
 
             String response="";
-            SharedPreferences pref=CommonFun.getPreferences(context);
-            response=pref.getString("homePageData","");
+
+            Realm realm= Realm.getDefaultInstance();
+            RealmResults<ProductDataModel> results=
+                    realm.where(ProductDataModel.class)
+                    .findAllAsync();
+
+            results.load();
+            response=results.asJSON();
+
 
             Log.d("topProduct",response.toString());
 
-            JSONObject jsonObj = null;
-            jsonObj = new JSONObject(String.valueOf(response));
-
-            JSONObject jsonObj_p = jsonObj.getJSONObject("product_details");
-
-            JSONArray jsonArray_product = jsonObj_p.getJSONArray("product_items");
+            JSONArray jsonArray_product = new JSONArray(response);
 
             for(int i=0;i<jsonArray_product.length();i++){
 
@@ -155,10 +154,10 @@ public class MVVM_HomePage_TopProductRepo {
                 String pname=jsonObject_product.getString("pname");
                 String pprice="₹ "+jsonObject_product.getString("price");
                 String psku=jsonObject_product.getString("sku");
-                String pimage=jsonObject_product.getString("image");
+                String pimage=jsonObject_product.getString("imageUrl");
                 String pip="PV / BV: "+jsonObject_product.getString("ip");
 
-
+                SharedPreferences pref =  CommonFun.getPreferences(context);
                 String login_group_id=pref.getString("login_group_id","");
                 if(login_group_id!=null && !login_group_id.equals(""))
                 {
@@ -219,7 +218,7 @@ public class MVVM_HomePage_TopProductRepo {
 //    /**
 //     * Sort Category Product
 //     */
-    public MutableLiveData<List<ProductDataModel>> sortByPrice(Context context,MutableLiveData<List<ProductDataModel>> data,int sortBy){
+    public MutableLiveData<List<ProductDataModel>> sortByPrice(Context context, MutableLiveData<List<ProductDataModel>> data, int sortBy){
 
         switch (sortBy) {
 
@@ -266,7 +265,7 @@ public class MVVM_HomePage_TopProductRepo {
     /******************************************Search Products And Category Products****************************************************/
 
 
-    public MutableLiveData<List<ProductDataModel>> getProductDetail(Context context,String query,Boolean is_search){
+    public MutableLiveData<List<ProductDataModel>> getProductDetail(Context context, String query, Boolean is_search){
         dataset.clear();
         MutableLiveData<List<ProductDataModel>> data=new MutableLiveData<>();
         MutableLiveData<Boolean> isDataLoad=new MutableLiveData<>();
@@ -282,7 +281,7 @@ public class MVVM_HomePage_TopProductRepo {
      * @param data
      */
     private void callAPIOfProductDetail(Context context, MutableLiveData<List<ProductDataModel>> data,
-                                        MutableLiveData<Boolean>isDataLoad,String query,
+                                        MutableLiveData<Boolean> isDataLoad, String query,
                                         Boolean is_search) {
 
         SharedPreferences preferences = context.getSharedPreferences("GalwayKart", MODE_PRIVATE);
@@ -291,7 +290,6 @@ public class MVVM_HomePage_TopProductRepo {
         pref = CommonFun.getPreferences(context);
         String st_selected_id = preferences.getString("selected_id","");
         String st_selected_name = preferences.getString("selected_name","");
-        String selId=preferences.getString("arr_id","");
         if(st_selected_name!=null && !st_selected_name.equals("")){
 
         }
@@ -345,13 +343,11 @@ public class MVVM_HomePage_TopProductRepo {
                     "%25&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
                     "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
                     "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset" +
-                    "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id+
-                    "&searchCriteria[filter_groups][2][filters][2][field]=store_id"+
-                    "&searchCriteria[filter_groups][2][filters][2][value]="+selId;
+                    "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
         }
         else
         {
-          st_URL=Global_Settings.api_url+"rest/V1/products?"+
+          st_URL= Global_Settings.api_url+"rest/V1/products?"+
                     "searchCriteria[filter_groups][0][filters][0][field]=category_id"+
                     "&searchCriteria[filter_groups][0][filters][0][value]="+st_selected_id+
                     "&searchCriteria[filter_groups][0][filters][1][field]=visibility"+
@@ -362,15 +358,12 @@ public class MVVM_HomePage_TopProductRepo {
                     "&searchCriteria[sortOrders][0][direction]=asc"+
                     "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
                     "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset"+
-                    "&searchCriteria[filter_groups][2][filters][1][value]="+api_login_id+
-                    "&searchCriteria[filter_groups][2][filters][2][field]=store_id"+
-                    "&searchCriteria[filter_groups][2][filters][2][value]="+selId;
-
+                    "&searchCriteria[filter_groups][2][filters][1][value]="+api_login_id;
 
 
         }
 
-        Log.d("st_url_MVVM_search",st_URL);
+        //Log.d("st_url_MVVM",st_URL);
 
         isDataLoad.postValue(true);
 
@@ -411,7 +404,7 @@ public class MVVM_HomePage_TopProductRepo {
 
 
         jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
-                1000*60,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                1000*60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         ));
         jsObjRequest.setShouldCache(false);
         queue.add(jsObjRequest);
@@ -427,8 +420,8 @@ public class MVVM_HomePage_TopProductRepo {
      * @param response
      * @param data
      */
-    private void setPostProductDetail(Context context,String response,
-                                      MutableLiveData<List<ProductDataModel>> data,String st_selected_name
+    private void setPostProductDetail(Context context, String response,
+                                      MutableLiveData<List<ProductDataModel>> data, String st_selected_name
     ) {
 
         if(response!=null){

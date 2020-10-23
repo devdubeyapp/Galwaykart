@@ -413,14 +413,16 @@ public class ComplaintDetailActivity extends AppCompatActivity implements View.O
 
                                                         for (int i = 0; i < jsonArrayItem.length(); i++) {
 
-                                                            JSONObject jsonObject_msg=jsonArrayItem.getJSONObject(i);
+                                                            JSONObject jsonObject_msg = jsonArrayItem.getJSONObject(i);
                                                             cht_msg[i] = jsonObject_msg.getString("message");
                                                             cht_name[i] = jsonObject_msg.getString("name");
 
-                                                            ComplModel complModelChat = new ComplModel();
-                                                            complModelChat.setName(jsonObject_msg.optString("name", ""));
-                                                            complModelChat.setMessage_chat(jsonObject_msg.optString("message", ""));
-                                                            complModelsChatFinal.add(complModelChat);
+
+                                                                ComplModel complModelChat = new ComplModel();
+                                                                complModelChat.setName(jsonObject_msg.optString("name", ""));
+                                                                complModelChat.setMessage_chat(jsonObject_msg.optString("message", ""));
+                                                                complModelsChatFinal.add(complModelChat);
+
                                                         }
 
                                                         messageChatAdapter = new MessageChatAdapter(ComplaintDetailActivity.this, complModelsChatFinal);
