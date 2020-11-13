@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -62,7 +62,7 @@ public class UPIFragment extends Fragment {
      */
     private void setUpUI(View view){
         tvUPIInfo = (TextView) view.findViewById(R.id.tv_upi_info);
-        TextView  tvLearnUpi = (TextView) view.findViewById(R.id.tv_learn_upi);
+        TextView tvLearnUpi = (TextView) view.findViewById(R.id.tv_learn_upi);
         etVirtualAddress = (EditText) view.findViewById(R.id.et_virtual_address);
 
         OnTextChangeListener onTextChangeListener = new OnTextChangeListener();

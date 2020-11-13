@@ -4,8 +4,8 @@ package com.payu.payuui.Fragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,28 +18,30 @@ import android.widget.Toast;
 import com.payu.india.Interfaces.DeleteCardApiListener;
 import com.payu.india.Model.CardStatus;
 import com.payu.india.Model.MerchantWebService;
-import com.payu.india.Model.PaymentParams;
 import com.payu.india.Model.PayuConfig;
 import com.payu.india.Model.PayuHashes;
 import com.payu.india.Model.PayuResponse;
-import com.payu.india.Model.PostData;
 import com.payu.india.Model.StoredCard;
 import com.payu.india.Payu.PayuConstants;
 import com.payu.india.Payu.PayuErrors;
 import com.payu.india.Payu.PayuUtils;
 import com.payu.india.PostParams.MerchantWebServicePostParams;
 import com.payu.india.Tasks.DeleteCardTask;
+import com.payu.paymentparamhelper.PaymentParams;
+import com.payu.paymentparamhelper.PostData;
 import com.payu.payuui.Activity.PayUBaseActivity;
 import com.payu.payuui.Adapter.PagerAdapter;
 import com.payu.payuui.Adapter.SavedCardItemFragmentAdapter;
+import com.payu.payuui.R;
 import com.payu.payuui.SdkuiUtil.SdkUIConstants;
 import com.payu.payuui.Widget.CirclePageIndicator;
-import com.payu.payuui.R;
-
 import com.payu.payuui.Widget.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+//import com.payu.india.Model.PaymentParams;
+//import com.payu.india.Model.PostData;
 
 
 /**
@@ -135,10 +137,7 @@ public class SavedCardsFragment extends Fragment implements View.OnClickListener
                 PagerAdapter activityAdapter = (PagerAdapter) activityViewPager.getAdapter();
                 if(activityAdapter != null && activityAdapter.getPageTitle(activityViewPager.getCurrentItem()).toString().equals(SdkUIConstants.SAVED_CARDS)) {
 
-              if (mStoreCards.get(position).getEnableOneClickPayment() == 1 && mStoreCards.get(position).getOneTapCard() == 1) {
-
-                        getActivity().findViewById(R.id.button_pay_now).setEnabled(true);
-                    } else if (mStoreCards.get(position).getCardType().equals("SMAE")) {
+                        if (mStoreCards.get(position).getCardType().equals("SMAE")) {
                         getActivity().findViewById(R.id.button_pay_now).setEnabled(true);
                     } else {
                         SavedCardItemFragmentAdapter mSaveAdapter = (SavedCardItemFragmentAdapter) mPager.getAdapter();
@@ -179,9 +178,7 @@ public class SavedCardsFragment extends Fragment implements View.OnClickListener
                 getActivity().findViewById(R.id.button_pay_now).setEnabled(true);
             }
 
-            if (mStoreCards != null && mStoreCards.size() != 0 && mStoreCards.get(0).getEnableOneClickPayment() == 1  && mStoreCards.get(0).getOneTapCard() == 1 ) {
-                getActivity().findViewById(R.id.button_pay_now).setEnabled(true);
-            }
+
         }
 
         return mView;

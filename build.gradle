@@ -32,7 +32,9 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven{url 'https://kotlin.bintray.com/kotlinx/'}
 
-
+        maven {
+            url "https://phonepe.bintray.com/PhonePeIntentSDK"
+        }
     }
 }
 

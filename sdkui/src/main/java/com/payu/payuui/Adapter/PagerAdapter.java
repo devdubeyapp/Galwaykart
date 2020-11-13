@@ -1,16 +1,22 @@
 package com.payu.payuui.Adapter;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.payu.india.Model.PayuResponse;
 import com.payu.india.Payu.PayuConstants;
 import com.payu.payuui.Fragment.CreditDebitFragment;
+import com.payu.payuui.Fragment.GenericUpiIntentFragment;
+import com.payu.payuui.Fragment.LazyPayFragment;
 import com.payu.payuui.Fragment.NetBankingFragment;
 import com.payu.payuui.Fragment.PayuMoneyFragment;
+import com.payu.payuui.Fragment.PhonePeFragment;
+import com.payu.payuui.Fragment.SamsungPayFragment;
 import com.payu.payuui.Fragment.SavedCardsFragment;
+import com.payu.payuui.Fragment.StandAlonePhonePeFragment;
+import com.payu.payuui.Fragment.TEZFragment;
 import com.payu.payuui.Fragment.UPIFragment;
 import com.payu.payuui.SdkuiUtil.SdkUIConstants;
 
@@ -25,15 +31,13 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     private ArrayList<String> mTitles;
     private PayuResponse payuResponse;
     private PayuResponse valueAddedResponse;
-    private HashMap<String, String> oneClickCardTokens;
     private HashMap<Integer, Fragment> mPageReference = new HashMap<Integer, Fragment>();
 
-    public PagerAdapter(FragmentManager fragmentManager, ArrayList<String> titles, PayuResponse payuResponse, PayuResponse valueAddedResponse, HashMap<String, String> oneClickCardTokens) {
+    public PagerAdapter(FragmentManager fragmentManager, ArrayList<String> titles, PayuResponse payuResponse, PayuResponse valueAddedResponse) {
         super(fragmentManager);
         this.mTitles = titles;
         this.payuResponse = payuResponse;
         this.valueAddedResponse = valueAddedResponse;
-        this.oneClickCardTokens = oneClickCardTokens;
     }
 
     @Override
@@ -46,7 +50,6 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 bundle.putParcelableArrayList(PayuConstants.STORED_CARD, payuResponse.getStoredCards());
                 bundle.putSerializable(SdkUIConstants.VALUE_ADDED, valueAddedResponse.getIssuingBankStatus());
                 bundle.putInt(SdkUIConstants.POSITION, i);
-                bundle.putSerializable(PayuConstants.ONE_CLICK_CARD_TOKENS, oneClickCardTokens);
                 fragment.setArguments(bundle);
                 mPageReference.put(i, fragment);
                 return fragment;
@@ -77,11 +80,43 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 mPageReference.put(i, fragment);
                 return fragment;
 
+            case SdkUIConstants.TEZ:
+                fragment = new TEZFragment();
+                mPageReference.put(i, fragment);
+                return fragment;
+
+            case SdkUIConstants.GENERICINTENT:
+                fragment = new GenericUpiIntentFragment();
+                mPageReference.put(i, fragment);
+                return fragment;
+
             case SdkUIConstants.PAYU_MONEY:
                 fragment = new PayuMoneyFragment();
                 bundle.putParcelableArrayList(PayuConstants.PAYU_MONEY, payuResponse.getPaisaWallet());
                 mPageReference.put(i, fragment);
                 return fragment;
+
+            case SdkUIConstants.LAZY_PAY:
+                fragment = new LazyPayFragment();
+                bundle.putParcelableArrayList(PayuConstants.LAZYPAY, payuResponse.getLazyPay());
+                mPageReference.put(i, fragment);
+                return fragment;
+            case "SAMPAY":
+                fragment = new SamsungPayFragment();
+                mPageReference.put(i, fragment);
+                return fragment;
+
+            case SdkUIConstants.PHONEPE:
+                fragment = new StandAlonePhonePeFragment();
+                mPageReference.put(i,fragment);
+                return fragment;
+
+            case SdkUIConstants.CBPHONEPE:
+                fragment = new PhonePeFragment();
+                mPageReference.put(i,fragment);
+                return fragment;
+
+
 
             default:
                 return null;

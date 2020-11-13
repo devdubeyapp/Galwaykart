@@ -5,12 +5,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,29 +15,22 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.galwaykart.address_book.OrderDetails;
 import com.galwaykart.R;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
-import com.galwaykart.essentialClass.TransparentProgressDialog;
+import com.galwaykart.profile.OrderDetails;
 import com.galwaykart.profile.OrderListActivity;
-import com.payu.india.CallBackHandler.OnetapCallback;
 import com.payu.india.Extras.PayUChecksum;
 import com.payu.india.Extras.PayUSdkDetails;
-import com.payu.india.Interfaces.OneClickPaymentListener;
-import com.payu.india.Model.PaymentParams;
+//import com.payu.india.Model.PaymentParams;
 import com.payu.india.Model.PayuConfig;
 import com.payu.india.Model.PayuHashes;
-import com.payu.india.Model.PostData;
+//import com.payu.india.Model.PostData;
 import com.payu.india.Payu.Payu;
 import com.payu.india.Payu.PayuConstants;
 import com.payu.india.Payu.PayuErrors;
+import com.payu.paymentparamhelper.PaymentParams;
+import com.payu.paymentparamhelper.PostData;
 import com.payu.payuui.Activity.PayUBaseActivity;
 
 import org.json.JSONArray;
@@ -55,11 +45,10 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Iterator;
-
-//import com.mixpanel.android.viewcrawler.EditProtocol;
-import com.payu.payuui.Activity.PayUBaseActivity;
+import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -68,95 +57,38 @@ import androidx.appcompat.app.AppCompatActivity;
  * <p>
  * Implement this activity with OneClickPaymentListener only if you are integrating One Tap payments.
  */
-public class MainActivity extends AppCompatActivity implements OneClickPaymentListener {
+public class MainActivity extends AppCompatActivity {
 
     private String merchantKey, userCredentials;
-    // These will hold all the payment parameters
 
+    // These will hold all the payment parameters
     private PaymentParams mPaymentParams;
+    private String paymentHash1;
+
     // This sets the configuration
     private PayuConfig payuConfig;
 
     private Spinner environmentSpinner;
+
     // Used when generating hash from SDK
     private PayUChecksum checksum;
+    String salt = null;
+
     EditText editTextEmail;
     SharedPreferences pref;
 
     String firstname,email;
     EditText editTextAmount;
-
-    int total_cart_count;
-    String[] product_ip;
-    String[] product_sku;
-    String[] product_qty;
-    String[] product_dp;
-    String[] product_mrp;
-    String ship_email="";
-    JsonObjectRequest jsonObjRequest = null;
-
-
-    @Override
-    public void onBackPressed() {
-        // TODO Auto-generated method stub
-        super.onBackPressed();
-
-//Do you really
-        final AlertDialog.Builder b;
-        try
-        {
-            b = new AlertDialog.Builder(this);
-            b.setTitle("Alert");
-            b.setCancelable(false);
-            b.setMessage("Are you sure want to cancel payment");
-            b.setPositiveButton("OK", new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton)
-                {
-
-                    cancelOrderEcom();
-
-                }
-            });
-            b.setNegativeButton("Cancel",new DialogInterface.OnClickListener()
-            {
-                @Override
-                public void onClick(DialogInterface dialog, int whichButton)
-                {
-                    b.create().dismiss();
-                }
-            });
-
-            b.create().show();
-        }
-        catch(Exception ex)
-        {
-        }
-
-    }
-
     String total_amount="";
-    String order_hash="";
-    String del_address="",st_city="",st_state="",st_pincode="",ship_fname="",ship_lname="",st_cust_name="",login_tel="";
-
     String dist_id="";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.payment_test);
+        setContentView(R.layout.activity_main);
 
         pref = CommonFun.getPreferences(getApplicationContext());
         dist_id=pref.getString("log_user_id", "").toLowerCase();
-
-        //Log.d("dist_id",dist_id);
-
-
-        order_hash=pref.getString("payment","");
-        //TODO Must write this code if integrating One Tap payments
-        OnetapCallback.setOneTapCallback(this);
 
         //TODO Must write below code in your activity to set up initial context for PayU
         Payu.setInstance(this);
@@ -174,6 +106,12 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
 
         }
 
+        // lets set up the tool bar;
+//        Toolbar toolBar = (Toolbar) findViewById(R.id.app_bar);
+//        toolBar.setTitle("PayU Demo App");
+//        toolBar.setTitleTextColor(Color.WHITE);
+//        setSupportActionBar(toolBar);
+
         // lets tell the people what version of sdk we are using
         PayUSdkDetails payUSdkDetails = new PayUSdkDetails();
 
@@ -189,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
         firstname=pref.getString("login_fname","");
 
         //Lets setup the environment spinner
-        environmentSpinner = findViewById(R.id.spinner_environment);
+        environmentSpinner = (Spinner) findViewById(R.id.spinner_environment);
         //  List<String> list = new ArrayList<String>();
         String[] environmentArray = getResources().getStringArray(R.array.environment_array);
 /*        list.add("Test");
@@ -204,22 +142,18 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (environmentSpinner.getSelectedItem().equals("Production")) {
-                    Toast.makeText(MainActivity.this, getString(R.string.use_live_key_in_production_environment), Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(MainActivity.this, getString(R.string.use_live_key_in_production_environment), Toast.LENGTH_SHORT).show();
 
-                    /* 0MQaQP is test key in PRODUCTION_ENv just for testing purpose in this app. Merchant should use their
-                     * own key in PRODUCTION_ENV
+                    /* For test keys, please contact mobile.integration@payu.in with your app name and registered email id
                      */
-
+                    // ((EditText) findViewById(R.id.editTextMerchantKey)).setText("0MQaQP");
                     ((EditText) findViewById(R.id.editTextMerchantKey)).setText(Global_Settings.payu_merchant_key);
-
-                    // ((EditText) findViewById(R.id.editTextMerchantKey)).setText("gtKFFx");
+                    //  ((EditText) findViewById(R.id.editTextMerchantKey)).setText("Rqpe0a");
                 }
                 else{
                     //set the test key in test environment
-
-                    //((EditText)findViewById(R.id.editTextMerchantKey)).setText("BlG3rets");
-                    ((EditText) findViewById(R.id.editTextMerchantKey)).setText(Global_Settings.payu_merchant_key);
-                    //((EditText) findViewById(R.id.editTextMerchantKey)).setText("MAZyiB");
+                    //((EditText) findViewById(R.id.editTextMerchantKey)).setText("gtKFFX");
+                    ((EditText) findViewById(R.id.editTextMerchantKey)).setText("psTghd");
 
                 }
             }
@@ -229,14 +163,11 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
 
             }
         });
-
-        editTextAmount.setText(total_amount);
-        startPaymentProcess();
-
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PayuConstants.PAYU_REQUEST_CODE) {
             if (data != null) {
 
@@ -256,25 +187,25 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
 //                            }
 //                        }).show();
 
-                String isSuccess="";
+                String isSuccess = "";
                 try {
-                    JSONObject jsonObject=new JSONObject(data.getStringExtra("payu_response"));
+                    JSONObject jsonObject = new JSONObject(data.getStringExtra("payu_response"));
 
-                    isSuccess=jsonObject.getString("status");
+                    isSuccess = jsonObject.getString("status");
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                if(!isSuccess.equals("")) {
+                if (!isSuccess.equals("")) {
 
-                    isSuccess=isSuccess.toLowerCase();
-                    if(isSuccess.contains("success")) {
+                    isSuccess = isSuccess.toLowerCase();
+                    if (isSuccess.contains("success")) {
                         pref = CommonFun.getPreferences(getApplicationContext());
                         String selPaymentCode = pref.getString("payment", "");
 
 
-                        String cust_id = pref.getString("login_customer_id","");
+                        String cust_id = pref.getString("login_customer_id", "");
                         //Log.d("paymentSuccess",cust_id+"-"+order_hash);
 
 
@@ -284,54 +215,41 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
                         CommonFun.finishscreen(MainActivity.this);
                         //callCartItemsIP(order_hash);
 
-                    }
-                    else
-                    {
+                    } else {
                         final AlertDialog.Builder b;
-                        try
-                        {
+                        try {
                             b = new AlertDialog.Builder(this);
                             b.setTitle("Alert");
                             b.setCancelable(false);
                             b.setMessage("Your payment for the order has been failed\nPlease try again.");
-                            b.setPositiveButton("OK", new DialogInterface.OnClickListener()
-                            {
+                            b.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialog, int whichButton)
-                                {
+                                public void onClick(DialogInterface dialog, int whichButton) {
 
-                                    String cust_id = pref.getString("login_customer_id","");
+                                    String cust_id = pref.getString("login_customer_id", "");
                                     //Log.d("paymentFailed",cust_id+"-"+order_hash);
                                     cancelOrderEcom();
-
 
 
                                 }
                             });
                             b.create().show();
-                        }
-                        catch(Exception ex)
-                        {
+                        } catch (Exception ex) {
                         }
 
                     }
 
-                }
-                else
-                {
+                } else {
 
                     final AlertDialog.Builder b;
-                    try
-                    {
+                    try {
                         b = new AlertDialog.Builder(this);
                         b.setTitle("Alert");
                         b.setCancelable(false);
                         b.setMessage("Your payment for the order has been failed\nPlease try again.");
-                        b.setPositiveButton("OK", new DialogInterface.OnClickListener()
-                        {
+                        b.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int whichButton)
-                            {
+                            public void onClick(DialogInterface dialog, int whichButton) {
                                 //b.create().dismiss();
 //                                Intent intent=new Intent(MainActivity.this,CartItemList.class);
 //                                startActivity(intent);
@@ -340,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
 
                                 SharedPreferences.Editor editor = pref.edit();
                                 //editor.putString("orderhash", st_pono);
-                                editor.putString("orderpono","");
+                                editor.putString("orderpono", "");
                                 editor.putString("paymentdue", "fail");
                                 editor.commit();
                                 cancelOrderEcom();
@@ -355,9 +273,7 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
                             }
                         });
                         b.create().show();
-                    }
-                    catch(Exception ex)
-                    {
+                    } catch (Exception ex) {
                     }
 
 
@@ -367,17 +283,14 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
             } else {
                 Toast.makeText(this, getString(R.string.could_not_receive_data), Toast.LENGTH_LONG).show();
                 final AlertDialog.Builder b;
-                try
-                {
+                try {
                     b = new AlertDialog.Builder(this);
                     b.setTitle("Alert");
                     b.setCancelable(false);
                     b.setMessage("Something went Wrong with your payment!!\n");
-                    b.setPositiveButton("OK", new DialogInterface.OnClickListener()
-                    {
+                    b.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int whichButton)
-                        {
+                        public void onClick(DialogInterface dialog, int whichButton) {
                             //b.create().dismiss();
 //                            Intent intent=new Intent(MainActivity.this,CartItemList.class);
 //                            startActivity(intent);
@@ -388,11 +301,8 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
                         }
                     });
                     b.create().show();
+                } catch (Exception ex) {
                 }
-                catch(Exception ex)
-                {
-                }
-
 
 
             }
@@ -400,124 +310,31 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
     }
 
 
-    TransparentProgressDialog pDialog;
-    String order_id_method_data="";
-    String tokenData="";
+    private void cancelOrderEcom()
+    {
+        pref = CommonFun.getPreferences(getApplicationContext());
+        // String st_Cancel_Order_URL=Global_Settings.api_url+"glaze/order_cancel.php?id="+pref.getString("orderhash","").trim();
+        // cancelOrder(st_Cancel_Order_URL);
+        goToOrderListActivity();
+    }
 
+    private void goToOrderListActivity() {
+        Intent intent=new Intent(MainActivity.this, OrderListActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
-
-
-
-
+        startActivity(intent);
+        CommonFun.finishscreen(MainActivity.this);
+    }
     /**
      * This method prepares all the payments params to be sent to PayuBaseActivity.java
      */
     public void navigateToBaseActivity(View view) {
 
+
+        // merchantKey="";
         merchantKey = ((EditText) findViewById(R.id.editTextMerchantKey)).getText().toString();
         String amount = ((EditText) findViewById(R.id.editTextAmount)).getText().toString();
         String email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
-
-
-
-        String value = environmentSpinner.getSelectedItem().toString();
-        int environment;
-        String TEST_ENVIRONMENT = getResources().getString(R.string.production);
-        if (value.equals(TEST_ENVIRONMENT))
-            environment = PayuConstants.STAGING_ENV;
-        else
-            environment = PayuConstants.PRODUCTION_ENV;
-
-        environment = PayuConstants.PRODUCTION_ENV;
-
-        merchantKey="MAZyiB";
-        userCredentials = merchantKey + ":" + email;
-
-        //TODO Below are mandatory params for hash genetation
-        mPaymentParams = new PaymentParams();
-        /**
-         * For Test Environment, merchantKey = "gtKFFx"
-         * For Production Environment, merchantKey should be your live key or for testing in live you can use "0MQaQP"
-         */
-        mPaymentParams.setKey(merchantKey);
-        mPaymentParams.setAmount(amount);
-        mPaymentParams.setProductInfo("product_info");
-        mPaymentParams.setFirstName(firstname);
-        mPaymentParams.setEmail(email);
-
-        /*
-         * Transaction Id should be kept unique for each transaction.
-         * */
-        mPaymentParams.setTxnId("" + System.currentTimeMillis());
-
-        /**
-         * Surl --> Success url is where the transaction response is posted by PayU on successful transaction
-         * Furl --> Failre url is where the transaction response is posted by PayU on failed transaction
-         */
-//        mPaymentParams.setSurl("https://payu.herokuapp.com/success");
-//        mPaymentParams.setFurl("https://payu.herokuapp.com/failure");
-
-        mPaymentParams.setSurl(Global_Settings.payment_success);
-        mPaymentParams.setFurl(Global_Settings.payment_failed);
-
-        /*
-         * udf1 to udf5 are options params where you can pass additional information related to transaction.
-         * If you don't want to use it, then send them as empty string like, udf1=""
-         * */
-//        mPaymentParams.setUdf1("udf1");
-//        mPaymentParams.setUdf2("udf2");
-//        mPaymentParams.setUdf3("udf3");
-//        mPaymentParams.setUdf4("udf4");
-//        mPaymentParams.setUdf5("udf5");
-        mPaymentParams.setUdf1(dist_id);
-        mPaymentParams.setUdf2("");
-        mPaymentParams.setUdf3("");
-        mPaymentParams.setUdf4("");
-        mPaymentParams.setUdf5("");
-
-        /**
-         * These are used for store card feature. If you are not using it then user_credentials = "default"
-         * user_credentials takes of the form like user_credentials = "merchant_key : user_id"
-         * here merchant_key = your merchant key,
-         * user_id = unique id related to user like, email, phone number, etc.
-         * */
-        mPaymentParams.setUserCredentials(userCredentials);
-
-        //TODO Pass this param only if using offer key
-        //mPaymentParams.setOfferKey("cardnumber@8370");
-
-        //TODO Sets the payment environment in PayuConfig object
-        payuConfig = new PayuConfig();
-        payuConfig.setEnvironment(environment);
-
-        //TODO It is recommended to generate hash from server only.
-        // Keep your key and salt in server side hash generation code.
-        String salt="BlG3rets";
-
-        generateHashFromServer(mPaymentParams);
-
-        /**
-         * Below approach for generating hash is not recommended. However, this approach can be used to test in PRODUCTION_ENV
-         * if your server side hash generation code is not completely setup.
-         * While going live this approach for hash generation
-         * should not be used.
-         * */
-        //String salt = "13p0PXZk";
-        //generateHashFromSDK(mPaymentParams, salt);
-
-    }
-
-
-    /**
-     * Start payment activity
-     */
-    private void startPaymentProcess(){
-
-
-
-        merchantKey = ((EditText) findViewById(R.id.editTextMerchantKey)).getText().toString();
-        String amount = editTextAmount.getText().toString();
-        String email =editTextEmail.getText().toString();
 
         String value = environmentSpinner.getSelectedItem().toString();
         int environment;
@@ -526,60 +343,44 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
             environment = PayuConstants.STAGING_ENV;
         else
             environment = PayuConstants.PRODUCTION_ENV;
-
-        environment=PayuConstants.PRODUCTION_ENV;
-        //environment=PayuConstants.STAGING_ENV;
+        merchantKey="MAZyiB";
         userCredentials = merchantKey + ":" + email;
 
         //TODO Below are mandatory params for hash genetation
         mPaymentParams = new PaymentParams();
         /**
-         * For Test Environment, merchantKey = "gtKFFx"
-         * For Production Environment, merchantKey should be your live key or for testing in live you can use "0MQaQP"
+         * For Test Environment, merchantKey = please contact mobile.integration@payu.in with your app name and registered email id
+
          */
-        //mPaymentParams.setKey(merchantKey);
-
-
-        mPaymentParams.setKey(Global_Settings.payu_merchant_key);
+        mPaymentParams.setKey(merchantKey);
         mPaymentParams.setAmount(amount);
-
         mPaymentParams.setProductInfo("product_info");
         mPaymentParams.setFirstName(firstname);
         mPaymentParams.setEmail(email);
+        mPaymentParams.setPhone("");
+
+        mPaymentParams.setBeneficiaryAccountNumber("50100041412026");
 
         /*
          * Transaction Id should be kept unique for each transaction.
          * */
-        //mPaymentParams.setTxnId("" + System.currentTimeMillis());
+        mPaymentParams.setTxnId("" + System.currentTimeMillis());
+        // mPaymentParams.setTxnId("1587113659761");
 
-        /**
-         *  send order id as tax Changes
-         *  Ankesh Kumar
-         *  June 28,2018
-         */
-
-
-        mPaymentParams.setTxnId(order_hash);
         /**
          * Surl --> Success url is where the transaction response is posted by PayU on successful transaction
          * Furl --> Failre url is where the transaction response is posted by PayU on failed transaction
          */
-//        mPaymentParams.setSurl("https://payu.herokuapp.com/success");
-//        mPaymentParams.setFurl("https://payu.herokuapp.com/failure");
-
-        mPaymentParams.setSurl(Global_Settings.payment_success+"?orderhash="+order_hash);
-        mPaymentParams.setFurl(Global_Settings.payment_failed+"?orderhash="+order_hash);
+        // mPaymentParams.setSurl(" https://www.fitternity.com/paymentsuccessandroid");
+        mPaymentParams.setSurl(Global_Settings.payment_success);
+        mPaymentParams.setFurl(Global_Settings.payment_failed);
+        //  mPaymentParams.setFurl("https://www.fitternity.com/paymentsuccessandroid");
+        mPaymentParams.setNotifyURL(mPaymentParams.getSurl());  //for lazy pay
 
         /*
          * udf1 to udf5 are options params where you can pass additional information related to transaction.
          * If you don't want to use it, then send them as empty string like, udf1=""
          * */
-
-//        mPaymentParams.setUdf1("udf1");
-//        mPaymentParams.setUdf2("udf2");
-//        mPaymentParams.setUdf3("udf3");
-//        mPaymentParams.setUdf4("udf4");
-//        mPaymentParams.setUdf5("udf5");
         mPaymentParams.setUdf1(dist_id);
         mPaymentParams.setUdf2("");
         mPaymentParams.setUdf3("");
@@ -595,119 +396,40 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
         mPaymentParams.setUserCredentials(userCredentials);
 
         //TODO Pass this param only if using offer key
-        //mPaymentParams.setOfferKey("cardnumber@8370");
+        // mPaymentParams.setOfferKey("YONOYSF@6445");
 
         //TODO Sets the payment environment in PayuConfig object
         payuConfig = new PayuConfig();
         payuConfig.setEnvironment(environment);
-
         //TODO It is recommended to generate hash from server only. Keep your key and salt in server side hash generation code.
-        generateHashFromServer(mPaymentParams);
+        // generateHashFromServer(mPaymentParams);
 
         /**
          * Below approach for generating hash is not recommended. However, this approach can be used to test in PRODUCTION_ENV
          * if your server side hash generation code is not completely setup. While going live this approach for hash generation
          * should not be used.
          * */
-        //String salt = "13p0PXZk";
-        //generateHashFromSDK(mPaymentParams, salt);
+        if(environment== PayuConstants.STAGING_ENV){
+            //  salt = " ";
+            salt = "aYTYaaqA";
+        }else {
+            //Production Env
+            salt = "1b1b0";
+            //salt = "ASSchu2n";
+            // salt = "Xd4VtaFd";
+            //  salt = "13p0PXZk";
+        }
+//        String salt = "eCwWELxi";
+        // String salt = "13p0PXZk";
+        // String salt = "1b1b0";
+
+        //  String salt = "mF1Rgbi5";
+        //  generateHashFromSDK(mPaymentParams, salt);
+
+        generateHashFromServer(mPaymentParams);
     }
 
-
-    /******************************
-     * Client hash generation
-     ***********************************/
-    // Do not use this, you may use this only for testing.
-    // lets generate hashes.
-    // This should be done from server side..
-    // Do not keep salt anywhere in app.
-    public void generateHashFromSDK(PaymentParams mPaymentParams, String salt) {
-        PayuHashes payuHashes = new PayuHashes();
-        PostData postData = new PostData();
-
-        // payment Hash;
-        checksum = null;
-        checksum = new PayUChecksum();
-        checksum.setAmount(mPaymentParams.getAmount());
-        checksum.setKey(mPaymentParams.getKey());
-        checksum.setTxnid(mPaymentParams.getTxnId());
-        checksum.setEmail(mPaymentParams.getEmail());
-        checksum.setSalt(salt);
-        checksum.setProductinfo(mPaymentParams.getProductInfo());
-        checksum.setFirstname(mPaymentParams.getFirstName());
-        checksum.setUdf1(mPaymentParams.getUdf1());
-        checksum.setUdf2(mPaymentParams.getUdf2());
-        checksum.setUdf3(mPaymentParams.getUdf3());
-        checksum.setUdf4(mPaymentParams.getUdf4());
-        checksum.setUdf5(mPaymentParams.getUdf5());
-
-        postData = checksum.getHash();
-        if (postData.getCode() == PayuErrors.NO_ERROR) {
-            payuHashes.setPaymentHash(postData.getResult());
-        }
-
-        // checksum for payemnt related details
-        // var1 should be either user credentials or default
-        String var1 = mPaymentParams.getUserCredentials() == null ? PayuConstants.DEFAULT : mPaymentParams.getUserCredentials();
-        String key = mPaymentParams.getKey();
-
-        if ((postData = calculateHash(key, PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK, var1, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR) // Assign post data first then check for success
-            payuHashes.setPaymentRelatedDetailsForMobileSdkHash(postData.getResult());
-        //vas
-        if ((postData = calculateHash(key, PayuConstants.VAS_FOR_MOBILE_SDK, PayuConstants.DEFAULT, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR)
-            payuHashes.setVasForMobileSdkHash(postData.getResult());
-
-        // getIbibocodes
-        if ((postData = calculateHash(key, PayuConstants.GET_MERCHANT_IBIBO_CODES, PayuConstants.DEFAULT, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR)
-            payuHashes.setMerchantIbiboCodesHash(postData.getResult());
-
-        if (!var1.contentEquals(PayuConstants.DEFAULT)) {
-            // get user card
-            if ((postData = calculateHash(key, PayuConstants.GET_USER_CARDS, var1, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR) // todo rename storedc ard
-                payuHashes.setStoredCardsHash(postData.getResult());
-            // save user card
-            if ((postData = calculateHash(key, PayuConstants.SAVE_USER_CARD, var1, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR)
-                payuHashes.setSaveCardHash(postData.getResult());
-            // delete user card
-            if ((postData = calculateHash(key, PayuConstants.DELETE_USER_CARD, var1, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR)
-                payuHashes.setDeleteCardHash(postData.getResult());
-            // edit user card
-            if ((postData = calculateHash(key, PayuConstants.EDIT_USER_CARD, var1, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR)
-                payuHashes.setEditCardHash(postData.getResult());
-        }
-
-        if (mPaymentParams.getOfferKey() != null) {
-            postData = calculateHash(key, PayuConstants.OFFER_KEY, mPaymentParams.getOfferKey(), salt);
-            if (postData.getCode() == PayuErrors.NO_ERROR) {
-                payuHashes.setCheckOfferStatusHash(postData.getResult());
-            }
-        }
-
-        if (mPaymentParams.getOfferKey() != null && (postData = calculateHash(key, PayuConstants.CHECK_OFFER_STATUS, mPaymentParams.getOfferKey(), salt)) != null && postData.getCode() == PayuErrors.NO_ERROR) {
-            payuHashes.setCheckOfferStatusHash(postData.getResult());
-        }
-
-        // we have generated all the hases now lest launch sdk's ui
-        launchSdkUI(payuHashes);
-    }
-
-    // deprecated, should be used only for testing.
-    private PostData calculateHash(String key, String command, String var1, String salt) {
-        checksum = null;
-        checksum = new PayUChecksum();
-        checksum.setKey(key);
-        checksum.setCommand(command);
-        checksum.setVar1(var1);
-        checksum.setSalt(salt);
-        return checksum.getHash();
-    }
-
-    /**
-     * This method generates hash from server.
-     *
-     * @param mPaymentParams payments params used for hash generation
-     */
-    public void generateHashFromServer(PaymentParams mPaymentParams) {
+    public void generateHashFromServer( PaymentParams mPaymentParams) {
         //nextButton.setEnabled(false); // lets not allow the user to click the button again and again.
 
         // lets create the post params
@@ -754,9 +476,7 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
         return key + "=" + value + "&";
     }
 
-    /**
-     * This AsyncTask generates hash from server.
-     */
+
     private class GetHashesFromServerTask extends AsyncTask<String, String, PayuHashes> {
         private ProgressDialog progressDialog;
 
@@ -933,12 +653,118 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
         }
     }
 
+    /******************************
+     * Client hash generation
+     ***********************************/
+    // Do not use this, you may use this only for testing.
+    // lets generate hashes.
+    // This should be done from server side..
+    // Do not keep salt anywhere in app.
+    public void generateHashFromSDK(PaymentParams mPaymentParams, String salt) {
+        PayuHashes payuHashes = new PayuHashes();
+        PostData postData = new PostData();
+
+        if(mPaymentParams.getBeneficiaryAccountNumber()== null){
+
+            // payment Hash;
+            checksum = null;
+            checksum = new PayUChecksum();
+            checksum.setAmount(mPaymentParams.getAmount());
+            checksum.setKey(mPaymentParams.getKey());
+            checksum.setTxnid(mPaymentParams.getTxnId());
+            checksum.setEmail(mPaymentParams.getEmail());
+            checksum.setSalt(salt);
+            checksum.setProductinfo(mPaymentParams.getProductInfo());
+            checksum.setFirstname(mPaymentParams.getFirstName());
+            checksum.setUdf1(mPaymentParams.getUdf1());
+            checksum.setUdf2(mPaymentParams.getUdf2());
+            checksum.setUdf3(mPaymentParams.getUdf3());
+            checksum.setUdf4(mPaymentParams.getUdf4());
+            checksum.setUdf5(mPaymentParams.getUdf5());
+
+            postData = checksum.getHash();
+            if (postData.getCode() == PayuErrors.NO_ERROR) {
+                payuHashes.setPaymentHash(postData.getResult());
+            }}
+
+        else {
+            String hashString = merchantKey + "|" + mPaymentParams.getTxnId() + "|" + mPaymentParams.getAmount() + "|" + mPaymentParams.getProductInfo() + "|" + mPaymentParams.getFirstName() + "|" + mPaymentParams.getEmail() + "|" + mPaymentParams.getUdf1() + "|" + mPaymentParams.getUdf2() + "|" + mPaymentParams.getUdf3() + "|" + mPaymentParams.getUdf4() + "|" + mPaymentParams.getUdf5() + "||||||{\"beneficiaryAccountNumber\":\"" +mPaymentParams.getBeneficiaryAccountNumber()+ "\"}|" + salt;
+
+            paymentHash1 = calculateHash(hashString);
+            payuHashes.setPaymentHash(paymentHash1);
+
+
+
+        }
+
+        // checksum for payemnt related details
+        // var1 should be either user credentials or default
+        String var1 = mPaymentParams.getUserCredentials() == null ? PayuConstants.DEFAULT : mPaymentParams.getUserCredentials();
+        String key = mPaymentParams.getKey();
+
+        if ((postData = calculateHash(key, PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK, var1, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR) // Assign post data first then check for success
+            payuHashes.setPaymentRelatedDetailsForMobileSdkHash(postData.getResult());
+        //vas
+        if ((postData = calculateHash(key, PayuConstants.VAS_FOR_MOBILE_SDK, PayuConstants.DEFAULT, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR)
+            payuHashes.setVasForMobileSdkHash(postData.getResult());
+
+        // getIbibocodes
+        if ((postData = calculateHash(key, PayuConstants.GET_MERCHANT_IBIBO_CODES, PayuConstants.DEFAULT, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR)
+            payuHashes.setMerchantIbiboCodesHash(postData.getResult());
+
+        if (!var1.contentEquals(PayuConstants.DEFAULT)) {
+            // get user card
+            if ((postData = calculateHash(key, PayuConstants.GET_USER_CARDS, var1, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR) // todo rename storedc ard
+                payuHashes.setStoredCardsHash(postData.getResult());
+            // save user card
+            if ((postData = calculateHash(key, PayuConstants.SAVE_USER_CARD, var1, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR)
+                payuHashes.setSaveCardHash(postData.getResult());
+            // delete user card
+            if ((postData = calculateHash(key, PayuConstants.DELETE_USER_CARD, var1, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR)
+                payuHashes.setDeleteCardHash(postData.getResult());
+            // edit user card
+            if ((postData = calculateHash(key, PayuConstants.EDIT_USER_CARD, var1, salt)) != null && postData.getCode() == PayuErrors.NO_ERROR)
+                payuHashes.setEditCardHash(postData.getResult());
+        }
+
+        if (mPaymentParams.getOfferKey() != null) {
+            postData = calculateHash(key, PayuConstants.OFFER_KEY, mPaymentParams.getOfferKey(), salt);
+            if (postData.getCode() == PayuErrors.NO_ERROR) {
+                payuHashes.setCheckOfferStatusHash(postData.getResult());
+            }
+        }
+
+        if (mPaymentParams.getOfferKey() != null && (postData = calculateHash(key, PayuConstants.CHECK_OFFER_STATUS, mPaymentParams.getOfferKey(), salt)) != null && postData.getCode() == PayuErrors.NO_ERROR) {
+            payuHashes.setCheckOfferStatusHash(postData.getResult());
+        }
+
+        // we have generated all the hases now lest launch sdk's ui
+        launchSdkUI(payuHashes);
+    }
+
+    // deprecated, should be used only for testing.
+    private PostData calculateHash(String key, String command, String var1, String salt) {
+        checksum = null;
+        checksum = new PayUChecksum();
+        checksum.setKey(key);
+        checksum.setCommand(command);
+        checksum.setVar1(var1);
+        checksum.setSalt(salt);
+        return checksum.getHash();
+    }
     /**
      * This method adds the Payuhashes and other required params to intent and launches the PayuBaseActivity.java
      *
      * @param payuHashes it contains all the hashes generated from merchant server
      */
     public void launchSdkUI(PayuHashes payuHashes) {
+
+//        Intent intent = new Intent(this, PayUBaseActivity.class);
+//        intent.putExtra(PayuConstants.PAYU_CONFIG, payuConfig);
+//        intent.putExtra(PayuConstants.PAYMENT_PARAMS, mPaymentParams);
+//        intent.putExtra(PayuConstants.SALT,salt);
+//        intent.putExtra(PayuConstants.PAYU_HASHES, payuHashes);
+//        startActivityForResult(intent, PayuConstants.PAYU_REQUEST_CODE);
 
         Intent intent = new Intent(this, PayUBaseActivity.class);
         intent.putExtra(PayuConstants.PAYU_CONFIG, payuConfig);
@@ -947,77 +773,9 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
 
         //Lets fetch all the one click card tokens first
         fetchMerchantHashes(intent);
-
-    }
-
-    //TODO This method is used if integrating One Tap Payments
-
-    /**
-     * This method stores merchantHash and cardToken on merchant server.
-     *
-     * @param cardToken    card token received in transaction response
-     * @param merchantHash merchantHash received in transaction response
-     */
-    private void storeMerchantHash(String cardToken, String merchantHash) {
-
-        final String postParams = "merchant_key=" + merchantKey + "&user_credentials=" + userCredentials + "&card_token=" + cardToken + "&merchant_hash=" + merchantHash;
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-
-                    //TODO Deploy a file on your server for storing cardToken and merchantHash nad replace below url with your server side file url.
-                    URL url = new URL("https://payu.herokuapp.com/store_merchant_hash");
-
-                    byte[] postParamsByte = postParams.getBytes(StandardCharsets.UTF_8);
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                    conn.setRequestProperty("Content-Length", String.valueOf(postParamsByte.length));
-                    conn.setDoOutput(true);
-                    conn.getOutputStream().write(postParamsByte);
-
-                    InputStream responseInputStream = conn.getInputStream();
-                    StringBuffer responseStringBuffer = new StringBuffer();
-                    byte[] byteContainer = new byte[1024];
-                    for (int i; (i = responseInputStream.read(byteContainer)) != -1; ) {
-                        responseStringBuffer.append(new String(byteContainer, 0, i));
-                    }
-
-                    JSONObject response = new JSONObject(responseStringBuffer.toString());
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (ProtocolException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                this.cancel(true);
-            }
-        }.execute();
     }
 
 
-    //TODO This method is used only if integrating One Tap Payments
-
-    /**
-     * This method fetches merchantHash and cardToken already stored on merchant server.
-     */
     private void fetchMerchantHashes(final Intent intent) {
         // now make the api call.
         final String postParams = "merchant_key=" + merchantKey + "&user_credentials=" + userCredentials;
@@ -1083,298 +841,28 @@ public class MainActivity extends AppCompatActivity implements OneClickPaymentLi
         }.execute();
     }
 
-    //TODO This method is used only if integrating One Tap Payments
-
-    /**
-     * This method deletes merchantHash and cardToken from server side file.
-     *
-     * @param cardToken cardToken of card whose merchantHash and cardToken needs to be deleted from merchant server
-     */
-    private void deleteMerchantHash(String cardToken) {
-
-        final String postParams = "card_token=" + cardToken;
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    //TODO Replace below url with your server side file url.
-                    URL url = new URL("https://payu.herokuapp.com/delete_merchant_hash");
-
-                    byte[] postParamsByte = postParams.getBytes(StandardCharsets.UTF_8);
-
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                    conn.setRequestProperty("Content-Length", String.valueOf(postParamsByte.length));
-                    conn.setDoOutput(true);
-                    conn.getOutputStream().write(postParamsByte);
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (ProtocolException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                this.cancel(true);
-            }
-        }.execute();
-    }
-
-    //TODO This method is used only if integrating One Tap Payments
-
-    /**
-     * This method prepares a HashMap of cardToken as key and merchantHash as value.
-     *
-     * @param merchantKey     merchant key used
-     * @param userCredentials unique credentials of the user usually of the form key:userId
-     */
-    public HashMap<String, String> getAllOneClickHashHelper(String merchantKey, String userCredentials) {
-
-        // now make the api call.
-        final String postParams = "merchant_key=" + merchantKey + "&user_credentials=" + userCredentials;
-        HashMap<String, String> cardTokens = new HashMap<String, String>();
-
+    /******************************
+     * Client hash generation
+     ***********************************/
+    // Do not use this, you may use this only for testing.
+    // lets generate hashes.
+    // This should be done from server side..
+    // Do not keep salt anywhere in app.
+    private String calculateHash(String hashString) {
         try {
-            //TODO Replace below url with your server side file url.
-            URL url = new URL("https://payu.herokuapp.com/get_merchant_hashes");
-
-            byte[] postParamsByte = postParams.getBytes(StandardCharsets.UTF_8);
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("Content-Length", String.valueOf(postParamsByte.length));
-            conn.setDoOutput(true);
-            conn.getOutputStream().write(postParamsByte);
-
-            InputStream responseInputStream = conn.getInputStream();
-            StringBuffer responseStringBuffer = new StringBuffer();
-            byte[] byteContainer = new byte[1024];
-            for (int i; (i = responseInputStream.read(byteContainer)) != -1; ) {
-                responseStringBuffer.append(new String(byteContainer, 0, i));
+            StringBuilder hash = new StringBuilder();
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+            messageDigest.update(hashString.getBytes());
+            byte[] mdbytes = messageDigest.digest();
+            for (byte hashByte : mdbytes) {
+                hash.append(Integer.toString((hashByte & 0xff) + 0x100, 16).substring(1));
             }
-
-            JSONObject response = new JSONObject(responseStringBuffer.toString());
-
-            JSONArray oneClickCardsArray = response.getJSONArray("data");
-            int arrayLength;
-            if ((arrayLength = oneClickCardsArray.length()) >= 1) {
-                for (int i = 0; i < arrayLength; i++) {
-                    cardTokens.put(oneClickCardsArray.getJSONArray(i).getString(0), oneClickCardsArray.getJSONArray(i).getString(1));
-                }
-
-            }
-            // pass these to next activity
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return cardTokens;
-    }
-
-    //TODO This method is used only if integrating One Tap Payments
-
-    /**
-     * Returns a HashMap object of cardToken and one click hash from merchant server.
-     * <p>
-     * This method will be called as a async task, regardless of merchant implementation.
-     * Hence, not to call this function as async task.
-     * The function should return a cardToken and corresponding one click hash as a hashMap.
-     *
-     * @param userCreds a string giving the user credentials of user.
-     * @return the Hash Map of cardToken and one Click hash.
-     **/
-    @Override
-    public HashMap<String, String> getAllOneClickHash(String userCreds) {
-        // 1. GET http request from your server
-        // GET params - merchant_key, user_credentials.
-        // 2. In response we get a
-        // this is a sample code for fetching one click hash from merchant server.
-        return getAllOneClickHashHelper(merchantKey, userCreds);
-    }
-
-    //TODO This method is used only if integrating One Tap Payments
-    @Override
-    public void getOneClickHash(String cardToken, String merchantKey, String userCredentials) {
-
-    }
-
-
-    //TODO This method is used only if integrating One Tap Payments
-
-    /**
-     * This method will be called as a async task, regardless of merchant implementation.
-     * Hence, not to call this function as async task.
-     * This function save the oneClickHash corresponding to its cardToken
-     *
-     * @param cardToken    a string containing the card token
-     * @param oneClickHash a string containing the one click hash.
-     **/
-
-    @Override
-    public void saveOneClickHash(String cardToken, String oneClickHash) {
-        // 1. POST http request to your server
-        // POST params - merchant_key, user_credentials,card_token,merchant_hash.
-        // 2. In this POST method the oneclickhash is stored corresponding to card token in merchant server.
-        // this is a sample code for storing one click hash on merchant server.
-
-        storeMerchantHash(cardToken, oneClickHash);
-
-    }
-
-    //TODO This method is used only if integrating One Tap Payments
-
-    /**
-     * This method will be called as a async task, regardless of merchant implementation.
-     * Hence, not to call this function as async task.
-     * This function delete’s the oneClickHash from the merchant server
-     *
-     * @param cardToken       a string containing the card token
-     * @param userCredentials a string containing the user credentials.
-     **/
-
-    @Override
-    public void deleteOneClickHash(String cardToken, String userCredentials) {
-
-        // 1. POST http request to your server
-        // POST params  - merchant_hash.
-        // 2. In this POST method the oneclickhash is deleted in merchant server.
-        // this is a sample code for deleting one click hash from merchant server.
-
-        deleteMerchantHash(cardToken);
-
-    }
-
-
-
-    private void cancelOrderEcom()
-    {
-        pref = CommonFun.getPreferences(getApplicationContext());
-       // String st_Cancel_Order_URL=Global_Settings.api_url+"glaze/order_cancel.php?id="+pref.getString("orderhash","").trim();
-       // cancelOrder(st_Cancel_Order_URL);
-        goToOrderListActivity();
-    }
-
-    private void cancelOrder(String st_Cancel_Order_URL) {
-
-        pDialog = new TransparentProgressDialog(MainActivity.this);
-        pDialog.setCancelable(false);
-        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        pDialog.show();
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-        try {
-            jsonObjRequest = new JsonObjectRequest(Request.Method.GET, st_Cancel_Order_URL,null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-
-                    if (pDialog.isShowing())
-                        pDialog.dismiss();
-
-                    if (response != null) {
-                        try {
-
-                            JSONObject jsonObject = new JSONObject(String.valueOf(response));
-                            ////Log.d("jsonObject",jsonObject+"");
-
-                            String st_Order_Cancel_Status = jsonObject.getString("orderdetails");
-                            //Log.d("st_Order_Cancel_Status",st_Order_Cancel_Status);
-
-//                            final AlertDialog.Builder b;
-//                            try
-//                            {
-//
-//
-//                                SharedPreferences.Editor editor=pref.edit();
-//                                editor.putString("orderhash","");
-//                                editor.putString("paymentdue","");
-//                                editor.putString("orderpono","");
-//                                editor.commit();
-//
-//
-//                                Vibrator vibrator = (Vibrator) MainActivity.this.getSystemService(OrderDetails.VIBRATOR_SERVICE);
-//                                vibrator.vibrate(100);
-//
-//                                final Dialog dialog = new Dialog(MainActivity.this);
-//                                dialog.setContentView(R.layout.custom_alert_dialog_design);
-//                                TextView tv_dialog = (TextView)dialog.findViewById(R.id.tv_dialog);
-//                                ImageView image_view_dialog = (ImageView)dialog.findViewById(R.id.image_view_dialog);
-//                                tv_dialog.setText("Oops!!! Something Wrong\nCannot place your order\nPlease Try Again");
-//                                dialog.show();
-//
-//
-//                                TimerTask timerTask=new TimerTask() {
-//                                    @Override
-//                                    public void run() {
-//
-//                                        goToOrderListActivity();
-//
-//                                    }};
-//
-//                                Timer timer=new Timer();
-//                                timer.schedule(timerTask,4500);
-//
-//                            }
-//                            catch(Exception ex)
-//                            {
-//
-//
-//                            }
-                            goToOrderListActivity();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            goToOrderListActivity();
-                        }
-
-                    }
-                }
-
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    if (pDialog.isShowing())
-                        pDialog.dismiss();
-
-                    goToOrderListActivity();
-                    //CommonFun.showVolleyException(error,MainActivity.this);
-
-//                    CommonFun.alertError(OrderDetails.this,error.toString());
-//
-//                    error.printStackTrace();
-                }
-
-            });
+            return hash.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            return "ERROR";
         }
-
-        queue.add(jsonObjRequest);
-
     }
 
-    private void goToOrderListActivity() {
-        Intent intent=new Intent(MainActivity.this, OrderListActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        startActivity(intent);
-        CommonFun.finishscreen(MainActivity.this);
-    }
+
 }

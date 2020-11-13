@@ -8,8 +8,8 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -82,12 +82,8 @@ public final class SavedCardItemFragment extends Fragment {
             cvvEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
         }
 
-        if (mStoredCard.getEnableOneClickPayment() == 1 && mStoredCard.getOneTapCard() == 1 ) {
 
-            cvvEditText.setVisibility(View.GONE);
-            enableOneClickPayment.setVisibility(View.GONE);
-            cvvTextView.setText("Click Pay Now to Pay through this card");
-        }else {
+            {
             enableOneClickPayment.setVisibility(View.VISIBLE);
 
         }
@@ -146,7 +142,7 @@ public final class SavedCardItemFragment extends Fragment {
     }
 
 
-    static Drawable getDrawableUI(Context context,int resID) {
+    static Drawable getDrawableUI(Context context, int resID) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP ) {
             return context.getResources().getDrawable(resID);
         } else {
@@ -167,7 +163,7 @@ public final class SavedCardItemFragment extends Fragment {
 
     private int getIssuerImage(String issuer) {
 
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             switch (issuer) {
                 case PayuConstants.VISA:
                     return R.drawable.logo_visa;

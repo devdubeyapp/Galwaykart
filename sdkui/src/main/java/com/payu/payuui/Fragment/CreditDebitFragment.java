@@ -4,15 +4,14 @@ package com.payu.payuui.Fragment;
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.viewpager.widget.ViewPager;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.fragment.app.Fragment;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -25,16 +24,16 @@ import android.widget.Toast;
 import com.payu.india.Interfaces.GetOfferStatusApiListener;
 import com.payu.india.Model.CardStatus;
 import com.payu.india.Model.MerchantWebService;
-import com.payu.india.Model.PaymentParams;
 import com.payu.india.Model.PayuConfig;
 import com.payu.india.Model.PayuHashes;
 import com.payu.india.Model.PayuResponse;
-import com.payu.india.Model.PostData;
 import com.payu.india.Payu.PayuConstants;
 import com.payu.india.Payu.PayuErrors;
 import com.payu.india.Payu.PayuUtils;
 import com.payu.india.PostParams.MerchantWebServicePostParams;
 import com.payu.india.Tasks.GetOfferStatusTask;
+import com.payu.paymentparamhelper.PaymentParams;
+import com.payu.paymentparamhelper.PostData;
 import com.payu.payuui.Activity.PayUBaseActivity;
 import com.payu.payuui.R;
 import com.payu.payuui.SdkuiUtil.SdkUIConstants;
@@ -42,6 +41,9 @@ import com.payu.payuui.Widget.MonthYearPickerDialog;
 
 import java.util.Calendar;
 import java.util.HashMap;
+
+//import com.payu.india.Model.PaymentParams;
+//import com.payu.india.Model.PostData;
 
 
 /**
@@ -122,7 +124,7 @@ public class CreditDebitFragment extends Fragment implements GetOfferStatusApiLi
 
         amountText = (TextView) getActivity().findViewById(R.id.textview_amount);
 
-        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             cardExpiryMonthEditText.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -396,12 +398,12 @@ public class CreditDebitFragment extends Fragment implements GetOfferStatusApiLi
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                 cvv = charSequence.toString();
                 if (payuUtils.validateCvv(cardNumberEditText.getText().toString().replace(" ",""), cvv)) {
-                    if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                     cvvImage.setAlpha((float)1);
                     isCvvValid = true;
                     uiValidation();
                 } else{
-                    if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                     cvvImage.setAlpha((float)0.5);
                     isCvvValid = false;
                     uiValidation();
@@ -422,7 +424,7 @@ public class CreditDebitFragment extends Fragment implements GetOfferStatusApiLi
 
     private int getIssuerImage(String issuer) {
 
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             switch (issuer) {
                 case PayuConstants.VISA:
                     return R.drawable.logo_visa;

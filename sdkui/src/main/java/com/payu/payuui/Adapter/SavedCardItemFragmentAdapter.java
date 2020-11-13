@@ -5,11 +5,9 @@ package com.payu.payuui.Adapter;
  */
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.core.view.*;
-
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.payu.india.Model.CardStatus;
@@ -30,7 +28,7 @@ public class SavedCardItemFragmentAdapter extends FragmentStatePagerAdapter {
     String bankStatus = "";
     FragmentManager mFragmentManager;
     HashMap<String, String> mOneClickCardTokens;
-    private static HashMap <Integer, SavedCardItemFragment> mPageReferencce = new HashMap<Integer, SavedCardItemFragment>();
+    private static HashMap<Integer, SavedCardItemFragment> mPageReferencce = new HashMap<Integer, SavedCardItemFragment>();
 
     public SavedCardItemFragmentAdapter(FragmentManager fm , ArrayList<StoredCard> storedCards, HashMap<String, CardStatus> valueAddedHashMap, HashMap<String, String> oneClickCardTokens) {
         super(fm);
