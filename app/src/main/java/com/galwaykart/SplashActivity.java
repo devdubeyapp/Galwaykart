@@ -50,7 +50,7 @@ import java.util.TimerTask;
 
 import io.realm.Realm;
 
-import static com.crashlytics.android.Crashlytics.log;
+
 
 //import com.galwaykart.RoomDb.GalwaykartRoomDatabase;
 
@@ -149,7 +149,7 @@ public class SplashActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
 
                 appUpdateManager.completeUpdate();
-                log("Update flow failed! Result code: " + resultCode);
+                //log("Update flow failed! Result code: " + resultCode);
                 // If the update is cancelled or fails,
                 // you can request to start the update again.
             }
@@ -242,6 +242,13 @@ public class SplashActivity extends AppCompatActivity {
             } finally {
                 realm.close();
             }
+
+            SharedPreferences pref;
+            pref=CommonFun.getPreferences(SplashActivity.this);
+            SharedPreferences.Editor editor=pref.edit();
+            editor.putString("homePageData","");
+            editor.commit();
+
             callHomePageAPI();
 
 
@@ -279,6 +286,8 @@ public class SplashActivity extends AppCompatActivity {
 
        // progress_bar.setVisibility(View.VISIBLE);
 
+        Log.d("responsebanner",url_cart_item_list);
+
         RequestQueue queue = Volley.newRequestQueue(this);
         final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
                 url_cart_item_list, null,
@@ -287,8 +296,11 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("responsebanner", response.toString());
-
-
+                        SharedPreferences pref;
+                        pref=CommonFun.getPreferences(SplashActivity.this);
+                        SharedPreferences.Editor editor=pref.edit();
+                        editor.putString("homePageData",response.toString());
+                        editor.commit();
                         setPostOperation(response.toString());
 
                     }

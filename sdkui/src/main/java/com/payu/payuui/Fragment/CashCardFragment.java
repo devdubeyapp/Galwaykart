@@ -2,16 +2,15 @@ package com.payu.payuui.Fragment;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+
 import com.payu.payuui.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class CashCardFragment extends Fragment {
 
     public CashCardFragment() {

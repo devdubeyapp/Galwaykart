@@ -142,7 +142,6 @@ public class StepperViewDemo extends BaseActivity {
         list2.add("Cancelled");
 
 
-
         if(st_selected_shipping_type.equalsIgnoreCase("1")) {
 
         tv_trackDetails.setVisibility(View.VISIBLE);
@@ -162,6 +161,15 @@ public class StepperViewDemo extends BaseActivity {
                 common_header3.setVisibility(View.VISIBLE);
                 trackShipmentBlueDart();
             }
+
+        }
+        else if(st_selected_shipping_type.equalsIgnoreCase("9")) {
+//            if (st_selected_Track_id.equalsIgnoreCase("9"))
+//            {
+                Intent intent=new Intent(StepperViewDemo.this,TrackDetailWebViewActivity.class);
+                intent.putExtra("trackUrl","https://galwaykart.clickpost.in/?waybill="+st_selected_Track_id);
+                startActivity(intent);
+            //}
 
         }
         else if(st_selected_shipping_type.equalsIgnoreCase("3")) {

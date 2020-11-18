@@ -1,7 +1,8 @@
 package com.payu.payuui.Widget;
 
-import android.support.v4.view.ViewPager;
+
 import android.view.View;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Created by ankur on 8/26/15.

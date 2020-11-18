@@ -1,7 +1,5 @@
 package com.galwaykart.Cart;
 
-import com.google.auto.value.AutoValue;
-
 import io.realm.RealmModel;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

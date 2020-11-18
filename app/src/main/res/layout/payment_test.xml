@@ -3,35 +3,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-
+    tools:context="com.galwaykart.Payment.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Processing...\nPlease Wait..."
+            android:textAlignment="center"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+
             android:padding="10dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Processing...\nPlease Wait..."
-                android:textAlignment="center"
-                />
+                android:text="Amount" />
 
             <EditText
                 android:id="@+id/editTextAmount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:enabled="false"
-                android:visibility="gone"
                 android:text="10" />
         </LinearLayout>
 
@@ -45,16 +61,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:visibility="gone"
                 android:text="Environment" />
 
             <Spinner
                 android:id="@+id/spinner_environment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:visibility="gone"
-                />
+                android:layout_weight="1" />
 
         </LinearLayout>
 
@@ -68,7 +81,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:visibility="gone"
                 android:text="Merchant Key" />
 
             <EditText
@@ -76,7 +88,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:visibility="gone"
                 android:text="gtKFFx" />
         </LinearLayout>
 
@@ -90,7 +101,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:visibility="gone"
                 android:text="Email" />
 
             <EditText
@@ -99,21 +109,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="text"
-                android:visibility="gone"
                 android:text="xyz@gmail.com" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnPayNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+
+            android:padding="10dp"
+            android:text="Pay Now" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnPayNow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:onClick="navigateToBaseActivity"
-        android:padding="10dp"
-        android:visibility="gone"
-        android:text="Pay Now" />
+
 
 </LinearLayout>

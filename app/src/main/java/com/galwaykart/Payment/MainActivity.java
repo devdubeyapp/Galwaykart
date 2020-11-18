@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.payment_test);
 
         pref = CommonFun.getPreferences(getApplicationContext());
         dist_id=pref.getString("log_user_id", "").toLowerCase();
@@ -163,6 +163,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        startPaymentProcess();
     }
 
     @Override
@@ -328,38 +330,39 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This method prepares all the payments params to be sent to PayuBaseActivity.java
      */
-    public void navigateToBaseActivity(View view) {
+    public void startPaymentProcess() {
 
 
         // merchantKey="";
         merchantKey = ((EditText) findViewById(R.id.editTextMerchantKey)).getText().toString();
         String amount = ((EditText) findViewById(R.id.editTextAmount)).getText().toString();
         String email = ((EditText) findViewById(R.id.editTextEmail)).getText().toString();
-
+        editTextAmount.setText(total_amount);
         String value = environmentSpinner.getSelectedItem().toString();
         int environment;
         String TEST_ENVIRONMENT = getResources().getString(R.string.test);
-        if (value.equals(TEST_ENVIRONMENT))
-            environment = PayuConstants.STAGING_ENV;
-        else
+//        if (value.equals(TEST_ENVIRONMENT))
+//            environment = PayuConstants.STAGING_ENV;
+//        else
             environment = PayuConstants.PRODUCTION_ENV;
-        merchantKey="MAZyiB";
+
+        //Todo change merchantKey
+        merchantKey="MAZyiB";//live
+        //merchantKey="gtKFFx";//sandbox
         userCredentials = merchantKey + ":" + email;
 
-        //TODO Below are mandatory params for hash genetation
         mPaymentParams = new PaymentParams();
         /**
          * For Test Environment, merchantKey = please contact mobile.integration@payu.in with your app name and registered email id
 
          */
         mPaymentParams.setKey(merchantKey);
-        mPaymentParams.setAmount(amount);
+        mPaymentParams.setAmount(total_amount);
         mPaymentParams.setProductInfo("product_info");
         mPaymentParams.setFirstName(firstname);
         mPaymentParams.setEmail(email);
         mPaymentParams.setPhone("");
 
-        mPaymentParams.setBeneficiaryAccountNumber("50100041412026");
 
         /*
          * Transaction Id should be kept unique for each transaction.
@@ -409,16 +412,16 @@ public class MainActivity extends AppCompatActivity {
          * if your server side hash generation code is not completely setup. While going live this approach for hash generation
          * should not be used.
          * */
-        if(environment== PayuConstants.STAGING_ENV){
-            //  salt = " ";
-            salt = "aYTYaaqA";
-        }else {
-            //Production Env
-            salt = "1b1b0";
-            //salt = "ASSchu2n";
-            // salt = "Xd4VtaFd";
-            //  salt = "13p0PXZk";
-        }
+//        if(environment== PayuConstants.STAGING_ENV){
+//            //  salt = " ";
+//            salt = "aYTYaaqA";
+//        }else {
+//            //Production Env
+//            salt = "1b1b0";
+//            //salt = "ASSchu2n";
+//            // salt = "Xd4VtaFd";
+//            //  salt = "13p0PXZk";
+//        }
 //        String salt = "eCwWELxi";
         // String salt = "13p0PXZk";
         // String salt = "1b1b0";
@@ -427,6 +430,7 @@ public class MainActivity extends AppCompatActivity {
         //  generateHashFromSDK(mPaymentParams, salt);
 
         generateHashFromServer(mPaymentParams);
+
     }
 
     public void generateHashFromServer( PaymentParams mPaymentParams) {

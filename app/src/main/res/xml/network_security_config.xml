@@ -10,6 +10,8 @@
     <domain includeSubdomains="true">amazonaws.com</domain>
     <domain includeSubdomains="true">glazegalway.net</domain>
     <domain includeSubdomains="true">glazegalway.com</domain>
+    <domain includeSubdomains="true">clickpost.in</domain>
+
 <!--    <trust-anchors>-->
 <!--&lt;!&ndash;        <certificates src="system" />&ndash;&gt;-->
 <!--        <certificates src="@raw/certificate" />-->

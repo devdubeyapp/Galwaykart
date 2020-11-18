@@ -55,6 +55,7 @@ import com.galwaykart.essentialClass.ExceptionError;
 import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.galwaykart.shipyaari.StepperViewDemo;
+import com.galwaykart.shipyaari.TrackDetailWebViewActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
@@ -874,7 +875,18 @@ public class OrderDetails extends BaseActivity {
         editor.putString("st_selected_shipment_text",arr_shipment_text[position]);
         editor.commit();
 
-        Intent intent = new Intent(OrderDetails.this, StepperViewDemo.class);
+
+       // st_selected_shipping_type="9";
+
+
+        Intent intent;
+        if(st_selected_shipping_type.equalsIgnoreCase("9")){
+            intent = new Intent(OrderDetails.this, TrackDetailWebViewActivity.class);
+            intent.putExtra("trackUrl","https://galwaykart.clickpost.in/?waybill="+st_selected_Track_id);
+        }
+        else {
+            intent = new Intent(OrderDetails.this, StepperViewDemo.class);
+        }
         startActivity(intent);
         //CommonFun.finishscreen(OrderDetails.this);
 
