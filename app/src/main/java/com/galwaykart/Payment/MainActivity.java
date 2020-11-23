@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextAmount;
     String total_amount="";
     String dist_id="";
+    String order_hash="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         pref = CommonFun.getPreferences(getApplicationContext());
         dist_id=pref.getString("log_user_id", "").toLowerCase();
-
+        order_hash=pref.getString("payment","");
         //TODO Must write below code in your activity to set up initial context for PayU
         Payu.setInstance(this);
 
@@ -193,7 +195,10 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(data.getStringExtra("payu_response"));
 
+                    Log.d("payment_info",jsonObject.toString());
                     isSuccess = jsonObject.getString("status");
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -203,11 +208,10 @@ public class MainActivity extends AppCompatActivity {
 
                     isSuccess = isSuccess.toLowerCase();
                     if (isSuccess.contains("success")) {
-                        pref = CommonFun.getPreferences(getApplicationContext());
-                        String selPaymentCode = pref.getString("payment", "");
+//                        pref = CommonFun.getPreferences(getApplicationContext());
+                        //String selPaymentCode = pref.getString("payment", "");
 
-
-                        String cust_id = pref.getString("login_customer_id", "");
+                        //String cust_id = pref.getString("login_customer_id", "");
                         //Log.d("paymentSuccess",cust_id+"-"+order_hash);
 
 
@@ -361,13 +365,13 @@ public class MainActivity extends AppCompatActivity {
         mPaymentParams.setProductInfo("product_info");
         mPaymentParams.setFirstName(firstname);
         mPaymentParams.setEmail(email);
-        mPaymentParams.setPhone("");
+        //mPaymentParams.setPhone("");
 
 
         /*
          * Transaction Id should be kept unique for each transaction.
          * */
-        mPaymentParams.setTxnId("" + System.currentTimeMillis());
+        mPaymentParams.setTxnId(order_hash);
         // mPaymentParams.setTxnId("1587113659761");
 
         /**
@@ -375,10 +379,11 @@ public class MainActivity extends AppCompatActivity {
          * Furl --> Failre url is where the transaction response is posted by PayU on failed transaction
          */
         // mPaymentParams.setSurl(" https://www.fitternity.com/paymentsuccessandroid");
-        mPaymentParams.setSurl(Global_Settings.payment_success);
-        mPaymentParams.setFurl(Global_Settings.payment_failed);
+        mPaymentParams.setSurl(Global_Settings.payment_success+"?orderhash="+order_hash);
+        mPaymentParams.setFurl(Global_Settings.payment_failed+"?orderhash="+order_hash);
         //  mPaymentParams.setFurl("https://www.fitternity.com/paymentsuccessandroid");
-        mPaymentParams.setNotifyURL(mPaymentParams.getSurl());  //for lazy pay
+        //mPaymentParams.setNotifyURL(mPaymentParams.getSurl());  //for lazy pay
+        mPaymentParams.setNotifyURL(Global_Settings.payment_success+"?orderhash="+order_hash);
 
         /*
          * udf1 to udf5 are options params where you can pass additional information related to transaction.
