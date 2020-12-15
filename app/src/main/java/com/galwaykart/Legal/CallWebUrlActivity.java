@@ -1,16 +1,22 @@
 package com.galwaykart.Legal;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JsResult;
 import android.webkit.MimeTypeMap;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -36,15 +42,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CallWebUrlActivity extends AppCompatActivity {
 
 
     TransparentProgressDialog pDialog;
     WebView webView;
     //  FirebaseAnalytics mFirebaseAnalytics;
-
+    private ValueCallback<Uri[]> mFilePathCallback;
+    private String mCameraPhotoPath;
+    private static final String TAG = "Webview";
     boolean is_from_chat=false;
-
+    public static final int Request_Id_Multiple_Permissions=1;
+    public static final int INPUT_FILE_REQUEST_CODE = 1;
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -114,6 +128,16 @@ public class CallWebUrlActivity extends AppCompatActivity {
             pDialog.setCancelable(true);
             pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             pDialog.show();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+            {
+                ////Log.d("permission","not");
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        Request_Id_Multiple_Permissions);
+            }
+
+        }
 
     }
 
@@ -185,12 +209,14 @@ public class CallWebUrlActivity extends AppCompatActivity {
     public class MyWebChromeClient extends WebChromeClient {
 
         @Override
-        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+        public boolean onJsAlert(WebView view, String url, String message, JsResult result)
+        {
             final JsResult finalRes = result;
             new AlertDialog.Builder(view.getContext())
                     .setMessage(message)
                     .setPositiveButton(android.R.string.ok,
-                            new AlertDialog.OnClickListener() {
+                            new AlertDialog.OnClickListener()
+                            {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     finalRes.confirm();
@@ -201,7 +227,77 @@ public class CallWebUrlActivity extends AppCompatActivity {
                     .show();
             return true;
         }
+
+
+        private File createImageFile() throws IOException {
+            // Create an image file name
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String imageFileName = "JPEG_" + timeStamp + "_";
+            File storageDir = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES);
+            File imageFile = File.createTempFile(
+                    imageFileName,  /* prefix */
+                    ".jpg",         /* suffix */
+                    storageDir      /* directory */
+            );
+            return imageFile;
+        }
+
+        public boolean onShowFileChooser(
+                WebView webView, ValueCallback<Uri[]> filePathCallback,
+                FileChooserParams fileChooserParams) {
+            if(mFilePathCallback != null) {
+                mFilePathCallback.onReceiveValue(null);
+            }
+            mFilePathCallback = filePathCallback;
+
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                // Create the File where the photo should go
+                File photoFile = null;
+                try {
+                    photoFile = createImageFile();
+                    takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath);
+                } catch (IOException ex) {
+                    // Error occurred while creating the File
+                    Log.e(TAG, "Unable to create Image File", ex);
+                }
+
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    mCameraPhotoPath = "file:" + photoFile.getAbsolutePath();
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(photoFile));
+                } else {
+                    takePictureIntent = null;
+                }
+            }
+
+            Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+            contentSelectionIntent.setType("image/*");
+
+            Intent[] intentArray;
+            if(takePictureIntent != null) {
+                intentArray = new Intent[]{takePictureIntent};
+            } else {
+                intentArray = new Intent[0];
+            }
+
+            Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
+            chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
+            chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser");
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
+
+            startActivityForResult(chooserIntent, INPUT_FILE_REQUEST_CODE);
+
+            return true;
+        }
+
+
+
     }
+
 }
 
 

@@ -97,12 +97,24 @@
             android:layout_below="@+id/tvOrderList"
             android:background="@color/colorPrimaryDark"/>
 
-
+        <TextView
+            android:id="@+id/tvNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Note: Jarruri Suchna, Galwaykart Order sambandhit kisi bhi prakar ki shikayat order delivery ke 7 karyat diwas main kare."
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/red"
+            android:layout_below="@+id/underline3"
+            android:layout_margin="10dp"
+            android:textAlignment="center"
+            android:clickable="true"
+            />
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/lv_order_list"
-            android:layout_below="@+id/underline3"
+            android:layout_below="@+id/tvNote"
           android:visibility="gone"
             >
 
@@ -117,6 +129,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:visibility="gone"
         app:headerLayout="@layout/nav_header_home_page"
         app:menu="@menu/activity_home_page_drawer" >
 

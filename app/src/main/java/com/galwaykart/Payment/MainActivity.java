@@ -17,9 +17,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.galwaykart.R;
+import com.galwaykart.address_book.OrderDetails;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
-import com.galwaykart.profile.OrderDetails;
 import com.galwaykart.profile.OrderListActivity;
 import com.payu.india.Extras.PayUChecksum;
 import com.payu.india.Extras.PayUSdkDetails;
@@ -213,13 +213,15 @@ public class MainActivity extends AppCompatActivity {
 
                         //String cust_id = pref.getString("login_customer_id", "");
                         //Log.d("paymentSuccess",cust_id+"-"+order_hash);
-
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("paymentdue", "done");
+                        editor.commit();
 
                         Intent intent = new Intent(MainActivity.this, OrderDetails.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         CommonFun.finishscreen(MainActivity.this);
-                        //callCartItemsIP(order_hash);
+                        //callCartItemsIP(order_hash);`
 
                     } else {
                         final AlertDialog.Builder b;

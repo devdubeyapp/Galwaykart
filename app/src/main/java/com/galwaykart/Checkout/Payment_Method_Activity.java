@@ -1383,9 +1383,6 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
 
 
                             String cust_id = pref.getString("login_customer_id","");
-
-                            //Log.d("OrderHashresponse", cust_id+"-"+response.toString());
-
                             // CommonFun.alertError(Payment_Method_Activity.this,response.toString());
                             if (response != null) {
 
@@ -1422,6 +1419,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                                 ////Log.d("callsalefromhashfalse",st_orderhash);
                                 pref = CommonFun.getPreferences(getApplicationContext());
                                 SharedPreferences.Editor editor_pay = pref.edit();
+                                editor_pay.putString("orderhash", st_orderhash);
                                 editor_pay.putString("payment", st_orderhash);
                                 editor_pay.putString("paydiscount", jsonObject_total_discount);
                                 editor_pay.putString("paygrandtotal", jsonObject_grand_total);
@@ -1454,6 +1452,8 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
 //                                //Log.d("paytm",st_orderhash);
                                 pref = CommonFun.getPreferences(getApplicationContext());
                                 SharedPreferences.Editor editor_pay = pref.edit();
+
+                                editor_pay.putString("orderhash", st_orderhash);
                                 editor_pay.putString("payment", st_orderhash);
                                 editor_pay.putString("paydiscount", jsonObject_total_discount);
                                 editor_pay.putString("paygrandtotal", jsonObject_grand_total);
