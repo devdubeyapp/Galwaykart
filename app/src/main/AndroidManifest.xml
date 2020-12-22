@@ -63,6 +63,7 @@
         <activity
             android:name=".Guest.GuestHomePageActivity"
             android:screenOrientation="portrait"
+
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".kt_notification.NotificationAct" />
         <activity

@@ -11,6 +11,8 @@
         <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
     </style>
 
+    <style name="AppTheme_floatingaction" parent="Widget.Design.FloatingActionButton"/>
+
     <style name="AppTheme_Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>

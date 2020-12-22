@@ -317,18 +317,25 @@
 
 
 
-    <ImageView
+ <com.galwaykart.MovableFloatingActionButton
     android:id="@+id/float_hchat_button"
-    android:layout_width="51dp"
-    android:layout_height="51dp"
+     android:layout_width="175dp"
+    android:layout_height="175dp"
+     app:fabCustomSize="64dp"
+     app:maxImageSize="48dp"
     android:layout_above="@+id/float_offer_button"
     android:layout_alignParentRight="true"
     android:layout_margin="10dp"
     android:clickable="true"
     android:src="@drawable/freshchat"
+    app:backgroundTint="@android:color/transparent"
+     android:elevation="10dp"
+     app:fabSize="normal"
+     android:scaleType="center"
+     app:borderWidth="0dp"
+    android:outlineProvider="none"
     android:layout_alignParentBottom="true"
-
-    />
+  />
 
 
 <ImageView
@@ -336,7 +343,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-
     android:layout_alignParentRight="true"
     android:layout_margin="10dp"
     android:clickable="true"

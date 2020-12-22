@@ -22,6 +22,7 @@ import com.galwaykart.HomePageTab.DataModelHomeAPI;
 import com.galwaykart.Legal.CallWebUrlActivity;
 import com.galwaykart.Legal.FaqActivity;
 import com.galwaykart.Legal.WebViewActivity;
+import com.galwaykart.MovableFloatingActionButton;
 import com.galwaykart.MultiStoreSelection.StateSelectionDialog;
 import com.galwaykart.app_promo.AppPromotion;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
@@ -139,7 +140,8 @@ Boolean is_rel_cross_app_visible=false;
     ViewPager pager_view_banner;
     Timer timer;
     int page = 0;
-    ImageView float_offer_button,float_chat_button;
+    ImageView float_offer_button;
+    MovableFloatingActionButton float_chat_button;
     final String API_ID = "0e3c5b88-b2b2-48ee-8509-a6db6e6df6cd";
     final String API_KEY = "ef4384c8-b541-4229-8e47-becd7aa1f6ea";
 

@@ -166,7 +166,8 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     ViewPager pager_view_banner;
     Timer timer;
     int page = 0;
-    ImageView float_offer_button,float_chat_button;
+    ImageView float_offer_button;
+    MovableFloatingActionButton float_chat_button;
     final String API_ID = "0e3c5b88-b2b2-48ee-8509-a6db6e6df6cd";
     final String API_KEY = "ef4384c8-b541-4229-8e47-becd7aa1f6ea";
 
