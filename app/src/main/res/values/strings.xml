@@ -68,32 +68,26 @@
     <string name="paytmcallbackurl">https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=</string>
 
 
-    <string-array name="environment_array">
-        <item>@string/production</item>
-        <item>@string/test</item>
-        <!--<item>@string/production</item>-->
-
-    </string-array>
-
-
     <string name="password_tnc">
         1. Password length must be 8-30 character long.\n
         2. Password must be contain atleast 1 alphabet value.\n
         3. Password must be contain atleast 1 numeric value.
     </string>
 
-    <string name="use_live_key_in_production_environment">Please use your live merchant key in production environment</string>
-    <string name="could_not_receive_data">Could not receive data</string>
 
+    <string name="use_live_key_in_production_environment">Please use your live merchant key in production environment</string>
+
+    <string name="could_not_receive_data">Could not receive data</string>
     <string name="enter_pin">Enter Pincode</string>
+
     <string name="enter_coupon">Enter Voucher</string>
     <string name="remove_coupon">Remove Voucher</string>
     <string name="coupon_report">Voucher Report</string>
     <string name="coupon_type">Voucher Type</string>
     <string name="coupon_code">Voucher Code</string>
-
-
     <string name="freshchat_file_provider_authority">com.galwaykart.provider</string>
+
+
     <string name="otp_tnc">
 
         Note: "NEW T&amp;C for OTP Request":\n\n
@@ -110,21 +104,27 @@
 4.     हमारी ओर से प्रति दिन कई बार ओटीपी भेजे जाएंगे। (नोटः इसमें वह ओटीपी भी गिना जाएगा जो पहले ही भेजा जा चुका है।)\n
 
     </string>
-
     <string name="address_note">नोट:- हमेशा अपना सही और पूरा पता दे | एड्रेस कॉलम मैं पूरी जानकारी भरे | अगर हो सके तो लैंडमार्क (आस पास कोई फेमस जगह ) भी भरे | आपके पिन कोड आपके एड्रेस का ही होना चाहिए | किसी और जगह का पिन कोड न भरे |</string>
 
     <string name="distributor_id">4</string>
+
     <string name="customer_id">0</string>
     <string name="employee_id">5</string>
     <string name="general_id">1</string>
     <string name="st_click_here"><u>click here</u></string>
-
     <string name="st_donation_text">* Gaushala donation will not be refundable</string>
+
     <string name="safety_net_api_key"> Your API Key </string>
     <string name="st_track_order"><u>Track Order</u></string>
-    <string name="st_reg_text">अगर आप डिस्ट्रीब्यूटर है और आई. पी लेना चाहते है| तो इस ऑप्शन से आर्डर न करे\nIf you are a distributor and want IP benefit, Please do not use this option to place your Order.</string>
+    <string name="st_reg_text">अगर आप डिस्ट्रीब्यूटर है और आई. पी लेना चाहते है| तो इस ऑप्शन से आर्डर न करे\nIf you are a distributor and want PV/BV benefit, Please do not use this option to place your Order.</string>
     <string name="st_reg_text_2">Note : कस्टमर का ऑप्शन केवल नॉन डिस्ट्रीब्यूटर यानि preferred कस्टमर के लिए है। Glaze डिस्ट्रीब्यूटर्स अपनी ID और पासवर्ड का प्रयोग कर डायरेक्ट लॉगिन कर सकते है।</string>
-
     <string name="st_change_zone"><u>Change</u></string>
+
+    <string-array name="environment_array">
+        <item>@string/production</item>
+        <item>@string/test</item>
+        <!--<item>@string/production</item>-->
+
+    </string-array>
 
 </resources>

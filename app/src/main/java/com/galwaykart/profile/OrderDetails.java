@@ -23,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -179,8 +180,11 @@ public class OrderDetails extends BaseActivity {
     String ship_country_id ="";
 
 
-
-
+    //code written on 28 Dec 2020 for show CC team remarks to the customer
+    String str_crm_remark ="";
+    LinearLayout ly_cc_remarks;
+    TextView cc_remark_tv;
+    //code written on 28 Dec 2020 for show CC team remarks to the customer
 
 
     @Override
@@ -209,7 +213,7 @@ public class OrderDetails extends BaseActivity {
         editor.putString("order_grand_total", "");
         editor.commit();
 
-//***********************************************************************************************************************************
+//********************************************************************************************************************
 
         bt_track_order=findViewById(R.id.bt_track_order);
         bt_track_order.setVisibility(View.GONE);
@@ -224,6 +228,13 @@ public class OrderDetails extends BaseActivity {
 
         tv_shipping_address=findViewById(R.id.tv_shipping_address);
         bt_shipping_address_edit_icon = findViewById(R.id.bt_shipping_address_edit_icon);
+
+
+        //code written on 28 Dec 2020 for show CC team remarks to the customer
+        ly_cc_remarks = findViewById(R.id.ly_cc_remarks);
+        ly_cc_remarks.setVisibility(View.GONE);
+        cc_remark_tv = findViewById(R.id.cc_remark_tv);
+        //code written on 28 Dec 2020 for show CC team remarks to the customer
 
 
         tv_order_id = findViewById(R.id.tv_order_id);
@@ -1798,6 +1809,20 @@ public class OrderDetails extends BaseActivity {
                             if(response.has("donation_title")){
                                 donation_title=response.getString("donation_title");
                             }
+
+                            //code written on 28 Dec 2020 for show CC team remarks to the customer
+                            if(response.has("crm_remark"))
+                            {
+                                ly_cc_remarks.setVisibility(View.VISIBLE);
+                                str_crm_remark = response.optString("crm_remark", "");
+                                cc_remark_tv.setText(str_crm_remark);
+
+                            }
+                            else
+                            {
+                                ly_cc_remarks.setVisibility(View.GONE);
+                            }
+                            //code written on 28 Dec 2020 for show CC team remarks to the customer
 
                             is_edit_address="0";
 

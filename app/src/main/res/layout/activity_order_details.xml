@@ -181,12 +181,43 @@
         </RelativeLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ly_cc_remarks"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/colorwhite"
+            android:padding="5dp"
+            android:orientation="vertical"
+            android:layout_below="@+id/rel_ship_address">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cc_remark_tv1"
+                android:textSize="14dp"
+                android:textColor="@color/colorPrimary"
+                android:text="Customer Care Remark"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cc_remark_tv"
+                android:textSize="16dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/red" />
+
+        </LinearLayout>
+
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/lv_order_details"
-            android:layout_below="@+id/rel_ship_address"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/ly_cc_remarks"
             android:layout_marginBottom="50dp">
 
 
@@ -218,7 +249,8 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_home_page"
-        app:menu="@menu/activity_home_page_drawer" >
+        app:menu="@menu/activity_home_page_drawer" 
+        android:visibility="gone">
 
     <ExpandableListView
         android:id="@+id/expandableListView"

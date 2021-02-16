@@ -38,14 +38,14 @@ public class Global_Settings {
     public static final String st_sales_api=galway_api_url+"returnapi/";     // Live
     //public static final String st_sales_api="http://it.galway.in/returnapi/";// Test
 
-    public static  String api_url="https://www.galwaykart.com/";                 // Live
-    public static String web_url="https://www.galwaykart.com/";
+    //public static  String api_url="https://www.galwaykart.com/";                 // Live
+    //public static String web_url="https://www.galwaykart.com/";
 
     //public static final String api_url="http://192.168.10.130/galwaykart/";               // Test
   //  public static String web_url="http://qa.galwaykart.com/";
 
-   // public static String api_url="http://qa.galwaykart.com/";
-    // public static String web_url="http://qa.galwaykart.com/";
+    public static String api_url="http://qa.galwaykart.com/";
+    public static String web_url="http://qa.galwaykart.com/";
 
     public static String current_zone="";
     public static Boolean multi_store=false;
