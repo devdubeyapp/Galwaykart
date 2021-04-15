@@ -76,6 +76,7 @@ import com.galwaykart.profile.OrderListActivity;
 import com.galwaykart.profile.wishList.WishListDetails;
 import com.galwaykart.report.CouponReportActivity;
 import com.galwaykart.testimonial.TestimonialActivity;
+import com.galwaykart.vendormanagement.VendorRegistration;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabItem;
@@ -558,6 +559,13 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                             CommonFun.finishscreen(HomePageActivity.this);
                         }
 
+                        else if(groupPosition == 8){
+                            Intent intent=new Intent(HomePageActivity.this, VendorRegistrationOld.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            CommonFun.finishscreen(HomePageActivity.this);
+                        }
+
                     }
                 }
 
@@ -758,6 +766,11 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
+        menuModel = new MenuModel("Become a Vendor", true, false);
+        headerList.add(menuModel);
+
+
         menuModel = new MenuModel("Version-"+version, true, false);
         headerList.add(menuModel);
 

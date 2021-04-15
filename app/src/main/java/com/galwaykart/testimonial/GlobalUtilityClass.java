@@ -170,4 +170,10 @@ public class GlobalUtilityClass {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
+
+    public static boolean isEmailValid(String email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+
+    }
+
 }

@@ -121,6 +121,9 @@ public class OrderDetails extends BaseActivity {
     final String TAG_shipmentText="shipmentText";
     final String TAG_sku="sku";
     final String TAG_TRACK_ORDER = "track_order";
+    final String TAG_ITEMSTATUS = "itemstatus";
+    final String TAG_ITEM_COURIER_NAME = "courier_number";
+    final String TAG_ITEM_AWB_NUMBER = "awb_number";
 
     String TAG_year = "";
     EditText return_qty;
@@ -136,7 +139,7 @@ public class OrderDetails extends BaseActivity {
 
     String st_order_id = "", st_increment_id="", st_product_image = "",st_product_id="",st_total_qty_ordered="",st_selected_qty="",
             st_product_amt="",st_order_status="",st_trigger_no_sale="",return_request_sales_url="",st_shipmentType=""
-            ,st_product_name="",st_product_order_date="",st_order_total_amt="";
+            ,st_product_name="",st_product_order_date="",st_order_total_amt="", st_item_status="", st_item_courier_name="", st_item_awb_number="";
 
 
     TextView tv_title,tv_order_total;
@@ -144,7 +147,7 @@ public class OrderDetails extends BaseActivity {
     String[] arr_product_id={},arr_product_name={},arr_product_qty={},arr_boolean={},arr_product_order_date,
             arr_product_amt,arr_product_img,arr_edit_rtn_qty,arr_rtn_qty,arr_req_rtn_qty,arr_shipment_type,
     arr_return_index,arr_tracking_id,arr_selected_sku,arr_sku,arr_order_item_id,arr_track_order,
-    arr_check_rtn_btn,arr_shipment_text;
+    arr_check_rtn_btn,arr_shipment_text, arr_item_status, arr_item_courier_name, arr_item_awb_number;
     String st_sales_url="" ;
     String st_sales_url1="" ;
     String dataValues="",st_selected_product_id="",st_selected_reason="",st_selected_resolution="",st_selected_condition="",
@@ -1494,14 +1497,17 @@ public class OrderDetails extends BaseActivity {
 				 *  Set value on List
 				 */
         ListAdapter listAdapter = new CustomAdapter(OrderDetails.this, arrayList, R.layout.order_details_item,
-                new String[]{TAG_name,TAG_image,TAG_created_at,TAG_total_qty_ordered,TAG_original_price,TAG_enter_qty_rtn,TAG_boolean},
+                new String[]{TAG_name,TAG_image,TAG_created_at,TAG_total_qty_ordered,TAG_original_price,TAG_enter_qty_rtn,TAG_boolean, TAG_ITEMSTATUS, TAG_ITEM_COURIER_NAME, TAG_ITEM_AWB_NUMBER},
                 new int[]{R.id.product_name_id,
                         R.id.img_view_ordered_product,
                         R.id.order_date_time,
                         R.id.total_product_qty,
                         R.id.total_product_amt,
                         R.id.return_qty_req,
-                        R.id.check_for_return_req});
+                        R.id.check_for_return_req,
+                        R.id.tv_item_status,
+                        R.id.tv_courier_name,
+                        R.id.tv_awb_number});
 
 
         if(listAdapter.getCount() >0 ) {
@@ -1820,7 +1826,7 @@ public class OrderDetails extends BaseActivity {
                             }
                             else
                             {
-                                ly_cc_remarks.setVisibility(View.GONE);
+                                    ly_cc_remarks.setVisibility(View.GONE);
                             }
                             //code written on 28 Dec 2020 for show CC team remarks to the customer
 
@@ -1860,6 +1866,9 @@ public class OrderDetails extends BaseActivity {
                             arr_sku = new String [order_list_length];
                             arr_track_order= new String[order_list_length];
                             arr_shipment_text=new String[order_list_length];
+                            arr_item_status=new String[order_list_length];
+                            arr_item_courier_name=new String[order_list_length];
+                            arr_item_awb_number=new String[order_list_length];
 
 
                             for(int i=0; i<order_list_length; i++) {
@@ -1872,6 +1881,20 @@ public class OrderDetails extends BaseActivity {
                                 st_total_qty_ordered = order_list_obj.getString(TAG_total_qty_ordered);
                                 st_product_amt = order_list_obj.getString(TAG_original_price);
                                 st_product_name = order_list_obj.getString(TAG_name);
+                                st_item_status = order_list_obj.getString(TAG_ITEMSTATUS);
+
+                                if(order_list_obj.has(TAG_ITEM_COURIER_NAME))
+                                    st_item_courier_name = order_list_obj.getString(TAG_ITEM_COURIER_NAME);
+                                else
+                                    st_item_courier_name="";
+
+                                if(order_list_obj.has(TAG_ITEM_AWB_NUMBER))
+                                    st_item_awb_number = order_list_obj.getString(TAG_ITEM_AWB_NUMBER);
+                                else
+                                    st_item_awb_number="";
+
+
+                                Log.e("st_item_status", st_item_status);
 
 
                                 //String st_tracking_no,String st_shippment_details,String st_salesshippment_details,String st_ShipmentText
@@ -1922,6 +1945,9 @@ public class OrderDetails extends BaseActivity {
                                 arr_tracking_id[i] = st_trigger_no_sale;
                                 arr_shipment_type[i] = st_shipmentType;
                                 arr_sku[i]= st_product_sku;
+                                arr_item_status[i] = st_item_status;
+                                arr_item_courier_name[i] = st_item_courier_name;
+                                arr_item_awb_number[i] = st_item_awb_number;
 
                                 if(order_list_obj.has(TAG_shipmentText))
                                     arr_shipment_text[i]=order_list_obj.getString(TAG_shipmentText);
@@ -1961,9 +1987,9 @@ public class OrderDetails extends BaseActivity {
                                 hashMap.put(TAG_trigger_no_sale, arr_tracking_id[i]);
                                 hashMap.put(TAG_sku, arr_sku[i]);
                                 hashMap.put(TAG_TRACK_ORDER, arr_track_order[i]);
-
-
-
+                                hashMap.put(TAG_ITEMSTATUS, st_item_status);
+                                hashMap.put(TAG_ITEM_COURIER_NAME, st_item_courier_name);
+                                hashMap.put(TAG_ITEM_AWB_NUMBER, st_item_awb_number);
                                 arrayList.add(hashMap);
                                // ////Log.d("itemList",arrayList+"");
                             }
@@ -2105,6 +2131,10 @@ public class OrderDetails extends BaseActivity {
         final String TAG_boolean="Return_check";
         final String TAG_edit_rtn = "Edit_Qty";
         final String TAG_enter_qty_rtn = "enter_qty";
+        final String TAG_ITEMSTATUS = "itemstatus";
+        final String TAG_ITEM_COURIER_NAME = "courier_number";
+        final String TAG_ITEM_AWB_NUMBER = "awb_number";
+
 
         Holder holder = null;
         Context ctx;
@@ -2142,6 +2172,7 @@ public class OrderDetails extends BaseActivity {
             TextView total_product_qty,return_qty_req;
             Button bt_edit_qty_icon,bt_track_order;
             CheckBox check_for_return_req;
+            TextView tv_item_status, tv_courier_name, tv_awb_number;
 
         }
 
@@ -2193,6 +2224,14 @@ public class OrderDetails extends BaseActivity {
                 holder.return_qty_req = convertView.findViewById(R.id.return_qty_req);
                 holder.bt_track_order = convertView.findViewById(R.id.bt_track_order);
                 holder.bt_edit_qty_icon = convertView.findViewById(R.id.bt_edit_qty_icon);
+                holder.tv_item_status = convertView.findViewById(R.id.tv_item_status);
+                holder.tv_courier_name = convertView.findViewById(R.id.tv_courier_name);
+                holder.tv_awb_number = convertView.findViewById(R.id.tv_awb_number);
+
+                holder.tv_courier_name.setVisibility(View.GONE);
+                holder.tv_awb_number.setVisibility(View.GONE);
+
+
                 convertView.setTag(holder);
 
             }
@@ -2204,6 +2243,18 @@ public class OrderDetails extends BaseActivity {
             holder.total_product_amt.setText(arrayList.get(position).get(TAG_original_price));
             holder.order_date_time.setText(arrayList.get(position).get(TAG_created_at));
             holder.total_product_qty.setText("Total Quantity:  " + arrayList.get(position).get(TAG_total_qty_ordered));
+            holder.tv_item_status.setText("Status:  " + arrayList.get(position).get(TAG_ITEMSTATUS));
+
+            if(!arrayList.get(position).get(TAG_ITEM_COURIER_NAME).equalsIgnoreCase(""))
+            {
+                holder.tv_courier_name.setVisibility(View.VISIBLE);
+                holder.tv_courier_name.setText("Courier Name:  " + arrayList.get(position).get(TAG_ITEM_COURIER_NAME));
+            }
+            if(!arrayList.get(position).get(TAG_ITEM_AWB_NUMBER).equalsIgnoreCase(""))
+            {
+                holder.tv_awb_number.setVisibility(View.VISIBLE);
+                holder.tv_awb_number.setText("Tracking No:  " + arrayList.get(position).get(TAG_ITEM_AWB_NUMBER));
+            }
 
 //            String st_boolean = arrayList.get(position).get(TAG_boolean).toString();
             String st_boolean = arr_boolean[position];

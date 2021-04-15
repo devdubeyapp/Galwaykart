@@ -210,7 +210,7 @@ public class OrderDetails extends BaseActivityWithoutCart {
                             	/*
 				 * Set value on List
 				 */
-                            ListAdapter listAdapter = new OrderDetailsAdapter(OrderDetails.this, arrayList, R.layout.order_details_item,
+                            ListAdapter listAdapter = new OrderDetailsAdapter(OrderDetails.this, arrayList, R.layout.order_details_item_old_march21,
                                     new String[]{TAG_name,TAG_image,TAG_created_at,TAG_total_qty_ordered,TAG_original_price},
                                     new int[]{R.id.product_name_id,
                                             R.id.img_view_ordered_product,

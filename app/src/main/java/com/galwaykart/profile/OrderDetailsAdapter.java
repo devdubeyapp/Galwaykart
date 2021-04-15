@@ -108,7 +108,7 @@ public class OrderDetailsAdapter extends SimpleAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.order_details_item, null);
+            convertView = inflater.inflate(R.layout.order_details_item_old_march21, null);
             holder = new Holder();
 
             holder.img_view_ordered_product = convertView.findViewById(R.id.img_view_ordered_product);

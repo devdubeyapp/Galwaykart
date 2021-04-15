@@ -52,6 +52,7 @@ import com.galwaykart.profile.OrderListActivity;
 import com.galwaykart.profile.wishList.WishListDetails;
 import com.galwaykart.report.CouponReportActivity;
 import com.galwaykart.testimonial.TestimonialActivity;
+import com.galwaykart.vendormanagement.VendorRegistration;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -278,6 +279,14 @@ public class BaseActivityCommon extends AppCompatActivity
                         CommonFun.finishscreen(BaseActivityCommon.this);
                     }*/
 
+
+                    else if(groupPosition==5 && childPosition == 0){
+                        Intent intent_wishlist=new Intent(BaseActivityCommon.this, VendorRegistration.class);
+                        intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent_wishlist);
+                        CommonFun.finishscreen(BaseActivityCommon.this);
+                    }
+
                else if(groupPosition==5 && childPosition == 0){
                         Intent intent_wishlist=new Intent(BaseActivityCommon.this, LegalAboutActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -366,6 +375,9 @@ public class BaseActivityCommon extends AppCompatActivity
 
         /*childModel = new MenuModel("Customer HelpDesk", false, false);
         childModelsList.add(childModel);*/
+
+        menuModel = new MenuModel("Become a Vendor", true, false); //Menu of Android Tutorial. No sub menus
+        headerList.add(menuModel);
 
         childModel = new MenuModel("Legal and About", false, false);
         childModelsList.add(childModel);

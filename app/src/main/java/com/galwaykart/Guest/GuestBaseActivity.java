@@ -35,7 +35,6 @@ import com.galwaykart.Legal.FaqActivity;
 import com.galwaykart.address_book.AddNewAddress;
 import com.galwaykart.EwalletActivity;
 import com.galwaykart.Legal.LegalAboutActivity;
-import com.galwaykart.Legal.WebViewActivity;
 import com.galwaykart.Login.LoginActivity;
 import com.galwaykart.Login.LogoutActivity;
 import com.galwaykart.R;
@@ -52,6 +51,7 @@ import com.galwaykart.profile.UpdateAddressActivity;
 import com.galwaykart.profile.wishList.WishListDetails;
 import com.galwaykart.registration.RegistrationActivity;
 import com.galwaykart.testimonial.TestimonialActivity;
+import com.galwaykart.vendormanagement.VendorRegistration;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -596,6 +596,15 @@ public abstract class GuestBaseActivity extends AppCompatActivity
         else if(id==R.id.nav_notice){
 
             Intent intent=new Intent(this, NoticeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            CommonFun.finishscreen(this);
+
+        }
+
+        else if(id==R.id.nav_become_a_vendor){
+
+            Intent intent=new Intent(this, VendorRegistration.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             CommonFun.finishscreen(this);

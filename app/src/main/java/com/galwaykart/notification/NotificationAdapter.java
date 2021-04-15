@@ -28,8 +28,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private Context context;
     String st_url="";
     boolean is_url_contain;
-    public class ViewHolder extends RecyclerView.ViewHolder
-    {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView date_tv, title_tv,description_tv,tv_click_more;
         public LinearLayout main_row_lay;
          public View layout;

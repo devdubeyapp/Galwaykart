@@ -17,6 +17,7 @@ import com.galwaykart.navigationDrawer.MenuModel;
 import com.galwaykart.newsnotice.NoticeActivity;
 import com.galwaykart.report.CouponReportActivity;
 import com.galwaykart.testimonial.TestimonialActivity;
+import com.galwaykart.vendormanagement.VendorRegistration;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.view.GravityCompat;
@@ -227,6 +228,13 @@ public abstract class BaseActivity extends AppCompatActivity
                             CommonFun.finishscreen(BaseActivity.this);
                         }
 
+                        else if(groupPosition == 8){
+                            Intent intent=new Intent(BaseActivity.this, VendorRegistration.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            CommonFun.finishscreen(BaseActivity.this);
+                        }
+
 
                     }
                 }
@@ -312,11 +320,13 @@ public abstract class BaseActivity extends AppCompatActivity
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivity.this);
                     }*/
+
                     else if(groupPosition==5 && childPosition == 0){
                         Intent intent_wishlist=new Intent(BaseActivity.this, LegalAboutActivity.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent_wishlist);
                         CommonFun.finishscreen(BaseActivity.this);
+
                     }else if(groupPosition==5 && childPosition == 1){
                         Intent intent_wishlist=new Intent(BaseActivity.this, AppPromoHome.class);
                         intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -391,6 +401,7 @@ public abstract class BaseActivity extends AppCompatActivity
             childList.put(menuModel, childModelsList);
         }
 
+
         menuModel = new MenuModel("Customer HelpDesk", true, false); //Menu of Android Tutorial. No sub menus
         headerList.add(menuModel);
 
@@ -401,6 +412,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
         /*childModel = new MenuModel("Customer HelpDesk", false, false);
         childModelsList.add(childModel);*/
+
 
         childModel = new MenuModel("Legal and About", false, false);
         childModelsList.add(childModel);
@@ -431,6 +443,9 @@ public abstract class BaseActivity extends AppCompatActivity
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
+        menuModel = new MenuModel("Become a Vendor", true, false);
+        headerList.add(menuModel);
 
         menuModel = new MenuModel(version, true, false);
         headerList.add(menuModel);

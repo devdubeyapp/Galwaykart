@@ -181,6 +181,9 @@
             android:name=".address_book.OrderDetails"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
+
         <activity
             android:name=".essentialClass.ServerErrorActivity"
             android:screenOrientation="portrait" />
@@ -191,6 +194,11 @@
             android:name=".profile.OrderDetails"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".profile.OrderDetailsOld"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".partialReturn.ReturnedOrderDetails"
             android:screenOrientation="portrait"
@@ -294,6 +302,18 @@
         <activity
             android:name=".registration.RegistrationTypeActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".vendormanagement.VendorRegistrationOld"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".vendormanagement.VendorRegistration"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
         <activity
             android:name=".notification.NotificationListActivity"
             android:screenOrientation="portrait"
