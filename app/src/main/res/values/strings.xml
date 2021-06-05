@@ -119,6 +119,7 @@
     <string name="st_reg_text">अगर आप डिस्ट्रीब्यूटर है और आई. पी लेना चाहते है| तो इस ऑप्शन से आर्डर न करे\nIf you are a distributor and want PV/BV benefit, Please do not use this option to place your Order.</string>
     <string name="st_reg_text_2">Note : कस्टमर का ऑप्शन केवल नॉन डिस्ट्रीब्यूटर यानि preferred कस्टमर के लिए है। Glaze डिस्ट्रीब्यूटर्स अपनी ID और पासवर्ड का प्रयोग कर डायरेक्ट लॉगिन कर सकते है।</string>
     <string name="st_change_zone"><u>Change</u></string>
+    <string name="st_pin_save"><u>Save</u></string>
 
     <string-array name="environment_array">
         <item>@string/production</item>

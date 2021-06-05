@@ -155,7 +155,7 @@ public class MVVM_HomePage_TopProductRepo {
                 String pprice="₹ "+jsonObject_product.getString("price");
                 String psku=jsonObject_product.getString("sku");
                 String pimage=jsonObject_product.getString("imageUrl");
-                String pip="PV / BV: "+jsonObject_product.getString("ip");
+                String pip="PV/BV/SBV: "+jsonObject_product.getString("ip");
 
                 SharedPreferences pref =  CommonFun.getPreferences(context);
                 String login_group_id=pref.getString("login_group_id","");
@@ -330,6 +330,15 @@ public class MVVM_HomePage_TopProductRepo {
         if(login_group_id.equalsIgnoreCase("0"))
             //api_login_id="288";
             api_login_id="274";
+
+        if(login_group_id.equalsIgnoreCase("7"))
+            api_login_id="284";
+        //This is for Vandor
+
+        if(login_group_id.equalsIgnoreCase("8"))
+            api_login_id="285";
+        //This is for Distributor SDP
+
             //api_login_id="284";
 //        ProductCustomerGroupDistributor = 289;
 //const ProductCustomerGroupEmployee = 290;
@@ -531,7 +540,7 @@ public class MVVM_HomePage_TopProductRepo {
 
                             ////Log.d("mvvmlog",login_group_id+" "+st_selected_name);
 
-                            dataset.add(new ProductDataModel(p_name, "PV / BV " + p_ip, "₹ " + p_price, p_sku, p_image,
+                            dataset.add(new ProductDataModel(p_name, "PV/BV/SBV " + p_ip, "₹ " + p_price, p_sku, p_image,
                                     "", st_selected_name, login_group_id));
 
                         }

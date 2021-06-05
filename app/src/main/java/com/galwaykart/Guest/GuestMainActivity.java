@@ -1872,8 +1872,8 @@ public class GuestMainActivity extends GuestBaseActivity {
 
                 SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
                 String login_group_id = pref.getString("login_group_id", "");
-                if (login_group_id.equals("4")) {
-                    short_desc = "IP: " + ip_of_product + "\n\n" + short_desc + "\n\n";
+                if (login_group_id.equals("4") || login_group_id.equals("8")) {
+                    short_desc = "PV/BV/SBV: " + ip_of_product + "\n\n" + short_desc + "\n\n";
 
                 } else {
                     short_desc = "\n" + short_desc;

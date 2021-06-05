@@ -93,7 +93,7 @@ public class RegistrationTypeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(st_group_id.equals("4")) //distributor
+                if(st_group_id.equals("4") || st_group_id.equals("8")) //distributor
                 {
                     Intent intent = new Intent(RegistrationTypeActivity.this, RegistrationActivity.class);
                     intent.putExtra("customer_type", st_group_id);

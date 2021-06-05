@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -270,6 +272,17 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     String current_user_zone="";
 
 
+    //home screen pincode get
+    //Pincode_code_add
+    TableRow tbl_row1,tbl_row2,tbl_row3;
+    TextView btn_apply_pincode,btn_save_pincode,txt_pincode,btn_change_pincode;
+    EditText et_pincode;
+    String strSavePincode="";
+
+
+    private String strHomeScreenPinCode;
+
+
 
     @Override
     public void onBackPressed() {
@@ -351,6 +364,104 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         tokenData = pref.getString("tokenData", "");
         //Log.d("tokenData:::::",tokenData);
 
+
+//Pincode
+        tbl_row1 = findViewById(R.id.tbl_row1);
+        tbl_row2 = findViewById(R.id.tbl_row2);
+        tbl_row3 = findViewById(R.id.tbl_row3);
+        txt_pincode = findViewById(R.id.txt_pincode);
+        et_pincode= findViewById(R.id.et_pincode);
+        btn_change_pincode = findViewById(R.id.btn_change_pincode);
+        btn_apply_pincode = findViewById(R.id.btn_apply_pincode);
+        btn_save_pincode = findViewById(R.id.btn_save_pincode);
+
+
+        SharedPreferences prefPincode;
+        prefPincode=CommonFun.getPreferences(MainActivity.this);
+        final String setPinCodeByUser = prefPincode.getString("current_pincode_home", "");
+        txt_pincode.setText("Pincode : " + setPinCodeByUser);
+
+        if(setPinCodeByUser.equalsIgnoreCase(""))
+        {
+            tbl_row1.setVisibility(View.VISIBLE);
+            tbl_row2.setVisibility(View.GONE);
+            tbl_row3.setVisibility(View.GONE);
+
+        }
+        else
+        {
+            tbl_row3.setVisibility(View.VISIBLE);
+            tbl_row2.setVisibility(View.GONE);
+            tbl_row1.setVisibility(View.GONE);
+
+        }
+
+
+        btn_apply_pincode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tbl_row1.setVisibility(View.GONE);
+                tbl_row2.setVisibility(View.VISIBLE);
+
+            }
+        });
+        btn_save_pincode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(et_pincode.getText().toString().trim().equalsIgnoreCase(""))
+                {
+                    CommonFun.alertError(MainActivity.this,"Please enter valid pincode...");
+                }
+                else if(et_pincode.getText().toString().trim().length() < 6){
+                    CommonFun.alertError(MainActivity.this,"Please enter valid pincode...");
+                }
+
+                else
+                {
+                    strSavePincode= et_pincode.getText().toString().trim();
+
+                    SharedPreferences prefPincode;
+                    prefPincode=CommonFun.getPreferences(MainActivity.this);
+                    SharedPreferences.Editor editor=prefPincode.edit();
+                    editor.putString("current_pincode_home",strSavePincode);
+                    editor.commit();
+
+                    final String setPinCodeByUser = prefPincode.getString("current_pincode_home", "");
+
+                    txt_pincode.setText("Pincode : " + setPinCodeByUser);
+                    tbl_row1.setVisibility(View.GONE);
+                    tbl_row2.setVisibility(View.GONE);
+                    tbl_row3.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+        btn_change_pincode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                tbl_row3.setVisibility(View.GONE);
+                tbl_row1.setVisibility(View.GONE);
+                tbl_row2.setVisibility(View.VISIBLE);
+
+
+                SharedPreferences prefPincode;
+                prefPincode=CommonFun.getPreferences(MainActivity.this);
+                SharedPreferences.Editor editor=prefPincode.edit();
+                editor.putString("current_pincode_home",strSavePincode);
+                editor.commit();
+
+                final String setPinCodeByUser = prefPincode.getString("current_pincode_home", "");
+                txt_pincode.setText("Pincode : " + setPinCodeByUser);
+
+            }
+        });
+
+
+
+
+
         toggle.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -401,6 +512,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         ed_pincode = findViewById(R.id.ed_pincode);
 
+
+
+
+
         btn_check_availablity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -417,8 +532,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 else{
                     pref= CommonFun.getPreferences(getApplicationContext());
                     final String product_sku=pref.getString("showitemsku","");
-                    check_pin_url=Global_Settings.api_custom_url+"pincode_check.php?postcode="+
-                            st_pincode+"&sku="+product_sku;
+                    check_pin_url=Global_Settings.api_custom_url+"pincode_check.php?postcode="+ st_pincode+"&sku="+product_sku;
 
                     checkPinCode();
                 }
@@ -712,7 +826,25 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                         CommonFun.alertError(MainActivity.this,"maximum 25 quantity is allowed");
                     else {
 
-                        getCartId_v1();
+
+                        //getCartId_v1();
+
+                        pref= CommonFun.getPreferences(getApplicationContext());
+                        strHomeScreenPinCode= pref.getString("current_pincode_home", "");
+                        Log.e("strHomeScreenPinCode",strHomeScreenPinCode);
+
+
+                        if(strHomeScreenPinCode.equalsIgnoreCase(""))
+                        {
+                            getCartId_v1();
+                        }
+                        else
+                        {
+                            validatePinAndAddItemInCart();
+                        }
+
+
+
 
                     }
 
@@ -844,6 +976,98 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     }
 
+    private void validatePinAndAddItemInCart() {
+
+        pref= CommonFun.getPreferences(getApplicationContext());
+        final String product_sku=pref.getString("showitemsku","");
+        final String setPinCodeByUser = pref.getString("current_pincode_home", "");
+        String on_home_check_pin_url=Global_Settings.api_custom_url+"pincode_check.php?postcode="+ setPinCodeByUser+"&sku="+product_sku;
+
+        Log.e("on_home_check_pin_url",on_home_check_pin_url);
+
+        pDialog = new TransparentProgressDialog(MainActivity.this);
+        pDialog.setCancelable(false);
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        pDialog.show();
+
+        try {
+
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, on_home_check_pin_url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            if(pDialog.isShowing())
+                                pDialog.dismiss();
+                             Log.e("response_pin_validate", response);
+                            //Log.d("response", response);
+                            try {
+                                JSONArray array = new JSONArray(response);
+
+                                JSONObject json_pincode=array.getJSONObject(0);
+                                String check_servicable=json_pincode.getString("status");
+                                if(!check_servicable.equals(""))
+                                {
+                                    if(check_servicable.equals("0")) {
+
+                                        getCartId_v1();
+                                    }
+                                    else
+                                    {
+                                        CommonFun.alertError(MainActivity.this,"Sorry, we don't have services in this area "+"("+setPinCodeByUser+")");
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    Toast.makeText(MainActivity.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                                    //onBackPressed();
+                                }
+                            } catch (JSONException e) {
+                                Toast.makeText(MainActivity.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                                //onBackPressed();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    if(pDialog.isShowing())
+                        pDialog.dismiss();
+
+                    Toast.makeText(MainActivity.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                    //onBackPressed();
+                    //CommonFun.showVolleyException(error,DeliveryTypeActivity.this);
+                }
+            }) {
+
+
+                @Override
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8";
+                }
+
+                @Override
+                protected String getParamsEncoding() {
+                    return "utf-8";
+                }
+
+
+
+            };
+
+            stringRequest.setShouldCache(false);
+            requestQueue.add(stringRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //////Log.d("error...","Error");
+        }
+
+
+    }
 
     private void checkPinCode() {
 
@@ -863,7 +1087,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                             if(pDialog.isShowing())
                                 pDialog.dismiss();
-                            //Log.d("response", response);
+                            Log.e("response_pin_checker", response);
                             //Log.d("response", response);
                             try {
                              JSONArray array = new JSONArray(response);
@@ -1413,7 +1637,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        // super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode==REQUEST_CODE_EXAMPLE && Global_Settings.multi_store==true){
 
@@ -1752,6 +1976,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                         sel_p_json=response;
 
                         Log.d("singleProDetails", response);
+                        Log.e("singleProDetails", response);
 
                         //   CommonFun.alertError(MainActivity.this,response.toString());
                         if(response!=null){
@@ -2074,7 +2299,14 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
                 String login_group_id = pref.getString("login_group_id", "");
                 if (login_group_id.equals("4")) {
-                    short_desc = "PV / BV : " + ip_of_product + "\n\n" + short_desc + "\n\n";
+                    short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n";
+
+                } else {
+                    short_desc = "\n" + short_desc;
+                }
+
+                if (login_group_id.equals("8")) {
+                    short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n";
 
                 } else {
                     short_desc = "\n" + short_desc;
@@ -2541,6 +2773,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
             //    String qty = "2";
             //  String sku = "GRP08100";
+
+        Log.e("Hi Developer", "Hi Developer");
 
 
             pDialog = new TransparentProgressDialog(MainActivity.this);

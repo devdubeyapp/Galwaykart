@@ -134,6 +134,10 @@ public class RegisterForNotification extends AppCompatActivity {
                 type_api="0";
                 type_firebase="distributor";
                 break;
+            case "8":
+                type_api="0";
+                type_firebase="distributor";
+                break;
             case "5":
                 type_api="1";
                 type_firebase="employee";

@@ -15,9 +15,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.galwaykart.BaseActivity;
@@ -56,6 +58,14 @@ public class ProductListActivity extends AppCompatActivity {
     Boolean is_loggedin=false;
     ActivityProductListBinding binding;
     Mvvm_ProductViewModel model;
+
+
+    //Pincode_code_add
+    TableRow tbl_row1,tbl_row2,tbl_row3;
+    TextView btn_apply_pincode,btn_save_pincode,txt_pincode,btn_change_pincode;
+    EditText et_pincode;
+    String strSavePincode="";
+
 
 
     int i=0;
@@ -156,7 +166,7 @@ public class ProductListActivity extends AppCompatActivity {
             is_loggedin=true;
 
         String login_group_id=pref.getString("login_group_id","");
-        if(login_group_id.equals("4"))
+        if(login_group_id.equals("4") || login_group_id.equals("8"))
         {
                 //item_sort_by = new String[]{"Sort", "Sort By Name", "Sort By Price", "Sort By IP"};
             item_sort_by = new String[]{"Sort", "Sort By Name", "Sort By Price"};
@@ -209,6 +219,10 @@ public class ProductListActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+
 
 
 

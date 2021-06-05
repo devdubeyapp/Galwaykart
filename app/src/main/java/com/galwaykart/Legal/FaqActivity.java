@@ -103,6 +103,7 @@ public class FaqActivity extends AppCompatActivity {
             webView.getSettings().setLoadsImagesAutomatically(true);
             webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             webView.getSettings().setJavaScriptEnabled(true);
+
             //wb.getSettings().setPluginState(WebSettings.PluginState.ON);
             webView.getSettings().setAllowFileAccess(true);
             webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -133,6 +134,7 @@ public class FaqActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.d("weburl",response.toString());
+                        Log.e("weburl_response",response.toString());
                         try {
 
                             JSONArray jsonArray = new JSONArray(response);
@@ -150,7 +152,7 @@ public class FaqActivity extends AppCompatActivity {
 
                             }
                         }catch (JSONException ex){
-                            //Log.d("weburl",ex.toString());
+                            Log.e("weburl_error",ex.toString());
                         }
 
 
@@ -189,7 +191,7 @@ public class FaqActivity extends AppCompatActivity {
         webView.loadData(webcontent, "text/html", "UTF-8");
 
         pDialog = new TransparentProgressDialog(FaqActivity.this);
-        //pDialog.setMessage("Please wait...");
+        //pDialog.setMessage("Please wait.....");
         pDialog.setCancelable(true);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         pDialog.show();

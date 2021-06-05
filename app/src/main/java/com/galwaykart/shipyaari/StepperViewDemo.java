@@ -185,7 +185,7 @@ public class StepperViewDemo extends BaseActivity {
                 trackShipmentFedex();
             }
         }
-        else if(st_selected_shipping_type.equalsIgnoreCase("4")){
+        else if(st_selected_shipping_type.equalsIgnoreCase("4") || st_selected_shipping_type.equalsIgnoreCase("8")){
 
             if (st_selected_Track_id.equalsIgnoreCase("0"))
                 setTrackBar(list0, 4);

@@ -102,7 +102,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
     String subtotal_inc_tax="";
     String disc_amount="",stDonationTitle="";
     int stDonationValue=0;
-    String base_grand_total="",st_total_cart_ip="";
+    String base_grand_total="",st_total_cart_ip="", tax_amount="";
     Dialog dialog;
     EditText ed_edit_donation;
 
@@ -995,6 +995,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                             subtotal_inc_tax=jsonObj.getString("subtotal_incl_tax");
                             disc_amount=jsonObj.getString("discount_amount");
                             base_grand_total=jsonObj.getString("base_grand_total");
+                            tax_amount = jsonObj.getString("tax_amount");
                             String base_total=jsonObj.getString("base_subtotal");
 
                             String base_shipping_amount=jsonObj.getString("base_shipping_amount");
@@ -1062,7 +1063,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
                             SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
                             String login_group_id=pref.getString("login_group_id","");
-                            if(login_group_id.equals("4")) {
+                            if(login_group_id.equals("4") || login_group_id.equals("8")) {
 
                                 if(jsonObj.has("ip"))
                                     st_total_cart_ip=jsonObj.getString("ip");
@@ -1070,7 +1071,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                     st_total_cart_ip="";
                                 String sst_disc= (disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
 
-                                 String ip_text=st_total_cart_ip.equals("")?"":"Total PV/BV: " + st_total_cart_ip;
+                                 String ip_text=st_total_cart_ip.equals("")?"":"Total PV/BV/SBV: " + st_total_cart_ip;
                                  String st_text = "<b>"+ip_text+"<br/>" +
                                             "-------------------------------</b><br/>" +
                                             "Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
@@ -1078,6 +1079,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
                                              stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
                                             sst_disc+
+                                         "<br/>Tax Amount: " + tax_amount +"<br/>"+
                                             "Total Amount: ₹ " + st_base_grand_total;
 
 

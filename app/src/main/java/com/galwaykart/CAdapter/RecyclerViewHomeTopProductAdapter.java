@@ -63,7 +63,7 @@ public class RecyclerViewHomeTopProductAdapter extends RecyclerView.Adapter<Recy
 
         SharedPreferences pref = CommonFun.getPreferences(mContext);
         String login_group_id=pref.getString("login_group_id","");
-        if(login_group_id.equals("4")) {
+        if(login_group_id.equals("4") || login_group_id.equals("8")) {
             if (!TextUtils.isEmpty(dataModel.ip))
                 holder.tv_ipss.setText(dataModel.ip);
             else

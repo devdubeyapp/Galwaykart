@@ -20,8 +20,7 @@
             android:id="@+id/common_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            >
+            android:layout_alignParentTop="true">
 
             <include
                 layout="@layout/common_header_layout"
@@ -29,6 +28,14 @@
                 android:layout_height="wrap_content" />
 
         </RelativeLayout>
+
+        <include
+            layout="@layout/content_pincode_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/include_pin"
+            android:layout_below="@+id/common_header"/>
 
         <TextView
             android:id="@+id/tvItemName"
@@ -40,7 +47,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:layout_below="@+id/common_header" />
+            android:layout_below="@+id/include_pin" />
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -48,8 +55,7 @@
             android:layout_height="match_parent"
             android:fillViewport="true"
             android:layout_marginBottom="50dp"
-            android:layout_below="@+id/tvItemName"
-            >
+            android:layout_below="@+id/tvItemName">
 
 
             <RelativeLayout
@@ -67,8 +73,7 @@
                     android:id="@+id/flayout_pic"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
 
                     <ImageView
@@ -932,7 +937,6 @@
             android:background="@drawable/roundtextbtn_addcart"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-
             android:layout_marginTop="20dp"
 
             >

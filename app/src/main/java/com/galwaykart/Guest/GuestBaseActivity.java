@@ -559,7 +559,7 @@ public abstract class GuestBaseActivity extends AppCompatActivity
 
             SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
             String login_group_id=pref.getString("login_group_id","");
-            if(login_group_id.equals("4")) {
+            if(login_group_id.equals("4") || login_group_id.equals("8")) {
 
                 Intent intent = new Intent(this, UpdateAddressActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

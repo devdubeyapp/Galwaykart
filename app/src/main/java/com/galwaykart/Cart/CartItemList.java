@@ -235,9 +235,15 @@ public class CartItemList extends BaseActivity {
 
         SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
         login_group_id=pref.getString("login_group_id","");
+        Log.e("login_group_id", login_group_id);
         if(!login_group_id.equals("4")) {
            tv_total_ip.setVisibility(View.GONE);
         }
+
+
+     /*   if(!login_group_id.equals("8")) {
+            tv_total_ip.setVisibility(View.GONE);
+        }*/
 
         img_empty_cart= findViewById(R.id.img_empty_cart);
         st_offer_api_URL=st_offer_api_URL+"?customer_type="+login_group_id;
@@ -1041,7 +1047,7 @@ public class CartItemList extends BaseActivity {
                             editor.commit();
 
                             //Log.d("tv_total_ip",""+total_ip);
-                            tv_total_ip.setText("Total PV / BV : "+ total_ip);
+                            tv_total_ip.setText("Total PV/BV/SBV : "+ total_ip);
 
 
                             String base_total="";
@@ -1343,7 +1349,7 @@ public class CartItemList extends BaseActivity {
                            tv_txt_view.setVisibility(View.VISIBLE);
 
                            if(jsonObj.has("ip")) {
-                               tv_total_ip.setText("Total PV/BV : " + jsonObj.getString("ip") );
+                               tv_total_ip.setText("Total PV/BV/SBV : " + jsonObj.getString("ip") );
                                //Log.d("totalipSegment",total_ip);
                            }
 
@@ -2399,7 +2405,7 @@ public class CartItemList extends BaseActivity {
 
 
             login_group_id=pref.getString("login_group_id","");
-            if(login_group_id.equals("4")) {
+            if(login_group_id.equals("4") || login_group_id.equals("8")) {
                 holder.textView_ip_value.setText(prod_ip);
             }
             else

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -24,6 +25,7 @@ import com.galwaykart.Legal.FaqActivity;
 import com.galwaykart.Legal.WebViewActivity;
 import com.galwaykart.MovableFloatingActionButton;
 import com.galwaykart.MultiStoreSelection.StateSelectionDialog;
+import com.galwaykart.SingleProductView.MainActivity;
 import com.galwaykart.app_promo.AppPromotion;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
 import com.google.android.material.navigation.NavigationView;
@@ -52,7 +54,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -121,6 +125,8 @@ public class GuestHomePageActivity extends GuestBaseActivity
     RecyclerView recyclerView_Product;
     RecyclerView recyclerView_Category;
 
+
+
 //    private List<DataModelHomeCategory> itemdCatList;
 //    private List<DataModelHomeProduct> itemdProductList;
 //    private RecyclerViewHomeProductAdapter adapter;
@@ -160,6 +166,14 @@ Boolean is_rel_cross_app_visible=false;
         Button btn_galwayexam,btn_galwayfoundation;
 
         TextView tv_current_zone,tv_change_zone;
+
+        //Pincode_code_add
+        TableRow tbl_row1,tbl_row2,tbl_row3;
+        TextView btn_apply_pincode,btn_save_pincode,txt_pincode,btn_change_pincode;
+        EditText et_pincode;
+        String strSavePincode="";
+        String setPinCodeByUser="";
+
 
 
         private void openAppPromotionDetail(String app_id){
@@ -215,9 +229,6 @@ Boolean is_rel_cross_app_visible=false;
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-
         viewPager = findViewById(R.id.viewPager_tabs);
         tabLayout = findViewById(R.id.tabLayoutss);
         tabTopProducts = findViewById(R.id.tabTopProducts);
@@ -225,6 +236,98 @@ Boolean is_rel_cross_app_visible=false;
         tabShopByCategory = findViewById(R.id.tabShopByCategory);
         tabOffer = findViewById(R.id.tabOffer);
 
+        //Pincode
+        tbl_row1 = findViewById(R.id.tbl_row1);
+        tbl_row2 = findViewById(R.id.tbl_row2);
+        tbl_row3 = findViewById(R.id.tbl_row3);
+        txt_pincode = findViewById(R.id.txt_pincode);
+        et_pincode= findViewById(R.id.et_pincode);
+        btn_change_pincode = findViewById(R.id.btn_change_pincode);
+        btn_apply_pincode = findViewById(R.id.btn_apply_pincode);
+        btn_save_pincode = findViewById(R.id.btn_save_pincode);
+
+        SharedPreferences prefPincode;
+        prefPincode=CommonFun.getPreferences(GuestHomePageActivity.this);
+        setPinCodeByUser = prefPincode.getString("current_pincode_home", "");
+        txt_pincode.setText("Pincode : " + setPinCodeByUser);
+
+        if(setPinCodeByUser.equalsIgnoreCase(""))
+        {
+            tbl_row1.setVisibility(View.VISIBLE);
+            tbl_row2.setVisibility(View.GONE);
+            tbl_row3.setVisibility(View.GONE);
+
+        }
+        else
+        {
+            tbl_row3.setVisibility(View.VISIBLE);
+            tbl_row2.setVisibility(View.GONE);
+            tbl_row1.setVisibility(View.GONE);
+
+
+        }
+
+
+        btn_apply_pincode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tbl_row1.setVisibility(View.GONE);
+                tbl_row2.setVisibility(View.VISIBLE);
+
+            }
+        });
+        btn_save_pincode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(et_pincode.getText().toString().trim().equalsIgnoreCase(""))
+                {
+                    CommonFun.alertError(GuestHomePageActivity.this,"Please enter valid pincode...");
+                }
+                else if(et_pincode.getText().toString().trim().length() < 6){
+                    CommonFun.alertError(GuestHomePageActivity.this,"Please enter valid pincode...");
+                }
+
+                else
+                {
+                    strSavePincode= et_pincode.getText().toString().trim();
+
+                    SharedPreferences prefPincode;
+                    prefPincode=CommonFun.getPreferences(GuestHomePageActivity.this);
+                    SharedPreferences.Editor editor=prefPincode.edit();
+                    editor.putString("current_pincode_home",strSavePincode);
+                    editor.commit();
+
+                    final String setPinCodeByUser = prefPincode.getString("current_pincode_home", "");
+
+                    txt_pincode.setText("Pincode : " + setPinCodeByUser);
+                    tbl_row1.setVisibility(View.GONE);
+                    tbl_row2.setVisibility(View.GONE);
+                    tbl_row3.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+        btn_change_pincode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                tbl_row3.setVisibility(View.GONE);
+                tbl_row1.setVisibility(View.GONE);
+                tbl_row2.setVisibility(View.VISIBLE);
+
+
+                SharedPreferences prefPincode;
+                prefPincode=CommonFun.getPreferences(GuestHomePageActivity.this);
+                SharedPreferences.Editor editor=prefPincode.edit();
+                editor.putString("current_pincode_home",strSavePincode);
+                editor.commit();
+
+                final String setPinCodeByUser = prefPincode.getString("current_pincode_home", "");
+                txt_pincode.setText("Pincode : " + setPinCodeByUser);
+
+            }
+        });
 
 //        rel_cross_app_promo=(RelativeLayout)findViewById(R.id.rel_cross_app_promo);
 //        rel_cross_app_promo.setVisibility(View.GONE);
@@ -440,6 +543,7 @@ Boolean is_rel_cross_app_visible=false;
         //callHomeItemList(home_page_api);
         //refreshItemCount();
     }
+
 
         TransparentProgressDialog pDialog;
         final String TAG_region_code= "code";

@@ -828,7 +828,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
 //                                                else {
                                                         //arr_pay_code = new String[1];
 
-                                                        if(login_group_id.equalsIgnoreCase("4")) {
+                                                        if(login_group_id.equalsIgnoreCase("4") || login_group_id.equalsIgnoreCase("8")) {
                                                             arr_pay_code[current_index] = payment_code;
                                                             itemList.add(hashMap);
 
@@ -1095,7 +1095,7 @@ public class Payment_Method_Activity  extends BaseActivityWithoutCart {
                     });
                     SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
                     String login_group_id=pref.getString("login_group_id","");
-                    if(login_group_id.equals("4")) {
+                    if(login_group_id.equals("4") || login_group_id.equals("8")) {
                         //b.create().show();
                         String cust_id = pref.getString("login_customer_id","");
                         //Log.d("payment_selection",cust_id+"-"+finalSelItemCode);

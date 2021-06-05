@@ -413,7 +413,7 @@ public class OrderDetails extends BaseActivity {
         st_Order_details_URL= Global_Settings.api_url+"rest/V1/m-order/view/"+st_entity_id;
 
 
-        //Log.d("st_Order_details_URL", st_Order_details_URL);
+        //Log.e("st_Order_details_URL", st_Order_details_URL);
         // st_Order_details_URL = "http://www.galwaykart.in/glaze/order_details.php?id=000018118";
         //////Log.d("st_Order_details_URL",st_Order_details_URL);
         //callOrderDetails();
@@ -1792,7 +1792,7 @@ public class OrderDetails extends BaseActivity {
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
         queue = Volley.newRequestQueue(this);
-       // RequestQueue queue = Volley.newRequestQueue(this);
+        //RequestQueue queue = Volley.newRequestQueue(this);
 
         try {
             jsObjRequest = new JsonObjectRequest(Request.Method.GET, st_Order_details_URL,null, new Response.Listener<JSONObject>() {
@@ -1802,7 +1802,7 @@ public class OrderDetails extends BaseActivity {
                     if (pDialog.isShowing())
                         pDialog.dismiss();
 
-                    Log.d("st_Order_details_URL",response.toString());
+                    Log.e("order_details_response",response.toString());
 
                     if (response != null) {
                         try {

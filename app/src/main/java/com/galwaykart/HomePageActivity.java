@@ -10,6 +10,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -194,6 +196,15 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
     List<MenuModel> headerList = new ArrayList<>();
     HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
 
+
+
+    //Pincode_code_add
+    TableRow tbl_row1,tbl_row2,tbl_row3;
+    TextView btn_apply_pincode,btn_save_pincode,txt_pincode,btn_change_pincode;
+    EditText et_pincode;
+    String strSavePincode="";
+
+
     String dist_id="";
     private void openAppPromotionDetail(String app_id){
         Intent intent=new Intent(this, AppPromotion.class);
@@ -254,6 +265,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
         tabTopCategory = findViewById(R.id.tabTopCategory);
         tabShopByCategory = findViewById(R.id.tabShopByCategory);
         tabOffer = findViewById(R.id.tabOffer);
+
 
 
         cart_progressBar = findViewById(R.id.cart_progressBar);
@@ -332,6 +344,98 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
+
+        //Pincode
+        tbl_row1 = findViewById(R.id.tbl_row1);
+        tbl_row2 = findViewById(R.id.tbl_row2);
+        tbl_row3 = findViewById(R.id.tbl_row3);
+        txt_pincode = findViewById(R.id.txt_pincode);
+        et_pincode= findViewById(R.id.et_pincode);
+        btn_change_pincode = findViewById(R.id.btn_change_pincode);
+        btn_apply_pincode = findViewById(R.id.btn_apply_pincode);
+        btn_save_pincode = findViewById(R.id.btn_save_pincode);
+
+        SharedPreferences prefPincode;
+        prefPincode=CommonFun.getPreferences(HomePageActivity.this);
+        final String setPinCodeByUser = prefPincode.getString("current_pincode_home", "");
+        txt_pincode.setText("Pincode : " + setPinCodeByUser);
+
+        if(setPinCodeByUser.equalsIgnoreCase(""))
+        {
+            tbl_row1.setVisibility(View.VISIBLE);
+            tbl_row2.setVisibility(View.GONE);
+            tbl_row3.setVisibility(View.GONE);
+
+        }
+        else
+        {
+            tbl_row3.setVisibility(View.VISIBLE);
+            tbl_row2.setVisibility(View.GONE);
+            tbl_row1.setVisibility(View.GONE);
+
+        }
+
+
+        btn_apply_pincode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tbl_row1.setVisibility(View.GONE);
+                tbl_row2.setVisibility(View.VISIBLE);
+
+            }
+        });
+        btn_save_pincode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(et_pincode.getText().toString().trim().equalsIgnoreCase(""))
+                {
+                    CommonFun.alertError(HomePageActivity.this,"Please enter valid pincode...");
+                }
+                else if(et_pincode.getText().toString().trim().length() < 6){
+                    CommonFun.alertError(HomePageActivity.this,"Please enter valid pincode...");
+                }
+
+                else
+                {
+                    strSavePincode= et_pincode.getText().toString().trim();
+
+                    SharedPreferences prefPincode;
+                    prefPincode=CommonFun.getPreferences(HomePageActivity.this);
+                    SharedPreferences.Editor editor=prefPincode.edit();
+                    editor.putString("current_pincode_home",strSavePincode);
+                    editor.commit();
+
+                    final String setPinCodeByUser = prefPincode.getString("current_pincode_home", "");
+
+                    txt_pincode.setText("Pincode : " + setPinCodeByUser);
+                    tbl_row1.setVisibility(View.GONE);
+                    tbl_row2.setVisibility(View.GONE);
+                    tbl_row3.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+        btn_change_pincode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                tbl_row3.setVisibility(View.GONE);
+                tbl_row1.setVisibility(View.GONE);
+                tbl_row2.setVisibility(View.VISIBLE);
+
+
+                SharedPreferences prefPincode;
+                prefPincode=CommonFun.getPreferences(HomePageActivity.this);
+                SharedPreferences.Editor editor=prefPincode.edit();
+                editor.putString("current_pincode_home",strSavePincode);
+                editor.commit();
+
+                final String setPinCodeByUser = prefPincode.getString("current_pincode_home", "");
+                txt_pincode.setText("Pincode : " + setPinCodeByUser);
+
+            }
+        });
 
         expandableListView = findViewById(R.id.expandableListView);
         prepareMenuData();
@@ -493,6 +597,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MY_REQUEST_CODE) {
             if (resultCode != RESULT_OK) {
                 //log("Update flow failed! Result code: " + resultCode);
@@ -560,7 +665,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         }
 
                         else if(groupPosition == 8){
-                            Intent intent=new Intent(HomePageActivity.this, VendorRegistrationOld.class);
+                            Intent intent=new Intent(HomePageActivity.this, VendorRegistration.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             CommonFun.finishscreen(HomePageActivity.this);

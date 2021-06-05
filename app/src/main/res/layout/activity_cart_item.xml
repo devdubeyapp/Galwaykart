@@ -72,7 +72,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:id="@+id/tv_total_ip"
-            android:text="Total PV / BV:"
+            android:text="Total PV/BV/SBV:"
             android:textColor="@color/colorPrimary"
             android:textSize="18dp"
             android:layout_below="@+id/tv_discount" />

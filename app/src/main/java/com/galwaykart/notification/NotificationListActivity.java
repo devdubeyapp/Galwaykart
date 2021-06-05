@@ -143,6 +143,9 @@ public class NotificationListActivity extends AppCompatActivity {
                 case "4":
                     log_type = 0;
                     break;
+                case "8":
+                    log_type = 0;
+                    break;
                 case "5":
                     log_type = 1;
                     break;

@@ -218,6 +218,10 @@ public class GuestCartItemList extends GuestBaseActivity {
            tv_total_ip.setVisibility(View.GONE);
         }
 
+        if(!login_group_id.equals("8")) {
+            tv_total_ip.setVisibility(View.GONE);
+        }
+
         st_offer_api_URL=st_offer_api_URL+"?customer_type="+login_group_id;
 
         tbl_row1 = findViewById(R.id.tbl_row1);
@@ -362,7 +366,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                         pref = CommonFun.getPreferences(getApplicationContext());
                         String value_email=pref.getString("login_email","");
                         if(!value_email.equals("") && value_email!=null) {
-                            if (login_group_id.equalsIgnoreCase("4")) {
+                            if (login_group_id.equalsIgnoreCase("4") || login_group_id.equalsIgnoreCase("8")) {
                                 Intent intent = new Intent(GuestCartItemList.this, CustomerAddressBook.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -661,7 +665,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                                 editor.commit();
 
                                 //Log.d("tv_total_ip",""+total_ip_f);
-                                tv_total_ip.setText("Total PV / BV : "+ total_ip_f);
+                                tv_total_ip.setText("Total PV/BV/SBV : "+ total_ip_f);
                             }
 
                         } catch (Exception e) {
@@ -878,7 +882,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                                     tv_txt_view.setVisibility(View.VISIBLE);
 
                                     if(jsonObj.has("ip")) {
-                                        tv_total_ip.setText("Total PV / BV : " + jsonObj.getString("ip") );
+                                        tv_total_ip.setText("Total PV/BV/SBV : " + jsonObj.getString("ip") );
                                     }
 
                                 }
@@ -1073,7 +1077,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                                 editor.commit();
 
                                 //Log.d("tv_total_ip",""+total_ip_f);
-                                tv_total_ip.setText("Total PV / BV : "+ total_ip_f);
+                                tv_total_ip.setText("Total PV/BV/SBV : "+ total_ip_f);
                             }
 
 
@@ -3130,7 +3134,7 @@ public class GuestCartItemList extends GuestBaseActivity {
 
 
             login_group_id=pref.getString("login_group_id","");
-            if(login_group_id.equals("4")) {
+            if(login_group_id.equals("4") || login_group_id.equals("8")) {
                 holder.textView_ip_value.setText(prod_ip);
             }
             else

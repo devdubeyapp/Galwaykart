@@ -162,6 +162,9 @@ public class RegistrationActivity extends AppCompatActivity {
         if(!st_group_id.equalsIgnoreCase("4")) {
             button_sign_up.setText("Submit");
         }
+        if(!st_group_id.equalsIgnoreCase("8")) {
+            button_sign_up.setText("Submit");
+        }
 
         tverror=findViewById(R.id.tverror);
 
@@ -355,6 +358,14 @@ public class RegistrationActivity extends AppCompatActivity {
         //Log.d("st_group_id",st_group_id);
 
         if(!st_group_id.equalsIgnoreCase("4")) {
+            radioGroup.setVisibility(View.GONE);
+        }
+        else
+        {
+            radioGroup.setVisibility(View.VISIBLE);
+        }
+
+        if(!st_group_id.equalsIgnoreCase("8")) {
             radioGroup.setVisibility(View.GONE);
         }
         else
@@ -572,7 +583,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 rel_layout4.setVisibility(View.GONE);
 
 
-                if(st_group_id.equalsIgnoreCase("4") || st_group_id.equalsIgnoreCase("5")) {
+                if(st_group_id.equalsIgnoreCase("4") || st_group_id.equalsIgnoreCase("5")  || st_group_id.equalsIgnoreCase("8")) {
 
                     first_name.setText(st_Fname);
                     last_name.setText(st_Lname);
@@ -668,7 +679,7 @@ public class RegistrationActivity extends AppCompatActivity {
 /**
  *  for distributor
  */
-            else if(st_group_id.equals("4")) {
+            else if(st_group_id.equals("4") || st_group_id.equals("8") ) {
                 st_dist_id = dist_id.getText().toString();
                 if (!st_dist_id.equalsIgnoreCase("")) {
                     st_Get_Dist_details_URL = Global_Settings.galway_api_url + "returnapi/Load_Guest?ID=" + st_dist_id;
@@ -771,7 +782,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                                 if(st_status==false){
 
-                                   if(user_type.equalsIgnoreCase("4"))
+                                   if(user_type.equalsIgnoreCase("4") || user_type.equalsIgnoreCase("8"))
                                    {
                                        getDistributorDetails();
                                    }
@@ -893,7 +904,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                             String cust_id=ed_dist_id.getText().toString().trim();
 
-                            if(st_group_id.equalsIgnoreCase("4") ) {
+                            if(st_group_id.equalsIgnoreCase("4") || st_group_id.equalsIgnoreCase("8")) {
 
                                 SharedPreferences.Editor editor = pref.edit();
                                 editor.putString("user_email",st_email);
@@ -989,7 +1000,7 @@ private void registerUser()
                 "\"password\":\""+password.getText().toString().trim() +"\""+
                 "}";
     }
-    if(st_group_id.equalsIgnoreCase("4")) {
+    if(st_group_id.equalsIgnoreCase("4") || st_group_id.equalsIgnoreCase("8")) {
         ////Log.d("inputsubmit",selected_franch_code);
         //Log.d("dibid",ed_dist_id.getText().toString().trim());
         //Log.d("ctype",st_group_id);
@@ -1326,7 +1337,7 @@ private void registerUser()
                                 editor.commit();
 
 
-                                if(st_group_id.equalsIgnoreCase("4")) {
+                                if(st_group_id.equalsIgnoreCase("4") || st_group_id.equalsIgnoreCase("8")) {
 
                                    // verifyDistID();
                                     sendOtpViaAPI();
@@ -1781,7 +1792,7 @@ private void registerUser()
                             try {
 
                                 rel_layout4.setVisibility(View.VISIBLE);
-                                if(st_group_id.equals("4"))
+                                if(st_group_id.equals("4") || st_group_id.equals("8"))
                                     radioGroup.setVisibility(View.VISIBLE);
                                 else
                                     radioGroup.setVisibility(View.GONE);
