@@ -1816,6 +1816,24 @@ public class OrderDetails extends BaseActivity {
                                 donation_title=response.getString("donation_title");
                             }
 
+
+                            String st_rebate_points="";
+                            String st_rebate_title="";
+
+                            if(response.has("rebate_value")){
+                                st_rebate_points=response.getString("rebate_value");
+                            }
+                            if(response.has("rebate_title")){
+                                st_rebate_title=response.getString("rebate_title");
+                            }
+
+
+
+
+
+
+
+
                             //code written on 28 Dec 2020 for show CC team remarks to the customer
                             if(response.has("crm_remark"))
                             {
@@ -1895,6 +1913,7 @@ public class OrderDetails extends BaseActivity {
 
 
                                 Log.e("st_item_status", st_item_status);
+                                Log.e("TAG_total_qty_ordered", st_total_qty_ordered);
 
 
                                 //String st_tracking_no,String st_shippment_details,String st_salesshippment_details,String st_ShipmentText
@@ -2036,10 +2055,13 @@ public class OrderDetails extends BaseActivity {
                             // end - for edit shipping address 20 may 2020
 
                             String st_donation_text=(donation_amout.equals("")||donation_amout.equals("0"))?"":(donation_title+" : ₹ "+donation_amout+"\n");
+                            String st_rebate_value_text=(st_rebate_points.equals("")||st_rebate_points.equals("0"))?"":(st_rebate_title+" : ₹ "+st_rebate_points+"\n");
 
                             String base_subtotal=jsonObject.getString("base_subtotal");
                             String shipping_amount=jsonObject.getString("shipping_amount");
                             String disc_amount=jsonObject.getString("discount_amount");
+
+                            String str_total_qty_ordered=jsonObject.getString("total_qty_ordered");
 
 
                             String sst_disc= (disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
@@ -2050,14 +2072,16 @@ public class OrderDetails extends BaseActivity {
                             tv_shipping_address.setText(st_ship_cust_full_name +"\n"+ "Ph. "+ st_ship_cust_telephone +"\n"+ st_ship_street+", "+st_ship_city+"\n"+st_ship_region+" ,"+st_ship_postcode+"\n");
 
                             String st_text=
-                                    "Cart Subtotal ("+ st_total_qty_ordered + " item) <br/>Inc Tax: ₹ " + base_subtotal +
+                                    "Cart Subtotal ("+ str_total_qty_ordered + " item) <br/>Inc Tax: ₹ " + base_subtotal +
                                     "<br/>Shipping Charge: " + shipping_amount +"<br/>"+
-                                    st_donation_text +"<br/>"+
+                                    st_donation_text +"<br/>"+ st_rebate_value_text +"<br/>"+
                                     sst_disc+
                                     "Total Amount: ₹ " + order_grand_total;
 
 
                             tv_order_total.setText(Html.fromHtml(st_text));
+
+                            Log.e("str_total_qty_ordered", str_total_qty_ordered);
 
 
 

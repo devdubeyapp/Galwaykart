@@ -24,8 +24,7 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        >
+        android:layout_gravity="center">
 
 
         <RelativeLayout
@@ -58,6 +57,21 @@
                 android:layout_marginRight="5dp"
                 />
 
+            <TextView
+                android:id="@+id/tv_p_lv"
+                android:visibility="@{(productDetails.login_user_id.equals(@string/distributor_id) &amp;&amp; productDetails.loyalty_value!=``)? View.VISIBLE : View.GONE}"
+                android:text="@{productDetails.loyalty_value}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorwhite"
+                android:background="@color/colorPrimary"
+                android:layout_below="@+id/tv_ipss"
+                android:layout_alignParentRight="true"
+                android:padding="2dp"
+                android:textSize="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp" />
+
             <ImageView
                 android:id="@+id/imageView_product"
                 android:layout_width="match_parent"
@@ -65,22 +79,36 @@
                 android:background="#00000000"
                 android:clickable="true"
                 android:scaleType="fitXY"
-                android:layout_below="@+id/tv_ipss"
+                android:layout_below="@+id/tv_p_lv"
                 app:imageUrl="@{productDetails.imageUrl}"
-                android:onClick="@{()->clickHandler.clickListener(productDetails)}"
+                android:onClick="@{()->clickHandler.clickListener(productDetails)}" />
 
-                />
+            <TextView
+                android:id="@+id/tv_category_segregation"
+                android:visibility="@{(productDetails.login_user_id.equals(@string/distributor_id) &amp;&amp; productDetails.category_segregation!=``)? View.VISIBLE : View.GONE}"
+                android:text="@{productDetails.category_segregation}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/colorYellow"
+                android:layout_below="@+id/imageView_product"
+                android:gravity="center"
+                android:padding="2dp"
+                android:textSize="12dp"/>
+
+
+
 
 
             <TextView
                 android:id="@+id/textView_name"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:textColor="#000"
                 android:text="@{productDetails.pname}"
                 android:padding="5dp"
-                android:layout_below="@+id/imageView_product" />
+                android:layout_below="@+id/tv_category_segregation" />
 
             <TextView
                 android:id="@+id/textView_price"
@@ -90,6 +118,7 @@
                 android:textColor="#000"
                 android:text="@{productDetails.price}"
                 android:layout_below="@+id/textView_name" />
+
             <TextView
                 android:id="@+id/textView_more_link"
                 android:layout_width="wrap_content"

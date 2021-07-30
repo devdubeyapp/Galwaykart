@@ -286,7 +286,7 @@ public class SplashActivity extends AppCompatActivity {
 
        // progress_bar.setVisibility(View.VISIBLE);
 
-        Log.d("responsebanner",url_cart_item_list);
+        Log.d("responsebanner_splash",url_cart_item_list);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
@@ -295,7 +295,8 @@ public class SplashActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("responsebanner", response.toString());
+                        Log.d("responsebanner_splash", response.toString());
+                        Log.e("responsebanner_splash", response.toString());
                         SharedPreferences pref;
                         pref=CommonFun.getPreferences(SplashActivity.this);
                         SharedPreferences.Editor editor=pref.edit();
@@ -403,6 +404,9 @@ else
                     String psku = jsonObject_product.getString("sku");
                     String pimage = jsonObject_product.getString("image");
                     String pip =  jsonObject_product.getString("ip");
+                    String top_p_lv =  jsonObject_product.getString("loyalty_value");
+                    String top_category_segregation =  jsonObject_product.getString("category_segregation");
+
 
 
                     String login_group_id = pref.getString("login_group_id", "");
@@ -422,12 +426,15 @@ else
                           ProductDataModel productDataModel=realm_1.createObject(ProductDataModel.class);
                           productDataModel.setPname(pname);
                           productDataModel.setIp(pip);
+                          productDataModel.setLoyalty_value(top_p_lv);
+                          productDataModel.setCategory_segregation(top_category_segregation);
                           productDataModel.setPrice("");
                           productDataModel.setSku(psku);
                           productDataModel.setImage(pimage);
                           productDataModel.setP_category_id("");
                           productDataModel.setP_category_name("");
                           productDataModel.setLogin_user_id(login_group_id);
+
 
 
 

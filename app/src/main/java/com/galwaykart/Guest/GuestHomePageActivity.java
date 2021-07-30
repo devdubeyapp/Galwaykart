@@ -669,7 +669,7 @@ Boolean is_rel_cross_app_visible=false;
         private void callHomeItemList(String url_cart_item_list) {
 
             String response="";
-            Log.d("responsebanner", response.toString());
+            Log.d("responsebanner_guest", response.toString());
 
             SharedPreferences pref;
             pref=CommonFun.getPreferences(GuestHomePageActivity.this);

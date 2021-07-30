@@ -145,7 +145,7 @@ public class GuestCartItemList extends GuestBaseActivity {
     RecyclerView recyclerView_RecentItem;
     private List<DataModelRecentItem> list_recent_item;
     Boolean recent_view_item_load=false;
-    TextView tv_recent_view_item,tv_total_ip;
+    TextView tv_recent_view_item,tv_total_ip, tv_total_loyalty_value;
 
     Boolean user_details_already_fetch;
     String st_sales_user_zone="";
@@ -211,15 +211,18 @@ public class GuestCartItemList extends GuestBaseActivity {
         progress_bar.setVisibility(View.GONE);
         tv_txt_view = findViewById(R.id.tv_txt_view);
         tv_total_ip= findViewById(R.id.tv_total_ip);
+        tv_total_loyalty_value= findViewById(R.id.tv_total_loyalty_value);
 
         SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
         login_group_id=pref.getString("login_group_id","");
-        if(!login_group_id.equals("4")) {
-           tv_total_ip.setVisibility(View.GONE);
+        if(!login_group_id.equals("4") ) {
+            tv_total_ip.setVisibility(View.GONE);
+            tv_total_loyalty_value.setVisibility(View.GONE);
         }
 
         if(!login_group_id.equals("8")) {
             tv_total_ip.setVisibility(View.GONE);
+            tv_total_loyalty_value.setVisibility(View.GONE);
         }
 
         st_offer_api_URL=st_offer_api_URL+"?customer_type="+login_group_id;
@@ -1281,7 +1284,7 @@ public class GuestCartItemList extends GuestBaseActivity {
              * add all cart item in listview
              */
 
-            listof_cart_item.add(new DataModelCart_v1(arr_qty[i],arr_name[i],arr_price[i],arr_boolean[i],arr_sku[i],product_ip[i],arr_boolean_edit[i],""));
+            listof_cart_item.add(new DataModelCart_v1(arr_qty[i],arr_name[i],arr_price[i],arr_boolean[i],arr_sku[i],product_ip[i],arr_boolean_edit[i],"",""));
 
         }
 
@@ -3095,8 +3098,14 @@ public class GuestCartItemList extends GuestBaseActivity {
 
                 textView_name = convertView.findViewById(R.id.textView_name);
                 imageView_Item= convertView.findViewById(R.id.imageView_Item);
+
+
                 textView_ip_value = convertView.findViewById(R.id.textView_ip_value);
                 textView_ip = convertView.findViewById(R.id.textView_ip);
+
+                textView_ip_value = convertView.findViewById(R.id.textView_ip_value);
+                textView_ip = convertView.findViewById(R.id.textView_ip);
+
                 textView_itemprice = convertView.findViewById(R.id.textView_itemprice);
                 itemqty = convertView.findViewById(R.id.itemqty);
                 iv_minus_cart_item = convertView.findViewById(R.id.iv_minus_cart_item);
@@ -3141,6 +3150,9 @@ public class GuestCartItemList extends GuestBaseActivity {
             {
                 holder.textView_ip_value.setVisibility(View.GONE);
                 holder.textView_ip.setVisibility(View.GONE);
+                holder.textView_ip_value.setVisibility(View.GONE);
+                holder.textView_ip.setVisibility(View.GONE);
+
             }
 
 

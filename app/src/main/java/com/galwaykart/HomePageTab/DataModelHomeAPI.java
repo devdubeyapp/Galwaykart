@@ -11,6 +11,8 @@ public class DataModelHomeAPI extends RealmObject {
     String p_image;
     String p_banner_category;
     String cat_title;
+    String p_loyalty_value;
+
 
 
     public String getP_catid() {

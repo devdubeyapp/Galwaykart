@@ -13,6 +13,20 @@ public class DataModelCart_v1 {
     String arr_updated_cart_qty;
     String arr_sku,product_ip;
     String arr_boolean_edit;
+    String product_lv;
+
+    public String getProduct_lv() {
+        return product_lv;
+    }
+
+    public void setProduct_lv(String product_lv) {
+        this.product_lv = product_lv;
+    }
+
+
+
+
+
 
     public String getArr_error_message() {
         return arr_error_message;
@@ -35,6 +49,9 @@ public class DataModelCart_v1 {
     public void setProduct_ip(String product_ip) {
         this.product_ip = product_ip;
     }
+
+
+
 
     public String getArr_boolean_edit() {
         return arr_boolean_edit;
@@ -92,7 +109,8 @@ public class DataModelCart_v1 {
 
     public DataModelCart_v1(String arr_cart_qty, String arr_item_name, String arr_item_price, String arr_boolean,String arr_sku,String product_ip,
                             String arr_boolean_edit,
-                            String arr_error_message) {
+                            String arr_error_message,
+                            String product_lv) {
         this.arr_cart_qty = arr_cart_qty;
         this.arr_item_name = arr_item_name;
         this.arr_item_price = arr_item_price;
@@ -101,6 +119,7 @@ public class DataModelCart_v1 {
         this.product_ip = product_ip;
         this.arr_boolean_edit = arr_boolean_edit;
         this.arr_error_message=arr_error_message;
+        this.product_lv = product_lv;
     }
 
 

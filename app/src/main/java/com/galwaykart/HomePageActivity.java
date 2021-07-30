@@ -124,6 +124,7 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             R.drawable.product_icon,
             R.drawable.product_icon,
             R.drawable.product_icon,
+            +
             R.drawable.product_icon
     };
 
@@ -1013,7 +1014,8 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
             results.load();
             total_banner_item=results.size();
             response = results.asJSON();
-            //Log.d("res_res", response);
+            Log.d("res_home_page_prd", response);
+            Log.e("res_home_page_prd", response);
         }
         finally {
             realm.close();

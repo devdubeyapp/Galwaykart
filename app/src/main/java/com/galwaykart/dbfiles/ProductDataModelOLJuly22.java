@@ -17,7 +17,7 @@ import io.realm.RealmObject;
 //import androidx.room.PrimaryKey;
 
 //@Entity(tableName = "table_product_detail")
-public class ProductDataModel extends RealmObject {
+public class ProductDataModelOLJuly22 extends RealmObject {
 
 
 //    @PrimaryKey
@@ -30,9 +30,6 @@ public class ProductDataModel extends RealmObject {
 
     //@ColumnInfo(name = "ip")
     public String ip;
-
-    //@ColumnInfo(name = "loyalty_value")
-    public String loyalty_value;
 
     //@ColumnInfo(name = "price")
     public String price;
@@ -49,21 +46,13 @@ public class ProductDataModel extends RealmObject {
     //@ColumnInfo(name = "login_user_id")
     public String login_user_id;
 
-    //@ColumnInfo(name = "category_segregation")
-    public String category_segregation;
+    public ProductDataModelOLJuly22(){}
 
-
-
-    public ProductDataModel(){}
-
-
-
-
-    public ProductDataModel(
+    public ProductDataModelOLJuly22(
             String pname, String ip,
             String price, String sku,
             String image, String p_category_id,
-            String p_category_name, String login_user_id, String loyalty_value, String category_segregation) {
+            String p_category_name, String login_user_id) {
         this.pname = pname;
         this.ip = ip;
         this.price = price;
@@ -72,18 +61,7 @@ public class ProductDataModel extends RealmObject {
         this.p_category_id=p_category_id;
         this.p_category_name=p_category_name;
         this.login_user_id=login_user_id;
-        this.loyalty_value=loyalty_value;
-        this.category_segregation=category_segregation;
 
-    }
-
-
-    public String getLoyalty_value() {
-        return loyalty_value;
-    }
-
-    public void setLoyalty_value(String loyalty_value) {
-        this.loyalty_value = loyalty_value;
     }
 
     public String getP_category_id() {
@@ -152,16 +130,6 @@ public class ProductDataModel extends RealmObject {
     public void setImage(String image) {
         this.imageUrl = image;
     }
-
-    public String getCategory_segregation() {
-        return category_segregation;
-    }
-
-    public void setCategory_segregation(String category_segregation) {
-        this.category_segregation = category_segregation;
-    }
-
-
 
 
     @BindingAdapter({"bind:imageUrl"})

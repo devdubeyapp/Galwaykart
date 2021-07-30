@@ -122,7 +122,7 @@ public class CartItemList extends BaseActivity {
             delete_to_cart_URL = "", st_qty_api = "",
             cart_item_id = "";
 
-    String [] arr_sku_off,product_ip;
+    String [] arr_sku_off,product_ip, product_lv;
     String [] arr_qty_off,arr_thrshold_amt;
     String[] arr_sku, arr_qty, arr_quote_id, arr_name, arr_price, arr_initial_qty, arr_final_qty, arr_boolean, arr_qty_api, arr_item_id,
             arr_updated_cart_qty,arr_stock_qty;
@@ -142,8 +142,8 @@ public class CartItemList extends BaseActivity {
     ProgressBar progress_bar;
     DatabaseHandler dbh;
     TextView tv_txt_view, tv_discount;
-    String total_grand_amount = "0",total_ip = "0";
-    Double total_ip_f;
+    String total_grand_amount = "0",total_ip = "0",  total_loyalty_value= "0";
+    Double total_ip_f, total_loyalty_value_f;
     Boolean data_load = false;
     String subtotal_inc_tax = "";
     String disc_amount = "";
@@ -156,7 +156,7 @@ public class CartItemList extends BaseActivity {
     RecyclerView recyclerView_RecentItem;
     private List<DataModelRecentItem> list_recent_item;
     Boolean recent_view_item_load=false;
-    TextView tv_recent_view_item,tv_total_ip;
+    TextView tv_recent_view_item,tv_total_ip,tv_total_loyalty_value;
 
     Boolean user_details_already_fetch;
     String st_sales_user_zone="";
@@ -232,18 +232,18 @@ public class CartItemList extends BaseActivity {
         tv_discount = findViewById(R.id.tv_discount);
         tv_discount.setVisibility(View.GONE);
         tv_total_ip= findViewById(R.id.tv_total_ip);
+        tv_total_loyalty_value= findViewById(R.id.tv_total_loyalty_value);
 
         SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
         login_group_id=pref.getString("login_group_id","");
         Log.e("login_group_id", login_group_id);
-        if(!login_group_id.equals("4")) {
+        if(!login_group_id.equals("4") && !login_group_id.equals("8")) {
            tv_total_ip.setVisibility(View.GONE);
+           tv_total_loyalty_value.setVisibility(View.GONE);
         }
 
 
-     /*   if(!login_group_id.equals("8")) {
-            tv_total_ip.setVisibility(View.GONE);
-        }*/
+
 
         img_empty_cart= findViewById(R.id.img_empty_cart);
         st_offer_api_URL=st_offer_api_URL+"?customer_type="+login_group_id;
@@ -671,6 +671,7 @@ public class CartItemList extends BaseActivity {
                                // tv_total_ip.setText("Total IP : "+ total_ip_f);
 
 
+
                             }
 
 
@@ -1046,8 +1047,17 @@ public class CartItemList extends BaseActivity {
                             editor.putString("cart_ip",""+total_ip);
                             editor.commit();
 
-                            //Log.d("tv_total_ip",""+total_ip);
                             tv_total_ip.setText("Total PV/BV/SBV : "+ total_ip);
+
+
+
+                            total_loyalty_value=jsonObj.getString("loyalty_value");
+                            Log.e("total_loyalty_value",total_loyalty_value);
+
+                            tv_total_loyalty_value.setText("Total Loyalty Value : "+ total_loyalty_value);
+                            //Log.d("tv_total_ip",""+total_ip);
+                            Log.e("total_loyalty_value_s",""+tv_total_loyalty_value);
+
 
 
                             String base_total="";
@@ -1201,6 +1211,16 @@ public class CartItemList extends BaseActivity {
                                //Log.d("totalip",total_ip);
                             }
 
+                            if(jsonObj.has("loyalty_value"))
+                            {
+                                total_loyalty_value=jsonObj.getString("loyalty_value");
+                                //Log.d("totalip",total_ip);
+                            }
+
+
+
+
+
                             is_error=jsonObj.getString("is_error");
                             JSONArray custom_data = jsonObj.getJSONArray("cart_items");
 
@@ -1232,6 +1252,7 @@ public class CartItemList extends BaseActivity {
                             arr_stock_qty=new String[total_cart_qty_new];
                             arr_show_qty=new Boolean[total_cart_qty_new];
                             product_ip=new String[total_cart_qty_new];
+                            product_lv = new String[total_cart_qty_new];
 
 
                             /**
@@ -1292,6 +1313,7 @@ public class CartItemList extends BaseActivity {
                                 arr_show_qty[i]=true;
 
                                 product_ip[i] = c.getString("ip");
+                                product_lv[i] = c.getString("loyalty_value");
 
                                 String st_product_image=c.getString("image");
                                 DatabaseHandler dbh = new DatabaseHandler(CartItemList.this);
@@ -1352,6 +1374,11 @@ public class CartItemList extends BaseActivity {
                                tv_total_ip.setText("Total PV/BV/SBV : " + jsonObj.getString("ip") );
                                //Log.d("totalipSegment",total_ip);
                            }
+                           if(jsonObj.has("loyalty_value"))
+                           {
+                               total_loyalty_value = jsonObj.getString("loyalty_value");
+                               tv_total_loyalty_value.setText("Total Loyalty Value : "+ total_loyalty_value);
+                           }
 
                        }
                        else
@@ -1393,6 +1420,8 @@ public class CartItemList extends BaseActivity {
                                 list_cart_item.setVisibility(View.GONE);
                                 tv_txt_view.setText("Cart Item Subtotal");
                                 tv_total_ip.setVisibility(View.GONE);
+                                tv_total_loyalty_value.setVisibility(View.GONE);
+
 
 
                             }
@@ -1472,7 +1501,7 @@ public class CartItemList extends BaseActivity {
             /**
              * add all cart item in listview
              */
-            listof_cart_item.add(new DataModelCart_v1(arr_qty[i],arr_name[i],arr_price[i],arr_boolean[i],arr_sku[i],product_ip[i],arr_boolean_edit[i],arr_out_stock_msg[i]));
+            listof_cart_item.add(new DataModelCart_v1(arr_qty[i],arr_name[i],arr_price[i],arr_boolean[i],arr_sku[i],product_ip[i],arr_boolean_edit[i],arr_out_stock_msg[i], product_lv[i]));
 
         }
 
@@ -1482,7 +1511,7 @@ public class CartItemList extends BaseActivity {
         //Log.d("total_cart_count",total_cart_qty_new+"");
         for (int i = 0; i < total_cart_qty_new ; i++) {
 
-            if (!arr_price[i].equals("0") && !arr_qty[i].equals("-1") && !arr_qty[i].equals("0") && !product_ip[i].equals("0") ) {
+            if (!arr_price[i].equals("0") && !arr_qty[i].equals("-1") && !arr_qty[i].equals("0") && !product_ip[i].equals("0") && !product_lv[i].equals("0") ) {
 
                 Double total_amt = Double.parseDouble(arr_price[i]) * Integer.parseInt(arr_qty[i]);
                 total_grand_amount = String.valueOf(Double.parseDouble(total_grand_amount) + Math.round(total_amt * 100.0) / 100.0);
@@ -2346,6 +2375,7 @@ public class CartItemList extends BaseActivity {
             TextView itemqty;
             TextView textView_price,textView_ip,textView_ip_value;
             TextView tv_msg;
+            TextView textView_lv, textView_loyalty_value;
             Button tv_update_qty_alert;
 
             ImageView iv_minus_cart_item;
@@ -2367,6 +2397,10 @@ public class CartItemList extends BaseActivity {
                 imageView_Item= convertView.findViewById(R.id.imageView_Item);
                 textView_ip_value = convertView.findViewById(R.id.textView_ip_value);
                 textView_ip = convertView.findViewById(R.id.textView_ip);
+
+                textView_lv = convertView.findViewById(R.id.textView_lv);
+                textView_loyalty_value = convertView.findViewById(R.id.textView_loyalty_value);
+
                 textView_itemprice = convertView.findViewById(R.id.textView_itemprice);
                 itemqty = convertView.findViewById(R.id.itemqty);
                 iv_minus_cart_item = convertView.findViewById(R.id.iv_minus_cart_item);
@@ -2403,15 +2437,24 @@ public class CartItemList extends BaseActivity {
 
             final  String prod_ip = dataModel.getProduct_ip();
 
+            final  String prod_loyalty_value = dataModel.getProduct_lv();
+
 
             login_group_id=pref.getString("login_group_id","");
             if(login_group_id.equals("4") || login_group_id.equals("8")) {
                 holder.textView_ip_value.setText(prod_ip);
+                holder.textView_loyalty_value.setText(prod_loyalty_value);
+
+
             }
             else
             {
                 holder.textView_ip_value.setVisibility(View.GONE);
                 holder.textView_ip.setVisibility(View.GONE);
+
+                holder.textView_loyalty_value.setVisibility(View.GONE);
+                holder.textView_lv.setVisibility(View.GONE);
+
             }
 
 

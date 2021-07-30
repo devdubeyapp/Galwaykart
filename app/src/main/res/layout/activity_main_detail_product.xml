@@ -77,24 +77,21 @@
 
 
                     <ImageView
-
                         android:layout_width="250dp"
                         android:layout_height="250dp"
                         android:id="@+id/img_view_product_image"
                         android:src="@drawable/blank"
                         android:background="@drawable/blank"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
+
+
 
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/pager_view_products"
                         android:layout_width="250dp"
                         android:layout_height="250dp"
-
                         android:scrollIndicators="right"
-                        android:layout_marginTop="10dp"
-
-                        >
+                        android:layout_marginTop="10dp">
 
                     </androidx.viewpager.widget.ViewPager>
 
@@ -115,6 +112,20 @@
                     android:layout_below="@+id/flayout_pic"
                     >
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_product_segregation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_below="@+id/viewPagerCountDots" />
+
+
                 <!--Price-->
                 <TextView
                     android:id="@+id/tvItemPrice"
@@ -126,8 +137,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
-                    android:layout_below="@+id/viewPagerCountDots"
-                    />
+                    android:layout_below="@+id/tv_product_segregation" />
                 <!--Add to cart-->
                 <RelativeLayout
                     android:id="@+id/spinnerlinear"

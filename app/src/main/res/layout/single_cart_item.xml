@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="1"
-    >
+    android:weightSum="1">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -125,6 +124,36 @@
             android:textSize="14dp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/textView_lv"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="ARLRDBD"
+            android:text="Loyalty Value"
+            android:layout_below="@+id/textView_ip"
+            android:layout_toRightOf="@+id/imageView_Item"
+            android:textColor="@color/text"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView_loyalty_value"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="ARLRDBD"
+            android:text="2"
+            android:layout_below="@+id/textView_ip_value"
+            android:layout_toRightOf="@+id/textView_lv"
+            android:textColor="@color/text"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+
+
 
         <TextView
             android:id="@+id/textView_qty"
@@ -135,7 +164,7 @@
             android:fontFamily="ARLRDBD"
             android:text="Qty: "
             android:layout_toRightOf="@+id/imageView_Item"
-            android:layout_below="@+id/textView_ip"
+            android:layout_below="@+id/textView_lv"
 
             android:textColor="@color/text"
             android:textSize="14dp"
@@ -151,7 +180,7 @@
             android:layout_marginRight="200dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="16dp"
-            android:layout_below="@+id/textView_ip"
+            android:layout_below="@+id/textView_lv"
             android:layout_toRightOf="@+id/textView_qty"
             android:visibility="visible"
             >

@@ -184,10 +184,7 @@ public class HomePage_CategoryTab extends Fragment {
     {
         String response="";
         Realm realm= Realm.getDefaultInstance();
-        RealmResults<DataModelHomeAPI> results=
-                realm.where(DataModelHomeAPI.class)
-                        .equalTo("p_banner_category","category")
-                        .findAllAsync();
+        RealmResults<DataModelHomeAPI> results= realm.where(DataModelHomeAPI.class).equalTo("p_banner_category","category").findAllAsync();
         results.load();
         response=results.asJSON();
 

@@ -386,7 +386,7 @@ public class HomePageActivity_v1 extends AppCompatActivity
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("responsebanner", response.toString());
+                        Log.d("responsebanner23july", response.toString());
 
                         try {
                             JSONObject jsonObj = null;
@@ -438,6 +438,8 @@ public class HomePageActivity_v1 extends AppCompatActivity
                                 String pprice=jsonObject_product.getString("price");
                                 String psku=jsonObject_product.getString("sku");
                                 String pimage=jsonObject_product.getString("image");
+                                String p_lv=jsonObject_product.getString("loyalty_value");
+
 
                                 itemdProductList.add(new DataModelHomeProduct(pname,pprice,psku,pimage,""));
                                 setProductAdapter();

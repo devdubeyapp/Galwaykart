@@ -114,8 +114,8 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
  * See review and give rating
  */
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener {
-    private static final int REQUEST_CODE_EXAMPLE = 1;
-    Spinner spinner1, spinner2, spinner_qty;
+        private static final int REQUEST_CODE_EXAMPLE = 1;
+        Spinner spinner1, spinner2, spinner_qty;
 
     TextView tvItemName,tv_add_to_cart;
     TextView tvItemPrice,tvItemShort,tvItemLong,tv_associate_products,tv_associate_products_details;
@@ -228,6 +228,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     RecyclerView recycle_view_size;
     RelativeLayout rel_horizontal_view;
     String st_hamper_desc="";
+    String st_loyalty_label="", st_loyalty_value="", st_category_segregation="";
     Realm realm;
     /**
      * Check if user zone details already fetch
@@ -281,6 +282,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
 
     private String strHomeScreenPinCode;
+
+    private TextView tv_product_segregation;
+
 
 
 
@@ -746,6 +750,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         tvItemLong_title= findViewById(R.id.tvItemLong_title);
         tv_associate_products = findViewById(R.id.tv_associate_products);
         tv_associate_products_details = findViewById(R.id.tv_associate_products_details);
+
+        tv_product_segregation= findViewById(R.id.tv_product_segregation);
 
 
 
@@ -2279,6 +2285,37 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                     if (c.getString("attribute_code").equalsIgnoreCase("hamper_description")) {
                         st_hamper_desc = c.getString("value");
                     }
+                    if (c.getString("attribute_code").equalsIgnoreCase("loyalty_label")) {
+                        st_loyalty_label = c.getString("value");
+                        Log.e("st_loyalty_label",st_loyalty_label);
+                    }
+
+                    if (c.getString("attribute_code").equalsIgnoreCase("loyalty_value")) {
+                        st_loyalty_value = c.getString("value");
+                        Log.e("loyalty_value",st_loyalty_label);
+                    }
+
+                    if (c.getString("attribute_code").equalsIgnoreCase("category_segregation")) {
+                        String strCG = c.getString("value");
+
+                        Log.e("strCG", strCG);
+
+                        if(strCG.equalsIgnoreCase("286"))
+                            st_category_segregation = "Supreme";
+
+                        else if(strCG.equalsIgnoreCase("287"))
+                            st_category_segregation = "Standard";
+
+                        else if(strCG.equalsIgnoreCase("288"))
+                            st_category_segregation = "Economy";
+
+                        else if(strCG.equalsIgnoreCase("289"))
+                            st_category_segregation = "Catalog";
+
+                        Log.e("category_segregation",st_category_segregation);
+
+
+                    }
                 }
 
                 if (is_salable == false) {
@@ -2299,15 +2336,20 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
                 String login_group_id = pref.getString("login_group_id", "");
                 if (login_group_id.equals("4")) {
-                    short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n";
+                    short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n" +  st_loyalty_label + ": " + st_loyalty_value ;
+                    tv_product_segregation.setText(st_category_segregation);
+
+                    //short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n\n"  + st_loyalty_label + ": " + st_loyalty_value + "\n\n" + short_desc + "\n\n";
 
                 } else {
                     short_desc = "\n" + short_desc;
                 }
 
                 if (login_group_id.equals("8")) {
-                    short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n";
-
+                    //short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n";
+                    //short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n\n"  + st_loyalty_label + ": " + st_loyalty_value + "\n\n" + short_desc + "\n\n";
+                    short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n" +  st_loyalty_label + ": " + st_loyalty_value ;
+                    tv_product_segregation.setText(st_category_segregation);
                 } else {
                     short_desc = "\n" + short_desc;
                 }
@@ -2381,6 +2423,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
 
                 tvItemPrice.setText("₹ " + product_price);
+
                 if (arr_product_images != null) {
                     if (arr_product_images.length > 0) {
                         setProductImages();
@@ -3526,8 +3569,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     private void getSelProductData(Boolean is_from_color) {
 
-
-
         if(is_from_color==true)
         {
             String sel_p_color_sku=product_sku+(!sel_p_color.equals("")?"-"+sel_p_color:"");
@@ -3654,6 +3695,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                    img_view_product_image.setVisibility(View.VISIBLE);
                                } else if (c.getString("attribute_code").equalsIgnoreCase("ip")) {
                                    ip_of_product = c.getString("value");
+                               }
+                               else  if (c.getString("attribute_code").equalsIgnoreCase("loyalty_label")) {
+                                   st_loyalty_label = c.getString("value");
+                                   Log.e("st_loyalty_label",st_loyalty_label);
                                }
 //                               else if (c.getString("attribute_code").equalsIgnoreCase("not_salable")) {
 //                                   String salable_value = c.getString("value");

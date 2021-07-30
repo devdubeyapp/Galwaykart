@@ -78,6 +78,18 @@
             android:layout_below="@+id/tv_discount" />
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_total_loyalty_value"
+            android:text="Total Loyalty Value:"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp"
+            android:layout_below="@+id/tv_total_ip" />
+
 
         <TextView
             android:layout_width="match_parent"
@@ -89,7 +101,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"
             android:visibility="gone"
-            android:layout_below="@+id/tv_total_ip"
+            android:layout_below="@+id/tv_total_loyalty_value"
             android:layout_marginTop="10dp"
             />
 
