@@ -22,12 +22,16 @@ android {
         applicationId "com.galwaykart"
         minSdkVersion 23
 
-
-
-
         targetSdkVersion 29
-        versionCode 105
-        versionName "10.2.7"
+
+        /*versionCode 110
+        versionName "10.2.12"*/
+
+        versionCode 111
+        versionName "10.2.13"
+
+
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }

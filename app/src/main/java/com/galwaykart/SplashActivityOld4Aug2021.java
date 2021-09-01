@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,7 +60,7 @@ import io.realm.Realm;
 
 
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivityOld4Aug2021 extends AppCompatActivity {
 
     private static final int MY_REQUEST_CODE = 10020;
     TimerTask timerTask;
@@ -120,8 +119,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-
-
 //        appUpdateManager = AppUpdateManagerFactory.create(SplashActivity.this);
 //
 //// Returns an intent object that you use to check for an update.
@@ -147,11 +144,6 @@ public class SplashActivity extends AppCompatActivity {
 //                init();
 //            }
 //        });
-
-
-        pref = CommonFun.getPreferences(SplashActivity.this);
-
-
         init();
     }
 
@@ -169,8 +161,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void init() {
-
-        pref = CommonFun.getPreferences(SplashActivity.this);
+        pref = CommonFun.getPreferences(SplashActivityOld4Aug2021.this);
         //pref=CommonFun.getPreferences(SplashActivity.this);
 //        Bundle bundle = getIntent().getExtras();
 //        if (bundle != null) {
@@ -223,7 +214,7 @@ public class SplashActivity extends AppCompatActivity {
             intent.putExtra("title", notice_title);
             intent.putExtra("message", notice_message);
             startActivity(intent);
-            CommonFun.finishscreen(SplashActivity.this);
+            CommonFun.finishscreen(SplashActivityOld4Aug2021.this);
 
         } else {
             Realm realm = Realm.getDefaultInstance();
@@ -257,20 +248,13 @@ public class SplashActivity extends AppCompatActivity {
                 realm.close();
             }
 
+            SharedPreferences pref;
+            pref=CommonFun.getPreferences(SplashActivityOld4Aug2021.this);
+            SharedPreferences.Editor editor=pref.edit();
+            editor.putString("homePageData","");
+            editor.commit();
 
-            try {
-                SharedPreferences pref;
-                pref=CommonFun.getPreferences(SplashActivity.this);
-                SharedPreferences.Editor editor=pref.edit();
-                editor.putString("homePageData","");
-                editor.apply();
-
-                callHomePageAPI();
-            }
-            catch(Exception e){
-                Toast.makeText(SplashActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-            }
-
+            callHomePageAPI();
 
 
             //callNotificationData();
@@ -318,23 +302,11 @@ public class SplashActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         Log.d("responsebanner_splash", response.toString());
                         Log.e("responsebanner_splash", response.toString());
-
-
-                        try {
-                            SharedPreferences pref;
-                            pref=CommonFun.getPreferences(SplashActivity.this);
-                            SharedPreferences.Editor editor=pref.edit();
-                            editor.putString("homePageData",response.toString());
-                            editor.apply();
-
-                        }
-                        catch(Exception e){
-                            Toast.makeText(SplashActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                        }
-
-
-
-
+                        SharedPreferences pref;
+                        pref=CommonFun.getPreferences(SplashActivityOld4Aug2021.this);
+                        SharedPreferences.Editor editor=pref.edit();
+                        editor.putString("homePageData",response.toString());
+                        editor.commit();
                         setPostOperation(response.toString());
 
                     }
@@ -347,7 +319,7 @@ public class SplashActivity extends AppCompatActivity {
 
                         //progress_bar.setVisibility(View.GONE);
                         //refreshItemCount();
-                        CommonFun.showVolleyException(error, SplashActivity.this);
+                        CommonFun.showVolleyException(error, SplashActivityOld4Aug2021.this);
 
                     }
                 }
@@ -389,19 +361,13 @@ else
             String  st_cat_head=jsonObj.getString("category_title");
 
             if(jsonObj.has("rebate_status")) {
+                SharedPreferences pref;
+                rebate_status = jsonObj.getString("rebate_status");
+                pref=CommonFun.getPreferences(SplashActivityOld4Aug2021.this);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("rebate_status", rebate_status);
 
-                try {
-                    SharedPreferences pref;
-                    rebate_status = jsonObj.getString("rebate_status");
-                    pref=CommonFun.getPreferences(SplashActivity.this);
-                    SharedPreferences.Editor editor = pref.edit();
-                    editor.putString("rebate_status", rebate_status);
-                    Log.e("rebate_status", rebate_status);
-                }
-
-                 catch(Exception e){
-                    Toast.makeText(SplashActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                }
+                Log.e("rebate_status", rebate_status);
 
             }
 
@@ -421,15 +387,13 @@ else
 
                 DataModelHomeAPI dataModelHomeAPI=realm.createObject(DataModelHomeAPI.class);
 
-                    dataModelHomeAPI.setCat_title(st_cat_head);
+                dataModelHomeAPI.setCat_title(st_cat_head);
                     dataModelHomeAPI.setP_catid(catid);
                     dataModelHomeAPI.setP_image(catimage);
                     dataModelHomeAPI.setP_banner_category(is_banner_category_offer);
                     dataModelHomeAPI.setP_sku(banner_image_sku);
                     dataModelHomeAPI.setP_name("");
                     dataModelHomeAPI.setP_price("");
-                    dataModelHomeAPI.setP_loyalty_value("");
-                    dataModelHomeAPI.setP_category_segregation("");
 
 
             }
@@ -517,18 +481,20 @@ else
 
     private void callNotificationData() {
 
-            try {
-            SharedPreferences pref;
-            pref=CommonFun.getPreferences(SplashActivity.this);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("categorydata", "");
-            editor.putString("log_user_zone", "");
-            editor.putString("homepage_data", "");
-            editor.apply();
-            }
-             catch(Exception e){
-            Toast.makeText(SplashActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-            }
+        SharedPreferences pref;
+        pref=CommonFun.getPreferences(SplashActivityOld4Aug2021.this);
+        SharedPreferences.Editor editor = pref.edit();
+        //editor.putString("tokenData", tokenData);
+
+        /**
+         * for distributor only
+         */
+        //editor.putString("user_zone","");
+        editor.putString("categorydata", "");
+        editor.putString("log_user_zone", "");
+        //editor.putString("st_dist_id","");
+        editor.putString("homepage_data", "");
+        editor.commit();
 
 
 
@@ -541,10 +507,10 @@ else
 
         if (!email.equalsIgnoreCase("") && email != null) {
             if (!reg_for_notification.equalsIgnoreCase("registered")) {
-                Intent innew = new Intent(SplashActivity.this, RegisterForNotification.class);
+                Intent innew = new Intent(SplashActivityOld4Aug2021.this, RegisterForNotification.class);
                 innew.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(innew);
-                CommonFun.finishscreen(SplashActivity.this);
+                CommonFun.finishscreen(SplashActivityOld4Aug2021.this);
 
 //
 //                String pass = pref.getString("user_password", "");
@@ -571,20 +537,20 @@ else
             if (!reg_for_notification_guest.equalsIgnoreCase("registered")) {
 
 
-                Intent innew = new Intent(SplashActivity.this, GuestRegisterForNotification.class);
+                Intent innew = new Intent(SplashActivityOld4Aug2021.this, GuestRegisterForNotification.class);
                 innew.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(innew);
-                CommonFun.finishscreen(SplashActivity.this);
+                CommonFun.finishscreen(SplashActivityOld4Aug2021.this);
 
 
             } else {
 
 
 
-                Intent innew = new Intent(SplashActivity.this, GuestHomePageActivity.class);
+                Intent innew = new Intent(SplashActivityOld4Aug2021.this, GuestHomePageActivity.class);
                 innew.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(innew);
-                CommonFun.finishscreen(SplashActivity.this);
+                CommonFun.finishscreen(SplashActivityOld4Aug2021.this);
 
 
             }
@@ -621,7 +587,7 @@ else
                     tokenData = tokenData.replaceAll("\"", "");
 
                     SharedPreferences pref;
-                    pref=CommonFun.getPreferences(SplashActivity.this);
+                    pref=CommonFun.getPreferences(SplashActivityOld4Aug2021.this);
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("tokenData", tokenData);
 
@@ -641,13 +607,8 @@ else
                 }
 
                 try {
-                   /* SharedPreferences pref_banner = getSharedPreferences("pref_banner", MODE_PRIVATE);
-                    pref_banner.edit().clear().commit();*/
-
                     SharedPreferences pref_banner = getSharedPreferences("pref_banner", MODE_PRIVATE);
-                    SharedPreferences.Editor pref_editor = pref_banner.edit();
-                    pref_editor.clear();
-                    pref_editor.apply();
+                    pref_banner.edit().clear().commit();
                 }
                 catch (Exception ex){
                     //////Log.d("cat_banner","error");
@@ -678,7 +639,7 @@ else
 
                 //Intent intent = new Intent(SplashActivity.this, com.galwaykart.essentialClass.InternetConnectivityError.class);
                 //startActivity(intent);
-                 CommonFun.showVolleyException(error, SplashActivity.this);
+                 CommonFun.showVolleyException(error, SplashActivityOld4Aug2021.this);
 
 
 
@@ -729,7 +690,7 @@ else
                     public void onResponse(JSONObject response) {
 
                         JSONObject jsonObject=response;
-                        Log.d("response",response.toString());
+                        //////Log.d("response",response.toString());
 
                         try {
                             String string_status=jsonObject.getString("status");
@@ -751,10 +712,10 @@ else
 
                                     if(Integer.parseInt(android_current_version)>  Global_Settings.current_soft_version){
 
-                                        Intent intent=new Intent(SplashActivity.this, Version_Check_Activity.class);
+                                        Intent intent=new Intent(SplashActivityOld4Aug2021.this, Version_Check_Activity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
-                                        CommonFun.finishscreen(SplashActivity.this);
+                                        CommonFun.finishscreen(SplashActivityOld4Aug2021.this);
 
                                     }
 
@@ -763,11 +724,11 @@ else
                                         String android_text=jsonObject1.getString("android_show_text");
 
 
-                                        Intent intent=new Intent(SplashActivity.this, ShutDown.class);
+                                        Intent intent=new Intent(SplashActivityOld4Aug2021.this, ShutDown.class);
                                         intent.putExtra("android_text",android_text);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
-                                        CommonFun.finishscreen(SplashActivity.this);
+                                        CommonFun.finishscreen(SplashActivityOld4Aug2021.this);
 
 
                                     }
@@ -786,7 +747,7 @@ else
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Intent intent=new Intent(SplashActivity.this, SplashErrorActivity.class);
+                            Intent intent=new Intent(SplashActivityOld4Aug2021.this, SplashErrorActivity.class);
                             startActivity(intent);
 
                         }
@@ -797,7 +758,7 @@ else
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Intent intent=new Intent(SplashActivity.this, SplashErrorActivity.class);
+                Intent intent=new Intent(SplashActivityOld4Aug2021.this, SplashErrorActivity.class);
                 startActivity(intent);
 
 
@@ -849,6 +810,7 @@ else
                     Boolean sync_successfully = Boolean.parseBoolean(response);
                     if(sync_successfully==true)
                     {
+
                         SharedPreferences.Editor editor=pref.edit();
                         editor.putString("guest_cart_id_process","");
                         editor.putString("guest_cart_id","");
@@ -971,16 +933,9 @@ else
                             String cart_id = response;
                             cart_id = cart_id.replaceAll("\"", "");
 
-                            try {
-                                SharedPreferences.Editor editor=pref.edit();
-                                editor.putString("guest_cart_id",cart_id);
-                                editor.apply();
-                            }
-
-                            catch(Exception e){
-                                Toast.makeText(SplashActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                            }
-
+                            SharedPreferences.Editor editor=pref.edit();
+                            editor.putString("guest_cart_id",cart_id);
+                            editor.commit();
 
 
                             String guest_cart_id=pref.getString("guest_cart_id_process","");
@@ -989,7 +944,7 @@ else
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            CommonFun.alertError(SplashActivity.this, e.toString());
+                            CommonFun.alertError(SplashActivityOld4Aug2021.this, e.toString());
                         }
 
                     }
@@ -1019,18 +974,18 @@ else
 //                                String st_code = object.getString("code");
 
                                   //  //Log.d("glog","updatecartitem");
-                                    CommonFun.alertError(SplashActivity.this,st_msg);
+                                    CommonFun.alertError(SplashActivityOld4Aug2021.this,st_msg);
 //                                //Log.d("st_code",st_code);
                                 } catch (JSONException e) {
                                     //e.printStackTrace();
-                                    CommonFun.showVolleyException(error, SplashActivity.this);
+                                    CommonFun.showVolleyException(error, SplashActivityOld4Aug2021.this);
                                 }
 
 
                             }
 
                         } else
-                            CommonFun.showVolleyException(error, SplashActivity.this);
+                            CommonFun.showVolleyException(error, SplashActivityOld4Aug2021.this);
 
                         //////Log.d("ERROR","error => "+error.toString());
                         //CommonFun.alertError(MainActivity.this,error.toString());
@@ -1062,19 +1017,19 @@ else
 
     private void goToHomePage() {
 
-        Intent intent = new Intent(SplashActivity.this, HomePageActivity.class);
+        Intent intent = new Intent(SplashActivityOld4Aug2021.this, HomePageActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        CommonFun.finishscreen(SplashActivity.this);
+        CommonFun.finishscreen(SplashActivityOld4Aug2021.this);
     }
 
 
     private void goToCartPage() {
 
-        Intent intent = new Intent(SplashActivity.this, CartItemList.class);
+        Intent intent = new Intent(SplashActivityOld4Aug2021.this, CartItemList.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        CommonFun.finishscreen(SplashActivity.this);
+        CommonFun.finishscreen(SplashActivityOld4Aug2021.this);
     }
 
     private void finishScreen() {
@@ -1093,7 +1048,7 @@ else
         String st_User_Status_URL = Global_Settings.st_sales_api+"CheckUserAuth";
         //////Log.d("st_User_Status_URL",st_User_Status_URL);
 
-        pDialog = new TransparentProgressDialog(SplashActivity.this);
+        pDialog = new TransparentProgressDialog(SplashActivityOld4Aug2021.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         if(!isFinishing())
@@ -1117,7 +1072,7 @@ else
                                 String st_status=jsonObject.getString("Status");
 
                                 if(st_status.equalsIgnoreCase("0")) {  // status = 0 (Successful in sales)
-                                    DatabaseHandler dbh=new DatabaseHandler(SplashActivity.this);
+                                    DatabaseHandler dbh=new DatabaseHandler(SplashActivityOld4Aug2021.this);
                                     dbh.deleteAllData();
 
                                     //Intent intent = new Intent(SplashActivity.this, HomePageActivity.class);
@@ -1135,7 +1090,7 @@ else
                               //  Intent intent=new Intent(SplashActivity.this, ExceptionError.class);
                                // startActivity(intent);
 
-                                Intent intent=new Intent(SplashActivity.this, SplashErrorActivity.class);
+                                Intent intent=new Intent(SplashActivityOld4Aug2021.this, SplashErrorActivity.class);
                                 startActivity(intent);
                             }
                         }
@@ -1147,7 +1102,7 @@ else
                     if(pDialog.isShowing())
                         pDialog.dismiss();
 
-                    CommonFun.alertError(SplashActivity.this,"Something went wrong!!! Try Again");
+                    CommonFun.alertError(SplashActivityOld4Aug2021.this,"Something went wrong!!! Try Again");
                     //CommonFun.showVolleyException(error,SplashActivity.this);
                 }
             }) {
@@ -1188,7 +1143,7 @@ else
         final AlertDialog.Builder b;
         try
         {
-            b = new AlertDialog.Builder(SplashActivity.this);
+            b = new AlertDialog.Builder(SplashActivityOld4Aug2021.this);
             b.setTitle("Alert");
             b.setCancelable(false);
             b.setMessage(errmsg);
@@ -1198,9 +1153,9 @@ else
                 public void onClick(DialogInterface dialog, int whichButton)
                 {
                     b.create().dismiss();
-                    Intent  intent = new Intent(SplashActivity.this, LogoutActivity.class);
+                    Intent  intent = new Intent(SplashActivityOld4Aug2021.this, LogoutActivity.class);
                     startActivity(intent);
-                    CommonFun.finishscreen(SplashActivity.this);
+                    CommonFun.finishscreen(SplashActivityOld4Aug2021.this);
                 }
             });
             b.create().show();
@@ -1232,7 +1187,7 @@ else
             public void onClick(DialogInterface dialog, int whichButton)
             {
                 b.create().dismiss();
-                CommonFun.finishscreen(SplashActivity.this);
+                CommonFun.finishscreen(SplashActivityOld4Aug2021.this);
             }
         });
         b.create().show();
@@ -1245,33 +1200,26 @@ else
 
     private void goToHome()
     {
+        SharedPreferences pref;
+        pref = CommonFun.getPreferences(SplashActivityOld4Aug2021.this);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("categorydata", "");
+        editor.putString("log_user_zone", "");
+        editor.putString("st_dist_id", "");
+        editor.putString("homepage_data", "");
+        editor.commit();
+
         try {
-            SharedPreferences pref;
-            pref = CommonFun.getPreferences(SplashActivity.this);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putString("categorydata", "");
-            editor.putString("log_user_zone", "");
-            editor.putString("st_dist_id", "");
-            editor.putString("homepage_data", "");
-            editor.apply();
-
-
-           /* SharedPreferences pref_banner = getSharedPreferences("pref_banner", MODE_PRIVATE);
-            pref_banner.edit().clear().commit();*/
-
-
             SharedPreferences pref_banner = getSharedPreferences("pref_banner", MODE_PRIVATE);
-            SharedPreferences.Editor pref_editor = pref_banner.edit();
-            pref_editor.clear();
-            pref_editor.apply();
+            pref_banner.edit().clear().commit();
         }
         catch (Exception ex){
-           Log.d("cat_banner","error");
+            //////Log.d("cat_banner","error");
         }
 
         //Intent intent = new Intent(SplashActivity.this, HomePageActivity.class);
 
-        pref = CommonFun.getPreferences(SplashActivity.this);
+        pref = CommonFun.getPreferences(SplashActivityOld4Aug2021.this);
         String guest_cart_id=pref.getString("guest_cart_id_process","");
         if(guest_cart_id!=null && !guest_cart_id.equals(""))
         {

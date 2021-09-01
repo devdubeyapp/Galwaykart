@@ -482,10 +482,106 @@ public class CartItemList extends BaseActivity {
             else
                 btCheckout.setVisibility(View.VISIBLE);
         //}
-
-
         //getCurrentZone();
 
+    }
+
+
+    public void callRebateAmountAPI(String stRebateCheckedStatus) {
+
+        String api_url = Global_Settings.api_url+"rest/V1/rebate/update/"+stRebateCheckedStatus;
+        Log.e("stRebateCheckedStatus",stRebateCheckedStatus);
+
+        SharedPreferences preferences = CommonFun.getPreferences(getApplicationContext());
+        tokenData = preferences.getString("tokenData", "");
+
+        pDialog = new TransparentProgressDialog(CartItemList.this);
+        pDialog.setCancelable(false);
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        pDialog.show();
+
+
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(CartItemList.this);
+            // JsonObjectRequest jsObjRequest = null;
+            StringRequest stringRequest =
+                    new StringRequest(Request.Method.POST, api_url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    if (pDialog.isShowing())
+                                        pDialog.dismiss();
+                                    Log.e("RebateResponse", response);
+                                    if (response != null) {
+                                        try {
+
+                                            JSONArray jsonArray = new JSONArray(response);
+                                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                            String status =  jsonObject.getString("status");
+                                            String msg =  jsonObject.getString("msg");
+
+                                            if(status.equalsIgnoreCase("0")){
+                                              /*  //CommonFun.alertError(CartItemList.this,msg);
+                                                Intent intent = new Intent(CartItemList.this, CartItemList.class);
+                                                startActivity(intent);
+                                                CommonFun.finishscreen(CartItemList.this);*/
+
+                                            }
+                                            else {
+                                         /*       CommonFun.alertError(CartItemList.this,msg);
+                                                Intent intent = new Intent(CartItemList.this, CartItemList.class);
+                                                startActivity(intent);
+                                                CommonFun.finishscreen(CartItemList.this);*/
+
+                                            }
+
+                                        }
+
+                                        catch (Exception e) {
+                                            //e.printStackTrace();
+                                            if (pDialog.isShowing())
+                                                pDialog.dismiss();
+                                            CommonFun.alertError(CartItemList.this,"Rebate amount has not added.Please try again!");
+                                        }
+                                    }
+
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }) {
+
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json; charset=utf-8";
+                        }
+
+                        @Override
+                        protected String getParamsEncoding() {
+                            return "utf-8";
+                        }
+                        @Override
+                        public Map<String, String> getHeaders () throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("Authorization", "Bearer " + tokenData);
+                            //params.put("Content-Type", "application/json");
+
+                            return params;
+                        }
+
+                       };
+
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+            stringRequest.setShouldCache(false);
+            requestQueue.add(stringRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
     }
 
     @Override
@@ -1801,6 +1897,7 @@ public class CartItemList extends BaseActivity {
                 public void onClick(DialogInterface dialog, int whichButton)
                 {
                     b.create().dismiss();
+                    callRebateAmountAPI("0");
                     deleteCartItem(selindexof,false,"");
 
                 }
@@ -1848,6 +1945,7 @@ public class CartItemList extends BaseActivity {
                         try {
 
                             delete_successfully = Boolean.parseBoolean(response);
+                            callRebateAmountAPI("0");
 
 
 
@@ -2046,7 +2144,7 @@ public class CartItemList extends BaseActivity {
                                     ////Log.d("st_qty", st_qty_api);
 
                                     data_load = false;
-
+                                    callRebateAmountAPI("0");
                                     Intent intent=new Intent(CartItemList.this,CartItemList.class);
                                     startActivity(intent);
                                     CommonFun.finishscreen(CartItemList.this);
@@ -2451,7 +2549,6 @@ public class CartItemList extends BaseActivity {
             {
                 holder.textView_ip_value.setVisibility(View.GONE);
                 holder.textView_ip.setVisibility(View.GONE);
-
                 holder.textView_loyalty_value.setVisibility(View.GONE);
                 holder.textView_lv.setVisibility(View.GONE);
 
@@ -2525,6 +2622,7 @@ public class CartItemList extends BaseActivity {
                             if (Integer.parseInt(holder.spinner_qty.getSelectedItem().toString()) < 6) {
 
                                 if(holder.is_start==false)
+
                                     updateCart(position, Integer.parseInt(holder.spinner_qty.getSelectedItem().toString()));
 
                             }

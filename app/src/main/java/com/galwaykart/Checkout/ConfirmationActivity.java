@@ -123,6 +123,8 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
     CheckBox cb_rebate_msg;
     boolean isFirstTimeAppy = false;
 
+    String rebate_status="";
+
 
     //TextView tv_grand_total;
 
@@ -309,6 +311,8 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
         dialog = new Dialog(ConfirmationActivity.this);
         dialogRebate = new Dialog(ConfirmationActivity.this);
 
+
+
         if(is_data_load==false) {
 
             tv_txt_view = findViewById(R.id.tv_txt_view);
@@ -316,6 +320,12 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
             cart_amount = pref.getString("cartamount", "");
             inc_tax = pref.getString("arr_amount", "");
             offer_dis = pref.getString("offer_disc", "");
+
+            rebate_status = pref.getString("rebate_status", "");
+            Log.e("rebate_status_p", rebate_status);
+
+
+
             ////Log.d("tax",inc_tax);
             ////Log.d("offer_dis",offer_dis);
 
@@ -382,6 +392,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
         dialog.setContentView(com.galwaykart.R.layout.dialog_donation);
         dialog.setCancelable(false);
+
         TextView tv_alert_title=dialog.findViewById(R.id.tv_alert_title);
         tv_alert_title.setText(stDonationTitle);
         ed_edit_donation = dialog.findViewById(com.galwaykart.R.id.ed_edit_donation);
@@ -1324,8 +1335,6 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                 String sst_disc= (disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
 
 
-
-
                                 Float flRP= Float.parseFloat(strRebateAmount);
 
                                 String ip_text=st_total_cart_ip.equals("")?"":"Total PV/BV/SBV: " + st_total_cart_ip;
@@ -1343,7 +1352,30 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                             "<b>Total Amount: ₹ " + st_base_grand_total + "</b><br/>";
 
 
-                                tv_txt_view.setText(Html.fromHtml(st_text));
+                                String st_text_hide_rebate = "<b>"+ip_text+"</b><br/>" +
+                                        "<b>"+loyality_text+"<br/>" +
+                                        "-------------------------------</b><br/>" +
+                                        "Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
+                                        "<br/>Shipping Charge: " + inc_tax +"<br/>"+
+                                        stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
+                                        sst_disc+
+                                        "Tax Amount: " + tax_amount +"<br/><br/>"+
+                                        "<b>Total Amount: ₹ " + st_base_grand_total + "</b><br/>";
+
+
+                                //Log.e("rebate_status",rebate_status);
+
+                                //tv_txt_view.setText(Html.fromHtml(st_text));
+
+                                if(rebate_status.equalsIgnoreCase("0"))
+                                {
+                                    cb_rebate_msg.setVisibility(View.GONE);
+                                    tv_txt_view.setText(Html.fromHtml(st_text_hide_rebate));
+                                }
+                                else
+                                {
+                                    tv_txt_view.setText(Html.fromHtml(st_text));
+                                }
 
                                 cb_donation_msg.setText(stDonationTitle);
                                 if(stDonationValue > 0) {

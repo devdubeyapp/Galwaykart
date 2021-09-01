@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_alert_title"
+        android:text=""
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/close_green"
+        android:id="@+id/btn_close_rebate" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_alert_title"
+        android:background="@color/black"
+        android:layout_marginTop="10dp"
+        android:id="@+id/hr_line"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:hint="amount"
+        android:text="@string/st_confirm_cart_title"
+        android:id="@+id/tv_text_line"
+        android:textSize="15dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@+id/hr_line" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:hint="amount"
+        android:text="@string/st_confirm_cart_msg"
+        android:id="@+id/tv_text_line1"
+        android:textSize="15dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@+id/tv_text_line" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:hint="amount"
+        android:text="@string/st_confirm_cart_msg_hindi"
+        android:id="@+id/tv_text_line2"
+        android:textSize="15dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@+id/tv_text_line1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_text_line2"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+
+        <Button
+            android:id="@+id/btn_confirm_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@color/colorYellow"
+            android:padding="10dp"
+            android:text="YES"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btn_confirm_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@color/colorYellow"
+            android:padding="10dp"
+            android:text="No"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</RelativeLayout>

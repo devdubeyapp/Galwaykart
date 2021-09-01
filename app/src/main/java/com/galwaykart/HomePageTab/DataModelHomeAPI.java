@@ -12,6 +12,25 @@ public class DataModelHomeAPI extends RealmObject {
     String p_banner_category;
     String cat_title;
     String p_loyalty_value;
+    String p_category_segregation;
+
+    public String getP_loyalty_value() {
+        return p_loyalty_value;
+    }
+
+    public void setP_loyalty_value(String p_loyalty_value) {
+        this.p_loyalty_value = p_loyalty_value;
+    }
+
+    public String getP_category_segregation() {
+        return p_category_segregation;
+    }
+
+    public void setP_category_segregation(String p_category_segregation) {
+        this.p_category_segregation = p_category_segregation;
+    }
+
+
 
 
 

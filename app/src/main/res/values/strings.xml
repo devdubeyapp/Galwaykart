@@ -128,4 +128,10 @@
 
     </string-array>
 
+    <string name="st_confirm_cart_title"><u><b>Different Items type already in cart!</b></u></string>
+    <string name="st_confirm_cart_msg">Your cart contains items having different type. Would you like to empty your cart for adding this type of items?</string>
+    <string name="st_confirm_cart_msg_hindi"> आपकी कार्ट में भिन्न प्रकार के आइटम हैं। क्या आप इस प्रकार के आइटम जोड़ने के लिए अपना कार्ट खाली करना चाहेंगे?</string>
+
+
+
 </resources>

@@ -179,7 +179,7 @@ public class ChangeMobileActivity extends AppCompatActivity {
         new CountDownTimer(count_otp_request<=2?1000*60:1000*60*5, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                tverror.setText("Wait for minute : " + millisUntilFinished / 1000);
+                tverror.setText("Wait for Seconds : " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {

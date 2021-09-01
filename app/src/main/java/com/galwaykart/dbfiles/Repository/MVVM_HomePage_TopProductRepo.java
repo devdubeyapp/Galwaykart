@@ -328,17 +328,80 @@ public class MVVM_HomePage_TopProductRepo {
 //const ProductCustomerGroupEmployee = 290;
 //const ProductCustomerGroupCustomer = 291;
 //  const ProductCustomerGroupGuset = 288;
+
+
+        /*
+        This is Live Value
+        product_sdp_rdp
+        data-title="SDP" = 288
+        data-title="RDP" = 289*/
+
+
+       /* This is QA Value
+        product_sdp_rdp
+        data-title="SDP" = 290
+        data-title="RDP" = 291*/
+
+
         String st_URL="";
+        Log.e("search_query",query);
 
         if(is_search==true) {
-            st_URL = Global_Settings.api_url + "rest/V1/products?searchCriteria[filter_groups][0][filters][1][field]=name" +
-                    "&searchCriteria[filter_groups][0][filters][1][value]=%25" + query +
-                    "%25&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
-                    "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
-                    "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset" +
-                    "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
 
-            Log.e("st_URL_search", st_URL);
+            if (query.contains("SDP") || query.contains("sdp")) {
+
+                String str_update_query = "";
+                if(Global_Settings.api_url.contains("http://qa.galwaykart.com/"))
+                {
+                    str_update_query = "290";
+                }
+                else
+                {
+                    str_update_query = "288";
+                }
+
+                  st_URL = Global_Settings.api_url + "rest/V1/products?searchCriteria[filter_groups][0][filters][1][field]=product_sdp_rdp" +
+                        "&searchCriteria[filter_groups][0][filters][1][value]="+str_update_query+
+                        "&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
+                        "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
+                        "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset" +
+                        "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
+
+                Log.e("st_URL_search_288", st_URL);
+
+
+            } else if (query.contains("RDP") || query.contains("rdp")) {
+
+                String str_update_query = "";
+                if(Global_Settings.api_url.contains("http://qa.galwaykart.com/"))
+                {
+                    str_update_query = "291";
+                }
+                else
+                {
+                    str_update_query = "289";
+                }
+
+                st_URL = Global_Settings.api_url + "rest/V1/products?searchCriteria[filter_groups][0][filters][1][field]=product_sdp_rdp" +
+                        "&searchCriteria[filter_groups][0][filters][1][value]="+str_update_query+
+                        "&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
+                        "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
+                        "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset" +
+                        "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
+
+                Log.e("st_URL_search_289", st_URL);
+
+            } else {
+
+                st_URL = Global_Settings.api_url + "rest/V1/products?searchCriteria[filter_groups][0][filters][1][field]=name" +
+                        "&searchCriteria[filter_groups][0][filters][1][value]=%25" + query +
+                        "%25&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
+                        "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
+                        "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset" +
+                        "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
+
+                Log.e("st_URL_search_n", st_URL);
+            }
         }
         else
         {
@@ -495,17 +558,31 @@ public class MVVM_HomePage_TopProductRepo {
                                         st_cate_seg = jsonObject_image.getString("value");
                                         Log.e("st_cate_seg", st_cate_seg);
 
+
+                                        /*This is QA Value
+                                           286 Supreme
+                                           287 Standard
+                                           288 Economy
+                                           289 catalog*/
+
+
+                                        /*//This is Live Value
+                                            category_segregation
+                                            286 Supreme
+                                            287 Deluxe
+                                            290 Standard*/
+
                                         if(st_cate_seg.equalsIgnoreCase("286"))
                                             p_category_segregation = "Supreme";
 
                                         else if(st_cate_seg.equalsIgnoreCase("287"))
+                                            p_category_segregation = "Deluxe";
+
+                                        else if(st_cate_seg.equalsIgnoreCase("290"))
                                             p_category_segregation = "Standard";
 
-                                        else if(st_cate_seg.equalsIgnoreCase("288"))
-                                            p_category_segregation = "Economy";
-
-                                        else if(st_cate_seg.equalsIgnoreCase("289"))
-                                            p_category_segregation = "Catalog";
+                                       /* else if(st_cate_seg.equalsIgnoreCase("289"))
+                                            p_category_segregation = "Catalog";*/
 
                                         Log.e("st_category_segregation",p_category_segregation);
                                     }

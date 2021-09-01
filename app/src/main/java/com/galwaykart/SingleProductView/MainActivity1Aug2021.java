@@ -20,16 +20,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.provider.MediaStore;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.viewpager.widget.ViewPager;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -54,6 +45,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
@@ -63,7 +62,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
@@ -71,10 +69,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.galwaykart.BaseActivity;
 import com.galwaykart.CAdapter.GridSpacingItemDecoration;
-import com.galwaykart.Cart.CartItemList;
 import com.galwaykart.Cart.DataModelCart;
 import com.galwaykart.Cart.DataModelRecentItem;
-import com.galwaykart.Checkout.ConfirmationActivity;
 import com.galwaykart.HomePageActivity;
 import com.galwaykart.MultiStoreSelection.GetCurrentZone;
 import com.galwaykart.R;
@@ -84,9 +80,6 @@ import com.galwaykart.dbfiles.DbBeanClass.CartProductImage;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.essentialClass.TransparentProgressDialog;
-import com.galwaykart.productList.ProductListActivity;
-import com.google.gson.JsonArray;
-import com.haozhang.lib.SlantedTextView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -94,12 +87,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -115,7 +105,7 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
  * user can share, add to whitelist
  * See review and give rating
  */
-public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.OnItemClickListener {
         private static final int REQUEST_CODE_EXAMPLE = 1;
         Spinner spinner1, spinner2, spinner_qty;
 
@@ -137,7 +127,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     String cartItem;
     ArrayList<DataModelCart> arrayList;
     //    JSONArray  cartItem = null;
-    TransparentProgressDialog pDialog,pDialog1, pDialog2;
+    TransparentProgressDialog pDialog;
     Toolbar toolbar;
     String  tokenData;
     EditText ed_qty;
@@ -232,10 +222,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     String st_hamper_desc="";
     String st_loyalty_label="", st_loyalty_value="", st_category_segregation="";
     Realm realm;
-
-
-
-    Dialog openComfirmationDialog;
 
 
     /**
@@ -392,7 +378,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
 
         SharedPreferences prefPincode;
-        prefPincode=CommonFun.getPreferences(MainActivity.this);
+        prefPincode=CommonFun.getPreferences(MainActivity1Aug2021.this);
         final String setPinCodeByUser = prefPincode.getString("current_pincode_home", "");
         txt_pincode.setText("Pincode : " + setPinCodeByUser);
 
@@ -426,10 +412,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                 if(et_pincode.getText().toString().trim().equalsIgnoreCase(""))
                 {
-                    CommonFun.alertError(MainActivity.this,"Please enter valid pincode...");
+                    CommonFun.alertError(MainActivity1Aug2021.this,"Please enter valid pincode...");
                 }
                 else if(et_pincode.getText().toString().trim().length() < 6){
-                    CommonFun.alertError(MainActivity.this,"Please enter valid pincode...");
+                    CommonFun.alertError(MainActivity1Aug2021.this,"Please enter valid pincode...");
                 }
 
                 else
@@ -437,7 +423,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                     strSavePincode= et_pincode.getText().toString().trim();
 
                     SharedPreferences prefPincode;
-                    prefPincode=CommonFun.getPreferences(MainActivity.this);
+                    prefPincode=CommonFun.getPreferences(MainActivity1Aug2021.this);
                     SharedPreferences.Editor editor=prefPincode.edit();
                     editor.putString("current_pincode_home",strSavePincode);
                     editor.commit();
@@ -462,7 +448,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
 
                 SharedPreferences prefPincode;
-                prefPincode=CommonFun.getPreferences(MainActivity.this);
+                prefPincode=CommonFun.getPreferences(MainActivity1Aug2021.this);
                 SharedPreferences.Editor editor=prefPincode.edit();
                 editor.putString("current_pincode_home",strSavePincode);
                 editor.commit();
@@ -540,9 +526,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 //Log.d("st_pincode",st_pincode);
 
                 if(st_pincode.equalsIgnoreCase(""))
-                    CommonFun.alertError(MainActivity.this,"Please enter valid pincode...");
+                    CommonFun.alertError(MainActivity1Aug2021.this,"Please enter valid pincode...");
                  else if(st_pincode.length() < 6){
-                    CommonFun.alertError(MainActivity.this,"Please enter valid pincode...");
+                    CommonFun.alertError(MainActivity1Aug2021.this,"Please enter valid pincode...");
                 }
                 else{
                     pref= CommonFun.getPreferences(getApplicationContext());
@@ -577,7 +563,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                 if(r_bar==0 || st_com.equals("") || st_nick.equals(""))
                 {
-                    CommonFun.alertError(MainActivity.this,"All fields are mandatory to submit review");
+                    CommonFun.alertError(MainActivity1Aug2021.this,"All fields are mandatory to submit review");
                 }
                 else
                     submitReview(st_com,st_nick);
@@ -748,7 +734,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             }
         });
 
-        dbh=new DatabaseHandler(MainActivity.this);
+        dbh=new DatabaseHandler(MainActivity1Aug2021.this);
 
         preferences = CommonFun.getPreferences(getApplicationContext());
         tokenData=preferences.getString("tokenData","");
@@ -841,7 +827,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
              if(Integer.parseInt(cartqty)>0){
 
                     if(Integer.parseInt(cartqty)>25)
-                        CommonFun.alertError(MainActivity.this,"maximum 25 quantity is allowed");
+                        CommonFun.alertError(MainActivity1Aug2021.this,"maximum 25 quantity is allowed");
                     else {
 
 
@@ -1003,7 +989,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         Log.e("on_home_check_pin_url",on_home_check_pin_url);
 
-        pDialog = new TransparentProgressDialog(MainActivity.this);
+        pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
@@ -1034,18 +1020,18 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                     }
                                     else
                                     {
-                                        CommonFun.alertError(MainActivity.this,"Sorry, we don't have services in this area "+"("+setPinCodeByUser+")");
+                                        CommonFun.alertError(MainActivity1Aug2021.this,"Sorry, we don't have services in this area "+"("+setPinCodeByUser+")");
 
                                     }
 
                                 }
                                 else
                                 {
-                                    Toast.makeText(MainActivity.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                                     //onBackPressed();
                                 }
                             } catch (JSONException e) {
-                                Toast.makeText(MainActivity.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                                 //onBackPressed();
                             }
                         }
@@ -1056,7 +1042,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                     if(pDialog.isShowing())
                         pDialog.dismiss();
 
-                    Toast.makeText(MainActivity.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                     //onBackPressed();
                     //CommonFun.showVolleyException(error,DeliveryTypeActivity.this);
                 }
@@ -1089,7 +1075,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     private void checkPinCode() {
 
-        pDialog = new TransparentProgressDialog(MainActivity.this);
+        pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
@@ -1133,11 +1119,11 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                 }
                                 else
                                 {
-                                    Toast.makeText(MainActivity.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                                     //onBackPressed();
                                 }
                             } catch (JSONException e) {
-                                Toast.makeText(MainActivity.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                                 //onBackPressed();
                             }
                         }
@@ -1148,7 +1134,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                     if(pDialog.isShowing())
                         pDialog.dismiss();
 
-                    Toast.makeText(MainActivity.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                     //onBackPressed();
                     //CommonFun.showVolleyException(error,DeliveryTypeActivity.this);
                 }
@@ -1254,7 +1240,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
 
         progressBar_write_review.setVisibility(View.VISIBLE);
-        RequestQueue requestQueue=Volley.newRequestQueue(MainActivity.this);
+        RequestQueue requestQueue=Volley.newRequestQueue(MainActivity1Aug2021.this);
 
         StringRequest jsonObjectRequest=new StringRequest(Request.Method.POST,
                                     submit_review_url, new Response.Listener<String>() {
@@ -1274,7 +1260,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                         String getResult=jsonObject.getString("maessage");
 
                         final AlertDialog.Builder b;
-                        CommonFun.showDialog(MainActivity.this,getResult);
+                        CommonFun.showDialog(MainActivity1Aug2021.this,getResult);
                         linear_write_review.setVisibility(View.GONE);
 
                     } catch (JSONException e) {
@@ -1287,7 +1273,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                CommonFun.showVolleyException(error,MainActivity.this);
+                CommonFun.showVolleyException(error, MainActivity1Aug2021.this);
 
             }
         }){
@@ -1338,7 +1324,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         }
 
 
-        RequestQueue requestQueue=Volley.newRequestQueue(MainActivity.this);
+        RequestQueue requestQueue=Volley.newRequestQueue(MainActivity1Aug2021.this);
         JsonRequest jsonRequest= new JsonRequest<JSONArray>(Request.Method.POST,
                 check_wish_list_url,
                 jsonObject_r.toString(),
@@ -1414,7 +1400,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             }
 
 
-            RequestQueue requestQueue=Volley.newRequestQueue(MainActivity.this);
+            RequestQueue requestQueue=Volley.newRequestQueue(MainActivity1Aug2021.this);
 
              JsonRequest jsonRequest= new JsonRequest<JSONArray>(Request.Method.POST, st_add_wish_list_URL,
                      jsonObject_r.toString(),
@@ -1430,7 +1416,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                             Drawable img_heart_fill=getResources().getDrawable(R.drawable.icon_heart_fill);
                                             tv_Wish_list.setCompoundDrawablesRelativeWithIntrinsicBounds(img_heart_fill,null,null,null);
                                             is_product_on_wishlist=true;
-                                            Toast.makeText(MainActivity.this, "Item added on wishlist", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(MainActivity1Aug2021.this, "Item added on wishlist", Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -1485,7 +1471,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         }
 
-        RequestQueue requestQueue=Volley.newRequestQueue(MainActivity.this);
+        RequestQueue requestQueue=Volley.newRequestQueue(MainActivity1Aug2021.this);
 
         JsonRequest jsonRequest= new JsonRequest<JSONArray>(Request.Method.POST, st_remove_wish_list_url,
                 jsonObject_r.toString(),
@@ -1549,8 +1535,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     protected void onResume() {
         super.onResume();
 
-        openComfirmationDialog = new Dialog(MainActivity.this);
-
         layoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
 //        layoutParams.setMargins(10,5,10,0);
         layoutParams.weight = 1.8f;
@@ -1563,7 +1547,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         layoutParamsMain = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParamsMain.weight = 2f;
 
-        pDialog = new TransparentProgressDialog(MainActivity.this);
+        pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -1678,9 +1662,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                     Global_Settings.api_url=Global_Settings.web_url+current_user_zone.trim().toString()+"/";
                     Global_Settings.current_zone=current_user_zone.trim().toString();
 
-                    Intent intent=new Intent(MainActivity.this,MainActivity.class);
+                    Intent intent=new Intent(MainActivity1Aug2021.this, MainActivity1Aug2021.class);
                     startActivity(intent);
-                    CommonFun.finishscreen(MainActivity.this);
+                    CommonFun.finishscreen(MainActivity1Aug2021.this);
                 }
 
             }
@@ -1690,7 +1674,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     private void setDataOnListSize(int i) {
 
-        mAdapter_size = new CustomAttributeSizeAdapter(MainActivity.this, array_value_list_size);
+        mAdapter_size = new CustomAttributeSizeAdapter(MainActivity1Aug2021.this, array_value_list_size);
 
         RecyclerView.LayoutManager mLayoutManager_size = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recycle_view_size.setLayoutManager(mLayoutManager_size);
@@ -1814,7 +1798,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     private void setDataOnListColor(int i) {
 
 //            mAdapter_size = new CustomAttributeSizeAdapter(MainActivity.this, array_value_list_size);
-            mAdapter_color= new CustomAttributeColorAdapter(MainActivity.this, array_value_list_color);
+            mAdapter_color= new CustomAttributeColorAdapter(MainActivity1Aug2021.this, array_value_list_color);
             //LinearLayout l1 = new LinearLayout(this);
             //l1.setOrientation(LinearLayout.VERTICAL);
             //dynamicRecyclerView = new RecyclerView(this);
@@ -1979,7 +1963,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
              fromurl= Global_Settings.api_url+"index.php/rest/V1/m-products/"+product_sku;
         Log.d("fromurl",fromurl);
 
-        pDialog = new TransparentProgressDialog(MainActivity.this);
+        pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
@@ -2066,7 +2050,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 if(pDialog.isShowing())
                     pDialog.dismiss();
 
-                CommonFun.showVolleyException(error,MainActivity.this);
+                CommonFun.showVolleyException(error, MainActivity1Aug2021.this);
 
 
             }
@@ -2314,30 +2298,17 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                         Log.e("strCG", strCG);
 
-                         /*This is QA Value
-                           286 Supreme
-                           287 Standard
-                           288 Economy
-                           289 catalog*/
-
-                           /*This is Live Value
-                             category_segregation
-                             286 Supreme
-                             287 Deluxe
-                             290 Standard*/
-
-
                         if(strCG.equalsIgnoreCase("286"))
                             st_category_segregation = "Supreme";
 
                         else if(strCG.equalsIgnoreCase("287"))
-                            st_category_segregation = "Deluxe";
-
-                        else if(strCG.equalsIgnoreCase("290"))
                             st_category_segregation = "Standard";
 
-                         /* else if(st_cate_seg.equalsIgnoreCase("289"))
-                          st_category_segregation = "Catalog";*/
+                        else if(strCG.equalsIgnoreCase("288"))
+                            st_category_segregation = "Economy";
+
+                        else if(strCG.equalsIgnoreCase("289"))
+                            st_category_segregation = "Catalog";
 
                         Log.e("category_segregation",st_category_segregation);
 
@@ -2513,17 +2484,17 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                 final AlertDialog.Builder b;
                 try {
-                    b = new AlertDialog.Builder(MainActivity.this);
+                    b = new AlertDialog.Builder(MainActivity1Aug2021.this);
                     b.setTitle("Alert");
                     b.setCancelable(false);
                     b.setMessage("Product currently not available");
                     b.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+                            Intent intent = new Intent(MainActivity1Aug2021.this, HomePageActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
-                            CommonFun.finishscreen(MainActivity.this);
+                            CommonFun.finishscreen(MainActivity1Aug2021.this);
                         }
                     });
                     b.create().show();
@@ -2735,13 +2706,14 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
      */
     private void getCartId_v1() {
 
-        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        RequestQueue queue = Volley.newRequestQueue(MainActivity1Aug2021.this);
+
 
         // st_token_data="w4svj2g3pw7k2vmtxo3wthipjy3ieig0";
 
-        pDialog = new TransparentProgressDialog(MainActivity.this);
+        pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
         pDialog.setCancelable(false);
-        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
 
 
@@ -2775,21 +2747,21 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                                if (can_colorproceed==true && can_csizeproceed==true)
                                {
-                                   jsonCheckRDPSDP(cart_id);
+                                       addItemToCart(cart_id);
                                }
                                else if(can_colorproceed==false)
                                {
-                                       CommonFun.alertError(MainActivity.this, "Please select any color of product first!");
+                                       CommonFun.alertError(MainActivity1Aug2021.this, "Please select any color of product first!");
                                }
                                else if(can_csizeproceed==false) {
-                                   CommonFun.alertError(MainActivity.this, "Please select any size of product first!");
+                                   CommonFun.alertError(MainActivity1Aug2021.this, "Please select any size of product first!");
                                }
                            }
                            else
                            {
                                String cart_id = response;
                                cart_id = cart_id.replaceAll("\"", "");
-                               jsonCheckRDPSDP(cart_id);
+                               addItemToCart(cart_id);
                            }
 
                         } catch (Exception e) {
@@ -2797,7 +2769,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                 pDialog.dismiss();
 
                             e.printStackTrace();
-                            CommonFun.alertError(MainActivity.this, e.toString());
+                            CommonFun.alertError(MainActivity1Aug2021.this, e.toString());
                         }
 
                     }
@@ -2816,9 +2788,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                         if (error instanceof ServerError) {
 
-                            CommonFun.alertError(MainActivity.this, "Please try to add maximum of 25 qty");
+                            CommonFun.alertError(MainActivity1Aug2021.this, "Please try to add maximum of 25 qty");
                         } else
-                            CommonFun.showVolleyException(error, MainActivity.this);
+                            CommonFun.showVolleyException(error, MainActivity1Aug2021.this);
                            Log.d("ERROR","error => "+error.toString());
                         //CommonFun.alertError(MainActivity.this,error.toString());
                     }
@@ -2840,252 +2812,6 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     }
 
-
-    public void jsonCheckRDPSDP(String cart_id) {
-
-        String sdp_rdp_api_url = Global_Settings.api_url+"rest/V1/carts/mine/items/check-rdp-sdp";
-        Log.e("check_sdp_rdp_api_url",sdp_rdp_api_url);
-
-        Log.e("cart_id_jsonCheckRDPSDP", cart_id);
-
-        String input_check_rdp_sdp = "{\"productSku\":\""+product_sku+"\"," +
-                "\"cartId\":\""+cart_id+"\"}";
-
-        SharedPreferences preferences = CommonFun.getPreferences(getApplicationContext());
-        tokenData = preferences.getString("tokenData", "");
-
-        pDialog1 = new TransparentProgressDialog(MainActivity.this);
-        pDialog1.setCancelable(false);
-        pDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        pDialog1.show();
-
-        try {
-            RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-            // JsonObjectRequest jsObjRequest = null;
-            StringRequest stringRequest =
-                    new StringRequest(Request.Method.POST, sdp_rdp_api_url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    if (pDialog1.isShowing())
-                                        pDialog1.dismiss();
-                                    Log.e("checkRDPResponse", response);
-                                    if (response != null) {
-                                        try {
-
-                                            String strResponse = response;
-
-                                            if(strResponse.equalsIgnoreCase("false")){
-                                               addItemToCart(cart_id);
-
-                                            }
-
-                                         else {
-                                                openComfirmationBox(cart_id);
-                                               Log.e("cart_id_if_true", cart_id);
-
-                                            }
-
-                                        }
-
-                                        catch (Exception e) {
-                                            //e.printStackTrace();
-                                            if (pDialog1.isShowing())
-                                                pDialog1.dismiss();
-                                            //openComfirmationBox(cart_id);
-                                            Log.e("cart_id_if_truess", cart_id);
-                                            CommonFun.alertError(MainActivity.this,"Something went wrong.Please try again!");
-                                        }
-                                    }
-
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }) {
-
-                        @Override
-                        public String getBodyContentType() {
-                            return "application/json; charset=utf-8";
-                        }
-
-                        @Override
-                        protected String getParamsEncoding() {
-                            return "utf-8";
-                        }
-                        @Override
-                        public Map<String, String> getHeaders () throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("Authorization", "Bearer " + tokenData);
-                            //params.put("Content-Type", "application/json");
-
-                            return params;
-                        }
-
-                @Override
-                public byte[] getBody() throws AuthFailureError {
-                    try {
-                        Log.e("input_check_rdp_sdp",input_check_rdp_sdp);
-                        return input_check_rdp_sdp == null ? null : input_check_rdp_sdp.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_check_rdp_sdp, "utf-8");
-                        return null;
-                    }
-                }
-                    };
-
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-            ));
-            stringRequest.setShouldCache(false);
-            requestQueue.add(stringRequest);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    private void openComfirmationBox(String cart_id) {
-
-        openComfirmationDialog.setContentView(R.layout.dialog_cart_confirmation);
-        openComfirmationDialog.setCancelable(false);
-
-        TextView tv_alert_title=openComfirmationDialog.findViewById(R.id.tv_alert_title);
-        tv_alert_title.setText("Need Your Action");
-
-        TextView tv_text_line = openComfirmationDialog.findViewById(R.id.tv_text_line);
-        TextView tv_text_line1 = openComfirmationDialog.findViewById(R.id.tv_text_line1);
-        TextView tv_text_line2 = openComfirmationDialog.findViewById(R.id.tv_text_line2);
-
-        Button btn_confirm_yes = openComfirmationDialog.findViewById(com.galwaykart.R.id.btn_confirm_yes);
-        Button btn_confirm_no = openComfirmationDialog.findViewById(com.galwaykart.R.id.btn_confirm_no);
-        ImageView btn_close_rebate= openComfirmationDialog.findViewById(com.galwaykart.R.id.btn_close_rebate);
-
-        btn_close_rebate.setVisibility(View.GONE);
-        btn_confirm_yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jsonCartRemoveAPI(cart_id);
-                CommonFun.finishscreen(MainActivity.this);
-                //Intent intent = new Intent (MainActivity.this, )
-                //openComfirmationDialog.dismiss();
-            }
-        });
-
-        btn_confirm_no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openComfirmationDialog.dismiss();
-            }
-        });
-
-        btn_close_rebate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                openComfirmationDialog.dismiss();
-            }
-        });
-
-
-        openComfirmationDialog.show();
-    }
-
-    public void jsonCartRemoveAPI(String cart_id) {
-
-        String cart_remove_api_url = Global_Settings.api_url+"rest/V1/carts/mine/items/clear-cart";
-        Log.e("cart_remove_api_url",cart_remove_api_url);
-
-        String input_cart_remove = "{\"cartId\":\""+cart_id+"\"}";
-
-        SharedPreferences preferences = CommonFun.getPreferences(getApplicationContext());
-        tokenData = preferences.getString("tokenData", "");
-
-        pDialog1 = new TransparentProgressDialog(MainActivity.this);
-        pDialog1.setCancelable(false);
-        pDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        pDialog1.show();
-
-        try {
-            RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-            // JsonObjectRequest jsObjRequest = null;
-            StringRequest stringRequest =
-                    new StringRequest(Request.Method.POST, cart_remove_api_url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    if (pDialog1.isShowing())
-                                        pDialog1.dismiss();
-                                    Log.e("RemoveCartResponse", response);
-                                    if (response != null) {
-                                        try {
-                                            String strResponse = response;
-                                            if(strResponse.equalsIgnoreCase("true")){
-                                                //jsonCartRemoveAPI(cart_id);
-                                                CommonFun.alertError(MainActivity.this,"Thanks You");
-                                            }
-                                        }
-
-                                        catch (Exception e) {
-                                            //e.printStackTrace();
-                                            if (pDialog1.isShowing())
-                                                pDialog1.dismiss();
-                                            CommonFun.alertError(MainActivity.this,"Something went wrong.Please try again!");
-                                        }
-                                    }
-
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }) {
-
-                        @Override
-                        public String getBodyContentType() {
-                            return "application/json; charset=utf-8";
-                        }
-
-                        @Override
-                        protected String getParamsEncoding() {
-                            return "utf-8";
-                        }
-                        @Override
-                        public Map<String, String> getHeaders () throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("Authorization", "Bearer " + tokenData);
-                            //params.put("Content-Type", "application/json");
-
-                            return params;
-                        }
-
-                        @Override
-                        public byte[] getBody() throws AuthFailureError {
-                            try {
-                                Log.e("input_check_rdp_sdp",input_cart_remove);
-                                return input_cart_remove == null ? null : input_cart_remove.getBytes("utf-8");
-                            } catch (UnsupportedEncodingException uee) {
-                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_cart_remove, "utf-8");
-                                return null;
-                            }
-                        }
-                    };
-
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                    1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-            ));
-            stringRequest.setShouldCache(false);
-            requestQueue.add(stringRequest);
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-    }
-
-
     private void addItemToCart(String cart_id) {
 
             add_to_cart_URL = Global_Settings.api_url + "rest/V1/carts/mine/items/";
@@ -3096,7 +2822,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         Log.e("Hi Developer", "Hi Developer");
 
 
-            pDialog = new TransparentProgressDialog(MainActivity.this);
+            pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
             pDialog.setCancelable(false);
 
             pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -3256,12 +2982,12 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                             /**
                                              * Update cart quantity
                                              */
-                                            refreshItemCount(MainActivity.this);
+                                            refreshItemCount(MainActivity1Aug2021.this);
                                             //refreshItemCount();
-                                            Vibrator vibrator = (Vibrator) MainActivity.this.getSystemService(MainActivity.VIBRATOR_SERVICE);
+                                            Vibrator vibrator = (Vibrator) MainActivity1Aug2021.this.getSystemService(MainActivity1Aug2021.VIBRATOR_SERVICE);
                                             vibrator.vibrate(100);
 
-                                            dialog = new Dialog(MainActivity.this);
+                                            dialog = new Dialog(MainActivity1Aug2021.this);
                                             dialog.setContentView(R.layout.custom_alert_dialog_design);
                                             TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
                                             ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
@@ -3294,7 +3020,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                         else if(jsonObj.has("message"))
                                         {
                                             String st_msg = jsonObj.getString("message");
-                                            CommonFun.alertError(MainActivity.this,st_msg);
+                                            CommonFun.alertError(MainActivity1Aug2021.this,st_msg);
 
                                         }
 
@@ -3328,17 +3054,17 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                     JSONObject object = new JSONObject(errorString);
                                     String st_msg = object.getString("message");
 //                                String st_code = object.getString("code");
-                                    CommonFun.alertError(MainActivity.this,st_msg);
+                                    CommonFun.alertError(MainActivity1Aug2021.this,st_msg);
 //                                //Log.d("st_code",st_code);
                                 } catch (JSONException e) {
                                     //e.printStackTrace();
-                                    CommonFun.showVolleyException(error, MainActivity.this);
+                                    CommonFun.showVolleyException(error, MainActivity1Aug2021.this);
                                 }
 
 
                             }
                         } else
-                            CommonFun.showVolleyException(error, MainActivity.this);
+                            CommonFun.showVolleyException(error, MainActivity1Aug2021.this);
                     }
 
 
@@ -3388,7 +3114,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         progressBar_read_review.setVisibility(View.VISIBLE);
 
-        final RequestQueue requestQueue=Volley.newRequestQueue(MainActivity.this);
+        final RequestQueue requestQueue=Volley.newRequestQueue(MainActivity1Aug2021.this);
 
         StringRequest jsonRequest=new StringRequest(Request.Method.GET, rating_url,
                  new Response.Listener<String>() {
@@ -3505,7 +3231,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     private void setReviewAdapter() {
 
         CustomerReviewAdapter adapter;
-        adapter = new CustomerReviewAdapter(MainActivity.this, itemRatingList);
+        adapter = new CustomerReviewAdapter(MainActivity1Aug2021.this, itemRatingList);
         progressBar_read_review.setVisibility(View.GONE);
         if (adapter.getItemCount() > 0) {
 
@@ -3517,7 +3243,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
             recyclerView_Rating.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
 
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(MainActivity.this, spanCount);
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(MainActivity1Aug2021.this, spanCount);
             recyclerView_Rating.setLayoutManager(mLayoutManager);
             //recyclerView_Rating.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true))
             //  recyclerView_Rating.setItemAnimator(new DefaultItemAnimator());
@@ -3554,7 +3280,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 onPermissionAccess();
             } else {
 
-                CommonFun.alertError(MainActivity.this, "Must allow Storage permission to Share Product");
+                CommonFun.alertError(MainActivity1Aug2021.this, "Must allow Storage permission to Share Product");
             }
         }
     }

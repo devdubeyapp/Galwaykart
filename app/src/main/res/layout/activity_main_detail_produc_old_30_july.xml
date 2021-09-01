@@ -117,7 +117,7 @@
                     android:id="@+id/tv_product_segregation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="Test"
                     android:textColor="@color/colorAccent"
                     android:textSize="16dp"
                     android:layout_marginLeft="16dp"
@@ -188,21 +188,21 @@
                     android:id="@+id/rel_horizontal_view"
                     android:layout_margin="10dp">
 
-                    <!--                    <androidx.recyclerview.widget.RecyclerView-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:id="@+id/recycle_view_size"-->
-                    <!--                        android:visibility="gone"-->
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/recycle_view_size"-->
+<!--                        android:visibility="gone"-->
 
-                    <!--                        />-->
+<!--                        />-->
 
-                    <!--                    <LinearLayout-->
-                    <!--                        android:id="@+id/recycle_view_Container"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_margin="0dp"-->
-                    <!--                        android:orientation="vertical">-->
-                    <!--                    </LinearLayout>-->
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/recycle_view_Container"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="0dp"-->
+<!--                        android:orientation="vertical">-->
+<!--                    </LinearLayout>-->
 
 
                     <TextView
@@ -213,7 +213,7 @@
                         android:textSize="14dp"
                         android:textStyle="bold"
 
-                        />
+                    />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
@@ -222,7 +222,7 @@
                         android:orientation="horizontal"
                         android:layout_below="@+id/tv_size"
 
-                        />
+                    />
 
 
                     <TextView
