@@ -83,6 +83,17 @@
                 app:imageUrl="@{productDetails.imageUrl}"
                 android:onClick="@{()->clickHandler.clickListener(productDetails)}" />
 
+
+            <TextView
+                android:id="@+id/textView_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textColor="#000"
+                android:text="@{productDetails.pname}"
+                android:padding="5dp"
+                android:layout_below="@+id/tv_category_segregation" />
+
             <TextView
                 android:id="@+id/tv_category_segregation"
                 android:visibility="@{(productDetails.login_user_id.equals(@string/distributor_id) &amp;&amp; productDetails.category_segregation!=``)? View.VISIBLE : View.GONE}"
@@ -97,18 +108,15 @@
                 android:textSize="14dp"/>
 
 
-
-
-
             <TextView
-                android:id="@+id/textView_name"
+                android:id="@+id/textView_mrp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:textColor="#000"
-                android:text="@{productDetails.pname}"
-                android:padding="5dp"
-                android:layout_below="@+id/tv_category_segregation" />
+                android:visibility="@{(productDetails.login_user_id.equals(@string/distributor_id) &amp;&amp; productDetails.p_mrp!=``)? View.VISIBLE : View.GONE}"
+                android:text="@{productDetails.p_mrp}"
+                android:background="@drawable/strikethrough_background"
+                android:layout_below="@+id/textView_name" />
 
             <TextView
                 android:id="@+id/textView_price"
@@ -117,7 +125,7 @@
                 android:layout_centerHorizontal="true"
                 android:textColor="#000"
                 android:text="@{productDetails.price}"
-                android:layout_below="@+id/textView_name" />
+                android:layout_below="@+id/textView_mrp" />
 
             <TextView
                 android:id="@+id/textView_more_link"

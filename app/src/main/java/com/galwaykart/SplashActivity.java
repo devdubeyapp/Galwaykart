@@ -430,6 +430,8 @@ else
                     dataModelHomeAPI.setP_price("");
                     dataModelHomeAPI.setP_loyalty_value("");
                     dataModelHomeAPI.setP_category_segregation("");
+                    dataModelHomeAPI.setP_mrp("");
+
 
 
             }
@@ -463,6 +465,10 @@ else
                     if(jsonObject_product.has("category_segregation")) {
                         top_category_segregation =  jsonObject_product.getString("category_segregation");
                     }
+                    String top_pmrp="";
+                    if(jsonObject_product.has("price")) {
+                        top_pmrp =  jsonObject_product.getString("price");
+                    }
 
 
                     String login_group_id = pref.getString("login_group_id", "");
@@ -484,6 +490,7 @@ else
                           productDataModel.setIp(pip);
                           productDataModel.setLoyalty_value(top_p_lv);
                           productDataModel.setCategory_segregation(top_category_segregation);
+                          //productDataModel.setP_mrp(top_pmrp);
                           productDataModel.setPrice("");
                           productDataModel.setSku(psku);
                           productDataModel.setImage(pimage);

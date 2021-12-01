@@ -443,12 +443,15 @@ public class RegistrationActivity extends AppCompatActivity {
                               "\"Password\":\""+user_password+"\"," +
                                "\"spmode\":\"0\"}";
 
-            //Log.d("input_data",input_data);
+
 
             String st_Get_Dist_password_details_URL = Global_Settings.galway_api_url+
                                         "returnapi/LoginValidate_by_mobile";
 
-            //Log.d("input_data",st_Get_Dist_password_details_URL);
+            Log.d("UserIRGatewayPassword",input_data);
+            Log.d("UserIRGatewayPassURL_",st_Get_Dist_password_details_URL);
+
+
             pDialog = new TransparentProgressDialog(RegistrationActivity.this);
             pDialog.setCancelable(false);
             pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -659,7 +662,7 @@ public class RegistrationActivity extends AppCompatActivity {
                    st_Get_Dist_details_URL = Global_Settings.galway_api_url
                             + "returnapi/Load_Guest?ID=" + st_dist_id;
 
-                    //Log.d("st_Get_Dist_details_URL",st_Get_Dist_details_URL);
+                    Log.e("st_Get_Dist_details_URL",st_Get_Dist_details_URL);
 
                    // getEmployeeDetails();
 
@@ -685,6 +688,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     st_Get_Dist_details_URL = Global_Settings.galway_api_url + "returnapi/Load_Guest?ID=" + st_dist_id;
 
                     String checkUserExist_URL=Global_Settings.st_check_user+st_group_id+"/"+st_dist_id;
+                    Log.e("checkUserExist_URL", checkUserExist_URL);
+
                     checkExistUser(checkUserExist_URL,st_group_id,st_dist_id);
                     /**
                      * Get distributor details
@@ -982,7 +987,7 @@ private void registerUser()
     String register_api_url=Global_Settings.api_url+"/rest/V1/customer/registration";
     //String register_api_url=Global_Settings.api_url+"glaze/registeration_v1.php";
 
-    ////Log.d("register_api_url",register_api_url);
+    Log.e("register_api_url_user",register_api_url);
 
 
 
@@ -1029,7 +1034,7 @@ private void registerUser()
                 "\"password\":\""+password.getText().toString().trim() +"\""+
                 "}";
     }
-    //Log.d("input_data",input_data);
+    Log.e("input_data_user",input_data);
 
     pDialog = new TransparentProgressDialog(RegistrationActivity.this);
     pDialog.setCancelable(false);
@@ -1296,7 +1301,7 @@ private void registerUser()
 
 
         st_Get_Dist_details_URL = Global_Settings.galway_api_url+"returnapi/Load_verify_guest?ID="+st_dist_id;
-        ////Log.d("st_Get_Dist_details_URL",st_Get_Dist_details_URL);
+        Log.d("st_Get_Dist_details_URL",st_Get_Dist_details_URL);
 
         pDialog = new TransparentProgressDialog(RegistrationActivity.this);
         pDialog.setCancelable(false);
@@ -1312,7 +1317,7 @@ private void registerUser()
 
                         if(pDialog.isShowing())
                             pDialog.dismiss();
-
+                        Log.e("get_distr_response", response);
 
                         if(response!=null){
                             try {
@@ -1515,7 +1520,7 @@ private void registerUser()
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         pDialog.show();
-        //Log.d("st_Get_Dist_details_URL",st_Get_Dist_details_URL);
+        Log.d("st_Get_Dist_details_URL",st_Get_Dist_details_URL);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest jsObjRequest = new StringRequest(Request.Method.GET, st_Get_Dist_details_URL,
@@ -1523,6 +1528,7 @@ private void registerUser()
 
                     @Override
                     public void onResponse(String response) {
+                        Log.e("response_verify_id", response);
 
                         if(pDialog.isShowing())
                             pDialog.dismiss();
@@ -1679,6 +1685,7 @@ private void registerUser()
     private void getEmployeeDetails(String st_emp_code) {
 
        st_Get_Employee_Details_URL = Global_Settings.galway_api_url+"returnapi/Employee_Details?Emp_Code="+st_emp_code;
+       Log.e("st_Get_Employee_URL", st_Get_Employee_Details_URL);
 
         pDialog = new TransparentProgressDialog(RegistrationActivity.this);
         pDialog.setCancelable(false);
@@ -1690,6 +1697,8 @@ private void registerUser()
 
                     @Override
                     public void onResponse(String response) {
+
+                        Log.e("st_Get_Employee_resp", response);
 
                         if(pDialog.isShowing())
                             pDialog.dismiss();
@@ -1769,8 +1778,8 @@ private void registerUser()
         //Log.d("otp",st_text_msg);
 
         st_get_otp_URL= Global_Settings.otp_url+"?mobile="+st_phone_no+"&otp="+otp_random_no;
-
         Log.d("st_get_otp_URL",st_get_otp_URL);
+
         pDialog = new TransparentProgressDialog(RegistrationActivity.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -1845,6 +1854,7 @@ private void registerDistributor(){
  //       String register_api_url=Global_Settings.api_custom_url+"registeration_v1.php";
 
     String register_api_url=Global_Settings.api_url+"rest/V1/customer/registration";
+    Log.e("register_api_url", register_api_url);
     //String register_api_url=Global_Settings.api_url+"glaze/registeration_v1.php";
 
     ////Log.d("register_api_url",register_api_url);
@@ -1863,6 +1873,7 @@ private void registerDistributor(){
                 "\"password\":\""+pref.getString("user_password","") +"\""+
                 "}";
 
+        Log.e("st_dibid", st_dibid);
 
 
         pDialog = new TransparentProgressDialog(RegistrationActivity.this);

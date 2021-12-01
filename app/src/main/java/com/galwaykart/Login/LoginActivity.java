@@ -500,6 +500,9 @@ public class LoginActivity extends AppCompatActivity {
         String st_mobile_opt_url = Global_Settings.api_url+"rest/V1/m-send-otp";
         final String json_input_data1s = "{\"mobile_number\":\""+st_user_email+"\"}";
 
+        Log.e("st_mobile_opt_url", st_mobile_opt_url);
+        Log.e("json_input_data1s", json_input_data1s);
+
         pDialog = new TransparentProgressDialog(LoginActivity.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -640,7 +643,9 @@ public class LoginActivity extends AppCompatActivity {
                         + "\",\"template\":\"" + Global_Settings.st_Tamplate
                         + "\",\"websiteId\":\"" + Global_Settings.st_WebSiteID
                         + "\"}";
-        ////Log.d("mRequestBody", mRequestBody);
+
+        Log.e("st_Forget_pwd_URL", st_Forget_pwd_URL);
+        Log.e("mRequestBody", mRequestBody);
 
         pDialog = new TransparentProgressDialog(LoginActivity.this);
         pDialog.setCancelable(false);
@@ -875,7 +880,7 @@ private void callLogin(){
                 "\"version\":\""+device_os_version+","+build_version+"\""+
                 "}"+
                 "}";
-        //Log.d("request_body",mRequestBody);
+        Log.e("request_body_login",mRequestBody);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         login_progress.setVisibility(View.VISIBLE);
@@ -883,7 +888,7 @@ private void callLogin(){
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                //Log.d("LOG_VOLLEY_token", response);
+                Log.d("LOG_VOLLEY_token_login", response);
 
                 //CommonFun.alertError(LoginActivity.this,response);
 
@@ -989,7 +994,7 @@ private void callLogin(){
                 new Response.Listener<JSONObject>() {
 
                     @Override   public void onResponse(JSONObject response) {
-                       // Log.d("response_login",response.toString());
+                       Log.d("response_login",response.toString());
                         //CommonFun.alertError(LoginActivity.this,response.toString());
 //                        login_progress.setVisibility(View.INVISIBLE);
 
@@ -1019,7 +1024,7 @@ private void callLogin(){
  * Now commented
  */
 
-if(jsonObj.has("addresses")) {
+    if(jsonObj.has("addresses")) {
     JSONArray custom_data = jsonObj.getJSONArray("addresses");
 
     if (custom_data.length() > 0) {
@@ -1102,7 +1107,7 @@ if(jsonObj.has("addresses")) {
  *
  */
 
-if(crm_status.equals("1")||crm_status.equals("")) {
+   if(crm_status.equals("1")||crm_status.equals("")) {
     SharedPreferences pref;
     pref = CommonFun.getPreferences(getApplicationContext());
     SharedPreferences.Editor editor = pref.edit();

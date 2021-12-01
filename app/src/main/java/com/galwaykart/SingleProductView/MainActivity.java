@@ -102,6 +102,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -230,7 +231,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     RecyclerView recycle_view_size;
     RelativeLayout rel_horizontal_view;
     String st_hamper_desc="";
-    String st_loyalty_label="", st_loyalty_value="", st_category_segregation="";
+    String st_loyalty_label="", st_loyalty_value="", st_category_segregation="", str_product_mrp="";
     Realm realm;
 
 
@@ -291,7 +292,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     private String strHomeScreenPinCode;
 
-    private TextView tv_product_segregation;
+    private TextView tv_product_segregation, tv_product_mrp;
     ///private SlantedTextView slanted_text_category_segregation;
 
 
@@ -762,7 +763,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         tv_associate_products = findViewById(R.id.tv_associate_products);
         tv_associate_products_details = findViewById(R.id.tv_associate_products_details);
 
+        tv_product_mrp= findViewById(R.id.tv_product_mrp);
+        tv_product_mrp.setPaintFlags(tv_product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         tv_product_segregation= findViewById(R.id.tv_product_segregation);
+
         //slanted_text_category_segregation = (SlantedTextView) findViewById(R.id.slanted_text_category_segregation);
 
 
@@ -2265,6 +2269,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             if (status_product.equals("1")) {
 
                 String product_name = jsonObj.getString("name");
+                str_product_mrp = jsonObj.getString("price");
                 st_product_id = jsonObj.getString("id");
                 //////Log.d("Name",product_name);
                 tvItemName.setText(product_name);
@@ -2324,7 +2329,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                              category_segregation
                              286 Supreme
                              287 Deluxe
-                             290 Standard*/
+                             290 Standard
+                             291 SSSL- Short Shelf 0-3 Months*/
 
 
                         if(strCG.equalsIgnoreCase("286"))
@@ -2336,8 +2342,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                         else if(strCG.equalsIgnoreCase("290"))
                             st_category_segregation = "Standard";
 
-                         /* else if(st_cate_seg.equalsIgnoreCase("289"))
-                          st_category_segregation = "Catalog";*/
+                        else if(strCG.equalsIgnoreCase("291"))
+                            st_category_segregation = "SSSL- Short Shelf 0-3 Months";
 
                         Log.e("category_segregation",st_category_segregation);
 
@@ -2362,21 +2368,34 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
                 SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
                 String login_group_id = pref.getString("login_group_id", "");
+
+                Log.e("ip_of_product", ip_of_product);
+
+                String ip_label="PV/RBV : ";
+                String[] separated = ip_of_product.split("/");
+                Log.e("separated", separated.length+"");
+                if(separated.length>=3)
+                {
+                    ip_label="PV/RBV/SBV : ";
+                }
+
                 if (login_group_id.equals("4")) {
-                    short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n" +  st_loyalty_label + ": " + st_loyalty_value ;
+                    short_desc = ip_label + ip_of_product + "\n\n" + short_desc + "\n\n" +  st_loyalty_label + ": " + st_loyalty_value ;
+                    tv_product_mrp.setText("₹ " + str_product_mrp);
                     tv_product_segregation.setText(st_category_segregation);
                     //slanted_text_category_segregation.setText(st_category_segregation);
 
-                    //short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n\n"  + st_loyalty_label + ": " + st_loyalty_value + "\n\n" + short_desc + "\n\n";
+                    //short_desc = "PV/RBV/SBV : " + ip_of_product + "\n\n\n"  + st_loyalty_label + ": " + st_loyalty_value + "\n\n" + short_desc + "\n\n";
 
                 } else {
                     short_desc = "\n" + short_desc;
                 }
 
                 if (login_group_id.equals("8")) {
-                    //short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n";
-                    //short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n\n"  + st_loyalty_label + ": " + st_loyalty_value + "\n\n" + short_desc + "\n\n";
-                    short_desc = "PV/BV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n" +  st_loyalty_label + ": " + st_loyalty_value ;
+                    //short_desc = "PV/RBV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n";
+                    //short_desc = "PV/RBV/SBV : " + ip_of_product + "\n\n\n"  + st_loyalty_label + ": " + st_loyalty_value + "\n\n" + short_desc + "\n\n";
+                    short_desc = "PV/RBV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n" +  st_loyalty_label + ": " + st_loyalty_value ;
+                    tv_product_mrp.setText("₹ " + str_product_mrp);
                     tv_product_segregation.setText(st_category_segregation);
                     //slanted_text_category_segregation.setText(st_category_segregation);
                 } else {
@@ -2968,9 +2987,9 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             @Override
             public void onClick(View v) {
                 jsonCartRemoveAPI(cart_id);
-                CommonFun.finishscreen(MainActivity.this);
-                //Intent intent = new Intent (MainActivity.this, )
-                //openComfirmationDialog.dismiss();
+                //CommonFun.finishscreen(MainActivity.this);
+
+
             }
         });
 
@@ -3023,8 +3042,14 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                         try {
                                             String strResponse = response;
                                             if(strResponse.equalsIgnoreCase("true")){
+                                            /*    addItemToCart(cart_id);
+                                                CommonFun.finishscreen(MainActivity.this);*/
+
+                                                addItemToCart(cart_id);
+                                                openComfirmationDialog.dismiss();
+
                                                 //jsonCartRemoveAPI(cart_id);
-                                                CommonFun.alertError(MainActivity.this,"Thanks You");
+                                                //CommonFun.alertError(MainActivity.this,"Thanks You");
                                             }
                                         }
 
@@ -3088,12 +3113,11 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     private void addItemToCart(String cart_id) {
 
+            //callRebateAmountAPI("0");
             add_to_cart_URL = Global_Settings.api_url + "rest/V1/carts/mine/items/";
 
             //    String qty = "2";
             //  String sku = "GRP08100";
-
-        Log.e("Hi Developer", "Hi Developer");
 
 
             pDialog = new TransparentProgressDialog(MainActivity.this);
@@ -3257,6 +3281,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                              * Update cart quantity
                                              */
                                             refreshItemCount(MainActivity.this);
+                                            callRebateAmountAPI("0");
                                             //refreshItemCount();
                                             Vibrator vibrator = (Vibrator) MainActivity.this.getSystemService(MainActivity.VIBRATOR_SERVICE);
                                             vibrator.vibrate(100);
@@ -3295,6 +3320,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                                         {
                                             String st_msg = jsonObj.getString("message");
                                             CommonFun.alertError(MainActivity.this,st_msg);
+                                            Log.e("cart_msg", st_msg);
 
                                         }
 
@@ -3367,6 +3393,103 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             queue.add(jsObjRequest);
 
         }
+
+    public void callRebateAmountAPI(String stRebateCheckedStatus) {
+
+        String api_url = Global_Settings.api_url+"rest/V1/rebate/update/"+stRebateCheckedStatus;
+        Log.e("stRebateCheckedStatus",stRebateCheckedStatus);
+
+        SharedPreferences preferences = CommonFun.getPreferences(getApplicationContext());
+        tokenData = preferences.getString("tokenData", "");
+
+        pDialog = new TransparentProgressDialog(MainActivity.this);
+        pDialog.setCancelable(false);
+        pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        pDialog.show();
+
+
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+            // JsonObjectRequest jsObjRequest = null;
+            StringRequest stringRequest =
+                    new StringRequest(Request.Method.POST, api_url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    if (pDialog.isShowing())
+                                        pDialog.dismiss();
+                                    Log.e("RebateResponse", response);
+                                    if (response != null) {
+                                        try {
+
+                                            JSONArray jsonArray = new JSONArray(response);
+                                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                            String status =  jsonObject.getString("status");
+                                            String msg =  jsonObject.getString("msg");
+
+                                            if(status.equalsIgnoreCase("0")){
+                                              /*  //CommonFun.alertError(CartItemList.this,msg);
+                                                Intent intent = new Intent(CartItemList.this, CartItemList.class);
+                                                startActivity(intent);
+                                                CommonFun.finishscreen(CartItemList.this);*/
+
+                                            }
+                                            else {
+                                         /*       CommonFun.alertError(CartItemList.this,msg);
+                                                Intent intent = new Intent(CartItemList.this, CartItemList.class);
+                                                startActivity(intent);
+                                                CommonFun.finishscreen(CartItemList.this);*/
+
+                                            }
+
+                                        }
+
+                                        catch (Exception e) {
+                                            //e.printStackTrace();
+                                            if (pDialog.isShowing())
+                                                pDialog.dismiss();
+                                            CommonFun.alertError(MainActivity.this,"Rebate amount has not added.Please try again!");
+                                        }
+                                    }
+
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }) {
+
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json; charset=utf-8";
+                        }
+
+                        @Override
+                        protected String getParamsEncoding() {
+                            return "utf-8";
+                        }
+                        @Override
+                        public Map<String, String> getHeaders () throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("Authorization", "Bearer " + tokenData);
+                            //params.put("Content-Type", "application/json");
+
+                            return params;
+                        }
+
+                    };
+
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+            stringRequest.setShouldCache(false);
+            requestQueue.add(stringRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
 
     /**
      * added on                                                                                                                                                              Dec 30, 2017

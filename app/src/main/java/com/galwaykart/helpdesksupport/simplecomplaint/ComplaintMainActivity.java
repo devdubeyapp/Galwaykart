@@ -530,7 +530,7 @@ public class ComplaintMainActivity extends BaseActivityWithoutCart {
                                             }
                                             @Override
                                             public int getCount() {
-                                                return super.getCount()- 2 ; // you dont display last item. It is used as hint.
+                                                return super.getCount()- 1 ; // you dont display last item. It is used as hint.
                                             }
                                         };
                                         adapter.setDropDownViewResource(R.layout.spinner_item_custom_layout);

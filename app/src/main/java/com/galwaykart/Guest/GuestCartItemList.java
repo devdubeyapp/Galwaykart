@@ -668,7 +668,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                                 editor.commit();
 
                                 //Log.d("tv_total_ip",""+total_ip_f);
-                                tv_total_ip.setText("Total PV/BV/SBV : "+ total_ip_f);
+                                tv_total_ip.setText("Total PV/RBV/SBV : "+ total_ip_f);
                             }
 
                         } catch (Exception e) {
@@ -885,7 +885,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                                     tv_txt_view.setVisibility(View.VISIBLE);
 
                                     if(jsonObj.has("ip")) {
-                                        tv_total_ip.setText("Total PV/BV/SBV : " + jsonObj.getString("ip") );
+                                        tv_total_ip.setText("Total PV/RBV/SBV : " + jsonObj.getString("ip") );
                                     }
 
                                 }
@@ -1080,7 +1080,7 @@ public class GuestCartItemList extends GuestBaseActivity {
                                 editor.commit();
 
                                 //Log.d("tv_total_ip",""+total_ip_f);
-                                tv_total_ip.setText("Total PV/BV/SBV : "+ total_ip_f);
+                                tv_total_ip.setText("Total PV/RBV/SBV : "+ total_ip_f);
                             }
 
 

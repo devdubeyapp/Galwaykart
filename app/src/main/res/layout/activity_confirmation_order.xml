@@ -87,10 +87,65 @@
             android:layout_below="@+id/common_header"
             />
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rel_donation">
+            android:id="@+id/rel_gstin_no"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/tv_txt_view">
+
+            <CheckBox
+                android:id="@+id/cb_gstin_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="15dp"
+                android:gravity="right"
+                android:paddingTop="5dp"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13dp" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/tv_gstin_no"
+                android:text="100"
+                android:layout_toRightOf="@+id/cb_gstin_msg"
+                android:textSize="14dp"
+                android:autoLink="web"
+                android:background="@drawable/roundtext"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:linksClickable="true"
+                android:textColor="@color/colorblue" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/tv_gstin_msg"
+                android:text=""
+                android:visibility="gone"
+                android:textColor="@color/colorPrimary"
+                android:layout_toRightOf="@+id/tv_gstin_no"
+                android:textSize="14dp"
+
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rel_donation"
+            android:layout_below="@+id/rel_gstin_no">
 
             <CheckBox
                 android:id="@+id/cb_donation_msg"
@@ -191,6 +246,8 @@
                 />
 
         </RelativeLayout>
+
+
 
 
         <RelativeLayout

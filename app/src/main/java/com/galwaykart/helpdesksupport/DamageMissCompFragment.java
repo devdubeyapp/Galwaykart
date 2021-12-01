@@ -329,8 +329,6 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                                         ComplaintOrderDetailModel model = complaint_list.get(i);
                                         if (model.getCheck_for_return_req() == true) {
 
-
-
                                             if (all_check.equals("")) {
                                                 all_check = "{\"qty\":" + model.getReturn_qty_req() +
                                                         ",\"resolution\":" + str_complaint_category_id +
@@ -1004,42 +1002,7 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
             }
         }
 
-//        else if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE && resultCode==Activity.RESULT_OK) {
-//
-//            if(data!=null) {
-//                fileUri = data.getData();
-//
-//                pathToStoredVideo = getRealPathFromURIPath(fileUri, getActivity());
-//                //Log.d("vid", "Recorded Video Path " + pathToStoredVideo);
-//                String videoFileName=imgfilename+".mp4";
-//
-//                if (pathToStoredVideo != null && !pathToStoredVideo.equalsIgnoreCase("")) {
-//                    //String filePath = SiliCompressor.with(this).compressVideo(pathToStoredVideo, destinationDirectory);
-//
-//                    finalVideoFileName=videoFileName;
-//                    //compressVideoAndUpload(videoFileName);
-//
-//                } else {
-//                    Toast.makeText(getActivity(), "Please select video file from gallery", Toast.LENGTH_LONG)
-//                            .show();
-//                }
-//            }
-//        }
-//
-//        else if (requestCode == CAMERA_Camera_CAPTURE_VIDEO_REQUEST_CODE && resultCode==Activity.RESULT_OK) {
-//
-//            if(data!=null) {
-//                fileUri = data.getData();
-//                filePath=fileUri.getPath();
-//                pathToStoredVideo=filePath;
-//                //pathToStoredVideo = getRealPathFromURIPath(fileUri, this);
-//                Log.d("vid", "Recorded Video Path " + pathToStoredVideo);
-//                String videoFileName=imgfilename+".mp4";
-//                finalVideoFileName=videoFileName;
-//                //compressVideoAndUploads(videoFileName);
-//
-//            }
-//        }
+
 
 
     }
@@ -1622,7 +1585,6 @@ public class DamageMissCompFragment extends Fragment implements View.OnClickList
                        ",\"sourceId\":\"" + deviceNumber + "\"" +
                        ",\"requestTypeId\":\"" + str_complaint_category_id + "\"" +
                        ",\"imageData\":[" + stImageData + "]}";
-
 
            Log.e("submitvideo",input_data);
            callSubmitAPI(st_submit_complaint_url);

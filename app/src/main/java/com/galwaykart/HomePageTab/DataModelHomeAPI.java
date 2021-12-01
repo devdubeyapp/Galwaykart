@@ -13,6 +13,17 @@ public class DataModelHomeAPI extends RealmObject {
     String cat_title;
     String p_loyalty_value;
     String p_category_segregation;
+    String p_mrp="";
+
+    public String getP_mrp() {
+        return p_mrp;
+    }
+
+    public void setP_mrp(String p_mrp) {
+        this.p_mrp = p_mrp;
+    }
+
+
 
     public String getP_loyalty_value() {
         return p_loyalty_value;

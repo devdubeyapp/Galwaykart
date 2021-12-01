@@ -98,7 +98,6 @@ public class GeneralComplaintFragment extends Fragment implements View.OnClickLi
     ArrayList<String> str_pname_array = new ArrayList<String>();
     ArrayList<String> str_psku_array = new ArrayList<String>();
 
-
     private ImageView capture_image1, capture_image2, capture_image3, capture_image4, capture_image5, capture_image6;
     private TextView tv_compaint_submit;
     private EditText write_complaint_et;

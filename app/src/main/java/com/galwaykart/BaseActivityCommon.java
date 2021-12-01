@@ -1,12 +1,14 @@
 package com.galwaykart;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +41,7 @@ import com.galwaykart.Login.LoginActivity;
 import com.galwaykart.Login.LogoutActivity;
 import com.galwaykart.app_promo.AppPromoHome;
 import com.galwaykart.essentialClass.CommonFun;
+import com.galwaykart.essentialClass.Global_Settings;
 import com.galwaykart.helpdesksupport.mycomplaint.MyComplaints;
 import com.galwaykart.helpdesksupport.simplecomplaint.ComplaintMainActivity;
 import com.galwaykart.navigationDrawer.ExpandableCustomListAdapter;
@@ -749,9 +753,18 @@ public class BaseActivityCommon extends AppCompatActivity
         }
         else if(id==R.id.customerlearningPoint)
         {
-            Intent intent=new Intent(this,WebViewActivity.class);
+
+            try {
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Global_Settings.web_url+"customer-help-desk-tutorials"));
+                startActivity(myIntent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(BaseActivityCommon.this, "No application can handle this request." + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+
+         /*   Intent intent=new Intent(this,WebViewActivity.class);
             intent.putExtra("comefrom","customer-help-desk-tutorials");
-            startActivity(intent);
+            startActivity(intent);*/
             //CommonFun.finishscreen(this);
         }
         else if(id==R.id.legalabout){

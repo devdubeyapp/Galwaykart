@@ -68,7 +68,7 @@ public class SplashActivity extends AppCompatActivity {
 
             String email = pref.getString("user_email", "");
             String pass = pref.getString("user_password", "");
-
+/customer/token
 
             //////Log.d("user ", email + " " + pass);
             String url = com.galwaykart.essentialClass.Global_Settings.api_url + "rest/V1/integration/customer/token";

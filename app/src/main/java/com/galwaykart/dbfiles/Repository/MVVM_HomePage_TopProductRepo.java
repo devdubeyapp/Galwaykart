@@ -36,6 +36,7 @@ public class MVVM_HomePage_TopProductRepo {
 
     private static MVVM_HomePage_TopProductRepo instance;
     private ArrayList<ProductDataModel> dataset=new ArrayList<>();
+    private String p_visibility="";
 
     public static MVVM_HomePage_TopProductRepo getInstance(){
         if(instance==null){
@@ -134,14 +135,29 @@ public class MVVM_HomePage_TopProductRepo {
             String str_p_cs="";
             for(int i=0;i<jsonArray_product.length();i++){
 
+
+
+
                 JSONObject jsonObject_product=jsonArray_product.getJSONObject(i);
                 String pname=jsonObject_product.getString("pname");
-                String pprice="₹ "+jsonObject_product.getString("price");
+                String mrp_price="₹ "+jsonObject_product.getString("price");
                 String psku=jsonObject_product.getString("sku");
                 String pimage=jsonObject_product.getString("imageUrl");
-                String pip="PV/BV/SBV: "+jsonObject_product.getString("ip");
+
+                String ip_label="PV/RBV : ";
+                String pvbv = jsonObject_product.getString("ip");
+                String[] separated = pvbv.split("/");
+                Log.e("separated", separated.length+"");
+                if(separated.length>=3)
+                {
+                    ip_label="PV/RBV/SBV : ";
+                }
+
+                String pip=ip_label +jsonObject_product.getString("ip");
+
                 String p_lv="Loyalty Value: "+jsonObject_product.getString("loyalty_value");
                 str_p_cs= jsonObject_product.getString("category_segregation");
+
 
                 /*if(str_p_cs.equalsIgnoreCase("286"))
                     str_p_cs = "Supreme";
@@ -176,7 +192,7 @@ public class MVVM_HomePage_TopProductRepo {
                 Log.d("topProductID","GroupID"+login_group_id);
 
                 ProductDataModel productDataModel= new ProductDataModel(pname,pip,"",psku,pimage,
-                        "","",login_group_id,p_lv,str_p_cs);
+                        "","",login_group_id,p_lv,str_p_cs,"");
 
                 dataset.add(productDataModel);
 
@@ -336,52 +352,25 @@ public class MVVM_HomePage_TopProductRepo {
         data-title="SDP" = 288
         data-title="RDP" = 289*/
 
-
-       /* This is QA Value
-        product_sdp_rdp
-        data-title="SDP" = 290
-        data-title="RDP" = 291*/
-
-
         String st_URL="";
         Log.e("search_query",query);
 
+
         if(is_search==true) {
-
             if (query.contains("SDP") || query.contains("sdp")) {
-
-                String str_update_query = "";
-                if(Global_Settings.api_url.contains("http://qa.galwaykart.com/"))
-                {
-                    str_update_query = "290";
-                }
-                else
-                {
-                    str_update_query = "288";
-                }
-
-                  st_URL = Global_Settings.api_url + "rest/V1/products?searchCriteria[filter_groups][0][filters][1][field]=product_sdp_rdp" +
+                String str_update_query = "288";
+                st_URL = Global_Settings.api_url + "rest/V1/products?searchCriteria[filter_groups][0][filters][1][field]=product_sdp_rdp" +
                         "&searchCriteria[filter_groups][0][filters][1][value]="+str_update_query+
                         "&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
                         "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
                         "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset" +
                         "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
-
                 Log.e("st_URL_search_288", st_URL);
 
 
             } else if (query.contains("RDP") || query.contains("rdp")) {
 
-                String str_update_query = "";
-                if(Global_Settings.api_url.contains("http://qa.galwaykart.com/"))
-                {
-                    str_update_query = "291";
-                }
-                else
-                {
-                    str_update_query = "289";
-                }
-
+                String str_update_query = "289";
                 st_URL = Global_Settings.api_url + "rest/V1/products?searchCriteria[filter_groups][0][filters][1][field]=product_sdp_rdp" +
                         "&searchCriteria[filter_groups][0][filters][1][value]="+str_update_query+
                         "&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
@@ -390,6 +379,8 @@ public class MVVM_HomePage_TopProductRepo {
                         "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
 
                 Log.e("st_URL_search_289", st_URL);
+
+
 
             } else {
 
@@ -405,7 +396,19 @@ public class MVVM_HomePage_TopProductRepo {
         }
         else
         {
-          st_URL= Global_Settings.api_url+"rest/V1/products?"+
+            st_URL= Global_Settings.api_url+"rest/V1/products?"+
+                    "searchCriteria[filter_groups][0][filters][0][field]=category_id"+
+                    "&searchCriteria[filter_groups][0][filters][0][value]="+st_selected_id+
+                    "&searchCriteria[filter_groups][1][filters][0][field]=status"+
+                    "&searchCriteria[filter_groups][1][filters][0][value]=1"+
+                    "&searchCriteria[sortOrders][0][field]=name"+
+                    "&searchCriteria[sortOrders][0][direction]=asc"+
+                    "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
+                    "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset"+
+                    "&searchCriteria[filter_groups][2][filters][1][value]="+api_login_id;
+
+
+         /* st_URL= Global_Settings.api_url+"rest/V1/products?"+
                     "searchCriteria[filter_groups][0][filters][0][field]=category_id"+
                     "&searchCriteria[filter_groups][0][filters][0][value]="+st_selected_id+
                     "&searchCriteria[filter_groups][0][filters][1][field]=visibility"+
@@ -416,12 +419,12 @@ public class MVVM_HomePage_TopProductRepo {
                     "&searchCriteria[sortOrders][0][direction]=asc"+
                     "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
                     "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset"+
-                    "&searchCriteria[filter_groups][2][filters][1][value]="+api_login_id;
+                    "&searchCriteria[filter_groups][2][filters][1][value]="+api_login_id;*/
 
 
         }
 
-        //Log.d("st_url_MVVM",st_URL);
+        Log.d("st_url_MVVM",st_URL);
 
         isDataLoad.postValue(true);
 
@@ -433,11 +436,17 @@ public class MVVM_HomePage_TopProductRepo {
                     @Override
                     public void onResponse(String response) {
 
-
                         //Log.d("resMVVM_Product",response.toString());
-
-                        setPostProductDetail(context, response,data, finalSt_selected_name);
-
+                        if(is_search==true)
+                        {
+                            setPostSearchProductDetail(context, response,data, finalSt_selected_name);
+                            Log.e("is_search", "is_search");
+                        }
+                        else
+                        {
+                            setPostProductDetail(context, response,data, finalSt_selected_name);
+                            Log.e("is_search", "not_use_search");
+                        }
 
                     }
 
@@ -479,8 +488,7 @@ public class MVVM_HomePage_TopProductRepo {
      * @param data
      */
     private void setPostProductDetail(Context context, String response,
-                                      MutableLiveData<List<ProductDataModel>> data, String st_selected_name
-    ) {
+                                      MutableLiveData<List<ProductDataModel>> data, String st_selected_name) {
 
         if(response!=null){
            Log.e("resProduct",response.toString());
@@ -505,58 +513,63 @@ public class MVVM_HomePage_TopProductRepo {
                         JSONObject sku_c = custom_data.getJSONObject(i);
 
                         String p_status = sku_c.getString("status");
-                        if(p_status.equals("1")) {
-                            String p_sku = sku_c.getString("sku");
-                            String p_name = sku_c.getString("name");
-                            // String p_image = sku_c.getString("image");
+                        p_visibility = sku_c.getString("visibility");
+                        Log.e("p_visibility", p_visibility);
+                        if (p_status.equals("1")) {
+                            if (p_visibility.equals("4") || p_visibility.equals("2")) {
+
+                                String p_sku = sku_c.getString("sku");
+                                String p_name = sku_c.getString("name");
+                                String p_mrp = sku_c.getString("price");
+                                // String p_image = sku_c.getString("image");
 
 
-                            String p_price = "";
-                            if (sku_c.has("price")) {
-                                p_price = sku_c.getString("price");
-                                Double d_price = Double.parseDouble(p_price);
-                                d_price = Math.round(d_price * 100.0) / 100.0;
-                                p_price = d_price.toString();
-                            }
+                                String p_price = "";
+                                if (sku_c.has("price")) {
+                                    p_price = sku_c.getString("price");
+                                    Double d_price = Double.parseDouble(p_price);
+                                    d_price = Math.round(d_price * 100.0) / 100.0;
+                                    p_price = d_price.toString();
+                                }
 
-                            p_name = p_name.toUpperCase();
+                                p_name = p_name.toUpperCase();
 
 
-                            String p_image = "";
-                            String p_ip = "";
-                            String p_loyalty_value="0";
-                            String st_cate_seg = "";
-                            String p_category_segregation="";
+                                String p_image = "";
+                                String p_ip = "";
+                                String p_loyalty_value = "0";
+                                String st_cate_seg = "";
+                                String p_category_segregation = "";
 
-                            JSONArray jsonArray_custom_attrib = sku_c.getJSONArray("custom_attributes");
+                                JSONArray jsonArray_custom_attrib = sku_c.getJSONArray("custom_attributes");
 
-                            if (jsonArray_custom_attrib.length() > 0) {
-                                for (int k = 0; k < jsonArray_custom_attrib.length(); k++) {
+                                if (jsonArray_custom_attrib.length() > 0) {
+                                    for (int k = 0; k < jsonArray_custom_attrib.length(); k++) {
 
-                                    JSONObject jsonObject_image = jsonArray_custom_attrib.getJSONObject(k);
+                                        JSONObject jsonObject_image = jsonArray_custom_attrib.getJSONObject(k);
 
-                                    String attribute_code = jsonObject_image.getString("attribute_code");
-                                    if (attribute_code.equalsIgnoreCase("thumbnail")) {
+                                        String attribute_code = jsonObject_image.getString("attribute_code");
+                                        if (attribute_code.equalsIgnoreCase("thumbnail")) {
 
-                                        p_image = jsonObject_image.getString("value");
-                                        //Log.d("resMVVM", p_image);
-                                    }
+                                            p_image = jsonObject_image.getString("value");
+                                            //Log.d("resMVVM", p_image);
+                                        }
 
-                                    if (attribute_code.equalsIgnoreCase("ip")) {
+                                        if (attribute_code.equalsIgnoreCase("ip")) {
 
-                                        p_ip = jsonObject_image.getString("value");
-                                        //Log.d("resMVVM", p_image);
-                                    }
+                                            p_ip = jsonObject_image.getString("value");
+                                            //Log.d("resMVVM", p_image);
+                                        }
 
-                                    if (attribute_code.equalsIgnoreCase("loyalty_value")) {
+                                        if (attribute_code.equalsIgnoreCase("loyalty_value")) {
 
-                                        p_loyalty_value = jsonObject_image.getString("value");
-                                        Log.e("resMVVM", p_loyalty_value);
-                                    }
+                                            p_loyalty_value = jsonObject_image.getString("value");
+                                            Log.e("resMVVM", p_loyalty_value);
+                                        }
 
-                                    if (attribute_code.equalsIgnoreCase("category_segregation")) {
-                                        st_cate_seg = jsonObject_image.getString("value");
-                                        Log.e("st_cate_seg", st_cate_seg);
+                                        if (attribute_code.equalsIgnoreCase("category_segregation")) {
+                                            st_cate_seg = jsonObject_image.getString("value");
+                                            Log.e("st_cate_seg", st_cate_seg);
 
 
                                         /*This is QA Value
@@ -570,78 +583,87 @@ public class MVVM_HomePage_TopProductRepo {
                                             category_segregation
                                             286 Supreme
                                             287 Deluxe
-                                            290 Standard*/
+                                            290 Standard
+                                            291 SSSL- Short Shelf 0-3 Months*/
 
-                                        if(st_cate_seg.equalsIgnoreCase("286"))
-                                            p_category_segregation = "Supreme";
+                                            if (st_cate_seg.equalsIgnoreCase("286"))
+                                                p_category_segregation = "Supreme";
 
-                                        else if(st_cate_seg.equalsIgnoreCase("287"))
-                                            p_category_segregation = "Deluxe";
+                                            else if (st_cate_seg.equalsIgnoreCase("287"))
+                                                p_category_segregation = "Deluxe";
 
-                                        else if(st_cate_seg.equalsIgnoreCase("290"))
-                                            p_category_segregation = "Standard";
+                                            else if (st_cate_seg.equalsIgnoreCase("290"))
+                                                p_category_segregation = "Standard";
 
-                                       /* else if(st_cate_seg.equalsIgnoreCase("289"))
-                                            p_category_segregation = "Catalog";*/
+                                            else if (st_cate_seg.equalsIgnoreCase("291"))
+                                                p_category_segregation = "SSSL- Short Shelf 0-3 Months";
 
-                                        Log.e("st_category_segregation",p_category_segregation);
+                                            Log.e("st_category_segregation", p_category_segregation);
+                                        }
+
+
                                     }
 
 
                                 }
 
 
-                            }
+                                if (!p_image.equals("")) {
+                                    p_image = Global_Settings.image_url + p_image;
+                                }
 
 
+                                SharedPreferences pref = CommonFun.getPreferences(context);
+                                String login_group_id = pref.getString("login_group_id", "");
+                                if (login_group_id != null && !login_group_id.equals("")) {
+
+                                } else {
+                                    login_group_id = "-";
+                                }
+                                // login_group_id="4";
 
 
-                            if (!p_image.equals("")) {
-                                p_image = Global_Settings.image_url + p_image;
-                            }
+                                jsonObject = custom_data.getJSONObject(i);
+
+                                JSONArray json_custom_price = jsonObject.getJSONArray("tier_prices");
+
+                                // ////Log.d("MyLog",jsonArraysunject+"");
 
 
-                            SharedPreferences pref = CommonFun.getPreferences(context);
-                            String login_group_id = pref.getString("login_group_id", "");
-                            if (login_group_id != null && !login_group_id.equals("")) {
+                                int tier_price_length = json_custom_price.length();
+                                if (tier_price_length > 0) {
 
-                            } else {
-                                login_group_id = "-";
-                            }
-                            // login_group_id="4";
+                                    for (int j = 0; j < tier_price_length; j++) {
 
+                                        JSONObject custom_obj = json_custom_price.getJSONObject(j);
+                                        String st_customer_gp_id = custom_obj.getString("customer_group_id");
+                                        String st_tier_qty = custom_obj.getString("qty");
+                                        String st_tier_price = custom_obj.getString("value");
 
-                            jsonObject = custom_data.getJSONObject(i);
-
-                            JSONArray json_custom_price = jsonObject.getJSONArray("tier_prices");
-
-                            // ////Log.d("MyLog",jsonArraysunject+"");
-
-
-                            int tier_price_length = json_custom_price.length();
-                            if (tier_price_length > 0) {
-
-                                for (int j = 0; j < tier_price_length; j++) {
-
-                                    JSONObject custom_obj = json_custom_price.getJSONObject(j);
-                                    String st_customer_gp_id = custom_obj.getString("customer_group_id");
-                                    String st_tier_qty = custom_obj.getString("qty");
-                                    String st_tier_price = custom_obj.getString("value");
-
-                                    if (st_customer_gp_id.equalsIgnoreCase(login_group_id)) {
-                                        p_price = st_tier_price;
+                                        if (st_customer_gp_id.equalsIgnoreCase(login_group_id)) {
+                                            p_price = st_tier_price;
+                                        }
                                     }
                                 }
+
+
+                                ////Log.d("mvvmlog",login_group_id+" "+st_selected_name);
+
+                                Log.e("ip_of_product", p_ip);
+
+                                String ip_label = "PV/RBV : ";
+                                String[] separated = p_ip.split("/");
+                                Log.e("separated", separated.length + "");
+                                if (separated.length >= 3) {
+                                    ip_label = "PV/RBV/SBV : ";
+                                }
+
+                                dataset.add(new ProductDataModel(p_name, ip_label + p_ip, "₹ " + p_price, p_sku, p_image,
+                                        "", st_selected_name, login_group_id, "Loyalty Value " + p_loyalty_value, p_category_segregation, "₹ " + p_mrp));
+
                             }
-
-
-                            ////Log.d("mvvmlog",login_group_id+" "+st_selected_name);
-
-                            dataset.add(new ProductDataModel(p_name, "PV/BV/SBV " + p_ip, "₹ " + p_price, p_sku, p_image,
-                                    "", st_selected_name, login_group_id, "Loyalty Value "+ p_loyalty_value, p_category_segregation));
-
+                            //data.postValue(dataset);
                         }
-                        //data.postValue(dataset);
                     }
 
                     data.postValue(dataset);
@@ -649,7 +671,211 @@ public class MVVM_HomePage_TopProductRepo {
                 else
                 {
                     dataset.add(new ProductDataModel("", "", "", "", "",
-                            "", st_selected_name, "","",""));
+                            "", st_selected_name, "","","",""));
+
+                    data.postValue(dataset);
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                ////Log.d("error",e.toString());
+            }
+
+        }
+    }
+
+    /**
+     * Post Operation Search Products
+     * @param context
+     * @param response
+     * @param data
+     */
+    private void setPostSearchProductDetail(Context context, String response,
+                                      MutableLiveData<List<ProductDataModel>> data, String st_selected_name) {
+
+        if(response!=null){
+            Log.e("resProduct",response.toString());
+            dataset.clear();
+            try {
+
+                JSONObject jsonObject = new JSONObject(response);
+
+                int total_count= Integer.parseInt(jsonObject.getString("total_count"));
+                if(total_count>0) {
+
+
+                    JSONArray custom_data = jsonObject.getJSONArray("items");
+
+
+                    int length_of_sku_code = custom_data.length();
+
+                    for (int i = 0; i < length_of_sku_code; i++) {
+
+                        // id":"2166","sku":"GRP29250","name":"BODY LOTION- ALMOND & SHEA BUTTER","image":"\/h\/o\/honey-butter-body-lotion.jpg","price":25
+
+                        JSONObject sku_c = custom_data.getJSONObject(i);
+
+                        String p_status = sku_c.getString("status");
+                        p_visibility = sku_c.getString("visibility");
+                        Log.e("p_visibility", p_visibility);
+                        if (p_status.equals("1")) {
+                            if (p_visibility.equals("3") || p_visibility.equals("4")) {
+
+                                String p_sku = sku_c.getString("sku");
+                                String p_name = sku_c.getString("name");
+                                String p_mrp = sku_c.getString("price");
+                                // String p_image = sku_c.getString("image");
+
+
+                                String p_price = "";
+                                if (sku_c.has("price")) {
+                                    p_price = sku_c.getString("price");
+                                    Double d_price = Double.parseDouble(p_price);
+                                    d_price = Math.round(d_price * 100.0) / 100.0;
+                                    p_price = d_price.toString();
+                                }
+
+                                p_name = p_name.toUpperCase();
+
+
+                                String p_image = "";
+                                String p_ip = "";
+                                String p_loyalty_value = "0";
+                                String st_cate_seg = "";
+                                String p_category_segregation = "";
+
+                                JSONArray jsonArray_custom_attrib = sku_c.getJSONArray("custom_attributes");
+
+                                if (jsonArray_custom_attrib.length() > 0) {
+                                    for (int k = 0; k < jsonArray_custom_attrib.length(); k++) {
+
+                                        JSONObject jsonObject_image = jsonArray_custom_attrib.getJSONObject(k);
+
+                                        String attribute_code = jsonObject_image.getString("attribute_code");
+                                        if (attribute_code.equalsIgnoreCase("thumbnail")) {
+
+                                            p_image = jsonObject_image.getString("value");
+                                            //Log.d("resMVVM", p_image);
+                                        }
+
+                                        if (attribute_code.equalsIgnoreCase("ip")) {
+
+                                            p_ip = jsonObject_image.getString("value");
+                                            //Log.d("resMVVM", p_image);
+                                        }
+
+                                        if (attribute_code.equalsIgnoreCase("loyalty_value")) {
+
+                                            p_loyalty_value = jsonObject_image.getString("value");
+                                            Log.e("resMVVM", p_loyalty_value);
+                                        }
+
+                                        if (attribute_code.equalsIgnoreCase("category_segregation")) {
+                                            st_cate_seg = jsonObject_image.getString("value");
+                                            Log.e("st_cate_seg", st_cate_seg);
+
+
+                                        /*This is QA Value
+                                           286 Supreme
+                                           287 Standard
+                                           288 Economy
+                                           289 catalog*/
+
+
+                                        /*//This is Live Value
+                                            category_segregation
+                                            286 Supreme
+                                            287 Deluxe
+                                            290 Standard
+                                            291 SSSL- Short Shelf 0-3 Months*/
+
+                                            if (st_cate_seg.equalsIgnoreCase("286"))
+                                                p_category_segregation = "Supreme";
+
+                                            else if (st_cate_seg.equalsIgnoreCase("287"))
+                                                p_category_segregation = "Deluxe";
+
+                                            else if (st_cate_seg.equalsIgnoreCase("290"))
+                                                p_category_segregation = "Standard";
+
+                                            else if (st_cate_seg.equalsIgnoreCase("291"))
+                                                p_category_segregation = "SSSL- Short Shelf 0-3 Months";
+
+                                            Log.e("st_category_segregation", p_category_segregation);
+                                        }
+
+
+                                    }
+
+
+                                }
+
+
+                                if (!p_image.equals("")) {
+                                    p_image = Global_Settings.image_url + p_image;
+                                }
+
+
+                                SharedPreferences pref = CommonFun.getPreferences(context);
+                                String login_group_id = pref.getString("login_group_id", "");
+                                if (login_group_id != null && !login_group_id.equals("")) {
+
+                                } else {
+                                    login_group_id = "-";
+                                }
+                                // login_group_id="4";
+
+
+                                jsonObject = custom_data.getJSONObject(i);
+
+                                JSONArray json_custom_price = jsonObject.getJSONArray("tier_prices");
+
+                                // ////Log.d("MyLog",jsonArraysunject+"");
+
+
+                                int tier_price_length = json_custom_price.length();
+                                if (tier_price_length > 0) {
+
+                                    for (int j = 0; j < tier_price_length; j++) {
+
+                                        JSONObject custom_obj = json_custom_price.getJSONObject(j);
+                                        String st_customer_gp_id = custom_obj.getString("customer_group_id");
+                                        String st_tier_qty = custom_obj.getString("qty");
+                                        String st_tier_price = custom_obj.getString("value");
+
+                                        if (st_customer_gp_id.equalsIgnoreCase(login_group_id)) {
+                                            p_price = st_tier_price;
+                                        }
+                                    }
+                                }
+
+
+                                ////Log.d("mvvmlog",login_group_id+" "+st_selected_name);
+
+                                Log.e("ip_of_product", p_ip);
+
+                                String ip_label = "PV/RBV : ";
+                                String[] separated = p_ip.split("/");
+                                Log.e("separated", separated.length + "");
+                                if (separated.length >= 3) {
+                                    ip_label = "PV/RBV/SBV : ";
+                                }
+
+                                dataset.add(new ProductDataModel(p_name, ip_label + p_ip, "₹ " + p_price, p_sku, p_image,
+                                        "", st_selected_name, login_group_id, "Loyalty Value " + p_loyalty_value, p_category_segregation, "₹ " + p_mrp));
+
+                            }
+                            //data.postValue(dataset);
+                        }
+                    }
+
+                    data.postValue(dataset);
+                }
+                else
+                {
+                    dataset.add(new ProductDataModel("", "", "", "", "",
+                            "", st_selected_name, "","","",""));
 
                     data.postValue(dataset);
                 }

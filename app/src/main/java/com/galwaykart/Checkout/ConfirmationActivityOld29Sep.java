@@ -59,7 +59,7 @@ import java.util.Map;
  * Created by ankesh on 10/3/2017.
  */
 
-public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
+public class ConfirmationActivityOld29Sep extends BaseActivityWithoutCart {
 
     SharedPreferences pref;
     TransparentProgressDialog pDialog;
@@ -107,14 +107,21 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
     String stRebateTitle="";
     String stNewRebateAmt="";
-    int rebateAmount=0;
-    int stRebatePoints=0;
-    EditText ed_edit_rebate;
+    String strRebateAmount="";
+    int inRebatePoints=0;
+    TextView tv_rebate_box;
+
+
+
+    String stRebateApplyStatus=""; //o means, user not check rebate section or he is not readem rebate pooint
     CheckBox cb_rebate_msg;
     boolean isFirstTimeAppy = false;
 
+    String rebate_status="";
+
 
     //TextView tv_grand_total;
+
 
 
     ArrayList<HashMap<String, String>> itemList;
@@ -158,7 +165,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
     Double total_offer_amount=0.0;
     Double total_amt=0.0;
-    DatabaseHandler dbh = new DatabaseHandler(ConfirmationActivityOldJuly24.this);
+    DatabaseHandler dbh = new DatabaseHandler(ConfirmationActivityOld29Sep.this);
 
     Boolean is_data_load=false;
     CheckBox cb_donation_msg;
@@ -168,14 +175,14 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
     String current_user_zone="";
 
 
-
+    String ip_label="PV/RBV : ";
 
 
     @Override
     public void onBackPressed() {
         // TODO Auto-generated method stub
         super.onBackPressed();
-        Intent intent=new Intent(ConfirmationActivityOldJuly24.this, DeliveryTypeActivity.class);
+        Intent intent=new Intent(ConfirmationActivityOld29Sep.this, DeliveryTypeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
         startActivity(intent);
@@ -285,10 +292,10 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
      */
     private void gotoPayment(){
 
-        Intent intent=new Intent(ConfirmationActivityOldJuly24.this, Payment_Method_Activity.class);
+        Intent intent=new Intent(ConfirmationActivityOld29Sep.this, Payment_Method_Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        CommonFun.finishscreen(ConfirmationActivityOldJuly24.this);
+        CommonFun.finishscreen(ConfirmationActivityOld29Sep.this);
     }
 
     @Override
@@ -296,8 +303,10 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
         super.onResume();
 
-        dialog = new Dialog(ConfirmationActivityOldJuly24.this);
-        dialogRebate = new Dialog(ConfirmationActivityOldJuly24.this);
+        dialog = new Dialog(ConfirmationActivityOld29Sep.this);
+        dialogRebate = new Dialog(ConfirmationActivityOld29Sep.this);
+
+
 
         if(is_data_load==false) {
 
@@ -306,6 +315,12 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
             cart_amount = pref.getString("cartamount", "");
             inc_tax = pref.getString("arr_amount", "");
             offer_dis = pref.getString("offer_disc", "");
+
+            rebate_status = pref.getString("rebate_status", "");
+            Log.e("rebate_status_p", rebate_status);
+
+
+
             ////Log.d("tax",inc_tax);
             ////Log.d("offer_dis",offer_dis);
 
@@ -328,8 +343,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
                     if(isFirstTime == true) {
                          openDonationBox();
-
-                    }
+                   }
 
                 }
             });
@@ -340,15 +354,29 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
             cb_rebate_msg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    //Log.d("isChecked", String.valueOf(isChecked));
+                    Log.d("isChecked", String.valueOf(isChecked));
 
-                    if(isFirstTimeAppy == true) {
-                        openRebateBox();
+                    if(isChecked)
+                    {
+                        Float flRP= Float.parseFloat(strRebateAmount);
+                        Log.e("flRP_m",flRP+ "");
+                        if(flRP.toString().equals("0.0")) {
+                            stRebateApplyStatus = "1";
+                            callRebateAmountAPI(stRebateApplyStatus);
+                        }
 
                     }
 
+                    else
+                    {
+                        stRebateApplyStatus = "0";
+                        callRebateAmountAPI(stRebateApplyStatus);
+                    }
+
+
                 }
             });
+
 
             callConfirmationActivity();
         }
@@ -359,6 +387,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
         dialog.setContentView(R.layout.dialog_donation);
         dialog.setCancelable(false);
+
         TextView tv_alert_title=dialog.findViewById(R.id.tv_alert_title);
         tv_alert_title.setText(stDonationTitle);
         ed_edit_donation = dialog.findViewById(R.id.ed_edit_donation);
@@ -378,7 +407,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                     if (gawalaDonationAmt >= 0) {
                         callDonationApi(stNewDonationAmt);
                     } else {
-                        CommonFun.alertError(ConfirmationActivityOldJuly24.this, "Please enter greater than 0 amount");
+                        CommonFun.alertError(ConfirmationActivityOld29Sep.this, "Please enter greater than 0 amount");
                     }
                 }
             }
@@ -418,13 +447,13 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                 try {
                     //Log.d("responseDonation", response);
 
-                    Intent intent = new Intent(ConfirmationActivityOldJuly24.this, ConfirmationActivityOldJuly24.class);
+                    Intent intent = new Intent(ConfirmationActivityOld29Sep.this, ConfirmationActivityOld29Sep.class);
                     startActivity(intent);
-                    CommonFun.finishscreen(ConfirmationActivityOldJuly24.this);
+                    CommonFun.finishscreen(ConfirmationActivityOld29Sep.this);
 
                     dialog.dismiss();
                 }catch (Exception e){
-                    CommonFun.alertError(ConfirmationActivityOldJuly24.this,"Donation amount has not added.Please try again!");
+                    CommonFun.alertError(ConfirmationActivityOld29Sep.this,"Donation amount has not added.Please try again!");
                 }
 
             }
@@ -434,7 +463,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
 //                            Log.d("errorDonation",error.toString());
-                        CommonFun.alertError(ConfirmationActivityOldJuly24.this,"Donation amount has not added.Please try again!");
+                        CommonFun.alertError(ConfirmationActivityOld29Sep.this,"Donation amount has not added.Please try again!");
                     }
                 }
         ) {
@@ -459,43 +488,50 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
     private void openRebateBox() {
 
-        dialogRebate.setContentView(R.layout.dialog_rebate);
+        dialogRebate.setContentView(R.layout.dialog_rebate_new1);
         dialogRebate.setCancelable(false);
 
         TextView tv_alert_title=dialogRebate.findViewById(R.id.tv_alert_title);
         tv_alert_title.setText(stRebateTitle);
 
-        ed_edit_rebate = dialogRebate.findViewById(R.id.ed_edit_rebate);
-        ed_edit_rebate.setText(String.valueOf(stRebatePoints));
+        tv_rebate_box = dialogRebate.findViewById(R.id.tv_rebate_box);
+        tv_rebate_box.setText("Are you sure to want to apply your Rabate Points?");
 
-        Button btn_add_rebate = dialogRebate.findViewById(R.id.btn_add_rebate);
-        Button btn_remove_rebate = dialogRebate.findViewById(R.id.btn_remove_rebate);
+
+        Button btn_yes_rebate = dialogRebate.findViewById(R.id.btn_yes_rebate);
+        Button btn_no_rebate = dialogRebate.findViewById(R.id.btn_no_rebate);
         ImageView btn_close_rebate= dialogRebate.findViewById(R.id.btn_close_rebate);
 
         btn_close_rebate.setVisibility(View.GONE);
-
-
-        btn_add_rebate.setOnClickListener(new View.OnClickListener() {
+        btn_yes_rebate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stNewRebateAmt = ed_edit_rebate.getText().toString().trim();
-                if (!stNewRebateAmt.equalsIgnoreCase("")) {
-                    rebateAmount = Integer.parseInt(stNewRebateAmt);
-                    Log.e("rebateAmount", rebateAmount + "");
-                    if (rebateAmount >= 0) {
-                        callRebateAmountAPI(stNewRebateAmt);
-                    } else {
-                        CommonFun.alertError(ConfirmationActivityOldJuly24.this, "Please enter greater than 0 amount");
-                    }
+
+
+                Float flRP= Float.parseFloat(strRebateAmount);
+
+                if(flRP.equals("0")) {
+                    stRebateApplyStatus = "1";
+                    callRebateAmountAPI(stRebateApplyStatus);
                 }
+               else
+                {
+                    stRebateApplyStatus = "0";
+                    callRebateAmountAPI(stRebateApplyStatus);
+                }
+
+
             }
         });
 
-        btn_remove_rebate.setOnClickListener(new View.OnClickListener() {
+        btn_no_rebate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stNewRebateAmt = "0";
                 //callRebateAmountAPI(stNewRebateAmt);
+               /* stRebateApplyStatus = "0";
+                callRebateAmountAPI(stRebateApplyStatus);*/
+
                 dialogRebate.dismiss();
             }
         });
@@ -512,22 +548,22 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
         dialogRebate.show();
     }
 
-    public void callRebateAmountAPI(String rebateAmount) {
+    public void callRebateAmountAPI(String stRebateCheckedStatus) {
 
-        String api_url = Global_Settings.api_url+"rest/V1/rebate/update/"+rebateAmount;
-        Log.e("rebateAmount_api",rebateAmount);
+        String api_url = Global_Settings.api_url+"rest/V1/rebate/update/"+stRebateCheckedStatus;
+        Log.e("stRebateCheckedStatus",stRebateCheckedStatus);
 
         SharedPreferences preferences = CommonFun.getPreferences(getApplicationContext());
         tokenData = preferences.getString("tokenData", "");
 
-        pDialog = new TransparentProgressDialog(ConfirmationActivityOldJuly24.this);
+        pDialog = new TransparentProgressDialog(ConfirmationActivityOld29Sep.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
 
 
         try {
-            RequestQueue requestQueue = Volley.newRequestQueue(ConfirmationActivityOldJuly24.this);
+            RequestQueue requestQueue = Volley.newRequestQueue(ConfirmationActivityOld29Sep.this);
             // JsonObjectRequest jsObjRequest = null;
             StringRequest stringRequest =
                     new StringRequest(Request.Method.POST, api_url,
@@ -546,12 +582,18 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                                             String msg =  jsonObject.getString("msg");
 
                                             if(status.equalsIgnoreCase("0")){
-                                                CommonFun.alertError(ConfirmationActivityOldJuly24.this,msg);
+                                                CommonFun.alertError(ConfirmationActivityOld29Sep.this,msg);
+                                                Intent intent = new Intent(ConfirmationActivityOld29Sep.this, ConfirmationActivityOld29Sep.class);
+                                                startActivity(intent);
+                                                CommonFun.finishscreen(ConfirmationActivityOld29Sep.this);
+
                                             }
                                             else {
-                                                Intent intent = new Intent(ConfirmationActivityOldJuly24.this, ConfirmationActivityOldJuly24.class);
+                                                CommonFun.alertError(ConfirmationActivityOld29Sep.this,msg);
+                                                Intent intent = new Intent(ConfirmationActivityOld29Sep.this, ConfirmationActivityOld29Sep.class);
                                                 startActivity(intent);
-                                                CommonFun.finishscreen(ConfirmationActivityOldJuly24.this);
+                                                CommonFun.finishscreen(ConfirmationActivityOld29Sep.this);
+
                                             }
 
                                         }
@@ -560,7 +602,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                                             //e.printStackTrace();
                                             if (pDialog.isShowing())
                                                 pDialog.dismiss();
-                                            CommonFun.alertError(ConfirmationActivityOldJuly24.this,"Rebate amount has not added.Please try again!");
+                                            CommonFun.alertError(ConfirmationActivityOld29Sep.this,"Rebate amount has not added.Please try again!");
                                         }
                                     }
 
@@ -617,7 +659,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
         tokenData = tokenData.replaceAll("\"", "");
 
-        pDialog = new TransparentProgressDialog(ConfirmationActivityOldJuly24.this);
+        pDialog = new TransparentProgressDialog(ConfirmationActivityOld29Sep.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); pDialog.show();
 
@@ -709,7 +751,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                                 arr_item_id [i] = item_id;
 
 
-                                DatabaseHandler dbh=new DatabaseHandler(ConfirmationActivityOldJuly24.this);
+                                DatabaseHandler dbh=new DatabaseHandler(ConfirmationActivityOld29Sep.this);
                                 if(dbh.getCartProductImageSKuCount()>0) {
                                     List<CartProductImage> contacts = dbh.getCartProductImage(arr_sku[i]);
 
@@ -738,11 +780,20 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                                 if(jsonObject.getString("code").equalsIgnoreCase("rebate"))
                                 {
 
-                                    int rebatevalueJsone =  jsonObject.getInt("value");
+                                    String rebatevalueJsone =  jsonObject.getString("value");
                                     stRebateTitle = jsonObject.getString("title");
-                                    stRebatePoints = rebatevalueJsone;
-                                    Log.e("base_rebatevaluejsone", String.valueOf(stRebatePoints));
+                                    strRebateAmount = rebatevalueJsone;
 
+                                    Log.e("base_rebatevaluejsone", strRebateAmount);
+
+                                /*  try {
+                                        String strRabate = String.valueOf(rebatevalueJsone);
+                                        strRebatePoints=String.valueOf(Float.parseFloat(strRabate));
+                                        Log.e("base_rebatevaluejsone", String.valueOf(strRebatePoints));
+                                    }
+                                    catch (NumberFormatException ex){
+
+                                    }*/
 
                                 }
 
@@ -760,16 +811,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                                 tv_donation_text.setText("");
                             }
 
-                            /*if(!stRebateTitle.equals(""))
-                            {
-                                cb_rebate_msg.setVisibility(View.VISIBLE);
-                                tv_donation_text.setText("* " + stRebateTitle + " will not be refundable");
-                            }
-                            else
-                            {
-                                cb_rebate_msg.setVisibility(View.GONE);
-                                tv_donation_text.setText("");
-                            }*/
+
 
                             showCartItem();
                         } catch (JSONException e) {
@@ -777,7 +819,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                             e.printStackTrace();
                             //Log.d("expi",e.toString());
                             //Snackbar.make(findViewById(android.R.id.content),"Unable to fetch data\nPlease try again",Snackbar.LENGTH_LONG).show();
-                            Intent intent=new Intent(ConfirmationActivityOldJuly24.this, ExceptionError.class);
+                            Intent intent=new Intent(ConfirmationActivityOld29Sep.this, ExceptionError.class);
                             startActivity(intent);
 
                         }
@@ -805,7 +847,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                         }
                         else {
                             //Snackbar.make(findViewById(android.R.id.content),"Unable to Fetch Cart\nCheck Your Internet Connectivity",Snackbar.LENGTH_LONG).show();
-                            CommonFun.showVolleyException(error, ConfirmationActivityOldJuly24.this);
+                            CommonFun.showVolleyException(error, ConfirmationActivityOld29Sep.this);
                         }
 
 
@@ -840,8 +882,8 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
      */
 
     private void showCartItem() {
-        DatabaseHandler dbh=new DatabaseHandler(ConfirmationActivityOldJuly24.this);
-        lstadapter = new CartItemShowAdapter(ConfirmationActivityOldJuly24.this,arr_sku,arr_qty,arr_name,arr_price,arr_boolean);
+        DatabaseHandler dbh=new DatabaseHandler(ConfirmationActivityOld29Sep.this);
+        lstadapter = new CartItemShowAdapter(ConfirmationActivityOld29Sep.this,arr_sku,arr_qty,arr_name,arr_price,arr_boolean);
 
         if (lstadapter.getCount() > 0) {
 
@@ -976,7 +1018,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                                 showCartItem();
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Intent intent=new Intent(ConfirmationActivityOldJuly24.this, ExceptionError.class);
+                                Intent intent=new Intent(ConfirmationActivityOld29Sep.this, ExceptionError.class);
                                 startActivity(intent);
                             }
 
@@ -991,7 +1033,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                         pDialog.dismiss();
 
                     //CommonFun.alertError(DeliveryTypeActivity.this,error.toString());
-                    CommonFun.showVolleyException(error, ConfirmationActivityOldJuly24.this);
+                    CommonFun.showVolleyException(error, ConfirmationActivityOld29Sep.this);
                 }
             }) {
 
@@ -1082,11 +1124,11 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
                       //  arr_price[current_index]="0";
                     {
-                        Intent intent=new Intent(ConfirmationActivityOldJuly24.this, ConfirmationActivityOldJuly24.class);
+                        Intent intent=new Intent(ConfirmationActivityOld29Sep.this, ConfirmationActivityOld29Sep.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         startActivity(intent);
-                        CommonFun.finishscreen(ConfirmationActivityOldJuly24.this);
+                        CommonFun.finishscreen(ConfirmationActivityOld29Sep.this);
                     }
                 }
 
@@ -1098,11 +1140,11 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
 
                     //onResume();
-                    Intent intent=new Intent(ConfirmationActivityOldJuly24.this, ConfirmationActivityOldJuly24.class);
+                    Intent intent=new Intent(ConfirmationActivityOld29Sep.this, ConfirmationActivityOld29Sep.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
 
                     startActivity(intent);
-                    CommonFun.finishscreen(ConfirmationActivityOldJuly24.this);
+                    CommonFun.finishscreen(ConfirmationActivityOld29Sep.this);
 //                    Intent intent=new Intent(getBaseContext(), com.galwaykart.essentialClass.InternetConnectivityError.class);
 //                    startActivity(intent);
 
@@ -1169,7 +1211,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
         tokenData = tokenData.replaceAll("\"", "");
 
-        pDialog = new TransparentProgressDialog(ConfirmationActivityOldJuly24.this);
+        pDialog = new TransparentProgressDialog(ConfirmationActivityOld29Sep.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); pDialog.show();
 
@@ -1288,36 +1330,80 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                                 String sst_disc= (disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
 
 
-                                Log.e("rebateAmount_set", rebateAmount + "");
-                                Log.e("stNewRebateAmt_set", stNewRebateAmt + "");
 
-                                String ip_text=st_total_cart_ip.equals("")?"":"Total PV/BV/SBV: " + st_total_cart_ip;
+
+
+                                Float flRP= Float.parseFloat(strRebateAmount);
+
+                                String[] separated = st_total_cart_ip.split("/");
+                                Log.e("separated", separated.length+"");
+                                if(separated.length>=3)
+                                {
+                                    ip_label="PV/RBV/SBV : ";
+                                }
+
+                                String ip_text=st_total_cart_ip.equals("")?"":ip_label + st_total_cart_ip;
                                 String loyality_text=st_total_cart_loyalty_value.equals("")?"":"Loyalty Value: " + st_total_cart_loyalty_value;
 
                                  String st_text = "<b>"+ip_text+"</b><br/>" +
                                          "<b>"+loyality_text+"<br/>" +
                                             "-------------------------------</b><br/>" +
-                                            "Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
+                                            "Cart Subtotal (" + total_cart_qty + " item) : ₹ " + base_total +
                                             "<br/>Shipping Charge: " + inc_tax +"<br/>"+
-                                            stRebateTitle+": ₹ " + stRebatePoints +"<br/>"+
                                              stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
+                                             stRebateTitle+": ₹ " + flRP +"<br/>"+
                                             sst_disc+
-                                         "<br/>Tax Amount: " + tax_amount +"<br/>"+
-                                            "Total Amount: ₹ " + st_base_grand_total;
+                                         "Tax Amount: " + tax_amount +"<br/><br/>"+
+                                            "<b>Total Amount: ₹ " + st_base_grand_total + "</b><br/>";
 
 
-                                tv_txt_view.setText(Html.fromHtml(st_text));
+                                String st_text_hide_rebate = "<b>"+ip_text+"</b><br/>" +
+                                        "<b>"+loyality_text+"<br/>" +
+                                        "-------------------------------</b><br/>" +
+                                        "Cart Subtotal (" + total_cart_qty + " item)  " + base_total +
+                                        "<br/>Shipping Charge: " + inc_tax +"<br/>"+
+                                        stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
+                                        sst_disc+
+                                        "Tax Amount: " + tax_amount +"<br/><br/>"+
+                                        "<b>Total Amount: ₹ " + st_base_grand_total + "</b><br/>";
+
+
+                                //Log.e("rebate_status",rebate_status);
+
+                                //tv_txt_view.setText(Html.fromHtml(st_text));
+
+                                if(rebate_status.equalsIgnoreCase("0"))
+                                {
+                                    cb_rebate_msg.setVisibility(View.GONE);
+                                    tv_txt_view.setText(Html.fromHtml(st_text_hide_rebate));
+                                }
+                                else
+                                {
+                                    tv_txt_view.setText(Html.fromHtml(st_text));
+                                }
+
                                 cb_donation_msg.setText(stDonationTitle);
                                 if(stDonationValue > 0) {
                                     cb_donation_msg.setChecked(true);
                                 }
                                 isFirstTime = true;
 
+
+
+
+
                                 cb_rebate_msg.setText(stRebateTitle);
-                                if(stRebatePoints > 0) {
+
+
+                                String strRV = String.valueOf(strRebateAmount);
+                                Log.e("flRP_St",flRP +"");
+
+                                if(!flRP.toString().equals("0.0")) {
                                     cb_rebate_msg.setChecked(true);
                                 }
                                 isFirstTimeAppy = true;
+
+
 
                                // getOfferDetails();
                             }
@@ -1325,7 +1411,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                                 if(pDialog.isShowing())
                                     pDialog.dismiss();
                                 String sst_disc=(disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
-                                String st_text="Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
+                                String st_text="Cart Subtotal (" + total_cart_qty + " item) : ₹ " + base_total +
                                         "<br/>Shipping Charge: " + inc_tax +"<br/>"+
                                         stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
                                         sst_disc+"<br/>"+
@@ -1358,7 +1444,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                                 pDialog.dismiss();
                             //e.printStackTrace();
                             //Snackbar.make(findViewById(android.R.id.content),"Unable to fetch data\nPlease try again",Snackbar.LENGTH_LONG).show();
-                            Intent intent=new Intent(ConfirmationActivityOldJuly24.this, ExceptionError.class);
+                            Intent intent=new Intent(ConfirmationActivityOld29Sep.this, ExceptionError.class);
                             startActivity(intent);
 
                         }
@@ -1383,7 +1469,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                         }
                         else {
                             //Snackbar.make(findViewById(android.R.id.content),"Unable to Fetch Cart\nCheck Your Internet Connectivity",Snackbar.LENGTH_LONG).show();
-                            CommonFun.showVolleyException(error, ConfirmationActivityOldJuly24.this);
+                            CommonFun.showVolleyException(error, ConfirmationActivityOld29Sep.this);
                         }
 
 
@@ -1426,9 +1512,9 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
         String login_group_id=pref.getString("login_group_id","");
         if(login_group_id.equalsIgnoreCase(""))
         {
-           Intent intent=new Intent(ConfirmationActivityOldJuly24.this, CartItemList.class);
+           Intent intent=new Intent(ConfirmationActivityOld29Sep.this, CartItemList.class);
            startActivity(intent);
-           CommonFun.finishscreen(ConfirmationActivityOldJuly24.this);
+           CommonFun.finishscreen(ConfirmationActivityOld29Sep.this);
 
         }
 
@@ -1437,7 +1523,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
         //Log.d("offer_url",st_offer_api_URL);
 
 
-        RequestQueue requestQueue = Volley.newRequestQueue(ConfirmationActivityOldJuly24.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(ConfirmationActivityOld29Sep.this);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                 st_offer_api_URL, null,
                 new Response.Listener<JSONObject>() {
@@ -1537,7 +1623,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                             if(pDialog.isShowing())
                                 pDialog.dismiss();
 
-                            Intent intent=new Intent(ConfirmationActivityOldJuly24.this, ExceptionError.class);
+                            Intent intent=new Intent(ConfirmationActivityOld29Sep.this, ExceptionError.class);
                             startActivity(intent);
                         }
 
@@ -1548,7 +1634,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                     public void onErrorResponse(VolleyError error) {
                         if(pDialog.isShowing())
                             pDialog.dismiss();
-                        CommonFun.showVolleyException(error, ConfirmationActivityOldJuly24.this);
+                        CommonFun.showVolleyException(error, ConfirmationActivityOld29Sep.this);
 
 
                     }
@@ -1761,7 +1847,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
-                                        Intent intent=new Intent(ConfirmationActivityOldJuly24.this, ExceptionError.class);
+                                        Intent intent=new Intent(ConfirmationActivityOld29Sep.this, ExceptionError.class);
                                         startActivity(intent);
                                         btConfirmOrder.setVisibility(View.GONE);
                                     }
@@ -1779,9 +1865,9 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                         btConfirmOrder.setVisibility(View.GONE);
                         if (error instanceof ServerError) {
 
-                            CommonFun.alertError(ConfirmationActivityOldJuly24.this, "Please try to add maximum of 25 qty...");
+                            CommonFun.alertError(ConfirmationActivityOld29Sep.this, "Please try to add maximum of 25 qty...");
                         } else
-                            CommonFun.showVolleyException(error, ConfirmationActivityOldJuly24.this);
+                            CommonFun.showVolleyException(error, ConfirmationActivityOld29Sep.this);
                     }
 
 
@@ -1821,7 +1907,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
 
         ////Log.d("cart_images","cartimage");
 
-        dbh = new DatabaseHandler(ConfirmationActivityOldJuly24.this);
+        dbh = new DatabaseHandler(ConfirmationActivityOld29Sep.this);
 
 //        String items_sku = "";
 //        for (int i = 0; i < arr_sku.length; i++) {
@@ -1871,7 +1957,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 //progress_bar.setProgress(View.GONE);
-                                Intent intent=new Intent(ConfirmationActivityOldJuly24.this, ExceptionError.class);
+                                Intent intent=new Intent(ConfirmationActivityOld29Sep.this, ExceptionError.class);
                                 startActivity(intent);
                             }
 
@@ -1886,7 +1972,7 @@ public class ConfirmationActivityOldJuly24 extends BaseActivityWithoutCart {
             public void onErrorResponse(VolleyError error) {
 
                // progress_bar.setProgress(View.GONE);
-                CommonFun.showVolleyException(error, ConfirmationActivityOldJuly24.this);
+                CommonFun.showVolleyException(error, ConfirmationActivityOld29Sep.this);
             }
         })
 

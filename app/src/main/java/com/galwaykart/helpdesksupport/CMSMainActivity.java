@@ -395,6 +395,7 @@ public class CMSMainActivity extends BaseActivityWithoutCart {
                                             complaint_reasons_spinner.setAdapter(adapter);
                                             complaint_reasons_spinner.setSelection(adapter.getCount());
                                         }
+
                                         else
                                         {
                                             CommonFun.alertError(CMSMainActivity.this,"No option available right now");

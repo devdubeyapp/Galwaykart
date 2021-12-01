@@ -58,6 +58,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Show all cart item with price and address
@@ -108,8 +110,9 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
     String disc_amount="",stDonationTitle="";
     int stDonationValue=0;
     String base_grand_total="",st_total_cart_ip="", tax_amount="", st_total_cart_loyalty_value="";
-    Dialog dialog, dialogRebate;
-    EditText ed_edit_donation;
+    Dialog dialog, dialogRebate, dialogGSTIN;
+    EditText ed_edit_donation, ed_gstin_no;
+    private String str_gstin_no="";
 
     String stRebateTitle="";
     String stNewRebateAmt="";
@@ -122,11 +125,11 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
     String stRebateApplyStatus=""; //o means, user not check rebate section or he is not readem rebate pooint
     CheckBox cb_rebate_msg;
     boolean isFirstTimeAppy = false;
-
     String rebate_status="";
 
 
     //TextView tv_grand_total;
+
 
 
     ArrayList<HashMap<String, String>> itemList;
@@ -176,11 +179,18 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
     CheckBox cb_donation_msg;
     TextView tv_donation_text;
 
+    CheckBox cb_gstin_msg;
+    TextView tv_gstin_no;
+    String stGSTINValue="";
+    String stGSTINTitle="";
+    String strGSTIN="";
+    boolean isGSTINAppy = false;
+
     Boolean is_zone_called=false;
     String current_user_zone="";
 
 
-
+    String ip_label="PV/RBV : ";
 
 
     @Override
@@ -215,6 +225,10 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
         String st_selected_address=pref.getString("st_selected_address","");
         tv_donation_text=findViewById(R.id.tv_donation_text);
+
+        cb_gstin_msg = findViewById(com.galwaykart.R.id.cb_gstin_msg);
+        tv_gstin_no=findViewById(R.id.tv_gstin_no);
+
 
         /**
          * Fetch all address details from the
@@ -310,6 +324,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
         dialog = new Dialog(ConfirmationActivity.this);
         dialogRebate = new Dialog(ConfirmationActivity.this);
+        dialogGSTIN =  new Dialog(ConfirmationActivity.this);
 
 
 
@@ -349,6 +364,18 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                     if(isFirstTime == true) {
                          openDonationBox();
                    }
+
+                }
+            });
+
+            cb_gstin_msg.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    //Log.d("isChecked", String.valueOf(isChecked));
+
+                    if(isGSTINAppy == true) {
+                        openGSTINBox();
+                    }
 
                 }
             });
@@ -490,6 +517,196 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
     }
 
+    private void openGSTINBox() {
+
+        dialogGSTIN.setContentView(R.layout.dialog_gstin);
+        dialogGSTIN.setCancelable(false);
+
+        TextView tv_alert_title=dialogGSTIN.findViewById(R.id.tv_alert_title);
+        tv_alert_title.setText(stGSTINTitle);
+        ed_gstin_no = dialogGSTIN.findViewById(R.id.ed_gstin_no);
+        ed_gstin_no.setText(String.valueOf(stGSTINValue));
+        Button btn_add_gstin = dialogGSTIN.findViewById(com.galwaykart.R.id.btn_add_gstin);
+        Button btn_remove_gstin = dialogGSTIN.findViewById(com.galwaykart.R.id.btn_remove_gstin);
+
+        ImageView btn_close= dialogGSTIN.findViewById(com.galwaykart.R.id.btn_close);
+
+        btn_close.setVisibility(View.GONE);
+        btn_add_gstin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                strGSTIN = ed_gstin_no.getText().toString().trim();
+                if (!strGSTIN.equalsIgnoreCase("")) {
+                    Log.d("strGSTIN", strGSTIN);
+
+                    String first_two_digit = strGSTIN.substring(0, 2);
+                    String first_digit = strGSTIN.substring(0, 1);
+                    Log.e("first_two_digit", first_two_digit);
+                    Log.e("first_digit", first_digit);
+                    if(first_two_digit.equalsIgnoreCase("28") ||  Integer.parseInt(first_two_digit) > 37 || first_two_digit.equalsIgnoreCase("00")){
+                        CommonFun.alertError(ConfirmationActivity.this, "GSTIN No. is invalid");
+                    }
+                    else
+                    {
+                        if(isValidGSTNo(strGSTIN))
+                        {
+                            callGSTINApi(strGSTIN);
+                        }
+                        else
+                        {
+                            CommonFun.alertError(ConfirmationActivity.this, "GSTIN No. is invalid");
+                        }
+                    }
+
+
+
+
+                }
+                else {
+                    CommonFun.alertError(ConfirmationActivity.this, "Please enter GSTIN");
+                }
+
+
+
+
+               /* if(ed_gstin_no.getText().toString().trim().equals(""))
+                {
+                    CommonFun.alertError(ConfirmationActivity.this, "Please enter GSTIN");
+                }
+                else {
+
+                    String str_gstin_no = ed_gstin_no.getText().toString().trim();*/
+
+
+                    //stGSTINValue = ed_gstin_no.getText().toString().trim();
+
+                    //dialogGSTIN.dismiss();
+              /*      if(isValidGSTNo(str_gstin_no))
+                    {
+                        stGSTINValue = ed_gstin_no.getText().toString().trim();
+                    }
+                    else
+                    {
+                        CommonFun.alertError(ConfirmationActivity.this, "GSTIN No. is invalid");
+                    }*/
+
+
+
+
+            //}
+
+            }
+        });
+
+        btn_remove_gstin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stGSTINValue = "0";
+                callGSTINApi("0");
+                cb_gstin_msg.setChecked(false);
+                dialogGSTIN.dismiss();
+
+            }
+        });
+
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialogGSTIN.dismiss();
+            }
+        });
+
+
+        dialogGSTIN.show();
+    }
+
+    private void callGSTINApi(String gstno) {
+
+        String gst_api_url = Global_Settings.api_url+"rest/V1/gstin/update/"+gstno;
+        Log.e("gst_api_url",gst_api_url);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        final StringRequest jsObjRequest = new StringRequest(Request.Method.POST,
+                gst_api_url,new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    Log.e("responseGst", response);
+                    if(response.equalsIgnoreCase("true"))
+                    {
+                        Intent intent = new Intent(ConfirmationActivity.this, ConfirmationActivity.class);
+                        startActivity(intent);
+                        CommonFun.finishscreen(ConfirmationActivity.this);
+                        dialog.dismiss();
+                    }
+                    else
+                    {
+                        CommonFun.alertError(ConfirmationActivity.this,"GST number Invalid!");
+                    }
+
+                }catch (Exception e){
+                    CommonFun.alertError(ConfirmationActivity.this,"GSTIN has not added.Please try again!");
+                }
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+//                            Log.d("errorDonation",error.toString());
+                        CommonFun.alertError(ConfirmationActivity.this,"GSTIN has not added.Please try again!");
+                    }
+                }
+        ) {
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + tokenData);
+                //   params.put("Content-Type","application/json");
+
+                return params;
+            }
+        };
+        jsObjRequest.setShouldCache(false);
+        queue.add(jsObjRequest);
+
+
+
+    }
+
+    public static boolean isValidGSTNo(String str)
+    {
+        // Regex to check valid
+        // GST (Goods and Services Tax) number
+        String regex = "^[0-9]{2}[A-Z]{5}[0-9]{4}"
+                + "[A-Z]{1}[1-9A-Z]{1}"
+                + "Z[0-9A-Z]{1}$";
+
+        // Compile the ReGex
+        Pattern p = Pattern.compile(regex);
+
+        // If the string is empty
+        // return false
+        if (str == null)
+        {
+            return false;
+        }
+
+        // Pattern class contains matcher()
+        // method to find the matching
+        // between the given string
+        // and the regular expression.
+        Matcher m = p.matcher(str);
+
+        // Return if the string
+        // matched the ReGex
+        return m.matches();
+    }
 
     private void openRebateBox() {
 
@@ -511,6 +728,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
         btn_yes_rebate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
 
                 Float flRP= Float.parseFloat(strRebateAmount);
@@ -772,6 +990,18 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                             {
                                 JSONObject jsonObject=jsonArray_Subtotal.getJSONObject(k);
 
+                                if(jsonObject.getString("code").equalsIgnoreCase("gstin"))
+                                {
+
+                                    //int value =  jsonObject.getInt("value");
+                                    stGSTINTitle = jsonObject.getString("title");
+                                    stGSTINValue = jsonObject.getString("area");;
+                                    Log.e("base_gstin", String.valueOf(stGSTINValue));
+                                    Log.e("stGSTINTitle", String.valueOf(stGSTINTitle));
+
+
+                                }
+
                                 if(jsonObject.getString("code").equalsIgnoreCase("donation"))
                                 {
 
@@ -779,7 +1009,6 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                     stDonationTitle = jsonObject.getString("title");
                                     stDonationValue = value;
                                     Log.e("base_totalDonation", String.valueOf(stDonationValue));
-
                                 }
 
                                 if(jsonObject.getString("code").equalsIgnoreCase("rebate"))
@@ -815,6 +1044,18 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                 cb_donation_msg.setVisibility(View.GONE);
                                 tv_donation_text.setText("");
                             }
+
+                            if(!stGSTINTitle.equals("") && !stGSTINTitle.equals("0") )
+                            {
+                                cb_gstin_msg.setVisibility(View.VISIBLE);
+                                tv_gstin_no.setText("* " + stGSTINTitle );
+                            }
+                            else
+                            {
+                                cb_gstin_msg.setVisibility(View.GONE);
+                                tv_gstin_no.setText("");
+                            }
+
 
 
 
@@ -1305,7 +1546,6 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                             }
 
 
-
 //                            String st_base_grand_total=String.valueOf(Integer.parseInt(base_total)+Integer.parseInt(inc_tax));
 //
 //                            ////Log.d("st_base_grand_total",st_base_grand_total);
@@ -1330,37 +1570,47 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
                                 Log.e("loyalty_value",st_total_cart_loyalty_value);
 
-
-
                                 String sst_disc= (disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
+
+
+
 
 
                                 Float flRP= Float.parseFloat(strRebateAmount);
 
-                                String ip_text=st_total_cart_ip.equals("")?"":"Total PV/BV/SBV: " + st_total_cart_ip;
+                                String[] separated = st_total_cart_ip.split("/");
+                                Log.e("separated", separated.length+"");
+                                if(separated.length>=3)
+                                {
+                                    ip_label="PV/RBV/SBV : ";
+                                }
+
+                                String ip_text=st_total_cart_ip.equals("")?"":ip_label + st_total_cart_ip;
                                 String loyality_text=st_total_cart_loyalty_value.equals("")?"":"Loyalty Value: " + st_total_cart_loyalty_value;
 
                                  String st_text = "<b>"+ip_text+"</b><br/>" +
                                          "<b>"+loyality_text+"<br/>" +
                                             "-------------------------------</b><br/>" +
-                                            "Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
+                                            "Cart Subtotal (" + total_cart_qty + " item) : ₹ " + base_total +
                                             "<br/>Shipping Charge: " + inc_tax +"<br/>"+
                                              stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
                                              stRebateTitle+": ₹ " + flRP +"<br/>"+
                                             sst_disc+
                                          "Tax Amount: " + tax_amount +"<br/><br/>"+
-                                            "<b>Total Amount: ₹ " + st_base_grand_total + "</b><br/>";
+                                            "<b>Total Amount: ₹ " + st_base_grand_total + "</b><br/><br/><br/>" +
+                                         stGSTINTitle+": " + stGSTINValue +"<br/><br/>";
 
 
                                 String st_text_hide_rebate = "<b>"+ip_text+"</b><br/>" +
                                         "<b>"+loyality_text+"<br/>" +
                                         "-------------------------------</b><br/>" +
-                                        "Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
+                                        "Cart Subtotal (" + total_cart_qty + " item)  " + base_total +
                                         "<br/>Shipping Charge: " + inc_tax +"<br/>"+
                                         stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
                                         sst_disc+
                                         "Tax Amount: " + tax_amount +"<br/><br/>"+
-                                        "<b>Total Amount: ₹ " + st_base_grand_total + "</b><br/>";
+                                        "<b>Total Amount: ₹ " + st_base_grand_total + "</b><br/><br/><br/>" +
+                                        stGSTINTitle+": " + stGSTINValue +"<br/><br/>";
 
 
                                 //Log.e("rebate_status",rebate_status);
@@ -1385,11 +1635,20 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
 
 
 
+                                cb_gstin_msg.setText(stGSTINTitle);
+
+                                if(!stGSTINValue.equals("") && !stGSTINValue.equals("NA")) {
+                                    cb_gstin_msg.setChecked(true);
+                                }
+                                isGSTINAppy = true;
+
+                         /*       if(!stGSTINValue.equals("")) {
+                                    cb_gstin_msg.setChecked(true);
+                                }
+                                isGSTINAppy = true;*/
 
 
                                 cb_rebate_msg.setText(stRebateTitle);
-
-
                                 String strRV = String.valueOf(strRebateAmount);
                                 Log.e("flRP_St",flRP +"");
 
@@ -1406,7 +1665,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                 if(pDialog.isShowing())
                                     pDialog.dismiss();
                                 String sst_disc=(disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
-                                String st_text="Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
+                                String st_text="Cart Subtotal (" + total_cart_qty + " item) : ₹ " + base_total +
                                         "<br/>Shipping Charge: " + inc_tax +"<br/>"+
                                         stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
                                         sst_disc+"<br/>"+
@@ -1418,7 +1677,13 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                                     cb_donation_msg.setChecked(true);
                                 }
                                 isFirstTime = true;
-                              //  btConfirmOrder.setVisibility(View.VISIBLE);
+                              // btConfirmOrder.setVisibility(View.VISIBLE);
+
+                                cb_gstin_msg.setText(stGSTINTitle);
+                                if(!stGSTINValue.equals("") || !stGSTINValue.equals("NA")) {
+                                    cb_gstin_msg.setChecked(true);
+                                }
+                                isGSTINAppy = true;
                             }
 
                             /**

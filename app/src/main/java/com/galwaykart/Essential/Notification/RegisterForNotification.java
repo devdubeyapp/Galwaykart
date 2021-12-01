@@ -159,13 +159,10 @@ public class RegisterForNotification extends AppCompatActivity {
                 "&reqfrm=1" +
                 "&type="+type_api;
 
-
-//        Intent innew = new Intent(RegisterForNotification.this, SplashActivity.class);
-//        startActivity(innew);
-//        CommonFun.finishscreen(RegisterForNotification.this);
+        Log.e("url_firebase_token", url);
 
 
-        //    new RegisterToken().execute();
+
 
 
 

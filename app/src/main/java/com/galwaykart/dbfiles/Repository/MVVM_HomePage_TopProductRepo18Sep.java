@@ -14,7 +14,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.galwaykart.dbfiles.ProductDataModel;
-import com.galwaykart.dbfiles.ProductDataModelOLJuly22;
 import com.galwaykart.essentialClass.CommonFun;
 import com.galwaykart.essentialClass.Global_Settings;
 
@@ -33,14 +32,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 //import com.galwaykart.RoomDb.GalwaykartRoomDatabase;
 
-public class MVVM_HomePage_TopProductRepoOlJuly22 {
+public class MVVM_HomePage_TopProductRepo18Sep {
 
-    private static MVVM_HomePage_TopProductRepoOlJuly22 instance;
-    private ArrayList<ProductDataModelOLJuly22> dataset=new ArrayList<>();
+    private static MVVM_HomePage_TopProductRepo18Sep instance;
+    private ArrayList<ProductDataModel> dataset=new ArrayList<>();
 
-    public static MVVM_HomePage_TopProductRepoOlJuly22 getInstance(){
+    public static MVVM_HomePage_TopProductRepo18Sep getInstance(){
         if(instance==null){
-            instance=new MVVM_HomePage_TopProductRepoOlJuly22();
+            instance=new MVVM_HomePage_TopProductRepo18Sep();
         }
         return instance;
     }
@@ -52,9 +51,9 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
 //     * @param context
 //     * @return
 //     */
-    public MutableLiveData<List<ProductDataModelOLJuly22>> getProduct(Context context){
+    public MutableLiveData<List<ProductDataModel>> getProduct(Context context){
        dataset.clear();
-        MutableLiveData<List<ProductDataModelOLJuly22>> data = new MutableLiveData<>();
+        MutableLiveData<List<ProductDataModel>> data = new MutableLiveData<>();
         callAPI(context, data);
         data.setValue(dataset);
         return data;
@@ -68,26 +67,7 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
      * @param data
 
      */
-    private void callAPI(Context context,
-                         MutableLiveData<List<ProductDataModelOLJuly22>> data
-                        ) {
-//        SharedPreferences pref;
-//        pref= CommonFun.getPreferences(context);
-//
-//
-//        String email = pref.getString("user_email", "");
-//         login_group_id=pref.getString("login_group_id","");
-//        String home_page_api="";
-//
-//        if (!email.equalsIgnoreCase("") && email != null) {
-//            //home_page_api= Global_Settings.home_page_api+"?cid="+login_group_id;
-//            home_page_api= Global_Settings.api_url+"/rest/V1/mobile/home/"+login_group_id;
-//        }
-//        else
-//        {
-//            //home_page_api=Global_Settings.home_page_api+"?cid=0";
-//            home_page_api= Global_Settings.api_url+"/rest/V1/mobile/home/0";
-//        }
+    private void callAPI(Context context, MutableLiveData<List<ProductDataModel>> data) {
 
         setPostOperation(context, data);
 
@@ -130,33 +110,69 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
      * @param context
      * @param data
      */
-    private void setPostOperation(Context context,
-                                  MutableLiveData<List<ProductDataModelOLJuly22>> data) {
+    private void setPostOperation(Context context, MutableLiveData<List<ProductDataModel>> data) {
         try {
 
             String response="";
 
             Realm realm= Realm.getDefaultInstance();
-            RealmResults<ProductDataModel> results=
-                    realm.where(ProductDataModel.class)
-                    .findAllAsync();
+            RealmResults<ProductDataModel> results= realm.where(ProductDataModel.class).findAllAsync();
 
             results.load();
             response=results.asJSON();
 
 
             Log.d("topProduct",response.toString());
+            Log.e("topProduct",response.toString());
+
+            Log.e("topProduct_response", response=results.asJSON());
 
             JSONArray jsonArray_product = new JSONArray(response);
 
+
+
+            String str_p_cs="";
             for(int i=0;i<jsonArray_product.length();i++){
+
+
+
 
                 JSONObject jsonObject_product=jsonArray_product.getJSONObject(i);
                 String pname=jsonObject_product.getString("pname");
-                String pprice="₹ "+jsonObject_product.getString("price");
+                String mrp_price="₹ "+jsonObject_product.getString("price");
                 String psku=jsonObject_product.getString("sku");
                 String pimage=jsonObject_product.getString("imageUrl");
-                String pip="PV/RBV/SBV: "+jsonObject_product.getString("ip");
+
+                String ip_label="PV/RBV : ";
+                String pvbv = jsonObject_product.getString("ip");
+                String[] separated = pvbv.split("/");
+                Log.e("separated", separated.length+"");
+                if(separated.length>=3)
+                {
+                    ip_label="PV/RBV/SBV : ";
+                }
+
+                String pip=ip_label +jsonObject_product.getString("ip");
+
+                String p_lv="Loyalty Value: "+jsonObject_product.getString("loyalty_value");
+                str_p_cs= jsonObject_product.getString("category_segregation");
+
+
+                /*if(str_p_cs.equalsIgnoreCase("286"))
+                    str_p_cs = "Supreme";
+
+                else if(str_p_cs.equalsIgnoreCase("287"))
+                    str_p_cs = "Standard";
+
+                else if(str_p_cs.equalsIgnoreCase("288"))
+                    str_p_cs = "Economy";
+
+                else if(str_p_cs.equalsIgnoreCase("289"))
+                    str_p_cs = "Catalog";*/
+
+                Log.e("str_p_cs",str_p_cs);
+
+
 
                 SharedPreferences pref =  CommonFun.getPreferences(context);
                 String login_group_id=pref.getString("login_group_id","");
@@ -169,11 +185,13 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
                     login_group_id="-";
                 }
 
-                //login_group_id="4";
-                Log.d("topProduct","GroupID"+login_group_id);
 
-                ProductDataModelOLJuly22 productDataModel= new ProductDataModelOLJuly22(pname,pip,"",psku,pimage,
-                        "","",login_group_id);
+
+                //login_group_id="4";
+                Log.d("topProductID","GroupID"+login_group_id);
+
+                ProductDataModel productDataModel= new ProductDataModel(pname,pip,"",psku,pimage,
+                        "","",login_group_id,p_lv,str_p_cs,"");
 
                 dataset.add(productDataModel);
 
@@ -195,31 +213,11 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
         }
     }
 
-
-
-//    private static class insertProductAsyncTask extends AsyncTask<ProductDataModel, Void, Void> {
-//
-//        //private ProductDataModelDao mAsyncTaskDao;
-//
-//        insertProductAsyncTask(ProductDataModelDao dao) {
-//            mAsyncTaskDao = dao;
-//        }
-//
-//        @Override
-//        protected Void doInBackground(final ProductDataModel... params) {
-//            mAsyncTaskDao.insert(params[0]);
-//            //Log.d("new_insert","success");
-//            return null;
-//        }
-//    }
-
-
-//
 //    /**************************************Category Products********************************************************/
 //    /**
 //     * Sort Category Product
 //     */
-    public MutableLiveData<List<ProductDataModelOLJuly22>> sortByPrice(Context context, MutableLiveData<List<ProductDataModelOLJuly22>> data, int sortBy){
+    public MutableLiveData<List<ProductDataModel>> sortByPrice(Context context, MutableLiveData<List<ProductDataModel>> data, int sortBy){
 
         switch (sortBy) {
 
@@ -266,9 +264,9 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
     /******************************************Search Products And Category Products****************************************************/
 
 
-    public MutableLiveData<List<ProductDataModelOLJuly22>> getProductDetail(Context context, String query, Boolean is_search){
+    public MutableLiveData<List<ProductDataModel>> getProductDetail(Context context, String query, Boolean is_search){
         dataset.clear();
-        MutableLiveData<List<ProductDataModelOLJuly22>> data=new MutableLiveData<>();
+        MutableLiveData<List<ProductDataModel>> data=new MutableLiveData<>();
         MutableLiveData<Boolean> isDataLoad=new MutableLiveData<>();
 
         callAPIOfProductDetail(context,data,isDataLoad, query, is_search);
@@ -281,7 +279,7 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
      * @param context
      * @param data
      */
-    private void callAPIOfProductDetail(Context context, MutableLiveData<List<ProductDataModelOLJuly22>> data,
+    private void callAPIOfProductDetail(Context context, MutableLiveData<List<ProductDataModel>> data,
                                         MutableLiveData<Boolean> isDataLoad, String query,
                                         Boolean is_search) {
 
@@ -345,15 +343,56 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
 //const ProductCustomerGroupEmployee = 290;
 //const ProductCustomerGroupCustomer = 291;
 //  const ProductCustomerGroupGuset = 288;
+
+
+        /*
+        This is Live Value
+        product_sdp_rdp
+        data-title="SDP" = 288
+        data-title="RDP" = 289*/
+
         String st_URL="";
+        Log.e("search_query",query);
+
 
         if(is_search==true) {
-            st_URL = Global_Settings.api_url + "rest/V1/products?searchCriteria[filter_groups][0][filters][1][field]=name" +
-                    "&searchCriteria[filter_groups][0][filters][1][value]=%25" + query +
-                    "%25&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
-                    "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
-                    "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset" +
-                    "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
+
+            if (query.contains("SDP") || query.contains("sdp")) {
+                String str_update_query = "288";
+                st_URL = Global_Settings.api_url + "rest/V1/products?searchCriteria[filter_groups][0][filters][1][field]=product_sdp_rdp" +
+                        "&searchCriteria[filter_groups][0][filters][1][value]="+str_update_query+
+                        "&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
+                        "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
+                        "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset" +
+                        "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
+                Log.e("st_URL_search_288", st_URL);
+
+
+            } else if (query.contains("RDP") || query.contains("rdp")) {
+
+                String str_update_query = "289";
+                st_URL = Global_Settings.api_url + "rest/V1/products?searchCriteria[filter_groups][0][filters][1][field]=product_sdp_rdp" +
+                        "&searchCriteria[filter_groups][0][filters][1][value]="+str_update_query+
+                        "&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
+                        "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
+                        "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset" +
+                        "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
+
+                Log.e("st_URL_search_289", st_URL);
+
+
+
+            } else {
+
+                st_URL = Global_Settings.api_url + "rest/V1/products?searchCriteria[filter_groups][0][filters][1][field]=name" +
+                        "&searchCriteria[filter_groups][0][filters][1][value]=%25" + query +
+                        "%25&searchCriteria[filter_groups][0][filters][1][condition_type]=like" +
+                        "&searchCriteria[filter_groups][2][filters][1][field]=productgroup" +
+                        "&searchCriteria[filter_groups][2][filters][1][condition_type]=finset" +
+                        "&searchCriteria[filter_groups][2][filters][1][value]=" + api_login_id;
+
+                Log.e("st_URL_search_n", st_URL);
+            }
         }
         else
         {
@@ -431,11 +470,11 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
      * @param data
      */
     private void setPostProductDetail(Context context, String response,
-                                      MutableLiveData<List<ProductDataModelOLJuly22>> data, String st_selected_name
+                                      MutableLiveData<List<ProductDataModel>> data, String st_selected_name
     ) {
 
         if(response!=null){
-            //Log.d("resProduct",response.toString());
+           Log.e("resProduct",response.toString());
             dataset.clear();
             try {
 
@@ -460,6 +499,7 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
                         if(p_status.equals("1")) {
                             String p_sku = sku_c.getString("sku");
                             String p_name = sku_c.getString("name");
+                            String p_mrp = sku_c.getString("price");
                             // String p_image = sku_c.getString("image");
 
 
@@ -476,6 +516,10 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
 
                             String p_image = "";
                             String p_ip = "";
+                            String p_loyalty_value="0";
+                            String st_cate_seg = "";
+                            String p_category_segregation="";
+
                             JSONArray jsonArray_custom_attrib = sku_c.getJSONArray("custom_attributes");
 
                             if (jsonArray_custom_attrib.length() > 0) {
@@ -495,10 +539,55 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
                                         p_ip = jsonObject_image.getString("value");
                                         //Log.d("resMVVM", p_image);
                                     }
+
+                                    if (attribute_code.equalsIgnoreCase("loyalty_value")) {
+
+                                        p_loyalty_value = jsonObject_image.getString("value");
+                                        Log.e("resMVVM", p_loyalty_value);
+                                    }
+
+                                    if (attribute_code.equalsIgnoreCase("category_segregation")) {
+                                        st_cate_seg = jsonObject_image.getString("value");
+                                        Log.e("st_cate_seg", st_cate_seg);
+
+
+                                        /*This is QA Value
+                                           286 Supreme
+                                           287 Standard
+                                           288 Economy
+                                           289 catalog*/
+
+
+                                        /*//This is Live Value
+                                            category_segregation
+                                            286 Supreme
+                                            287 Deluxe
+                                            290 Standard
+                                            291 SSSL- Short Shelf 0-3 Months*/
+
+                                        if(st_cate_seg.equalsIgnoreCase("286"))
+                                            p_category_segregation = "Supreme";
+
+                                        else if(st_cate_seg.equalsIgnoreCase("287"))
+                                            p_category_segregation = "Deluxe";
+
+                                        else if(st_cate_seg.equalsIgnoreCase("290"))
+                                            p_category_segregation = "Standard";
+
+                                        else if(st_cate_seg.equalsIgnoreCase("291"))
+                                            p_category_segregation = "SSSL- Short Shelf 0-3 Months";
+
+                                        Log.e("st_category_segregation",p_category_segregation);
+                                    }
+
+
                                 }
 
 
                             }
+
+
+
 
                             if (!p_image.equals("")) {
                                 p_image = Global_Settings.image_url + p_image;
@@ -541,8 +630,18 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
 
                             ////Log.d("mvvmlog",login_group_id+" "+st_selected_name);
 
-                            dataset.add(new ProductDataModelOLJuly22(p_name, "PV/RBV/SBV " + p_ip, "₹ " + p_price, p_sku, p_image,
-                                    "", st_selected_name, login_group_id));
+                            Log.e("ip_of_product", p_ip);
+
+                            String ip_label="PV/RBV : ";
+                            String[] separated = p_ip.split("/");
+                            Log.e("separated", separated.length+"");
+                            if(separated.length>=3)
+                            {
+                                ip_label="PV/RBV/SBV : ";
+                            }
+
+                            dataset.add(new ProductDataModel(p_name, ip_label + p_ip, "₹ " + p_price, p_sku, p_image,
+                                    "", st_selected_name, login_group_id, "Loyalty Value "+ p_loyalty_value, p_category_segregation, "₹ " +p_mrp));
 
                         }
                         //data.postValue(dataset);
@@ -552,8 +651,8 @@ public class MVVM_HomePage_TopProductRepoOlJuly22 {
                 }
                 else
                 {
-                    dataset.add(new ProductDataModelOLJuly22("", "", "", "", "",
-                            "", st_selected_name, ""));
+                    dataset.add(new ProductDataModel("", "", "", "", "",
+                            "", st_selected_name, "","","",""));
 
                     data.postValue(dataset);
                 }

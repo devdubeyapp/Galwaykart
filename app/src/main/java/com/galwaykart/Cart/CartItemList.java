@@ -195,6 +195,7 @@ public class CartItemList extends BaseActivity {
     Boolean is_voucher_applied=false;
     Boolean is_zone_called=false;
     String current_user_zone="";
+    String ip_label="PV/RBV : ";
 
     @Override
     public void onBackPressed() {
@@ -1143,7 +1144,15 @@ public class CartItemList extends BaseActivity {
                             editor.putString("cart_ip",""+total_ip);
                             editor.commit();
 
-                            tv_total_ip.setText("Total PV/BV/SBV : "+ total_ip);
+
+                            String[] separated = total_ip.split("/");
+                            Log.e("separated", separated.length+"");
+                            if(separated.length>=3)
+                            {
+                                ip_label="PV/RBV/SBV : ";
+                            }
+
+                            tv_total_ip.setText(ip_label + total_ip);
 
 
 
@@ -1467,7 +1476,15 @@ public class CartItemList extends BaseActivity {
                            tv_txt_view.setVisibility(View.VISIBLE);
 
                            if(jsonObj.has("ip")) {
-                               tv_total_ip.setText("Total PV/BV/SBV : " + jsonObj.getString("ip") );
+
+
+                               String[] separated = jsonObj.getString("ip").split("/");
+                               Log.e("separated", separated.length+"");
+                               if(separated.length>=3)
+                               {
+                                   ip_label="PV/RBV/SBV : ";
+                               }
+                               tv_total_ip.setText(ip_label + jsonObj.getString("ip") );
                                //Log.d("totalipSegment",total_ip);
                            }
                            if(jsonObj.has("loyalty_value"))
@@ -2535,12 +2552,21 @@ public class CartItemList extends BaseActivity {
 
             final  String prod_ip = dataModel.getProduct_ip();
 
-            final  String prod_loyalty_value = dataModel.getProduct_lv();
 
+            String[] separated = prod_ip.split("/");
+            Log.e("separated", separated.length+"");
+            Log.e("prod_ip", prod_ip);
+            if(separated.length>=3)
+            {
+                ip_label="PV/RBV/SBV : ";
+            }
+
+            final  String prod_loyalty_value = dataModel.getProduct_lv();
 
             login_group_id=pref.getString("login_group_id","");
             if(login_group_id.equals("4") || login_group_id.equals("8")) {
                 holder.textView_ip_value.setText(prod_ip);
+                //holder.textView_ip.setText(ip_label+ prod_ip);
                 holder.textView_loyalty_value.setText(prod_loyalty_value);
 
 

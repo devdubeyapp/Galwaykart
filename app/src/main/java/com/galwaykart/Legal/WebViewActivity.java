@@ -1,5 +1,6 @@
 package com.galwaykart.Legal;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -17,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.JsResult;
 import android.webkit.MimeTypeMap;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -52,7 +55,7 @@ import okio.Utf8;
  * Common
  * Created by ankesh on 10/4/2017.
  */
-
+@SuppressLint("SetJavaScriptEnabled")
 public class WebViewActivity extends AppCompatActivity {
 
 
@@ -124,6 +127,7 @@ public class WebViewActivity extends AppCompatActivity {
         {
             Intent intent = new Intent(WebViewActivity.this, FaqActivity.class);
             intent.putExtra("comefrom","customer-help-desk-tutorials");
+            Log.e("comefrom_web","customer-help-desk-tutorials");
             startActivity(intent);
             CommonFun.finishscreen(WebViewActivity.this);
 
@@ -142,7 +146,7 @@ public class WebViewActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        ////Log.d("weburl",response.toString());
+                        Log.e("weburlsep",response.toString());
                         try {
 
                             JSONArray jsonArray = new JSONArray(response);
@@ -152,10 +156,12 @@ public class WebViewActivity extends AppCompatActivity {
                                 String webcontent=jsonObject.getString("content");
                                 if(webcontent.length()>0 && !webcontent.equalsIgnoreCase("null")){
                                     setWebView(webcontent);
+                                    Log.e("setWebView_sep_if","setWebView_sep_if");
                                 }
                                 else
                                 {
                                     setWebView(jsonObject.getString("title")+"<br/><br/><h3>-----</h3>");
+                                    Log.e("setWebView_sep_else","setWebView_sep_else");
                                 }
 
                             }
@@ -182,6 +188,7 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
 
+
     private void setWebView(String webcontent){
 
 
@@ -192,11 +199,12 @@ public class WebViewActivity extends AppCompatActivity {
         //wb.getSettings().setPluginState(WebSettings.PluginState.ON);
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-
         WebChromeClient myWebChromeClient = new MyWebChromeClient();
         webView.setWebChromeClient(myWebChromeClient);
 
-        webView.loadData(webcontent, "text/html", "UTF-8");
+
+        //webView.loadData(webcontent, "text/html", "UTF-8");
+        webView.loadDataWithBaseURL("", webcontent, "text/html","utf-8", "");
 
         pDialog = new TransparentProgressDialog(WebViewActivity.this);
         //pDialog.setMessage("Please wait...");
@@ -261,6 +269,12 @@ public class WebViewActivity extends AppCompatActivity {
                 pDialog.dismiss();
 
         }
+
+   /*     @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            super.onReceivedSslError(view, handler, error);
+            handler.proceed(); // Ignore SSL certificate errors
+        }*/
 
         // To handle "Back" key press event for WebView to go back to previous screen.
 

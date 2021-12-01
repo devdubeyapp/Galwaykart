@@ -52,6 +52,12 @@ public class ProductDataModel extends RealmObject {
     //@ColumnInfo(name = "category_segregation")
     public String category_segregation;
 
+    //@ColumnInfo(name = "p_mrp")
+    public String p_mrp;
+
+
+
+
 
 
     public ProductDataModel(){}
@@ -63,7 +69,7 @@ public class ProductDataModel extends RealmObject {
             String pname, String ip,
             String price, String sku,
             String image, String p_category_id,
-            String p_category_name, String login_user_id, String loyalty_value, String category_segregation) {
+            String p_category_name, String login_user_id, String loyalty_value, String category_segregation, String p_mrp) {
         this.pname = pname;
         this.ip = ip;
         this.price = price;
@@ -74,6 +80,7 @@ public class ProductDataModel extends RealmObject {
         this.login_user_id=login_user_id;
         this.loyalty_value=loyalty_value;
         this.category_segregation=category_segregation;
+        this.p_mrp=p_mrp;
 
     }
 
@@ -159,7 +166,18 @@ public class ProductDataModel extends RealmObject {
 
     public void setCategory_segregation(String category_segregation) {
         this.category_segregation = category_segregation;
+
+
     }
+
+    public String getP_mrp() {
+        return p_mrp;
+    }
+
+    public void setP_mrp(String p_mrp) {
+        this.p_mrp = p_mrp;
+    }
+
 
 
 

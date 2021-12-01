@@ -125,6 +125,17 @@
                     android:layout_marginBottom="5dp"
                     android:layout_below="@+id/viewPagerCountDots" />
 
+                <!--Price-->
+                <TextView
+                    android:id="@+id/tv_product_mrp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="20dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_below="@+id/tv_product_segregation" />
 
                 <!--Price-->
                 <TextView
@@ -135,9 +146,9 @@
                     android:textColor="@color/text"
                     android:textSize="22dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:layout_below="@+id/tv_product_segregation" />
+                    android:layout_below="@+id/tv_product_mrp" />
                 <!--Add to cart-->
                 <RelativeLayout
                     android:id="@+id/spinnerlinear"

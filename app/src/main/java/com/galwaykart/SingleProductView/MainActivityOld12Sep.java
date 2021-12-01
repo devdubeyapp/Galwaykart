@@ -62,6 +62,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
@@ -92,6 +93,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -105,7 +107,7 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
  * user can share, add to whitelist
  * See review and give rating
  */
-public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.OnItemClickListener {
+public class MainActivityOld12Sep extends BaseActivity implements AdapterView.OnItemClickListener {
         private static final int REQUEST_CODE_EXAMPLE = 1;
         Spinner spinner1, spinner2, spinner_qty;
 
@@ -127,7 +129,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
     String cartItem;
     ArrayList<DataModelCart> arrayList;
     //    JSONArray  cartItem = null;
-    TransparentProgressDialog pDialog;
+    TransparentProgressDialog pDialog,pDialog1, pDialog2;
     Toolbar toolbar;
     String  tokenData;
     EditText ed_qty;
@@ -220,8 +222,12 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
     RecyclerView recycle_view_size;
     RelativeLayout rel_horizontal_view;
     String st_hamper_desc="";
-    String st_loyalty_label="", st_loyalty_value="", st_category_segregation="";
+    String st_loyalty_label="", st_loyalty_value="", st_category_segregation="", str_product_mrp="";
     Realm realm;
+
+
+
+    Dialog openComfirmationDialog;
 
 
     /**
@@ -277,7 +283,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
     private String strHomeScreenPinCode;
 
-    private TextView tv_product_segregation;
+    private TextView tv_product_segregation, tv_product_mrp;
     ///private SlantedTextView slanted_text_category_segregation;
 
 
@@ -378,7 +384,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
 
         SharedPreferences prefPincode;
-        prefPincode=CommonFun.getPreferences(MainActivity1Aug2021.this);
+        prefPincode=CommonFun.getPreferences(MainActivityOld12Sep.this);
         final String setPinCodeByUser = prefPincode.getString("current_pincode_home", "");
         txt_pincode.setText("Pincode : " + setPinCodeByUser);
 
@@ -412,10 +418,10 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
                 if(et_pincode.getText().toString().trim().equalsIgnoreCase(""))
                 {
-                    CommonFun.alertError(MainActivity1Aug2021.this,"Please enter valid pincode...");
+                    CommonFun.alertError(MainActivityOld12Sep.this,"Please enter valid pincode...");
                 }
                 else if(et_pincode.getText().toString().trim().length() < 6){
-                    CommonFun.alertError(MainActivity1Aug2021.this,"Please enter valid pincode...");
+                    CommonFun.alertError(MainActivityOld12Sep.this,"Please enter valid pincode...");
                 }
 
                 else
@@ -423,7 +429,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                     strSavePincode= et_pincode.getText().toString().trim();
 
                     SharedPreferences prefPincode;
-                    prefPincode=CommonFun.getPreferences(MainActivity1Aug2021.this);
+                    prefPincode=CommonFun.getPreferences(MainActivityOld12Sep.this);
                     SharedPreferences.Editor editor=prefPincode.edit();
                     editor.putString("current_pincode_home",strSavePincode);
                     editor.commit();
@@ -448,7 +454,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
 
                 SharedPreferences prefPincode;
-                prefPincode=CommonFun.getPreferences(MainActivity1Aug2021.this);
+                prefPincode=CommonFun.getPreferences(MainActivityOld12Sep.this);
                 SharedPreferences.Editor editor=prefPincode.edit();
                 editor.putString("current_pincode_home",strSavePincode);
                 editor.commit();
@@ -526,9 +532,9 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                 //Log.d("st_pincode",st_pincode);
 
                 if(st_pincode.equalsIgnoreCase(""))
-                    CommonFun.alertError(MainActivity1Aug2021.this,"Please enter valid pincode...");
+                    CommonFun.alertError(MainActivityOld12Sep.this,"Please enter valid pincode...");
                  else if(st_pincode.length() < 6){
-                    CommonFun.alertError(MainActivity1Aug2021.this,"Please enter valid pincode...");
+                    CommonFun.alertError(MainActivityOld12Sep.this,"Please enter valid pincode...");
                 }
                 else{
                     pref= CommonFun.getPreferences(getApplicationContext());
@@ -563,7 +569,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
                 if(r_bar==0 || st_com.equals("") || st_nick.equals(""))
                 {
-                    CommonFun.alertError(MainActivity1Aug2021.this,"All fields are mandatory to submit review");
+                    CommonFun.alertError(MainActivityOld12Sep.this,"All fields are mandatory to submit review");
                 }
                 else
                     submitReview(st_com,st_nick);
@@ -734,7 +740,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
             }
         });
 
-        dbh=new DatabaseHandler(MainActivity1Aug2021.this);
+        dbh=new DatabaseHandler(MainActivityOld12Sep.this);
 
         preferences = CommonFun.getPreferences(getApplicationContext());
         tokenData=preferences.getString("tokenData","");
@@ -748,7 +754,10 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
         tv_associate_products = findViewById(R.id.tv_associate_products);
         tv_associate_products_details = findViewById(R.id.tv_associate_products_details);
 
+        tv_product_mrp= findViewById(R.id.tv_product_mrp);
+        tv_product_mrp.setPaintFlags(tv_product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         tv_product_segregation= findViewById(R.id.tv_product_segregation);
+
         //slanted_text_category_segregation = (SlantedTextView) findViewById(R.id.slanted_text_category_segregation);
 
 
@@ -827,7 +836,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
              if(Integer.parseInt(cartqty)>0){
 
                     if(Integer.parseInt(cartqty)>25)
-                        CommonFun.alertError(MainActivity1Aug2021.this,"maximum 25 quantity is allowed");
+                        CommonFun.alertError(MainActivityOld12Sep.this,"maximum 25 quantity is allowed");
                     else {
 
 
@@ -989,7 +998,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
         Log.e("on_home_check_pin_url",on_home_check_pin_url);
 
-        pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
+        pDialog = new TransparentProgressDialog(MainActivityOld12Sep.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
@@ -1020,18 +1029,18 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                                     }
                                     else
                                     {
-                                        CommonFun.alertError(MainActivity1Aug2021.this,"Sorry, we don't have services in this area "+"("+setPinCodeByUser+")");
+                                        CommonFun.alertError(MainActivityOld12Sep.this,"Sorry, we don't have services in this area "+"("+setPinCodeByUser+")");
 
                                     }
 
                                 }
                                 else
                                 {
-                                    Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivityOld12Sep.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                                     //onBackPressed();
                                 }
                             } catch (JSONException e) {
-                                Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivityOld12Sep.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                                 //onBackPressed();
                             }
                         }
@@ -1042,7 +1051,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                     if(pDialog.isShowing())
                         pDialog.dismiss();
 
-                    Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivityOld12Sep.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                     //onBackPressed();
                     //CommonFun.showVolleyException(error,DeliveryTypeActivity.this);
                 }
@@ -1075,7 +1084,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
     private void checkPinCode() {
 
-        pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
+        pDialog = new TransparentProgressDialog(MainActivityOld12Sep.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
@@ -1119,11 +1128,11 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                                 }
                                 else
                                 {
-                                    Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivityOld12Sep.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                                     //onBackPressed();
                                 }
                             } catch (JSONException e) {
-                                Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivityOld12Sep.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                                 //onBackPressed();
                             }
                         }
@@ -1134,7 +1143,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                     if(pDialog.isShowing())
                         pDialog.dismiss();
 
-                    Toast.makeText(MainActivity1Aug2021.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivityOld12Sep.this,"Something went wrong.\nPlease try again",Toast.LENGTH_LONG).show();
                     //onBackPressed();
                     //CommonFun.showVolleyException(error,DeliveryTypeActivity.this);
                 }
@@ -1240,7 +1249,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
 
         progressBar_write_review.setVisibility(View.VISIBLE);
-        RequestQueue requestQueue=Volley.newRequestQueue(MainActivity1Aug2021.this);
+        RequestQueue requestQueue=Volley.newRequestQueue(MainActivityOld12Sep.this);
 
         StringRequest jsonObjectRequest=new StringRequest(Request.Method.POST,
                                     submit_review_url, new Response.Listener<String>() {
@@ -1260,7 +1269,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                         String getResult=jsonObject.getString("maessage");
 
                         final AlertDialog.Builder b;
-                        CommonFun.showDialog(MainActivity1Aug2021.this,getResult);
+                        CommonFun.showDialog(MainActivityOld12Sep.this,getResult);
                         linear_write_review.setVisibility(View.GONE);
 
                     } catch (JSONException e) {
@@ -1273,7 +1282,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                CommonFun.showVolleyException(error, MainActivity1Aug2021.this);
+                CommonFun.showVolleyException(error, MainActivityOld12Sep.this);
 
             }
         }){
@@ -1324,7 +1333,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
         }
 
 
-        RequestQueue requestQueue=Volley.newRequestQueue(MainActivity1Aug2021.this);
+        RequestQueue requestQueue=Volley.newRequestQueue(MainActivityOld12Sep.this);
         JsonRequest jsonRequest= new JsonRequest<JSONArray>(Request.Method.POST,
                 check_wish_list_url,
                 jsonObject_r.toString(),
@@ -1400,7 +1409,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
             }
 
 
-            RequestQueue requestQueue=Volley.newRequestQueue(MainActivity1Aug2021.this);
+            RequestQueue requestQueue=Volley.newRequestQueue(MainActivityOld12Sep.this);
 
              JsonRequest jsonRequest= new JsonRequest<JSONArray>(Request.Method.POST, st_add_wish_list_URL,
                      jsonObject_r.toString(),
@@ -1416,7 +1425,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                                             Drawable img_heart_fill=getResources().getDrawable(R.drawable.icon_heart_fill);
                                             tv_Wish_list.setCompoundDrawablesRelativeWithIntrinsicBounds(img_heart_fill,null,null,null);
                                             is_product_on_wishlist=true;
-                                            Toast.makeText(MainActivity1Aug2021.this, "Item added on wishlist", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(MainActivityOld12Sep.this, "Item added on wishlist", Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -1471,7 +1480,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
         }
 
-        RequestQueue requestQueue=Volley.newRequestQueue(MainActivity1Aug2021.this);
+        RequestQueue requestQueue=Volley.newRequestQueue(MainActivityOld12Sep.this);
 
         JsonRequest jsonRequest= new JsonRequest<JSONArray>(Request.Method.POST, st_remove_wish_list_url,
                 jsonObject_r.toString(),
@@ -1535,6 +1544,8 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
     protected void onResume() {
         super.onResume();
 
+        openComfirmationDialog = new Dialog(MainActivityOld12Sep.this);
+
         layoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
 //        layoutParams.setMargins(10,5,10,0);
         layoutParams.weight = 1.8f;
@@ -1547,7 +1558,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
         layoutParamsMain = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParamsMain.weight = 2f;
 
-        pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
+        pDialog = new TransparentProgressDialog(MainActivityOld12Sep.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
@@ -1662,9 +1673,9 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                     Global_Settings.api_url=Global_Settings.web_url+current_user_zone.trim().toString()+"/";
                     Global_Settings.current_zone=current_user_zone.trim().toString();
 
-                    Intent intent=new Intent(MainActivity1Aug2021.this, MainActivity1Aug2021.class);
+                    Intent intent=new Intent(MainActivityOld12Sep.this, MainActivityOld12Sep.class);
                     startActivity(intent);
-                    CommonFun.finishscreen(MainActivity1Aug2021.this);
+                    CommonFun.finishscreen(MainActivityOld12Sep.this);
                 }
 
             }
@@ -1674,7 +1685,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
     private void setDataOnListSize(int i) {
 
-        mAdapter_size = new CustomAttributeSizeAdapter(MainActivity1Aug2021.this, array_value_list_size);
+        mAdapter_size = new CustomAttributeSizeAdapter(MainActivityOld12Sep.this, array_value_list_size);
 
         RecyclerView.LayoutManager mLayoutManager_size = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recycle_view_size.setLayoutManager(mLayoutManager_size);
@@ -1798,7 +1809,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
     private void setDataOnListColor(int i) {
 
 //            mAdapter_size = new CustomAttributeSizeAdapter(MainActivity.this, array_value_list_size);
-            mAdapter_color= new CustomAttributeColorAdapter(MainActivity1Aug2021.this, array_value_list_color);
+            mAdapter_color= new CustomAttributeColorAdapter(MainActivityOld12Sep.this, array_value_list_color);
             //LinearLayout l1 = new LinearLayout(this);
             //l1.setOrientation(LinearLayout.VERTICAL);
             //dynamicRecyclerView = new RecyclerView(this);
@@ -1963,7 +1974,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
              fromurl= Global_Settings.api_url+"index.php/rest/V1/m-products/"+product_sku;
         Log.d("fromurl",fromurl);
 
-        pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
+        pDialog = new TransparentProgressDialog(MainActivityOld12Sep.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
@@ -2050,7 +2061,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                 if(pDialog.isShowing())
                     pDialog.dismiss();
 
-                CommonFun.showVolleyException(error, MainActivity1Aug2021.this);
+                CommonFun.showVolleyException(error, MainActivityOld12Sep.this);
 
 
             }
@@ -2249,8 +2260,9 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
             if (status_product.equals("1")) {
 
                 String product_name = jsonObj.getString("name");
+                str_product_mrp = jsonObj.getString("price");
                 st_product_id = jsonObj.getString("id");
-                //////Log.d("Name",product_name);
+                Log.e("str_product_mrp",str_product_mrp);
                 tvItemName.setText(product_name);
                 //tvItemPrice.setText("Rs :"+jsonObj.getString("price"));
                 JSONArray custom_data = jsonObj.getJSONArray("custom_attributes");
@@ -2298,17 +2310,30 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
                         Log.e("strCG", strCG);
 
+                         /*This is QA Value
+                           286 Supreme
+                           287 Standard
+                           288 Economy
+                           289 catalog*/
+
+                           /*This is Live Value
+                             category_segregation
+                             286 Supreme
+                             287 Deluxe
+                             290 Standard*/
+
+
                         if(strCG.equalsIgnoreCase("286"))
                             st_category_segregation = "Supreme";
 
                         else if(strCG.equalsIgnoreCase("287"))
+                            st_category_segregation = "Deluxe";
+
+                        else if(strCG.equalsIgnoreCase("290"))
                             st_category_segregation = "Standard";
 
-                        else if(strCG.equalsIgnoreCase("288"))
-                            st_category_segregation = "Economy";
-
-                        else if(strCG.equalsIgnoreCase("289"))
-                            st_category_segregation = "Catalog";
+                         /* else if(st_cate_seg.equalsIgnoreCase("289"))
+                          st_category_segregation = "Catalog";*/
 
                         Log.e("category_segregation",st_category_segregation);
 
@@ -2333,8 +2358,13 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
                 SharedPreferences pref = CommonFun.getPreferences(getApplicationContext());
                 String login_group_id = pref.getString("login_group_id", "");
+
+                Log.e("ip_of_product", ip_of_product);
+
+
                 if (login_group_id.equals("4")) {
                     short_desc = "PV/RBV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n" +  st_loyalty_label + ": " + st_loyalty_value ;
+                    tv_product_mrp.setText("₹ " + str_product_mrp);
                     tv_product_segregation.setText(st_category_segregation);
                     //slanted_text_category_segregation.setText(st_category_segregation);
 
@@ -2348,6 +2378,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                     //short_desc = "PV/RBV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n";
                     //short_desc = "PV/RBV/SBV : " + ip_of_product + "\n\n\n"  + st_loyalty_label + ": " + st_loyalty_value + "\n\n" + short_desc + "\n\n";
                     short_desc = "PV/RBV/SBV : " + ip_of_product + "\n\n" + short_desc + "\n\n" +  st_loyalty_label + ": " + st_loyalty_value ;
+                    tv_product_mrp.setText("₹ " + str_product_mrp);
                     tv_product_segregation.setText(st_category_segregation);
                     //slanted_text_category_segregation.setText(st_category_segregation);
                 } else {
@@ -2419,10 +2450,8 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                 }
 
 
-
-
-
                 tvItemPrice.setText("₹ " + product_price);
+                Log.e("product_price",product_price);
 
                 if (arr_product_images != null) {
                     if (arr_product_images.length > 0) {
@@ -2484,17 +2513,17 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
                 final AlertDialog.Builder b;
                 try {
-                    b = new AlertDialog.Builder(MainActivity1Aug2021.this);
+                    b = new AlertDialog.Builder(MainActivityOld12Sep.this);
                     b.setTitle("Alert");
                     b.setCancelable(false);
                     b.setMessage("Product currently not available");
                     b.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            Intent intent = new Intent(MainActivity1Aug2021.this, HomePageActivity.class);
+                            Intent intent = new Intent(MainActivityOld12Sep.this, HomePageActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
-                            CommonFun.finishscreen(MainActivity1Aug2021.this);
+                            CommonFun.finishscreen(MainActivityOld12Sep.this);
                         }
                     });
                     b.create().show();
@@ -2706,12 +2735,11 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
      */
     private void getCartId_v1() {
 
-        RequestQueue queue = Volley.newRequestQueue(MainActivity1Aug2021.this);
-
+        RequestQueue queue = Volley.newRequestQueue(MainActivityOld12Sep.this);
 
         // st_token_data="w4svj2g3pw7k2vmtxo3wthipjy3ieig0";
 
-        pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
+        pDialog = new TransparentProgressDialog(MainActivityOld12Sep.this);
         pDialog.setCancelable(false);
         pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         pDialog.show();
@@ -2747,21 +2775,21 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
                                if (can_colorproceed==true && can_csizeproceed==true)
                                {
-                                       addItemToCart(cart_id);
+                                   jsonCheckRDPSDP(cart_id);
                                }
                                else if(can_colorproceed==false)
                                {
-                                       CommonFun.alertError(MainActivity1Aug2021.this, "Please select any color of product first!");
+                                       CommonFun.alertError(MainActivityOld12Sep.this, "Please select any color of product first!");
                                }
                                else if(can_csizeproceed==false) {
-                                   CommonFun.alertError(MainActivity1Aug2021.this, "Please select any size of product first!");
+                                   CommonFun.alertError(MainActivityOld12Sep.this, "Please select any size of product first!");
                                }
                            }
                            else
                            {
                                String cart_id = response;
                                cart_id = cart_id.replaceAll("\"", "");
-                               addItemToCart(cart_id);
+                               jsonCheckRDPSDP(cart_id);
                            }
 
                         } catch (Exception e) {
@@ -2769,7 +2797,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                                 pDialog.dismiss();
 
                             e.printStackTrace();
-                            CommonFun.alertError(MainActivity1Aug2021.this, e.toString());
+                            CommonFun.alertError(MainActivityOld12Sep.this, e.toString());
                         }
 
                     }
@@ -2788,9 +2816,9 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
                         if (error instanceof ServerError) {
 
-                            CommonFun.alertError(MainActivity1Aug2021.this, "Please try to add maximum of 25 qty");
+                            CommonFun.alertError(MainActivityOld12Sep.this, "Please try to add maximum of 25 qty");
                         } else
-                            CommonFun.showVolleyException(error, MainActivity1Aug2021.this);
+                            CommonFun.showVolleyException(error, MainActivityOld12Sep.this);
                            Log.d("ERROR","error => "+error.toString());
                         //CommonFun.alertError(MainActivity.this,error.toString());
                     }
@@ -2812,6 +2840,256 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
     }
 
+
+    public void jsonCheckRDPSDP(String cart_id) {
+
+        String sdp_rdp_api_url = Global_Settings.api_url+"rest/V1/carts/mine/items/check-rdp-sdp";
+        Log.e("check_sdp_rdp_api_url",sdp_rdp_api_url);
+
+        Log.e("cart_id_jsonCheckRDPSDP", cart_id);
+
+        String input_check_rdp_sdp = "{\"productSku\":\""+product_sku+"\"," +
+                "\"cartId\":\""+cart_id+"\"}";
+
+        SharedPreferences preferences = CommonFun.getPreferences(getApplicationContext());
+        tokenData = preferences.getString("tokenData", "");
+
+        pDialog1 = new TransparentProgressDialog(MainActivityOld12Sep.this);
+        pDialog1.setCancelable(false);
+        pDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        pDialog1.show();
+
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(MainActivityOld12Sep.this);
+            // JsonObjectRequest jsObjRequest = null;
+            StringRequest stringRequest =
+                    new StringRequest(Request.Method.POST, sdp_rdp_api_url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    if (pDialog1.isShowing())
+                                        pDialog1.dismiss();
+                                    Log.e("checkRDPResponse", response);
+                                    if (response != null) {
+                                        try {
+
+                                            String strResponse = response;
+
+                                            if(strResponse.equalsIgnoreCase("false")){
+                                               addItemToCart(cart_id);
+
+                                            }
+
+                                         else {
+                                                openComfirmationBox(cart_id);
+                                               Log.e("cart_id_if_true", cart_id);
+
+                                            }
+
+                                        }
+
+                                        catch (Exception e) {
+                                            //e.printStackTrace();
+                                            if (pDialog1.isShowing())
+                                                pDialog1.dismiss();
+                                            //openComfirmationBox(cart_id);
+                                            Log.e("cart_id_if_truess", cart_id);
+                                            CommonFun.alertError(MainActivityOld12Sep.this,"Something went wrong.Please try again!");
+                                        }
+                                    }
+
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }) {
+
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json; charset=utf-8";
+                        }
+
+                        @Override
+                        protected String getParamsEncoding() {
+                            return "utf-8";
+                        }
+                        @Override
+                        public Map<String, String> getHeaders () throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("Authorization", "Bearer " + tokenData);
+                            //params.put("Content-Type", "application/json");
+
+                            return params;
+                        }
+
+                @Override
+                public byte[] getBody() throws AuthFailureError {
+                    try {
+                        Log.e("input_check_rdp_sdp",input_check_rdp_sdp);
+                        return input_check_rdp_sdp == null ? null : input_check_rdp_sdp.getBytes("utf-8");
+                    } catch (UnsupportedEncodingException uee) {
+                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_check_rdp_sdp, "utf-8");
+                        return null;
+                    }
+                }
+                    };
+
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+            stringRequest.setShouldCache(false);
+            requestQueue.add(stringRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    private void openComfirmationBox(String cart_id) {
+
+        openComfirmationDialog.setContentView(R.layout.dialog_cart_confirmation);
+        openComfirmationDialog.setCancelable(false);
+
+        TextView tv_alert_title=openComfirmationDialog.findViewById(R.id.tv_alert_title);
+        tv_alert_title.setText("Need Your Action");
+
+        TextView tv_text_line = openComfirmationDialog.findViewById(R.id.tv_text_line);
+        TextView tv_text_line1 = openComfirmationDialog.findViewById(R.id.tv_text_line1);
+        TextView tv_text_line2 = openComfirmationDialog.findViewById(R.id.tv_text_line2);
+
+        Button btn_confirm_yes = openComfirmationDialog.findViewById(R.id.btn_confirm_yes);
+        Button btn_confirm_no = openComfirmationDialog.findViewById(R.id.btn_confirm_no);
+        ImageView btn_close_rebate= openComfirmationDialog.findViewById(R.id.btn_close_rebate);
+
+        btn_close_rebate.setVisibility(View.GONE);
+        btn_confirm_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jsonCartRemoveAPI(cart_id);
+                //CommonFun.finishscreen(MainActivity.this);
+                //Intent intent = new Intent (MainActivity.this, )
+                //openComfirmationDialog.dismiss();
+            }
+        });
+
+        btn_confirm_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openComfirmationDialog.dismiss();
+            }
+        });
+
+        btn_close_rebate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                openComfirmationDialog.dismiss();
+            }
+        });
+
+
+        openComfirmationDialog.show();
+    }
+
+    public void jsonCartRemoveAPI(String cart_id) {
+
+        String cart_remove_api_url = Global_Settings.api_url+"rest/V1/carts/mine/items/clear-cart";
+        Log.e("cart_remove_api_url",cart_remove_api_url);
+
+        String input_cart_remove = "{\"cartId\":\""+cart_id+"\"}";
+
+        SharedPreferences preferences = CommonFun.getPreferences(getApplicationContext());
+        tokenData = preferences.getString("tokenData", "");
+
+        pDialog1 = new TransparentProgressDialog(MainActivityOld12Sep.this);
+        pDialog1.setCancelable(false);
+        pDialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        pDialog1.show();
+
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(MainActivityOld12Sep.this);
+            // JsonObjectRequest jsObjRequest = null;
+            StringRequest stringRequest =
+                    new StringRequest(Request.Method.POST, cart_remove_api_url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    if (pDialog1.isShowing())
+                                        pDialog1.dismiss();
+                                    Log.e("RemoveCartResponse", response);
+                                    if (response != null) {
+                                        try {
+                                            String strResponse = response;
+                                            if(strResponse.equalsIgnoreCase("true")){
+                                                addItemToCart(cart_id);
+                                                openComfirmationDialog.dismiss();
+                                                //CommonFun.finishscreen(MainActivity.this);
+
+                                                //jsonCartRemoveAPI(cart_id);
+                                                //CommonFun.alertError(MainActivity.this,"Thanks You");
+                                            }
+                                        }
+
+                                        catch (Exception e) {
+                                            //e.printStackTrace();
+                                            if (pDialog1.isShowing())
+                                                pDialog1.dismiss();
+                                            CommonFun.alertError(MainActivityOld12Sep.this,"Something went wrong.Please try again!");
+                                        }
+                                    }
+
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }) {
+
+                        @Override
+                        public String getBodyContentType() {
+                            return "application/json; charset=utf-8";
+                        }
+
+                        @Override
+                        protected String getParamsEncoding() {
+                            return "utf-8";
+                        }
+                        @Override
+                        public Map<String, String> getHeaders () throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("Authorization", "Bearer " + tokenData);
+                            //params.put("Content-Type", "application/json");
+
+                            return params;
+                        }
+
+                        @Override
+                        public byte[] getBody() throws AuthFailureError {
+                            try {
+                                Log.e("input_check_rdp_sdp",input_cart_remove);
+                                return input_cart_remove == null ? null : input_cart_remove.getBytes("utf-8");
+                            } catch (UnsupportedEncodingException uee) {
+                                VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", input_cart_remove, "utf-8");
+                                return null;
+                            }
+                        }
+                    };
+
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    1000 * 60, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+            stringRequest.setShouldCache(false);
+            requestQueue.add(stringRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
+
     private void addItemToCart(String cart_id) {
 
             add_to_cart_URL = Global_Settings.api_url + "rest/V1/carts/mine/items/";
@@ -2822,7 +3100,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
         Log.e("Hi Developer", "Hi Developer");
 
 
-            pDialog = new TransparentProgressDialog(MainActivity1Aug2021.this);
+            pDialog = new TransparentProgressDialog(MainActivityOld12Sep.this);
             pDialog.setCancelable(false);
 
             pDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -2982,12 +3260,12 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                                             /**
                                              * Update cart quantity
                                              */
-                                            refreshItemCount(MainActivity1Aug2021.this);
+                                            refreshItemCount(MainActivityOld12Sep.this);
                                             //refreshItemCount();
-                                            Vibrator vibrator = (Vibrator) MainActivity1Aug2021.this.getSystemService(MainActivity1Aug2021.VIBRATOR_SERVICE);
+                                            Vibrator vibrator = (Vibrator) MainActivityOld12Sep.this.getSystemService(MainActivityOld12Sep.VIBRATOR_SERVICE);
                                             vibrator.vibrate(100);
 
-                                            dialog = new Dialog(MainActivity1Aug2021.this);
+                                            dialog = new Dialog(MainActivityOld12Sep.this);
                                             dialog.setContentView(R.layout.custom_alert_dialog_design);
                                             TextView tv_dialog = dialog.findViewById(R.id.tv_dialog);
                                             ImageView image_view_dialog = dialog.findViewById(R.id.image_view_dialog);
@@ -3020,7 +3298,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                                         else if(jsonObj.has("message"))
                                         {
                                             String st_msg = jsonObj.getString("message");
-                                            CommonFun.alertError(MainActivity1Aug2021.this,st_msg);
+                                            CommonFun.alertError(MainActivityOld12Sep.this,st_msg);
 
                                         }
 
@@ -3054,17 +3332,17 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                                     JSONObject object = new JSONObject(errorString);
                                     String st_msg = object.getString("message");
 //                                String st_code = object.getString("code");
-                                    CommonFun.alertError(MainActivity1Aug2021.this,st_msg);
+                                    CommonFun.alertError(MainActivityOld12Sep.this,st_msg);
 //                                //Log.d("st_code",st_code);
                                 } catch (JSONException e) {
                                     //e.printStackTrace();
-                                    CommonFun.showVolleyException(error, MainActivity1Aug2021.this);
+                                    CommonFun.showVolleyException(error, MainActivityOld12Sep.this);
                                 }
 
 
                             }
                         } else
-                            CommonFun.showVolleyException(error, MainActivity1Aug2021.this);
+                            CommonFun.showVolleyException(error, MainActivityOld12Sep.this);
                     }
 
 
@@ -3114,7 +3392,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
         progressBar_read_review.setVisibility(View.VISIBLE);
 
-        final RequestQueue requestQueue=Volley.newRequestQueue(MainActivity1Aug2021.this);
+        final RequestQueue requestQueue=Volley.newRequestQueue(MainActivityOld12Sep.this);
 
         StringRequest jsonRequest=new StringRequest(Request.Method.GET, rating_url,
                  new Response.Listener<String>() {
@@ -3231,7 +3509,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
     private void setReviewAdapter() {
 
         CustomerReviewAdapter adapter;
-        adapter = new CustomerReviewAdapter(MainActivity1Aug2021.this, itemRatingList);
+        adapter = new CustomerReviewAdapter(MainActivityOld12Sep.this, itemRatingList);
         progressBar_read_review.setVisibility(View.GONE);
         if (adapter.getItemCount() > 0) {
 
@@ -3243,7 +3521,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 
             recyclerView_Rating.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
 
-            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(MainActivity1Aug2021.this, spanCount);
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(MainActivityOld12Sep.this, spanCount);
             recyclerView_Rating.setLayoutManager(mLayoutManager);
             //recyclerView_Rating.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true))
             //  recyclerView_Rating.setItemAnimator(new DefaultItemAnimator());
@@ -3280,7 +3558,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                 onPermissionAccess();
             } else {
 
-                CommonFun.alertError(MainActivity1Aug2021.this, "Must allow Storage permission to Share Product");
+                CommonFun.alertError(MainActivityOld12Sep.this, "Must allow Storage permission to Share Product");
             }
         }
     }
@@ -3679,6 +3957,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
 //                               product_price = jsonObj.getString("price");
 
                            tvItemPrice.setText("₹ " + product_price);
+                           Log.e("product_price", product_price);
 
 
 
@@ -3703,6 +3982,7 @@ public class MainActivity1Aug2021 extends BaseActivity implements AdapterView.On
                                    img_view_product_image.setVisibility(View.VISIBLE);
                                } else if (c.getString("attribute_code").equalsIgnoreCase("ip")) {
                                    ip_of_product = c.getString("value");
+
                                }
                                else  if (c.getString("attribute_code").equalsIgnoreCase("loyalty_label")) {
                                    st_loyalty_label = c.getString("value");

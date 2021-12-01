@@ -103,7 +103,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:fontFamily="ARLRDBD"
-            android:text="PV/BV/SBV "
+            android:text="PV/RBV/SBV "
             android:layout_below="@+id/textView_price"
             android:layout_toRightOf="@+id/imageView_Item"
             android:textColor="@color/text"

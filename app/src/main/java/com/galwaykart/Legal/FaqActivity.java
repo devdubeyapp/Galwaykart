@@ -1,20 +1,28 @@
 package com.galwaykart.Legal;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.JsResult;
 import android.webkit.MimeTypeMap;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +45,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 public class FaqActivity extends AppCompatActivity {
 
 
@@ -57,6 +66,7 @@ public class FaqActivity extends AppCompatActivity {
         CommonFun.finishscreen(FaqActivity.this);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +100,7 @@ public class FaqActivity extends AppCompatActivity {
 
             url = Global_Settings.terms_url_api + url_part;
 
-            Log.e("faq_url",url);
+            Log.e("faq_url_sep29",url);
             callAPI(url);
         }
         else
@@ -99,6 +109,7 @@ public class FaqActivity extends AppCompatActivity {
             Log.e("else", "else");
             url=Global_Settings.webview_api+url_part;
             Log.e("else_url", url);
+            Log.e("comefrom_webvew","customer-help-desk-tutorials");
             webView.setWebViewClient(new MyBrowser());
             webView.getSettings().setLoadsImagesAutomatically(true);
             webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -107,7 +118,6 @@ public class FaqActivity extends AppCompatActivity {
             //wb.getSettings().setPluginState(WebSettings.PluginState.ON);
             webView.getSettings().setAllowFileAccess(true);
             webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-
             WebChromeClient myWebChromeClient = new MyWebChromeClient();
             webView.setWebChromeClient(myWebChromeClient);
 
@@ -131,6 +141,7 @@ public class FaqActivity extends AppCompatActivity {
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         StringRequest jsonObjectRequest=new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
+                    @SuppressLint("SetJavaScriptEnabled")
                     @Override
                     public void onResponse(String response) {
                         Log.d("weburl",response.toString());
@@ -143,11 +154,18 @@ public class FaqActivity extends AppCompatActivity {
 
                                 String webcontent=jsonObject.getString("content");
                                 if(webcontent.length()>0 && !webcontent.equalsIgnoreCase("null")){
+                                    Log.e("testwebview", "twxtWebview");
+                                    //webView.getSettings().setJavaScriptEnabled(true);
+                                    //webView.loadData(webcontent, "text/html; charset=utf-8", "UTF-8");
+                                    //webView.loadDataWithBaseURL("", webcontent, "text/html","utf-8", "");
+
                                     setWebView(webcontent);
+                                    Log.e("setWebView__if","setWebView_sep_if");
                                 }
                                 else
                                 {
                                     setWebView(jsonObject.getString("title")+"<br/><br/><h3>-----</h3>");
+                                    Log.e("setWebView__else","setWebView_sep_else");
                                 }
 
                             }
@@ -174,8 +192,9 @@ public class FaqActivity extends AppCompatActivity {
     }
 
 
-    private void setWebView(String webcontent){
 
+    @SuppressLint("SetJavaScriptEnabled")
+    private void setWebView(String webcontent){
 
         webView.setWebViewClient(new MyBrowser());
         webView.getSettings().setLoadsImagesAutomatically(true);
@@ -185,10 +204,28 @@ public class FaqActivity extends AppCompatActivity {
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
 
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setSaveFormData(true);
+        webView.getSettings().setAllowContentAccess(true);
+        webView.getSettings().setAllowFileAccessFromFileURLs(true);
+        webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        webView.getSettings().setSupportZoom(true);
+
+        webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setDatabaseEnabled(true);
+        webView.getSettings().setGeolocationEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webView.getSettings().setUserAgentString(System.getProperty("http.agent"));
+
+
         WebChromeClient myWebChromeClient = new MyWebChromeClient();
         webView.setWebChromeClient(myWebChromeClient);
+        webView.setClickable(true);
 
-        webView.loadData(webcontent, "text/html", "UTF-8");
+        //webView.loadData(webcontent, "text/html", "UTF-8");
+        //webView.loadData(webcontent, "text/html; charset=utf-8", "UTF-8");
+        webView.loadDataWithBaseURL("", webcontent, "text/html","utf-8", "");
 
         pDialog = new TransparentProgressDialog(FaqActivity.this);
         //pDialog.setMessage("Please wait.....");
@@ -255,6 +292,13 @@ public class FaqActivity extends AppCompatActivity {
         }
 
         // To handle "Back" key press event for WebView to go back to previous screen.
+
+
+/*        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            super.onReceivedSslError(view, handler, error);
+            handler.proceed(); // Ignore SSL certificate errors
+        }*/
 
     }
 

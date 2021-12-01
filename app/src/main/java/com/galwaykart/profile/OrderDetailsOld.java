@@ -2020,7 +2020,7 @@ public class OrderDetailsOld extends BaseActivity {
                             tv_shipping_address.setText(st_ship_cust_full_name +"\n"+ "Ph. "+ st_ship_cust_telephone +"\n"+ st_ship_street+", "+st_ship_city+"\n"+st_ship_region+" ,"+st_ship_postcode+"\n");
 
                             String st_text=
-                                    "Cart Subtotal ("+ st_total_qty_ordered + " item) <br/>Inc Tax: ₹ " + base_subtotal +
+                                    "Cart Subtotal ("+ st_total_qty_ordered + " item) <br/>: ₹ " + base_subtotal +
                                     "<br/>Shipping Charge: " + shipping_amount +"<br/>"+
                                     st_donation_text +"<br/>"+
                                     sst_disc+

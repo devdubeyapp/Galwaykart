@@ -1,6 +1,7 @@
 package com.galwaykart;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -79,6 +81,7 @@ import com.galwaykart.profile.wishList.WishListDetails;
 import com.galwaykart.report.CouponReportActivity;
 import com.galwaykart.testimonial.TestimonialActivity;
 import com.galwaykart.vendormanagement.VendorRegistration;
+import com.galwaykart.vendormanagement.VendorRegistrationOld;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabItem;
@@ -646,11 +649,19 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
                         }
                         else if(groupPosition==4)
                         {
-                            Intent intent_wishlist=new Intent(HomePageActivity.this, WebViewActivity.class);
+                            try {
+                                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Global_Settings.web_url+"customer-help-desk-tutorials"));
+                                startActivity(myIntent);
+                            } catch (ActivityNotFoundException e) {
+                                Toast.makeText(HomePageActivity.this, "No application can handle this request." + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
+                                e.printStackTrace();
+                            }
+
+                      /*      Intent intent_wishlist=new Intent(HomePageActivity.this, WebViewActivity.class);
                             intent_wishlist.putExtra("comefrom","customer-help-desk-tutorials");
                             intent_wishlist.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent_wishlist);
-                            CommonFun.finishscreen(HomePageActivity.this);
+                            CommonFun.finishscreen(HomePageActivity.this);*/
                         }
                         else if(groupPosition == 6){
                             Intent intent=new Intent(HomePageActivity.this, TestimonialActivity.class);
@@ -1367,9 +1378,23 @@ public class HomePageActivity extends AppCompatActivity implements NavigationVie
 
         else if(id== R.id.customerlearningPoint)
         {
-            Intent intent=new Intent(this, WebViewActivity.class);
+            Intent myIntent = null;
+            try {
+                myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Global_Settings.web_url+"customer-help-desk-tutorials"));
+                myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                myIntent.setPackage("com.android.chrome");
+                startActivity(myIntent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(HomePageActivity.this, "No application can handle this request." + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
+                myIntent.setPackage(null);
+                e.printStackTrace();
+            }
+
+            Log.e("Web_url", Global_Settings.web_url+"customer-help-desk-tutorials");
+
+            /*Intent intent=new Intent(this, WebViewActivity.class);
             intent.putExtra("comefrom","customer-help-desk-tutorials");
-            startActivity(intent);
+            startActivity(intent);*/
             //CommonFun.finishscreen(this);
         }
         else if(id== R.id.legalabout){

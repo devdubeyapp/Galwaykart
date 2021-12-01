@@ -1324,13 +1324,13 @@ public class ConfirmationActivity27_July extends BaseActivityWithoutCart {
                                 Log.e("strRP", strRP + "");
 
 
-                                String ip_text=st_total_cart_ip.equals("")?"":"Total PV/BV/SBV: " + st_total_cart_ip;
+                                String ip_text=st_total_cart_ip.equals("")?"":"Total PV/RBV/SBV: " + st_total_cart_ip;
                                 String loyality_text=st_total_cart_loyalty_value.equals("")?"":"Loyalty Value: " + st_total_cart_loyalty_value;
 
                                  String st_text = "<b>"+ip_text+"</b><br/>" +
                                          "<b>"+loyality_text+"<br/>" +
                                             "-------------------------------</b><br/>" +
-                                            "Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
+                                            "Cart Subtotal (" + total_cart_qty + " item) : ₹ " + base_total +
                                             "<br/>Shipping Charge: " + inc_tax +"<br/>"+
                                              stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
                                              stRebateTitle+": ₹ " + strRP +"<br/>"+
@@ -1364,7 +1364,7 @@ public class ConfirmationActivity27_July extends BaseActivityWithoutCart {
                                 if(pDialog.isShowing())
                                     pDialog.dismiss();
                                 String sst_disc=(disc_amount.equals("0"))?"":("Discount/(Voucher Disc.):" + disc_amount + "<br/>");
-                                String st_text="Cart Subtotal (" + total_cart_qty + " item) Inc Tax: ₹ " + base_total +
+                                String st_text="Cart Subtotal (" + total_cart_qty + " item) : ₹ " + base_total +
                                         "<br/>Shipping Charge: " + inc_tax +"<br/>"+
                                         stDonationTitle+": ₹ " + stDonationValue +"<br/>"+
                                         sst_disc+"<br/>"+

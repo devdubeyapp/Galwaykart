@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 //apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     useLibrary 'org.apache.http.legacy'
 
     dataBinding {
@@ -22,13 +22,13 @@ android {
         applicationId "com.galwaykart"
         minSdkVersion 23
 
-        targetSdkVersion 29
+        targetSdkVersion 30
 
         /*versionCode 110
         versionName "10.2.12"*/
 
-        versionCode 111
-        versionName "10.2.13"
+        versionCode 117
+        versionName "10.2.19"
 
 
 
@@ -47,6 +47,7 @@ android {
         sourceCompatibility 1.8
         incremental false
     }
+    buildToolsVersion '28.0.3'
 }
 
 dependencies {

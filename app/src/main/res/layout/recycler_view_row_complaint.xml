@@ -13,6 +13,7 @@
         android:layout_margin="4dp"
         app:cardCornerRadius="6dp"
         android:elevation="10dp"
+        android:theme="@style/Theme.MaterialComponents.Light"
         card_view:cardUseCompatPadding="true">
 
         <RelativeLayout

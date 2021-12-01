@@ -578,7 +578,7 @@ public class CartItemList extends BaseActivity {
                                 editor.commit();
 
                                // //Log.d("tv_total_ip",""+total_ip_f);
-                                tv_total_ip.setText("Total PV / BV : "+ total_ip_f);
+                                tv_total_ip.setText("Total PV/RBV : "+ total_ip_f);
                             }
 
                         } catch (Exception e) {
@@ -927,7 +927,7 @@ public class CartItemList extends BaseActivity {
                                 editor.commit();
 
                                 //Log.d("tv_total_ip",""+total_ip_f);
-                                tv_total_ip.setText("Total PV / BV : "+ total_ip_f);
+                                tv_total_ip.setText("Total PV/RBV : "+ total_ip_f);
                             }
 
 

@@ -72,7 +72,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:id="@+id/tv_total_ip"
-            android:text="Total PV/BV/SBV:"
+            android:text="Total PV/RBV/SBV:"
             android:textColor="@color/colorPrimary"
             android:textSize="18dp"
             android:layout_below="@+id/tv_discount" />
@@ -379,7 +379,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:visibility="visible"
+        android:visibility="gone"
         app:headerLayout="@layout/nav_header_home_page"
         app:menu="@menu/activity_home_page_drawer" >
 

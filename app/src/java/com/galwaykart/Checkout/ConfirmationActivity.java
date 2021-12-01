@@ -793,7 +793,7 @@ public class ConfirmationActivity extends BaseActivityWithoutCart {
                             st_base_grand_total=String.valueOf(Integer.parseInt(st_base_grand_total)+Integer.parseInt(disc_amount));
                             ////Log.d("st_base_grand_total1",st_base_grand_total);
 
-                            tv_txt_view.setText("Cart Subtotal ("+total_cart_qty+" item) Inc Tax: ₹ "+base_total+
+                            tv_txt_view.setText("Cart Subtotal ("+total_cart_qty+" item) :₹ "+base_total+
                                     "\nDiscount: "+disc_amount+"\n" +
                                     "Shipping Charge: "+inc_tax+"\n"+
                                     "Total IP: "+st_total_cart_ip+"\n"+
